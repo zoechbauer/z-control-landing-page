@@ -1,0 +1,7 @@
+{
+  "name": "landing-page",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
