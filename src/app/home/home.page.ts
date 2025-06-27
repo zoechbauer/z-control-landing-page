@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { addIcons } from 'ionicons';
+import {
+  personOutline,
+  mailOutline,
+  locationOutline,
+  logoGooglePlaystore,
+} from 'ionicons/icons';
 import {
   IonHeader,
   IonToolbar,
@@ -15,6 +22,7 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
+  IonFooter,
 } from '@ionic/angular/standalone';
 @Component({
   selector: 'app-home',
@@ -37,10 +45,19 @@ import {
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
+    IonFooter,
   ],
 })
 export class HomePage {
   maxInputLength = 1000;
-  
-  constructor() {}
+
+  constructor() {
+    // Register the icons used in this component
+    addIcons({
+      'person-outline': personOutline,
+      'mail-outline': mailOutline,
+      'location-outline': locationOutline,
+      'logo-google-playstore': logoGooglePlaystore,
+    });
+  }
 }

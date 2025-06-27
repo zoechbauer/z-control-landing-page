@@ -8,6 +8,8 @@ import {
   IonToolbar,
   IonButtons,
   IonBackButton,
+  IonIcon,
+  IonFooter,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -16,6 +18,8 @@ import {
   styleUrls: ['./privacy-policy.page.scss'],
   standalone: true,
   imports: [
+    IonFooter,
+    IonIcon,
     IonBackButton,
     IonButtons,
     IonContent,
