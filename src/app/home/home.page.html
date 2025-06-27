@@ -1,20 +1,171 @@
-<ion-header [translucent]="true">
+<!-- Start Page Proposal for Firebase Hosting -->
+
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <div class="header-content">
+      <img
+        class="logo"
+        src="assets/icon/z-bell-32px.png"
+        alt="z-control logo"
+      />
+      <ion-title>z-control</ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+  <div>
+    <h2 class="ion-text-center">Welcome to <i>z-control</i> Applications</h2>
+    <p>
+      This is a landing page for the <i>z-control QR Code</i> app and other
+      future applications. Here you can find information about our apps, how to
+      use them, and how to contact us.
+    </p>
+    <p></p>
   </div>
+
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>z-control QR Code App</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>What can the app do?</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>
+              A QR code is created from the entered text and sent by email. The
+              text cannot be formatted and can be up to {{ maxInputLength }}
+              characters long. Text or a link to a web page can be entered.
+            </p>
+            <p>
+              The QR code is attached to the email as an image and PDF, and the
+              entered text is included in the email. This way you can
+              immediately see which text is contained in the QR code, in case
+              you create multiple QR codes.
+            </p>
+            <p>
+              To avoid having to enter the email address every time you send an
+              email, you can save email addresses.
+            </p>
+            <p>This web version is hosted on Google Firebase.</p>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-accordion-group>
+          <ion-accordion value="1a">
+            <ion-item slot="header" color="light">
+              <ion-label>Run it as Web App</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                You can test the app here without installing it on your phone.
+              </p>
+              <ion-button>
+                <a href="/assets/test-app/" target="_blank">Run as Web App</a>
+              </ion-button>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1b">
+            <ion-item slot="header" color="light">
+              <ion-label>Get the Mobile App</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                For the best experience, download our Android app from the
+                <i>Google Play Store</i>.
+              </p>
+              <p>
+                <b><i>z-control QR Code</i></b> offers offline QR code
+                generation, direct sharing, and more.
+              </p>
+              <ion-button
+                href="https://play.google.com/store/apps/details?id=at.zcontrol.zoe"
+                target="_blank"
+              >
+                <ion-icon name="logo-google-playstore" slot="start"></ion-icon>
+                Google Play Store
+              </ion-button>
+              <p class="under-construction">
+                Note: The Hosting is currently in development and will be
+                available soon.
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1c">
+            <ion-item slot="header" color="light">
+              <ion-label>Get the Source Code</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                The app is open source, and the source code is available on
+                <a
+                  href="https://github.com/zoechbauer/ng-leaflet-fuel-prices.git"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub</a
+                >, so you can review how the app works and how your data is
+                handled at any time.
+              </p>
+              <p class="under-construction">
+                Note: The Hosting is currently in development and will be
+                available soon. At the moment you get another open source
+                project.
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1d">
+            <ion-item slot="header" color="light">
+              <ion-label>Email us about errors</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                Please report errors and suggestions for improvement to
+                <a href="mailto:hans.zoechbauer@gmail.com"
+                  >Hans Z&ouml;chbauer</a
+                >.
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1e">
+            <ion-item slot="header" color="light">
+              <ion-label>Privacy Policy</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>Your privacy is important to us.</p>
+              <p>
+                Please review our
+                <a routerLink="/privacy-policy">Privacy Policy</a> to learn how
+                we handle your data.
+              </p>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+    </ion-accordion>
+
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Other Apps</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Procedure</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            All apps we create in the future will have their own entry.
+            <br />The structure will be the same as for the
+            <i>z-control QR Code</i> app.
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>

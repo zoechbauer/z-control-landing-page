@@ -34,4 +34,75 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-app {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  // Mobile first approach
+  max-width: 100%;
+  padding: 0 16px;
+
+  // Tablet (768px and up)
+  @media (min-width: 768px) {
+    max-width: 90vw;
+    padding: 0 24px;
+  }
+
+  // Desktop small (1024px and up)
+  @media (min-width: 1024px) {
+    max-width: 70vw;
+    padding: 0 32px;
+  }
+
+  // Desktop large (1200px and up)
+  @media (min-width: 1200px) {
+    max-width: 65vw;
+    padding: 0 40px;
+  }
+
+  // Extra large screens (1440px and up)
+  @media (min-width: 1440px) {
+    max-width: 60vw;
+    padding: 0 48px;
+  }
+}
+
+body {
+  background-color: rgb(244, 241, 241) !important;
+}
+
+// Custom header styling for all pages
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: white;
+
+    ion-title,
+    ion-back-button,
+    ion-buttons {
+      --color: white;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+
+      .logo {
+        height: 32px;
+        width: 32px;
+      }
+
+      ion-title {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.under-construction {
+    color: var(--ion-color-danger);
+}
+  
