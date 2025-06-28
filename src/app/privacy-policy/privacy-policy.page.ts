@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -31,7 +32,17 @@ import {
   ],
 })
 export class PrivacyPolicyPage implements OnInit {
-  constructor() {}
+  selectedAccordion: string = 'z-control QR Code App';
 
-  ngOnInit() {}
+  constructor(private readonly route: ActivatedRoute) {}
+
+  ngOnInit() {
+    // Get the 'from' query parameter
+    this.route.queryParams.subscribe((params) => {
+      if (params['from']) {
+        this.selectedAccordion = params['from'];
+        console.log('Received selectedAccordion:', this.selectedAccordion);
+      }
+    });
+  }
 }

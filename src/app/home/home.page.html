@@ -10,6 +10,9 @@
       />
       <ion-title>z-control</ion-title>
     </div>
+    <div slot="end">
+      <ion-title> {{ selectedAccordion }} </ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -18,14 +21,17 @@
     <h2 class="ion-text-center">Welcome to <i>z-control</i> Applications</h2>
     <p class="ion-text-center">
       This is a landing page for the <i>z-control QR Code</i> app and other
-      future applications. <br />Here you can find information about our apps, how to
-      use them, and how to contact us.
+      future applications. <br />Here you can find information about our apps,
+      how to use them, and how to contact us.
     </p>
     <p></p>
   </div>
 
-  <ion-accordion-group>
-    <ion-accordion value="first">
+  <ion-accordion-group
+    #accordionGroup
+    (ionChange)="accordionGroupChange($event)"
+  >
+    <ion-accordion value="group 1">
       <ion-item slot="header" color="light">
         <ion-label>z-control QR Code App</ion-label>
       </ion-item>
@@ -54,7 +60,7 @@
           </ion-card-content>
         </ion-card>
 
-        <ion-accordion-group>
+        <ion-accordion-group (ionChange)="subAccordionChange('group 1')">
           <ion-accordion value="1a">
             <ion-item slot="header" color="light">
               <ion-label>Run it as Web App</ion-label>
@@ -141,8 +147,12 @@
               <p>Your privacy is important to us.</p>
               <p>
                 Please review our
-                <a routerLink="/privacy-policy">Privacy Policy</a> to learn how
-                we handle your data.
+                <a
+                  [routerLink]="['/privacy-policy']"
+                  [queryParams]="{ from: selectedAccordion }"
+                  >Privacy Policy</a
+                >
+                to learn how we handle your data.
               </p>
             </div>
           </ion-accordion>
@@ -150,7 +160,7 @@
       </div>
     </ion-accordion>
 
-    <ion-accordion value="second">
+    <ion-accordion value="group 2">
       <ion-item slot="header" color="light">
         <ion-label>Other Apps</ion-label>
       </ion-item>
@@ -161,9 +171,9 @@
           </ion-card-header>
           <ion-card-content>
             <p class="ion-text-center">
-            All apps we create in the future will have their own entry.
-            <br />The structure will be the same as for the
-            <i>z-control QR Code</i> app.
+              All apps we create in the future will have their own entry.
+              <br />The structure will be the same as for the
+              <i>z-control QR Code</i> app.
             </p>
           </ion-card-content>
         </ion-card>
@@ -179,7 +189,7 @@
         <p class="footer-brand">© 2025 z-control Applications</p>
         <p class="footer-tagline">Innovative Mobile Solutions</p>
       </div>
-      
+
       <div class="footer-contact">
         <div class="contact-item">
           <ion-icon name="person-outline"></ion-icon>
@@ -187,16 +197,20 @@
         </div>
         <div class="contact-item">
           <ion-icon name="mail-outline"></ion-icon>
-          <a href="mailto:hans.zoechbauer@gmail.com" class="footer-link">hans.zoechbauer&#64;gmail.com</a>
+          <a href="mailto:hans.zoechbauer@gmail.com" class="footer-link"
+            >hans.zoechbauer&#64;gmail.com</a
+          >
         </div>
         <div class="contact-item">
           <ion-icon name="location-outline"></ion-icon>
           <span>Austria</span>
         </div>
       </div>
-      
+
       <div class="footer-info">
-        <p class="footer-note">Developer of mobile applications and web solutions</p>
+        <p class="footer-note">
+          Developer of mobile applications and web solutions
+        </p>
       </div>
     </div>
   </ion-toolbar>
