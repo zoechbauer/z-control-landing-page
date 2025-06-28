@@ -1,29 +1,20 @@
-// TODO check container
-#container {
+.header-content {
+  margin-left: 56px;
+}
+
+.general.info {
   text-align: center;
+  margin-bottom: 20px;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-
-  strong {
-    font-size: 20px;
-    line-height: 26px;
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
   }
 
   p {
     font-size: 16px;
-    line-height: 22px;
-
-    color: #8c8c8c;
-
-    margin: 0;
-  }
-
-  a {
-    text-decoration: none;
+    margin-bottom: 10px;
+    color: rgb(147, 144, 144);
   }
 }
 
@@ -35,6 +26,8 @@ ion-card-title {
 ion-card-content {
   p {
     margin-bottom: 15px;
+    font-size: 16px;
+    color: var(--ion-color-medium);
   }
   p:last-child {
     margin-bottom: 0;
@@ -46,6 +39,11 @@ ion-card-content {
   border-radius: 8px;
   background-color: #eaeaea;
   text-align: center;
+
+  p {
+      line-height: 1.5;
+      color: var(--ion-color-medium);
+    }
 
   ion-button {
     margin: 0 auto;
@@ -68,12 +66,4 @@ ion-card-content {
       text-decoration: none;
     }
   }
-}
-
-.header-content {
-  margin-left: 56px;
-}
-
-ion-accordion {
-  margin: 0, auto;
 }

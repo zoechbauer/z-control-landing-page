@@ -17,14 +17,17 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div>
-    <h2 class="ion-text-center">Welcome to <i>z-control</i> Applications</h2>
-    <p class="ion-text-center">
+  <div class="general info">
+    <h2>Welcome to our applications</h2>
+    <p>
       This is a landing page for the <i>z-control QR Code</i> app and other
-      future applications. <br />Here you can find information about our apps,
-      how to use them, and how to contact us.
+      future applications.
     </p>
-    <p></p>
+    <p>
+      Here you can find information about our apps, how to use them, and how to
+      contact us.
+    </p>
+    <p class="under-construction">This site is under construction</p>
   </div>
 
   <ion-accordion-group
@@ -67,11 +70,28 @@
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
               <p>
-                You can test the app here without installing it on your phone.
+                You can use or test the app here without installing it on your
+                phone.
               </p>
+              <h5>Limitations when using the app as a web app</h5>
+              <ul>
+                <p>
+                  Since browsers are not allowed to delete data, you must
+                  manually delete the saved QR codes in the download directory
+                  if you wish.
+                </p>
+                <p>
+                  Since webmail clients are not allowed to automatically add
+                  attachments, the saved QR codes must be manually added to the
+                  generated email.
+                </p>
+                <h5>In the mobile app, this is all done automatically.</h5>
+              </ul>
               <ion-button>
                 <a href="/assets/test-app/" target="_blank">Run as Web App</a>
               </ion-button>
+              <p>Click the ? in the app to get the online help.</p>
+              <p>You can use the app in English or German.</p>
             </div>
           </ion-accordion>
 
@@ -85,14 +105,15 @@
                 <i>Google Play Store</i>.
               </p>
               <p>
-                <b><i>z-control QR Code</i></b> offers offline QR code
-                generation, direct sharing, and more.
+                It offers offline QR code generation, direct sharing, online
+                help, and more.
               </p>
+              <p>The app is free, and no registration is required.</p>
               <ion-button
                 href="https://play.google.com/store/apps/details?id=at.zcontrol.zoe"
                 target="_blank"
               >
-                Get from Google Play Store
+                Get it from Google Play Store
               </ion-button>
               <p class="under-construction">
                 Note: The Hosting is currently in development and will be
@@ -189,8 +210,9 @@
   <ion-toolbar>
     <div class="footer-content">
       <div class="footer-section">
-        <p class="footer-brand">© 2025 z-control Applications</p>
+        <p class="footer-brand">© 2025 z-control</p>
         <p class="footer-tagline">Innovative Mobile Solutions</p>
+        <p class="footer-version">Version: 0.1 / 2025-06-28</p>
       </div>
 
       <div class="footer-contact">

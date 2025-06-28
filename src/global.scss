@@ -109,7 +109,7 @@ ion-header {
 ion-footer {
   ion-toolbar {
     --background: var(--ion-color-light);
-    --color: var(--ion-color-dark);
+    --color: var(--ion-color-medium);
     min-height: auto;
 
     .footer-content {
@@ -130,7 +130,7 @@ ion-footer {
       text-align: center;
 
       .footer-brand {
-        font-weight: 600;
+        font-weight: 500;
         margin: 0;
         font-size: 14px;
       }
@@ -139,6 +139,11 @@ ion-footer {
         margin: 4px 0 0 0;
         font-size: 12px;
         color: var(--ion-color-medium);
+      }
+
+      .footer-version {
+        font-size: 10px;
+        margin: 4px 0 0 0;
       }
     }
     .footer-contact {
@@ -192,5 +197,6 @@ ion-footer {
 }
 
 .under-construction {
-  color: var(--ion-color-danger);
+  color: var(--ion-color-danger) !important;
+  font-weight: bold;
 }
