@@ -110,7 +110,7 @@ export class HomePage implements AfterViewInit {
 
   subAccordionChange(parentGroup?: string) {
     this.subAccordionOpened = true;
-    console.log(`Sub-accordion changed, parent: ${parentGroup}`);
+    // console.log(`Sub-accordion changed, parent: ${parentGroup}`);
   }
 
   setSelectedAccordion(group: string) {

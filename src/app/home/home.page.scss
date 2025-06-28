@@ -45,13 +45,35 @@ ion-card-content {
   border: 2px solid #eaeaea;
   border-radius: 8px;
   background-color: #eaeaea;
+  text-align: center;
 
-  ion-button a {
-    color: #fff;
-    text-decoration: none;
+  ion-button {
+    margin: 0 auto;
+    display: block;
+
+    // Responsive button width
+    width: 100%; // Full width on mobile
+    max-width: 280px; // Limit width on larger screens
+
+    // For larger screens, use inline-block for better appearance
+    @media (min-width: 768px) {
+      display: inline-block;
+      width: auto;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
   }
 }
 
 .header-content {
   margin-left: 56px;
+}
+
+ion-accordion {
+  margin: 0, auto;
 }

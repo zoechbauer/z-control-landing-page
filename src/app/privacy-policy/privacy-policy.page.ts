@@ -41,7 +41,7 @@ export class PrivacyPolicyPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['from']) {
         this.selectedAccordion = params['from'];
-        console.log('Received selectedAccordion:', this.selectedAccordion);
+        // console.log('Received selectedAccordion:', this.selectedAccordion);
       }
     });
   }
