@@ -38,16 +38,78 @@ ion-card-content {
   border: 2px solid #eaeaea;
   border-radius: 8px;
   background-color: #eaeaea;
-  text-align: center;
+  text-align: left; // Changed from center to left
 
   p {
-      line-height: 1.5;
-      color: var(--ion-color-medium);
+    line-height: 1.5;
+    color: var(--ion-color-medium);
+  }
+
+  // Style for headings in accordion content
+  h5,
+  h6 {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 10px;
+
+    &:first-child {
+      margin-top: 0;
     }
+  }
+
+  // Clean list styling
+  ul {
+    text-align: left;
+    margin: 12px 0;
+    padding-left: 0; // Remove default padding
+    list-style: none; // Remove default bullets
+
+    li {
+      margin-bottom: 8px;
+      padding-left: 0;
+      position: relative;
+    }
+  }
+
+  // Special styling for benefit/feature lists
+  .comparison-note {
+    background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+    padding: 12px;
+    border-radius: 6px;
+    margin: 16px 0;
+    text-align: left;
+
+    ion-icon {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+  }
+
+  .help-tip {
+    text-align: left;
+    margin-top: 12px;
+    font-size: 0.9rem;
+
+    ion-icon {
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+  }
+
+  // Button wrapper for guaranteed centering
+  .button-wrapper {
+    text-align: center;
+    margin: 16px 0;
+
+    ion-button {
+      margin: 0 auto;
+    }
+  }
 
   ion-button {
-    margin: 0 auto;
+    margin: 16px auto; // Center the buttons
     display: block;
+    text-align: center; // Ensure button content is centered
 
     // Responsive button width
     width: 100%; // Full width on mobile
@@ -55,15 +117,24 @@ ion-card-content {
 
     // For larger screens, use inline-block for better appearance
     @media (min-width: 768px) {
-      display: inline-block;
+      display: block; // Keep as block to maintain centering
       width: auto;
       min-width: 200px;
       max-width: 300px;
+      margin: 16px auto; // Ensure centering on desktop too
     }
 
     a {
       color: #fff;
       text-decoration: none;
+      display: block;
+      width: 100%;
+      text-align: center;
     }
+  }
+
+  // Override text alignment specifically for button containers
+  .ion-text-center {
+    text-align: center;
   }
 }

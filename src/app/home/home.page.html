@@ -1,20 +1,9 @@
 <!-- Start Page Proposal for Firebase Hosting -->
 
-<ion-header>
-  <ion-toolbar>
-    <div class="header-content">
-      <img
-        class="logo"
-        src="assets/icon/z-bell-32px.png"
-        alt="z-control logo"
-      />
-      <ion-title>z-control</ion-title>
-    </div>
-    <div slot="end">
-      <ion-title> {{ selectedAccordion }} </ion-title>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-header
+  [selectedAccordion]="selectedAccordion"
+  [showBackButton]="false"
+></app-header>
 
 <ion-content class="ion-padding">
   <div class="general info">
@@ -69,29 +58,72 @@
               <ion-label>Run it as Web App</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
+              <h5>🌐 Try Before You Download</h5>
               <p>
-                You can use or test the app here without installing it on your
-                phone.
+                Test the full functionality of z-control QR Code directly in
+                your browser without any installation required.
               </p>
-              <h5>Limitations when using the app as a web app</h5>
+
+              <h6>✅ Web App Benefits:</h6>
               <ul>
-                <p>
-                  Since browsers are not allowed to delete data, you must
-                  manually delete the saved QR codes in the download directory
-                  if you wish.
-                </p>
-                <p>
-                  Since webmail clients are not allowed to automatically add
-                  attachments, the saved QR codes must be manually added to the
-                  generated email.
-                </p>
-                <h5>In the mobile app, this is all done automatically.</h5>
+                <li>
+                  <strong>Instant Access:</strong> Start using immediately
+                </li>
+                <li>
+                  <strong>Cross-Platform:</strong> Works on any device with a
+                  browser
+                </li>
+                <li>
+                  <strong>No Storage Required:</strong> No app installation
+                  needed
+                </li>
+                <li>
+                  <strong>Multi-Language:</strong> Available in English and
+                  German
+                </li>
               </ul>
-              <ion-button>
-                <a href="/assets/test-app/" target="_blank">Run as Web App</a>
-              </ion-button>
-              <p>Click the ? in the app to get the online help.</p>
-              <p>You can use the app in English or German.</p>
+
+              <h6>⚠️ Web Browser Limitations:</h6>
+              <ul>
+                <li>
+                  <strong>File Management:</strong> Downloaded QR codes remain
+                  in your browser's download folder - manual cleanup required
+                </li>
+                <li>
+                  <strong>Email Integration:</strong> QR code attachments must
+                  be manually added to emails (browser security restrictions)
+                </li>
+                <li>
+                  <strong>Offline Access:</strong> Requires internet connection
+                  to function
+                </li>
+              </ul>
+
+              <div class="comparison-note">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <strong>💡 Pro Tip:</strong> The native mobile app handles file
+                management and email attachments automatically for a seamless
+                experience.
+              </div>
+
+              <div class="button-wrapper">
+                <ion-button
+                  href="/assets/test-app/"
+                  target="_blank"
+                  color="secondary"
+                  expand="block"
+                  class="web-app-button"
+                >
+                  <ion-icon name="globe-outline" slot="start"></ion-icon>
+                  Launch Web App
+                </ion-button>
+              </div>
+
+              <p class="help-tip">
+                <ion-icon name="help-circle-outline"></ion-icon>
+                <strong>Need Help?</strong> Click the <strong>?</strong> icon in
+                the app for online assistance.
+              </p>
             </div>
           </ion-accordion>
 
@@ -100,24 +132,64 @@
               <ion-label>Get the Mobile App</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
+              <h5>📱 Download the Native Android App</h5>
               <p>
-                For the best experience, download our Android app from the
-                <i>Google Play Store</i>.
+                Experience the full power of z-control QR Code with our native
+                Android application, available on the
+                <strong>Google Play Store</strong>.
               </p>
+
+              <h6>🚀 Key Features:</h6>
+              <ul>
+                <li>
+                  <strong>Offline QR Generation:</strong> Create QR codes
+                  without internet connection
+                </li>
+                <li>
+                  <strong>Direct Sharing:</strong> Instantly share via email,
+                  messaging, or social apps
+                </li>
+                <li>
+                  <strong>Integrated Help:</strong> Built-in tutorials and
+                  support
+                </li>
+                <li>
+                  <strong>Enhanced Performance:</strong> Faster processing and
+                  smoother experience
+                </li>
+                <li>
+                  <strong>Auto-Email Attachments:</strong> QR codes
+                  automatically added to emails
+                </li>
+              </ul>
+
               <p>
-                It offers offline QR code generation, direct sharing, online
-                help, and more.
+                <strong>✅ 100% Free</strong> •
+                <strong>🔐 No Registration Required</strong> •
+                <strong>📱 Optimized for Mobile</strong>
               </p>
-              <p>The app is free, and no registration is required.</p>
-              <ion-button
-                href="https://play.google.com/store/apps/details?id=at.zcontrol.zoe"
-                target="_blank"
-              >
-                Get it from Google Play Store
-              </ion-button>
+
+              <div class="button-wrapper">
+                <ion-button
+                  href="https://play.google.com/store/apps/details?id=at.zcontrol.zoe"
+                  target="_blank"
+                  color="primary"
+                  expand="block"
+                  class="download-button"
+                >
+                  <ion-icon
+                    name="logo-google-playstore"
+                    slot="start"
+                  ></ion-icon>
+                  Download from Google Play
+                </ion-button>
+              </div>
+
               <p class="under-construction">
-                Note: The Hosting is currently in development and will be
-                available soon.
+                <ion-icon name="construct-outline"></ion-icon>
+                <strong>Development Update:</strong> The mobile app is currently
+                being finalized. Web hosting and distribution will be available
+                soon.
               </p>
             </div>
           </ion-accordion>
@@ -206,37 +278,4 @@
   </ion-accordion-group>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <div class="footer-content">
-      <div class="footer-section">
-        <p class="footer-brand">© 2025 z-control</p>
-        <p class="footer-tagline">Innovative Mobile Solutions</p>
-        <p class="footer-version">Version: 0.1 / 2025-06-28</p>
-      </div>
-
-      <div class="footer-contact">
-        <div class="contact-item">
-          <ion-icon name="person-outline"></ion-icon>
-          <span>Hans Zöchbauer</span>
-        </div>
-        <div class="contact-item">
-          <ion-icon name="mail-outline"></ion-icon>
-          <a href="mailto:hans.zoechbauer@gmail.com" class="footer-link"
-            >hans.zoechbauer&#64;gmail.com</a
-          >
-        </div>
-        <div class="contact-item">
-          <ion-icon name="location-outline"></ion-icon>
-          <span>Austria</span>
-        </div>
-      </div>
-
-      <div class="footer-info">
-        <p class="footer-note">
-          Developer of mobile applications and web solutions
-        </p>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

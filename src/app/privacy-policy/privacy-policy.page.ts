@@ -2,16 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonIcon,
-  IonFooter,
-} from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
+import { HeaderComponent, FooterComponent } from '../ui';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -19,16 +11,11 @@ import {
   styleUrls: ['./privacy-policy.page.scss'],
   standalone: true,
   imports: [
-    IonFooter,
-    IonIcon,
-    IonBackButton,
-    IonButtons,
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
+    HeaderComponent,
+    FooterComponent,
   ],
 })
 export class PrivacyPolicyPage implements OnInit {
@@ -41,7 +28,7 @@ export class PrivacyPolicyPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['from']) {
         this.selectedAccordion = params['from'];
-        // console.log('Received selectedAccordion:', this.selectedAccordion);
+        console.log('Received selectedAccordion:', this.selectedAccordion);
       }
     });
   }

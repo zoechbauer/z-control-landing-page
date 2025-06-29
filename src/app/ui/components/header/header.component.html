@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button
+        *ngIf="showBackButton"
+        fill="clear"
+        (click)="goBack()"
+        (keydown.enter)="goBack()"
+      >
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="logo-container">
+      <img
+        class="logo"
+        src="assets/icon/z-bell-32px.png"
+        alt="z-control logo"
+      />
+      <span class="app-title">z-control</span>
+    </div>
+
+    <ion-title
+      slot="end"
+      class="selected-accordion"
+      *ngIf="selectedAccordion"
+      >{{ selectedAccordion }}</ion-title
+    >
+  </ion-toolbar>
+</ion-header>

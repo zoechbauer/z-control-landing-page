@@ -1,0 +1,189 @@
+// Responsive footer component styles
+.footer-content {
+  padding: 12px 16px;
+}
+
+.footer-compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      flex: none; // Don't expand on desktop since email moves to right
+    }
+
+    .footer-brand {
+      font-weight: 500;
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  .footer-email {
+    font-size: 12px;
+
+    @media (min-width: 768px) {
+      font-size: 14px;
+    }
+
+    .footer-link {
+      color: var(--ion-color-primary);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    // Mobile-only email (under copyright)
+    &.mobile-only {
+      @media (min-width: 768px) {
+        display: none;
+      }
+    }
+
+    // Desktop-only email (right side)
+    &.desktop-only {
+      display: none;
+
+      @media (min-width: 768px) {
+        display: block;
+        margin-right: 12px; // Space from expand button area
+      }
+    }
+  }
+
+  .expand-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    height: 32px;
+    margin: 0;
+
+    // Hide expand button on desktop where we show full footer
+    @media (min-width: 768px) {
+      display: none;
+    }
+
+    ion-icon {
+      font-size: 18px;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.footer-details {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
+    padding 0.3s ease-out;
+
+  // Center content on mobile to match header alignment
+  @media (max-width: 767px) {
+    margin-right: 40px; // Account for expand button space for perfect centering
+    text-align: center;
+  }
+
+  &.expanded {
+    max-height: 300px;
+    opacity: 1;
+    padding-top: 16px;
+  }
+
+  // On desktop, always show details and disable animation
+  @media (min-width: 768px) {
+    max-height: none !important;
+    opacity: 1 !important;
+    padding-top: 0 !important;
+    transition: none !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 12px;
+    margin-right: 0; // Reset margin on desktop
+  }
+
+  .footer-section {
+    text-align: center;
+    margin-bottom: 16px;
+
+    @media (min-width: 768px) {
+      text-align: left;
+      margin-bottom: 0;
+    }
+
+    .footer-tagline {
+      margin: 4px 0;
+      font-size: 12px;
+      color: var(--ion-color-medium);
+    }
+
+    .footer-version {
+      font-size: 10px;
+      margin: 2px 0 0 0;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    margin-bottom: 16px;
+
+    @media (min-width: 768px) {
+      text-align: left;
+      margin-bottom: 0;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      justify-content: center;
+
+      @media (min-width: 768px) {
+        justify-content: flex-start;
+        font-size: 14px;
+      }
+
+      ion-icon {
+        font-size: 14px;
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+
+  .footer-info {
+    text-align: center;
+
+    @media (min-width: 768px) {
+      text-align: right;
+    }
+
+    .footer-note {
+      margin: 0;
+      font-size: 11px;
+      color: var(--ion-color-medium);
+      font-style: italic;
+
+      @media (min-width: 768px) {
+        font-size: 12px;
+      }
+    }
+  }
+}

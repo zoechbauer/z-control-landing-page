@@ -1,18 +1,9 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
+import { logoGooglePlaystore } from 'ionicons/icons';
 import {
-  personOutline,
-  mailOutline,
-  locationOutline,
-  logoGooglePlaystore,
-} from 'ionicons/icons';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonIcon,
   IonButton,
   IonAccordion,
   IonAccordionGroup,
@@ -22,30 +13,28 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonFooter,
+  IonIcon,
 } from '@ionic/angular/standalone';
+import { HeaderComponent, FooterComponent } from '../ui';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
+    IonIcon,
     IonCard,
     IonButton,
-    IonIcon,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonAccordion,
     IonAccordionGroup,
     IonItem,
     IonLabel,
     RouterModule,
-    IonCard,
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    IonFooter,
+    HeaderComponent,
+    FooterComponent,
   ],
 })
 export class HomePage implements AfterViewInit {
@@ -61,9 +50,6 @@ export class HomePage implements AfterViewInit {
 
   private registerIcons() {
     addIcons({
-      'person-outline': personOutline,
-      'mail-outline': mailOutline,
-      'location-outline': locationOutline,
       'logo-google-playstore': logoGooglePlaystore,
     });
   }
@@ -110,7 +96,7 @@ export class HomePage implements AfterViewInit {
 
   subAccordionChange(parentGroup?: string) {
     this.subAccordionOpened = true;
-    // console.log(`Sub-accordion changed, parent: ${parentGroup}`);
+    console.log(`Sub-accordion changed, parent: ${parentGroup}`);
   }
 
   setSelectedAccordion(group: string) {

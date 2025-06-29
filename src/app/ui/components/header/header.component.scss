@@ -1,0 +1,50 @@
+.logo-container {
+  position: absolute;
+  left: 56px; /* Fixed position regardless of back button */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  max-width: calc(100vw - 200px); /* Prevent overlap on mobile */
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  --color: #000;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-accordion {
+  font-size: 1rem;
+  font-weight: 400;
+  --color: #666;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .logo-container {
+    max-width: calc(100vw - 180px);
+  }
+
+  .selected-accordion {
+    max-width: 250px;
+    font-size: 0.9rem;
+  }
+}
