@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -28,7 +28,7 @@ import {
     IonIcon,
   ],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   @Input() selectedAccordion: string = '';
   @Input() showBackButton: boolean = false;
 
@@ -40,11 +40,6 @@ export class HeaderComponent implements OnInit {
     addIcons({
       'arrow-back': arrowBack,
     });
-  }
-
-  ngOnInit() {
-    console.log('HeaderComponent - showBackButton:', this.showBackButton);
-    console.log('HeaderComponent - selectedAccordion:', this.selectedAccordion);
   }
 
   goBack() {

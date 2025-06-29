@@ -16,7 +16,7 @@
       Here you can find information about our apps, how to use them, and how to
       contact us.
     </p>
-    <p class="under-construction">This site is under construction</p>
+    <p class="under-construction">This site is under construction!</p>
   </div>
 
   <ion-accordion-group
@@ -55,7 +55,7 @@
         <ion-accordion-group (ionChange)="subAccordionChange('group 1')">
           <ion-accordion value="1a">
             <ion-item slot="header" color="light">
-              <ion-label>Run it as Web App</ion-label>
+              <ion-label>Start app as Web App without installation</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
               <h5>🌐 Try Before You Download</h5>
@@ -181,8 +181,22 @@
                     name="logo-google-playstore"
                     slot="start"
                   ></ion-icon>
-                  Download from Google Play
+                  Download for Android
                 </ion-button>
+              </div>
+
+              <div class="platform-note">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <strong>Using a PC/Desktop?</strong> This is an Android mobile
+                app. For computer users, try our
+                <a
+                  href="/assets/test-app/"
+                  target="_blank"
+                  class="web-app-link"
+                >
+                  <strong>Web App</strong>
+                </a>
+                instead - it works in any browser!
               </div>
 
               <p class="under-construction">

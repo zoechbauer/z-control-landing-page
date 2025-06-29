@@ -14,38 +14,43 @@
   p {
     font-size: 16px;
     margin-bottom: 10px;
-    color: rgb(147, 144, 144);
   }
 }
 
 ion-card-title {
   text-align: center;
-  margin-top: -20px;
 }
 
 ion-card-content {
   p {
     margin-bottom: 15px;
     font-size: 16px;
-    color: var(--ion-color-medium);
+    color: #000;
   }
   p:last-child {
     margin-bottom: 0;
   }
 }
 
+.accordion-expanded {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  border: 2px solid var(--ion-color-primary);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
 .accordion-content {
   border: 2px solid #eaeaea;
   border-radius: 8px;
   background-color: #eaeaea;
-  text-align: left; // Changed from center to left
+  text-align: left;
+  line-height: 1.5;
 
   p {
     line-height: 1.5;
-    color: var(--ion-color-medium);
   }
 
-  // Style for headings in accordion content
   h5,
   h6 {
     text-align: left;
@@ -57,7 +62,6 @@ ion-card-content {
     }
   }
 
-  // Clean list styling
   ul {
     text-align: left;
     margin: 12px 0;
@@ -68,6 +72,7 @@ ion-card-content {
       margin-bottom: 8px;
       padding-left: 0;
       position: relative;
+      line-height: 1.5;
     }
   }
 
@@ -136,5 +141,35 @@ ion-card-content {
   // Override text alignment specifically for button containers
   .ion-text-center {
     text-align: center;
+  }
+}
+
+.platform-note {
+  background-color: rgba(var(--ion-color-warning-rgb), 0.1);
+  border: 1px solid rgba(var(--ion-color-warning-rgb), 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 16px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ion-color-dark);
+
+  ion-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+    color: var(--ion-color-warning);
+  }
+
+  .web-app-link {
+    color: var(--ion-color-primary);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
   }
 }
