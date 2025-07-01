@@ -25,7 +25,7 @@ ion-card-content {
   p {
     margin-bottom: 15px;
     font-size: 16px;
-    color: #000;
+    color: var(--ion-text-color);
   }
   p:last-child {
     margin-bottom: 0;
@@ -33,19 +33,21 @@ ion-card-content {
 }
 
 .accordion-expanded {
-  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  background-color: var(--ion-color-step-100);
   border: 2px solid var(--ion-color-primary);
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 16px;
+  color: var(--ion-text-color);
 }
 
 .accordion-content {
-  border: 2px solid #eaeaea;
+  border: 2px solid var(--ion-color-step-200);
   border-radius: 8px;
-  background-color: #eaeaea;
+  background-color: var(--ion-color-step-50);
   text-align: left;
   line-height: 1.5;
+  color: var(--ion-text-color);
 
   p {
     line-height: 1.5;
@@ -78,11 +80,13 @@ ion-card-content {
 
   // Special styling for benefit/feature lists
   .comparison-note {
-    background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+    background-color: var(--ion-color-step-100);
+    border: 1px solid var(--ion-color-step-300);
     padding: 12px;
     border-radius: 6px;
     margin: 16px 0;
     text-align: left;
+    color: var(--ion-text-color);
 
     ion-icon {
       margin-right: 8px;
@@ -130,7 +134,7 @@ ion-card-content {
     }
 
     a {
-      color: #fff;
+      color: var(--ion-color-primary-contrast);
       text-decoration: none;
       display: block;
       width: 100%;
@@ -161,7 +165,7 @@ ion-card-content {
   margin: 16px 0;
   text-align: center;
   font-size: 0.9rem;
-  color: var(--ion-color-dark);
+  color: var(--ion-text-color);
 
   ion-icon {
     margin-right: 6px;
