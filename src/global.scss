@@ -74,15 +74,21 @@ body {
   background-color: rgb(244, 241, 241) !important;
 }
 
+// CSS Custom Properties for consistent styling
+:root {
+  --app-header-background: #d5e7fe;
+  --app-header-text-color: #000;
+}
+
 // Custom header styling for all pages
 ion-header {
   ion-toolbar {
-    --background: #d5e7fe;
-    --color: #000;
+    --background: var(--app-header-background);
+    --color: var(--app-header-text-color);
 
     ion-back-button,
     ion-title {
-      --color: #000;
+      --color: var(--app-header-text-color);
     }
 
     ion-buttons {

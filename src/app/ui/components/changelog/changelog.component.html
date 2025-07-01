@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>What's New</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        fill="clear"
+        (click)="closeChangelog()"
+        (keydown.enter)="closeChangelog()"
+      >
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="changelog-container">
+    <div class="changelog-intro">
+      <h2>Recent Updates</h2>
+      <p>Here's what's new in the latest versions of our landing page.</p>
+    </div>
+
+    <div class="changelog-entries">
+      <ion-card *ngFor="let entry of changelogEntries" class="changelog-card">
+        <ion-card-header>
+          <ion-card-title>
+            <div class="version-header">
+              <span class="version-number">Version {{ entry.version }}</span>
+              <ion-badge color="primary">{{ entry.date }}</ion-badge>
+            </div>
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <!-- Added Features -->
+          <div
+            *ngIf="entry.added && entry.added.length > 0"
+            class="changelog-section"
+          >
+            <h4 class="section-title added">✨ Added</h4>
+            <ul>
+              <li *ngFor="let item of entry.added" [innerHTML]="item"></li>
+            </ul>
+          </div>
+
+          <!-- Fixed Issues -->
+          <div
+            *ngIf="entry.fixed && entry.fixed.length > 0"
+            class="changelog-section"
+          >
+            <h4 class="section-title fixed">🐛 Fixed</h4>
+            <ul>
+              <li *ngFor="let item of entry.fixed" [innerHTML]="item"></li>
+            </ul>
+          </div>
+
+          <!-- Improvements -->
+          <div
+            *ngIf="entry.improved && entry.improved.length > 0"
+            class="changelog-section"
+          >
+            <h4 class="section-title improved">🚀 Improved</h4>
+            <ul>
+              <li *ngFor="let item of entry.improved" [innerHTML]="item"></li>
+            </ul>
+          </div>
+
+          <!-- Features -->
+          <div
+            *ngIf="entry.features && entry.features.length > 0"
+            class="changelog-section"
+          >
+            <h4 class="section-title features">⭐ Features</h4>
+            <ul>
+              <li *ngFor="let item of entry.features" [innerHTML]="item"></li>
+            </ul>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

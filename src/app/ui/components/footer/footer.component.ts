@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { addIcons } from 'ionicons';
 import {
   personOutline,
@@ -6,13 +6,18 @@ import {
   locationOutline,
   chevronUpOutline,
   chevronDownOutline,
+  listOutline,
 } from 'ionicons/icons';
 import {
   IonFooter,
   IonToolbar,
   IonIcon,
   IonButton,
+  ModalController,
 } from '@ionic/angular/standalone';
+
+import { environment } from 'src/environments/environment';
+import { ChangelogComponent } from '../changelog/changelog.component';
 
 @Component({
   selector: 'app-footer',
@@ -24,12 +29,30 @@ import {
 export class FooterComponent {
   showDetails = false;
 
-  constructor() {
+  constructor(private modalController: ModalController) {
     this.registerIcons();
   }
 
   toggleFooterDetails() {
     this.showDetails = !this.showDetails;
+  }
+
+  async openChangelog() {
+    const modal = await this.modalController.create({
+      component: ChangelogComponent,
+      cssClass: 'changelog-modal',
+    });
+
+    await modal.present();
+  }
+
+  get versionInfo() {
+    const { major, minor, date } = {
+      major: environment.version.major,
+      minor: environment.version.minor,
+      date: environment.version.date,
+    };
+    return `Version ${major}.${minor} (${date})`;
   }
 
   private registerIcons() {
@@ -39,6 +62,7 @@ export class FooterComponent {
       'location-outline': locationOutline,
       'chevron-up-outline': chevronUpOutline,
       'chevron-down-outline': chevronDownOutline,
+      'list-outline': listOutline,
     });
   }
 }

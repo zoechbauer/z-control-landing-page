@@ -378,7 +378,7 @@ firebase deploy --only hosting:qr-code-target-name
 deploy landingPage:  
 
 ```powershell
-firebase deploy --only hosting:z-conttrol-4070
+firebase deploy --only hosting:z-control-4070
 ```
 
 deploy qr-code:  

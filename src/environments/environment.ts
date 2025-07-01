@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  version: {
+    major: 1,
+    minor: 1,
+    date: '2025-07-01',
+  }
 };
 
 /*

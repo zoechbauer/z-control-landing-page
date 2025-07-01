@@ -39,7 +39,19 @@
       <div class="footer-details" [class.expanded]="showDetails">
         <div class="footer-section">
           <p class="footer-tagline">Innovative Mobile Solutions</p>
-          <p class="footer-version">Version: 1.0 / 2025-06-30</p>
+          <div class="version-info">
+            <p class="footer-version">{{ versionInfo }}</p>
+            <ion-button
+              fill="clear"
+              size="small"
+              (click)="openChangelog()"
+              (keydown.enter)="openChangelog()"
+              class="changelog-button"
+            >
+              <ion-icon name="list-outline" slot="start"></ion-icon>
+              What's New
+            </ion-button>
+          </div>
         </div>
 
         <div class="footer-contact">
@@ -62,3 +74,6 @@
     </div>
   </ion-toolbar>
 </ion-footer>
+
+<!-- Changelog Modal -->
+<!-- <app-changelog #changelog></app-changelog> -->
