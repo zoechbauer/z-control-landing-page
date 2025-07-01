@@ -1,6 +1,13 @@
 {
   "recommendations": [
     "Webnative.webnative",
-    "Webnative.webnative"
+    "Angular.ng-template",
+    "ms-vscode.vscode-typescript-next",
+    "Ionic.ionic",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-json",
+    "DavidAnson.vscode-markdownlint",
+    "Firebase.firebase-explorer"
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/qr-code/**", "destination": "/qr-code/index.html" },
+      { "source": "**", "destination": "/landing/index.html" }
+    ]
+  }
+}

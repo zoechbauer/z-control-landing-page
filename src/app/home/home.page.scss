@@ -144,6 +144,15 @@ ion-card-content {
   }
 }
 
+.web-app-link {
+  color: var(--ion-color-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .platform-note {
   background-color: rgba(var(--ion-color-warning-rgb), 0.1);
   border: 1px solid rgba(var(--ion-color-warning-rgb), 0.3);
@@ -158,15 +167,6 @@ ion-card-content {
     margin-right: 6px;
     vertical-align: middle;
     color: var(--ion-color-warning);
-  }
-
-  .web-app-link {
-    color: var(--ion-color-primary);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   @media (min-width: 768px) {

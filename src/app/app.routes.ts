@@ -12,6 +12,31 @@ export const routes: Routes = [
   },
   {
     path: 'privacy-policy',
-    loadComponent: () => import('./privacy-policy/privacy-policy.page').then( m => m.PrivacyPolicyPage)
+    redirectTo: 'privacy/basic/en',
+    pathMatch: 'full',
+  },
+  {
+    path: 'privacy/:type/:language',
+    loadComponent: () =>
+      import(
+        './privacy/components/privacy-viewer/privacy-viewer.component'
+      ).then((m) => m.PrivacyViewerComponent),
+  },
+  {
+    path: 'privacy/:type',
+    redirectTo: 'privacy/:type/en',
+    pathMatch: 'full',
+  },
+  {
+    path: 'privacy',
+    redirectTo: 'privacy/basic/en',
+    pathMatch: 'full',
+  },
+  {
+    path: 'privacy-debug',
+    loadComponent: () =>
+      import('./privacy/components/privacy-debug/privacy-debug.component').then(
+        (m) => m.PrivacyDebugComponent
+      ),
   },
 ];

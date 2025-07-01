@@ -1,0 +1,60 @@
+<app-header
+  [selectedAccordion]="selectedAccordion"
+  [showBackButton]="true"
+></app-header>
+
+<ion-content class="ion-padding">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="circular"></ion-spinner>
+    <p>Loading privacy policy...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <h2>Privacy Policy Not Found</h2>
+    <p>Sorry, the requested privacy policy could not be loaded.</p>
+    <ion-button fill="outline" (click)="goBack()">
+      <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+      Back to Home
+    </ion-button>
+  </div>
+
+  <!-- Policy Content -->
+  <div *ngIf="policy && !loading && !error" class="policy-container">
+    <!-- Language Switcher -->
+    <div class="language-switcher" *ngIf="hasOtherLanguage">
+      <ion-button
+        fill="outline"
+        size="small"
+        (click)="switchLanguage(otherLanguage)"
+        class="language-button"
+      >
+        <ion-icon name="globe-outline" slot="start"></ion-icon>
+        {{ otherLanguageLabel }}
+      </ion-button>
+    </div>
+
+    <!-- Policy Header -->
+    <div class="policy-header">
+      <h1>{{ policy.title }}</h1>
+      <div class="policy-meta">
+        <span class="policy-version">Version {{ policy.lastUpdated }}</span>
+        <span class="policy-language">{{ language.toUpperCase() }}</span>
+      </div>
+    </div>
+
+    <!-- Policy Content -->
+    <div class="policy-content" [innerHTML]="policy.content"></div>
+
+    <!-- Back Button -->
+    <div class="action-buttons">
+      <ion-button fill="outline" (click)="goBack()">
+        <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+        Back to Home
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>
