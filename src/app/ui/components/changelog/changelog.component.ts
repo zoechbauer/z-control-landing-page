@@ -21,7 +21,7 @@ import { closeOutline, listOutline } from 'ionicons/icons';
 import {
   ChangelogService,
   ChangelogEntry,
-} from '../../../services/changelog-simple.service';
+} from '../../../services/changelog.service';
 
 @Component({
   selector: 'app-changelog',
@@ -61,6 +61,15 @@ export class ChangelogComponent implements OnInit {
   private loadChangelog() {
     this.changelogService.getLatestChanges(5).subscribe({
       next: (entries: ChangelogEntry[]) => {
+        console.log('Changelog entries loaded:', entries.length, 'entries');
+        entries.forEach((entry, index) => {
+          console.log(`Entry ${index + 1}: Version ${entry.version}`);
+          console.log(`  - Fixed: ${entry.fixed?.length || 0} items`);
+          console.log(`  - Improved: ${entry.improved?.length || 0} items`);
+          console.log(`  - Added: ${entry.added?.length || 0} items`);
+          console.log(`  - Features: ${entry.features?.length || 0} items`);
+        });
+
         this.changelogEntries = entries;
       },
       error: (error: any) => {

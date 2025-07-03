@@ -14,13 +14,14 @@ A modern, responsive landing page built with Ionic Angular, showcasing the z-con
 
 ## 🚀 Live Demo
 
-🔗 **[View Live Site](https://your-domain.web.app)** *(Update with your actual domain)*
+🔗 **[View Live Site](https://your-domain.web.app)** _(Update with your actual domain)_
 
 ## 📱 Showcased Applications
 
 ### z-control QR Code App
+
 - **Web App**: Try directly in browser without installation
-- **Android App**: Available on Google Play Store *(coming soon)*
+- **Android App**: Available on Google Play Store _(coming soon)_
 - **Features**: QR code generation, offline functionality, multi-language support
 
 ## 🛠️ Tech Stack
@@ -54,6 +55,7 @@ landing-page/
 ## 🏁 Quick Start
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - npm or yarn
 - Ionic CLI
@@ -61,22 +63,26 @@ landing-page/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/z-control-landing-page.git
    cd z-control-landing-page
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Install Ionic CLI** (if not already installed)
+
    ```bash
    npm install -g @ionic/cli
    ```
 
 4. **Start development server**
+
    ```bash
    ionic serve
    ```
@@ -117,8 +123,8 @@ export const environment = {
   version: {
     major: 1,
     minor: 1,
-    date: '2025-07-01'
-  }
+    date: "2025-07-01",
+  },
 };
 ```
 
@@ -127,16 +133,19 @@ export const environment = {
 ### Firebase Hosting
 
 1. **Install Firebase CLI**
+
    ```bash
    npm install -g firebase-tools
    ```
 
 2. **Login to Firebase**
+
    ```bash
    firebase login
    ```
 
 3. **Initialize project** (first time only)
+
    ```bash
    firebase init hosting
    ```
@@ -205,6 +214,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Hans Zöchbauer**
+
 - Email: hans.zoechbauer@gmail.com
 - GitHub: [@yourusername](https://github.com/yourusername)
 

@@ -37,9 +37,20 @@
             *ngIf="entry.added && entry.added.length > 0"
             class="changelog-section"
           >
-            <h4 class="section-title added">✨ Added</h4>
+            <h4 class="section-title added">✨ New Features</h4>
             <ul>
-              <li *ngFor="let item of entry.added" [innerHTML]="item"></li>
+              <li *ngFor="let item of entry.added">
+                <span [innerHTML]="item.text"></span>
+                <ul
+                  *ngIf="item.children && item.children.length > 0"
+                  class="nested-list"
+                >
+                  <li
+                    *ngFor="let child of item.children"
+                    [innerHTML]="child.text"
+                  ></li>
+                </ul>
+              </li>
             </ul>
           </div>
 
@@ -48,9 +59,20 @@
             *ngIf="entry.fixed && entry.fixed.length > 0"
             class="changelog-section"
           >
-            <h4 class="section-title fixed">🐛 Fixed</h4>
+            <h4 class="section-title fixed">🐛 Fixes</h4>
             <ul>
-              <li *ngFor="let item of entry.fixed" [innerHTML]="item"></li>
+              <li *ngFor="let item of entry.fixed">
+                <span [innerHTML]="item.text"></span>
+                <ul
+                  *ngIf="item.children && item.children.length > 0"
+                  class="nested-list"
+                >
+                  <li
+                    *ngFor="let child of item.children"
+                    [innerHTML]="child.text"
+                  ></li>
+                </ul>
+              </li>
             </ul>
           </div>
 
@@ -59,9 +81,20 @@
             *ngIf="entry.improved && entry.improved.length > 0"
             class="changelog-section"
           >
-            <h4 class="section-title improved">🚀 Improved</h4>
+            <h4 class="section-title improved">🚀 Improvements</h4>
             <ul>
-              <li *ngFor="let item of entry.improved" [innerHTML]="item"></li>
+              <li *ngFor="let item of entry.improved">
+                <span [innerHTML]="item.text"></span>
+                <ul
+                  *ngIf="item.children && item.children.length > 0"
+                  class="nested-list"
+                >
+                  <li
+                    *ngFor="let child of item.children"
+                    [innerHTML]="child.text"
+                  ></li>
+                </ul>
+              </li>
             </ul>
           </div>
 
@@ -70,9 +103,20 @@
             *ngIf="entry.features && entry.features.length > 0"
             class="changelog-section"
           >
-            <h4 class="section-title features">⭐ Features</h4>
+            <h4 class="section-title features">🎉 Initial Release</h4>
             <ul>
-              <li *ngFor="let item of entry.features" [innerHTML]="item"></li>
+              <li *ngFor="let item of entry.features">
+                <span [innerHTML]="item.text"></span>
+                <ul
+                  *ngIf="item.children && item.children.length > 0"
+                  class="nested-list"
+                >
+                  <li
+                    *ngFor="let child of item.children"
+                    [innerHTML]="child.text"
+                  ></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </ion-card-content>
