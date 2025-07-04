@@ -17,7 +17,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
-import { ChangelogComponent } from '../changelog/changelog.component';
+import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 
 @Component({
   selector: 'app-footer',
@@ -39,8 +39,7 @@ export class FooterComponent {
 
   async openChangelog() {
     const modal = await this.modalController.create({
-      component: ChangelogComponent,
-      cssClass: 'changelog-modal',
+      component: MarkdownViewerComponent,
     });
 
     await modal.present();

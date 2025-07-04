@@ -2,15 +2,48 @@
 
 All recent updates and improvements to our landing page.
 
-## [1.2] - July 2, 2025
+## [1.3] - July 3, 2025
 
 ### 🐛 Fixes
 
-- **QR Code App: Email Client Issue on iPad Fixed**
-  - **Issue**: Email client was not opening on iPad/Safari when using the "Mail code" button
-  - **Root Cause**: Safari on iOS blocks `mailto:` actions when triggered simultaneously with file downloads, treating multiple programmatic actions as potentially suspicious
-  - **Solution**: Added user interaction requirement - users now see a confirmation dialog after files download, then can manually trigger the email client
-  - **Result**: Email functionality now works reliably across all iOS devices and browsers
+- **QR Code App: Email Client Issue on mobile devices when using the Wep App**
+  - **Issue**: In the web app, the email client does not open on mobile devices when the "Mail Code" button is used
+  - **Solution**: new user experience flow for e-mail sending
+
+    - ***Native Apps (iOS/Android)***
+
+      1. User clicks "Mail Code"
+      2. QR code downloads automatically
+      3. Email client opens with pre-filled recipients, content and attachments
+      4. User sends email
+
+    - ***Desktop Web***
+
+      1. User clicks "Mail Code"
+      2. QR code downloads to Downloads folder
+      3. Alert shows instruction to manually attach files
+      4. Email client opens via mailto: with recipients and content pre-filled
+      5. User manually attaches downloaded files and sends
+
+    - ***Mobile Web (iOS/Android browsers)***
+
+      1. User clicks "Mail Code"
+      2. QR code downloads to Downloads folder
+      3. Options dialog appears with choices:
+         - **Copy QR Text**: Copies text to clipboard with success feedback
+         - **Try Email App**: Attempts to open email client (may not work)
+         - **Manual Instructions**: Shows detailed step-by-step guide
+         - **Cancel**: Closes dialog
+
+### 🚀 Improvements
+
+- **What's New Dialog**
+  - **ngx-markdown Integration**: Replaced custom changelog parser with ngx-markdown viewer for more reliable rendering
+  - **WYSIWYG Display**: Markdown content now displays exactly as written, ensuring consistent formatting
+  - **Improved Reliability**: No more parsing errors from formatting variations or extra spaces
+  - **Better Maintainability**: Supports all standard markdown features without custom regex patterns
+
+## [1.2] - July 2, 2025
 
 ### 🚀 Improvements
 

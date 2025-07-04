@@ -105,6 +105,24 @@ ion-card-content {
     }
   }
 
+  .platform-note {
+    text-align: left;
+    h6 {
+      font-weight: 600;
+    }
+
+    ul {
+      li {
+        margin-left: 18px;
+        line-height: 1;
+        list-style:circle
+      }
+      li:first-child {
+        margin-top: -7px;
+      }
+    }
+  }
+
   // Button wrapper for guaranteed centering
   .button-wrapper {
     text-align: center;
