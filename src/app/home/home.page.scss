@@ -67,8 +67,8 @@ ion-card-content {
   ul {
     text-align: left;
     margin: 12px 0;
-    padding-left: 0; // Remove default padding
-    list-style: none; // Remove default bullets
+    padding-left: 0;
+    list-style: none;
 
     li {
       margin-bottom: 8px;
@@ -112,13 +112,13 @@ ion-card-content {
     }
 
     ul {
+      text-align: left;
+      margin-left: 10px;
+      padding-left: 0;
       li {
-        margin-left: 18px;
-        line-height: 1;
-        list-style:circle
-      }
-      li:first-child {
-        margin-top: -7px;
+        margin-left: 30px;
+        line-height: 1.5;
+        list-style-type: circle;
       }
     }
   }

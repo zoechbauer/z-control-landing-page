@@ -16,7 +16,7 @@
       Here you can find information about our apps, how to use them, and how to
       contact us.
     </p>
-    <p class="under-construction">This site is under construction!</p>
+    <!-- <p class="under-construction">This site is under construction!</p> -->
   </div>
 
   <ion-accordion-group
@@ -125,8 +125,13 @@
                 the app for online assistance.
               </p>
               <div class="platform-note">
-                <h5><strong>How to use the QR code email feature in different platforms</strong></h5>
-                <h6>Native Apps (iOS/Android)</h6>
+                <h5>
+                  <strong
+                    >How to use the QR code email feature in different
+                    platforms</strong
+                  >
+                </h5>
+                <h6>Native Apps (Android)</h6>
                 <ol>
                   <li>User clicks "Mail Code"</li>
                   <li>QR code downloads automatically</li>
@@ -142,33 +147,25 @@
                   <li>QR code downloads to Downloads folder</li>
                   <li>Alert shows instruction to manually attach files</li>
                   <li>
-                    Email client opens via mailto: with recipients and content pre-filled
+                    Email client opens via mailto: with recipients and content
+                    pre-filled
                   </li>
                   <li>User manually attaches downloaded files and sends</li>
                 </ol>
-                <h6>Mobile Web (iOS/Android browsers)</h6>
-                <ol>
-                  <li>User clicks "Mail Code"</li>
-                  <li>QR code downloads to Downloads folder</li>
-                  <li>Options dialog appears with choices:</li>
-                  <ul>
-                    <li>
-                      <i>Copy QR Text:</i> Copies text to clipboard with success
-                      feedback
-                    </li>
-                    <li>
-                      <i>Try Email App: Attempts to open email client (may not
-                      work)</i>
-                    </li>
-                    <li>
-                      <i
-                        >Manual Instructions: Shows detailed step-by-step
-                        guide</i
-                      >
-                    </li>
-                    <li><i>Cancel: Closes dialog</i></li>
-                  </ul>
-                </ol>
+                <h6>Mobile Web</h6>
+                <ul>
+                  <li>
+                    <strong>Android browsers: </strong><br />
+                    Full functionality with options dialog (Try Email App, Copy
+                    QR Text, Manual Instructions, Cancel)
+                  </li>
+                  <li>
+                    <strong>iOS Safari/browsers:</strong>
+                    ⚠️ <strong>Limited functionality</strong><br />
+                    QR code downloads but email options dialog may not appear
+                    due to iOS browser restrictions
+                  </li>
+                </ul>
               </div>
             </div>
           </ion-accordion>

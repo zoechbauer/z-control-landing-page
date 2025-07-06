@@ -10,7 +10,7 @@ All recent updates and improvements to our landing page.
   - **Issue**: In the web app, the email client does not open on mobile devices when the "Mail Code" button is used
   - **Solution**: new user experience flow for e-mail sending
 
-    - ***Native Apps (iOS/Android)***
+    - ***Native Apps (Android)***
 
       1. User clicks "Mail Code"
       2. QR code downloads automatically
@@ -25,15 +25,10 @@ All recent updates and improvements to our landing page.
       4. Email client opens via mailto: with recipients and content pre-filled
       5. User manually attaches downloaded files and sends
 
-    - ***Mobile Web (iOS/Android browsers)***
-
-      1. User clicks "Mail Code"
-      2. QR code downloads to Downloads folder
-      3. Options dialog appears with choices:
-         - **Copy QR Text**: Copies text to clipboard with success feedback
-         - **Try Email App**: Attempts to open email client (may not work)
-         - **Manual Instructions**: Shows detailed step-by-step guide
-         - **Cancel**: Closes dialog
+    - ***Mobile Web***
+        - **Android browsers**: Full functionality with options dialog (Try Email App, 
+            Copy QR Text, Manual Instructions, Cancel)
+        - **iOS Safari/browsers**: ⚠️ **Limited functionality** - QR code downloads but email options dialog may not appear due to iOS browser restrictions
 
 ### 🚀 Improvements
 
