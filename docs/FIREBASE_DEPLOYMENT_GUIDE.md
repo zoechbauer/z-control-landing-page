@@ -10,14 +10,20 @@ Before deploying, ensure you have:
 
 ## A) Deploying Landing Page Changes
 
-### 1. Build the Landing Page
+### 1. Update Version Info of Landing Page
+
+- Update version in `src/environments/environment.ts` and `environment.prod.ts`
+- Update `assets/logs/change-logs/CHANGELOG.md` with new changes of Landing Page
+  - QR Code and other future apps have their own landing page.
+
+### 2. Build the Landing Page
 
 ```powershell
 cd " path\to\your\landing-page"
-npm run build
+ionic build --prod
 ```
 
-### 2. Deploy to Firebase
+### 3. Deploy to Firebase
 
 ```powershell
 # Login to Firebase (if not already logged in)
@@ -27,7 +33,7 @@ firebase login
 firebase deploy --only hosting
 ```
 
-### 3. Verify Deployment
+### 4. Verify Deployment
 
 - Check the Firebase console for deployment status
 - Visit your landing page URL to verify changes
@@ -37,7 +43,7 @@ firebase deploy --only hosting
 
 ## B) Deploying QR Code App Changes
 
-### 1. Update Privacy Policy Links in QR Code App
+### Initial Step: Update Privacy Policy Links in QR Code App
 
 First, update the privacy policy links in your QR Code app to point to the landing page:
 
@@ -46,6 +52,10 @@ First, update the privacy policy links in your QR Code app to point to the landi
 const privacyPolicyUrl = "https://your-landing-page.web.app/privacy/basic/en";
 const privacyPolicyUrlDe = "https://your-landing-page.web.app/privacy/basic/de";
 ```
+
+### 1. Update change log of QR Code app
+
+- Update `assets/logs/change-logs/CHANGELOG_QR-CODE.md` with new changes
 
 ### 2. Build the QR Code App
 

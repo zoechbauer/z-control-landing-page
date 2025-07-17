@@ -220,9 +220,10 @@
                 <strong>📱 Optimized for Mobile</strong>
               </p>
 
+              // TODO: change test link to production link if app is released for production in Google Play Store
               <div class="button-wrapper">
                 <ion-button
-                  href="https://play.google.com/store/apps/details?id=at.zcontrol.zoe"
+                  href="https://play.google.com/apps/internaltest/4700763022412481257"
                   target="_blank"
                   color="primary"
                   expand="block"
@@ -252,9 +253,9 @@
 
               <p class="under-construction">
                 <ion-icon name="construct-outline"></ion-icon>
-                <strong>Development Update:</strong> The mobile app is currently
-                being finalized. Web hosting and distribution will be available
-                soon.
+                <strong>Note:</strong> The mobile app has been
+                hosted on the Google Play Store and is currently in <i>internal
+                testing status</i>. You can download and test it, if you have a <i>Google Account</i>.
               </p>
             </div>
           </ion-accordion>
@@ -323,33 +324,6 @@
 
           <ion-accordion value="1d">
             <ion-item slot="header" color="light">
-              <ion-label>Get the Source Code</ion-label>
-            </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
-              <p>
-                The app is open source, and the source code is available on
-                <i>GitHub</i>
-                so you can review how the app works and how your data is handled
-                at any time.
-              </p>
-              <ion-button>
-                <a
-                  href="https://github.com/zoechbauer/ng-leaflet-fuel-prices.git"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Get from GitHub</a
-                >
-              </ion-button>
-              <p class="under-construction">
-                Note: The Hosting is currently in development and will be
-                available soon. At the moment you get another open source
-                project.
-              </p>
-            </div>
-          </ion-accordion>
-
-          <ion-accordion value="1e">
-            <ion-item slot="header" color="light">
               <ion-label>Email us about errors</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
@@ -362,7 +336,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1f">
+          <ion-accordion value="1e">
             <ion-item slot="header" color="light">
               <ion-label>Privacy Policy</ion-label>
             </ion-item>
@@ -377,6 +351,47 @@
                 >
                 to learn how we handle your data.
               </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1f">
+            <ion-item slot="header" color="light">
+              <ion-label>What's new? (Change log)</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>All new features, improvements and bug fixes of the QR Code app are tracked in</p>
+              <ion-button
+              fill="clear"
+              size="small"
+              (click)="openChangelog()"
+              (keydown.enter)="openChangelog()"
+              class="changelog-button"
+            >
+              <ion-icon name="list-outline" slot="start"></ion-icon>
+              Change log
+            </ion-button>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1g">
+            <ion-item slot="header" color="light">
+              <ion-label>Get the Source Code</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                The app is open source, and the source code is available on
+                <i>GitHub</i>
+                so you can review how the app works and how your data is handled
+                at any time.
+              </p>
+              <ion-button>
+                <a
+                  href="https://github.com/zoechbauer/z-control-qr-code-generator"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Get from GitHub</a
+                >
+              </ion-button>
             </div>
           </ion-accordion>
         </ion-accordion-group>

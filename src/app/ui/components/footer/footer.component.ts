@@ -29,7 +29,7 @@ import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.comp
 export class FooterComponent {
   showDetails = false;
 
-  constructor(private modalController: ModalController) {
+  constructor(private readonly modalController: ModalController) {
     this.registerIcons();
   }
 
@@ -40,6 +40,9 @@ export class FooterComponent {
   async openChangelog() {
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
+      componentProps: {
+        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
+      },
     });
 
     await modal.present();

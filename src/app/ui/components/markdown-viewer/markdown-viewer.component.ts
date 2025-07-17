@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MarkdownComponent } from 'ngx-markdown';
 import {
   IonContent,
@@ -31,7 +31,9 @@ import { closeOutline } from 'ionicons/icons';
   ],
 })
 export class MarkdownViewerComponent implements OnInit {
+  @Input() fullChangeLogPath!: string;
   markdown: string = '';
+  pathToChangeLog = 'assets/logs/change-logs';
 
   constructor(
     private readonly http: HttpClient,
@@ -55,7 +57,8 @@ export class MarkdownViewerComponent implements OnInit {
   }
 
   private loadMarkdownChangelog() {
-    this.http.get('assets/CHANGELOG.md', { responseType: 'text' }).subscribe({
+    // const changelogFile = `${this.pathToChangeLog}/CHANGELOG.md`;
+    this.http.get(this.fullChangeLogPath, { responseType: 'text' }).subscribe({
       next: (data) => {
         this.markdown = data;
       },

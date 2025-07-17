@@ -14,14 +14,15 @@ A modern, responsive landing page built with Ionic Angular, showcasing the z-con
 
 ## 🚀 Live Demo
 
-🔗 **[View Live Site](https://your-domain.web.app)** _(Update with your actual domain)_
+🔗 **[View Live Site](https://z-control-4070.web.app)**
 
 ## 📱 Showcased Applications
 
 ### z-control QR Code App
 
-- **Web App**: Try directly in browser without installation
-- **Android App**: Available on Google Play Store _(coming soon)_
+- **Web App**: [Try directly in browser](https://z-control-qr-code.web.app) without installation
+- **Android App**: [Available on Google Play Store](https://play.google.com/apps/internaltest/4700763022412481257) _(currently in internal testing)_
+- **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-qr-code-generator)
 - **Features**: QR code generation, offline functionality, multi-language support
 
 ## 🛠️ Tech Stack
@@ -44,7 +45,9 @@ landing-page/
 │   │   ├── services/          # Application services
 │   │   └── ui/
 │   │       └── components/    # Reusable UI components
-│   ├── assets/               # Static assets
+│   ├── assets/               # Static assets (including logs/change-logs)
+│   │   └── logs/
+│   │       └── change-logs/  # Changelogs for each app (e.g., CHANGELOG_LANDING-PAGE.md, CHANGELOG_QR-CODE.md)
 │   ├── environments/         # Environment configurations
 │   └── theme/               # Global styling
 ├── docs/                    # Technical documentation
@@ -174,13 +177,18 @@ The app uses Ionic CSS Variables for consistent theming. Main theme files:
 2. **Add new apps**: Update home page content and routing
 3. **Customize styling**: Use Ionic CSS variables for theme consistency
 
-## 📚 Documentation
+## 📚 Documentation & Changelogs
 
 Technical documentation is available in the `/docs` folder:
 
 - **[Dark Mode Guide](./docs/IONIC_DARK_MODE_COLOR_GUIDE.md)** - Implementation details for dark mode support
 - **[Firebase Security](./docs/FIREBASE_SECURITY.md)** - Security configuration and best practices
 - **[Privacy Policy Architecture](./docs/PRIVACY_POLICY_ARCHITECTURE.md)** - Multi-language privacy system details
+
+Changelogs for each app are stored in `src/assets/logs/change-logs/`:
+
+- `CHANGELOG_LANDING-PAGE.md` — for the landing page
+- `CHANGELOG_QR-CODE.md` — for the QR code app
 
 ## 🧪 Testing
 
@@ -197,7 +205,7 @@ ng test --code-coverage
 
 ## 📱 Mobile App Development
 
-This landing page showcases the z-control QR Code mobile application. The mobile app development and Google Play Store release is planned as the next phase of this project.
+This landing page showcases the z-control QR Code mobile application. The mobile app is now available on the Google Play Store (currently in internal testing). For updates and source code, see the [QR Code app GitHub repository](https://github.com/zoechbauer/z-control-qr-code-generator).
 
 ## 🤝 Contributing
 
@@ -216,7 +224,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Hans Zöchbauer**
 
 - Email: hans.zoechbauer@gmail.com
-- GitHub: [@yourusername](https://github.com/yourusername)
+- GitHub: [zoechbauer](https://github.com/zoechbauer)
 
 ## 🙏 Acknowledgments
 
@@ -230,8 +238,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Privacy Policy System: Complete
 - ✅ Dark Mode Support: Complete
 - ✅ Firebase Hosting: Complete
-- 🔄 Mobile App: In development
-- 🔄 Google Play Store: Planned
+- 🔄 Mobile App: in testing mode
+- 🔄 Google Play Store: in testing mode
 
 ---
 

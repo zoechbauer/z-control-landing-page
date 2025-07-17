@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { logoGooglePlaystore } from 'ionicons/icons';
+import { code, logoGooglePlaystore } from 'ionicons/icons';
 import {
   IonContent,
   IonButton,
@@ -14,8 +14,16 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
+  ModalController
 } from '@ionic/angular/standalone';
+
 import { HeaderComponent, FooterComponent } from '../ui';
+import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
+
+enum App {
+  qrCode = 'z-control QR Code App',
+  other = 'Other Apps '
+}
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -44,7 +52,7 @@ export class HomePage implements AfterViewInit {
   currentMainAccordion: string = '';
   subAccordionOpened: boolean = false;
 
-  constructor() {
+  constructor(private readonly modalController: ModalController) {
     this.registerIcons();
   }
 
@@ -102,10 +110,10 @@ export class HomePage implements AfterViewInit {
   setSelectedAccordion(group: string) {
     switch (group) {
       case 'group 1':
-        this.selectedAccordion = 'z-control QR Code App';
+        this.selectedAccordion = App.qrCode;
         break;
       case 'group 2':
-        this.selectedAccordion = 'Other Apps';
+        this.selectedAccordion = App.other;
         break;
       case undefined:
       case '':
@@ -114,5 +122,29 @@ export class HomePage implements AfterViewInit {
       default:
         this.selectedAccordion = '';
     }
+  }
+
+  private getFullChangeLogPath(): string {
+    const changeLogPath = 'assets/logs/change-logs';
+
+    switch (this.selectedAccordion) {
+      case App.qrCode:
+        return `${changeLogPath}/CHANGELOG_QR-CODE.md`;
+      // Add more cases for future apps here
+      default:
+        console.error(`No changelog available for ${this.selectedAccordion}`);
+        return '';
+  }
+}
+
+  async openChangelog() {
+    const modal = await this.modalController.create({
+      component: MarkdownViewerComponent,
+      componentProps: {
+        fullChangeLogPath: this.getFullChangeLogPath(),
+      },
+    });
+
+    await modal.present();
   }
 }
