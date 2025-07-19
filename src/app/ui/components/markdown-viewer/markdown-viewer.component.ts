@@ -14,6 +14,8 @@ import {
 import { addIcons } from 'ionicons';
 import { closeOutline } from 'ionicons/icons';
 
+// TODO: this markdown viewer component will also be used in z-control qr code generator app
+//       so extract it to a shared library 
 @Component({
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
@@ -33,7 +35,6 @@ import { closeOutline } from 'ionicons/icons';
 export class MarkdownViewerComponent implements OnInit {
   @Input() fullChangeLogPath!: string;
   markdown: string = '';
-  pathToChangeLog = 'assets/logs/change-logs';
 
   constructor(
     private readonly http: HttpClient,
@@ -57,7 +58,6 @@ export class MarkdownViewerComponent implements OnInit {
   }
 
   private loadMarkdownChangelog() {
-    // const changelogFile = `${this.pathToChangeLog}/CHANGELOG.md`;
     this.http.get(this.fullChangeLogPath, { responseType: 'text' }).subscribe({
       next: (data) => {
         this.markdown = data;

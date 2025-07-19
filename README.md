@@ -1,6 +1,6 @@
 # z-control Landing Page
 
-A modern, responsive landing page built with Ionic Angular, showcasing the z-control QR Code application and serving as a central hub for future applications.
+A modern, responsive landing page built with Ionic Angular, showcasing the z-control QR Code app and serving as a central hub for future applications.
 
 ## 🌟 Features
 
@@ -45,14 +45,15 @@ landing-page/
 │   │   ├── services/          # Application services
 │   │   └── ui/
 │   │       └── components/    # Reusable UI components
-│   ├── assets/               # Static assets (including logs/change-logs)
+│   ├── assets/                # Static assets (including logs/change-logs)
 │   │   └── logs/
 │   │       └── change-logs/  # Changelogs for each app (e.g., CHANGELOG_LANDING-PAGE.md, CHANGELOG_QR-CODE.md)
 │   ├── environments/         # Environment configurations
-│   └── theme/               # Global styling
-├── docs/                    # Technical documentation
-├── firebase.json           # Firebase configuration
-└── README.md               # This file
+│   └── theme/                # Global styling
+├── tools/                    # Project-wide dev tools (e.g. CHANGELOG-Templates)
+├── docs/                     # Technical documentation
+├── firebase.json            # Firebase configuration
+└── README.md                # This file
 ```
 
 ## 🏁 Quick Start
@@ -188,7 +189,7 @@ Technical documentation is available in the `/docs` folder:
 Changelogs for each app are stored in `src/assets/logs/change-logs/`:
 
 - `CHANGELOG_LANDING-PAGE.md` — for the landing page
-- `CHANGELOG_QR-CODE.md` — for the QR code app
+- `CHANGELOG_QR-CODE.md` — for the z-control QR Code Generator app
 
 ## 🧪 Testing
 
@@ -205,7 +206,12 @@ ng test --code-coverage
 
 ## 📱 Mobile App Development
 
-This landing page showcases the z-control QR Code mobile application. The mobile app is now available on the Google Play Store (currently in internal testing). For updates and source code, see the [QR Code app GitHub repository](https://github.com/zoechbauer/z-control-qr-code-generator).
+This landing page showcases the z-control ion-title {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+} mobile application. The mobile app is now available on the Google Play Store (currently in internal testing). For updates and source code, see the [z-control QR Code Generator app in GitHub repository](https://github.com/zoechbauer/z-control-qr-code-generator).
 
 ## 🤝 Contributing
 

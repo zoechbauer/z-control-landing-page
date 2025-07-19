@@ -34,29 +34,28 @@ With the `markdownlint` extension installed, you'll see:
 ## Quick Fixes for Your File:
 
 ```markdown
-# Instead of:
+1) instead of:
 
-**Option A: If QR Code App is in a SEPARATE Firebase project**
+**Option A: If z-control QR Code Generator App is in a SEPARATE Firebase project**
 
-# Use:
+use:
 
-### Option A: If QR Code App is in a SEPARATE Firebase project
+### Option A: If z-control QR Code Generator App is in a SEPARATE Firebase project
 
-# Instead of:
+2) instead of:
 
 ### Common Issues:
 
-# Use:
+use:
 
 ### Common Issues
 
-# Instead of:
-```
-
+3)Instead of:
+'```
 {
 "hosting": [
 
-# Use:
+use:
 
 ```json
 {

@@ -14,7 +14,7 @@ Before deploying, ensure you have:
 
 - Update version in `src/environments/environment.ts` and `environment.prod.ts`
 - Update `assets/logs/change-logs/CHANGELOG.md` with new changes of Landing Page
-  - QR Code and other future apps have their own landing page.
+  - z-control QR Code Generator app and other future apps have their own landing page.
 
 ### 2. Build the Landing Page
 
@@ -41,32 +41,32 @@ firebase deploy --only hosting
 
 ---
 
-## B) Deploying QR Code App Changes
+## B) Deploying z-control QR Code Generator App Changes
 
 ### Initial Step: Update Privacy Policy Links in QR Code App
 
-First, update the privacy policy links in your QR Code app to point to the landing page:
+First, update the privacy policy links in your z-control QR Code Generator app to point to the landing page:
 
 ```typescript
-// In your QR Code app, update privacy policy links to:
-const privacyPolicyUrl = "https://your-landing-page.web.app/privacy/basic/en";
-const privacyPolicyUrlDe = "https://your-landing-page.web.app/privacy/basic/de";
+// In z-control QR Code Generator app, update privacy policy links to:
+const privacyPolicyUrl = "https://z-control-4070.web.app/privacy/basic/en";
+const privacyPolicyUrlDe = "https://z-control-4070.web.app/privacy/basic/de";
 ```
 
-### 1. Update change log of QR Code app
+### 1. Update change log of z-control QR Code Generator app
 
 - Update `assets/logs/change-logs/CHANGELOG_QR-CODE.md` with new changes
 
-### 2. Build the QR Code App
+### 2. Build the z-control QR Code Generator App
 
 ```powershell
-cd "path\to\your\qr-code-app"
+cd "C:\SOURCE-ACTIVE\ionic\qr-code"
 npm run build
 ```
 
-### 3. Deploy QR Code App
+### 3. Deploy z-control QR Code Generator App
 
-**Option A: If QR Code App is in a SEPARATE Firebase project**
+**Option A: If z-control QR Code Generator App is in a SEPARATE Firebase project**
 
 ```powershell
 # Switch to the QR Code app project
@@ -76,14 +76,14 @@ firebase use your-qr-code-project-id
 firebase deploy --only hosting
 ```
 
-**Option B: If QR Code App is in the SAME Firebase project but different hosting target**
+**Option B: If z-control QR Code Generator App is in the SAME Firebase project but different hosting target**
 
 ```powershell
 # Deploy to specific hosting target
 firebase deploy --only hosting:qr-code-target-name
 ```
 
-**Option C: If QR Code App is a mobile app (Capacitor/Cordova)**
+**Option C: If z-control QR Code Generator App is a mobile app (Capacitor/Cordova)**
 
 ```powershell
 # Build for mobile platforms
@@ -225,14 +225,14 @@ Your `firebase.json` should look like this:
 
 1. **Verify URLs Work**
 
-   - `https://your-site.web.app/privacy/basic/en`
-   - `https://your-site.web.app/privacy/basic/de`
-   - `https://your-site.web.app/privacy/premium/en`
-   - `https://your-site.web.app/privacy/premium/de`
+   - `https://z-control-4070.web.app/privacy/basic/en`
+   - `https://z-control-4070.web.app/privacy/basic/de`
+   - `https://z-control-4070.web.app/privacy/premium/en`
+   - `https://z-control-4070.web.app/privacy/premium/de`
 
-2. **Test From QR Code App**
+2. **Test From z-control QR Code Generator App**
 
-   - Ensure privacy links from QR Code app point to correct URLs
+   - Ensure privacy links from z-control QR Code Generator app point to correct URLs
    - Test both English and German versions
 
 3. **Check Analytics** (if enabled)
@@ -263,16 +263,16 @@ firebase hosting:sites:list
 
 ## Quick Decision Guide: Which Deployment Command?
 
-### Step 1: Determine Your QR Code App Type
+### Step 1: Determine z-control QR Code Generator App Type
 
 **Answer these questions:**
 
-1. **Is your QR Code app a web app or mobile app?**
+1. **Is z-control QR Code Generator app a web app or mobile app?**
 
    - Web app → Continue to Step 2
    - Mobile app (iOS/Android) → Use Option C (App Store/Play Store)
 
-2. **If web app: Do you have separate Firebase projects for Landing Page and QR Code app?**
+2. **If web app: Do you have separate Firebase projects for Landing Page and z-control QR Code Generator app?**
    - Yes, separate projects → Use Option A
    - No, same project → Use Option B
 
@@ -296,7 +296,7 @@ firebase target
 **Scenario 1: Both apps in same Firebase project**
 
 - Landing page deploys to main hosting
-- QR Code app deploys to different hosting target
+- z-control QR Code Generator app deploys to different hosting target
 - Command: `firebase deploy --only hosting:qr-code-target-name`
 
 **Scenario 2: Separate Firebase projects**
@@ -328,9 +328,9 @@ firebase target
 ### Testing URLs
 
 - Local: `http://localhost:4200/privacy/basic/en`
-- Production: `https://your-site.web.app/privacy/basic/en`
+- Production: `https://z-control-4070.web.app/privacy/basic/en`
 
-## **Concrete Implementation of Landing Page with QR Code App**
+## **Concrete Implementation of Landing Page with z-control QR Code Generator App**
 
 ### File Structure
 
@@ -380,6 +380,8 @@ In z-control folder is the the following firebase.json file.
 ### Firebase commands for deploying  
 
 These commands are used from within folder z-control:  
+
+abstract deploy command:
 
 ```powershell
 firebase deploy --only hosting:qr-code-target-name

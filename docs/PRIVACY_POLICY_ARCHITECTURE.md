@@ -89,15 +89,15 @@ bootstrapApplication(AppComponent, {
 
 #### **Landing Page (Web)**
 
-- Privacy Policy: `https://yoursite.com/privacy/basic/en`
-- German Version: `https://yoursite.com/privacy/basic/de`
+- Privacy Policy: `https://z-control-4070.web.app/privacy/basic/en`
+- German Version: `https://z-control-4070.web.app/privacy/basic/de`
 
 #### **Mobile Apps**
 
-- **z-control QR Code App (English)**: `https://yoursite.com/privacy/basic/en`
-- **z-control QR Code App (German)**: `https://yoursite.com/privacy/basic/de`
-- **Future Premium Features (English)**: `https://yoursite.com/privacy/premium/en`
-- **Future Premium Features (German)**: `https://yoursite.com/privacy/premium/de`
+- **z-control QR Code App (English)**: `https://z-control-4070.web.app/privacy/basic/en`
+- **z-control QR Code App (German)**: `https://z-control-4070.web.app/privacy/basic/de`
+- **Future Premium Features (English)**: `https://z-control-4070.web.app/privacy/premium/en`
+- **Future Premium Features (German)**: `https://z-control-4070.web.app/privacy/premium/de`
 
 ### **Service Usage (Same for All Apps)**
 

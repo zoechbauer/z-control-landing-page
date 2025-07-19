@@ -54,6 +54,8 @@ export class PrivacyViewerComponent implements OnInit {
 
     // Get selectedAccordion from query params for header + support legacy approach
     this.route.queryParams.subscribe((params) => {
+      console.log('route.queryParams:', params  );
+      
       this.selectedAccordion = params['from'] || 'Privacy Policy';
       // Support legacy query parameter approach
       if (params['from']) {
@@ -65,8 +67,8 @@ export class PrivacyViewerComponent implements OnInit {
   private mapLegacyFromParam(from: string): string {
     // Map legacy 'from' parameter values to policy types
     const mapping: { [key: string]: string } = {
-      'z-control QR Code App': 'basic',
-      'Z-Control QR Code App': 'basic',
+      'z-control QR Code Generator App': 'basic',
+      'Z-Control QR Code Generator App': 'basic',
       'Future App 1': 'premium',
       'Future App 2': 'enterprise',
     };

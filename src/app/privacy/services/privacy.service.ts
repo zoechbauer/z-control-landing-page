@@ -25,7 +25,7 @@ export class PrivacyService {
     {
       type: 'basic',
       languages: ['en', 'de'],
-      description: 'Standard privacy policy for z-control QR Code App',
+      description: 'Standard privacy policy for z-control QR Code Generator App',
     },
     {
       type: 'premium',
@@ -94,8 +94,8 @@ export class PrivacyService {
   private getTitle(type: string, language: string): string {
     const titles: Record<string, Record<string, string>> = {
       basic: {
-        en: 'Privacy Policy - z-control QR Code App',
-        de: 'Datenschutzerklärung - z-control QR Code App',
+        en: 'Privacy Policy - z-control QR Code Generator App',
+        de: 'Datenschutzerklärung - z-control QR-Code-Generator-App',
       },
       premium: {
         en: 'Privacy Policy - Premium Features',

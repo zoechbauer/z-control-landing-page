@@ -1,27 +1,31 @@
 # What's New
 
-All recent updates and improvements to our landing page.
+All recent updates and improvements to our **landing page**.
+
+## [1.5] - 2025-07-19
+
+### 🚀 Improvements
+
+- **wording improved**: QR code in brand name z-control QR Code Generator changed
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
 
 ## [1.4] - 2025-07-17
 
-### 🎉 Installations
-
-- **QR Code App: web installaton updated**: You can see the changes in the QR Code App in the Change log entry
-
-
-### 🚀 Improvements
+### ✨ New Features
 
 - **Separate change logs for each application**
+    - z-control QR Code Generator app has a new accordion entry for change log
 
-    - QR Code App has a new accordion entry for change log
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
 
 ## [1.3] - 2025-07-03
 
-### 🎉 Installations
-
-- **QR Code App: web installaton updated**: You can see the changes in the QR Code App in the Change log entry
-
-### 🚀 Improvements
+### ✨ New Features
 
 - **What's New Dialog**
 
@@ -30,20 +34,54 @@ All recent updates and improvements to our landing page.
   - **Improved Reliability**: No more parsing errors from formatting variations or extra spaces
   - **Better Maintainability**: Supports all standard markdown features without custom regex patterns
 
+### 🐛 Fixes
+
+- Email Client Issue on mobile devices when **using the Wep App of z-control QR Code Generator**
+
+  - **Issue**: In the web app, the email client does not open on mobile devices when the "Mail Code" button is used
+
+  - **Solution**: new user experience flow for e-mail sending
+
+    - ***Native Apps (Android)***
+
+      1. User clicks "Mail Code"
+      2. QR code downloads automatically
+      3. Email client opens with pre-filled recipients, content and attachments
+      4. User sends email
+
+    - ***Desktop Web***
+
+      1. User clicks "Mail Code"
+      2. QR code downloads to Downloads folder
+      3. Alert shows instruction to manually attach files
+      4. Email client opens via mailto: with recipients and content pre-filled
+      5. User manually attaches downloaded files and sends
+
+    - ***Mobile Web***
+
+        - **Android browsers**: Full functionality with options dialog (Try Email App, 
+            Copy QR Text, Manual Instructions, Cancel)
+
+        - **iOS Safari/browsers**: ⚠️ **Limited functionality** - QR code downloads but email options dialog may not appear due to iOS browser restrictions
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+
 ## [1.2] - 2025-07-02
-
-### 🎉 Installations
-
-- **QR Code App: web installaton updated**: You can see the changes in the QR Code App in the Change log entry
 
 ### 🚀 Improvements
 
-- **What's New Dialog**
+- **What's New Dialog Redesign**
 
   - **Markdown Structure Support**: Changelog now properly displays nested markdown lists with visual hierarchy
   - **Enhanced Readability**: Main topics and sub-points are now clearly distinguished with proper indentation
   - **Improved Information Architecture**: Complex changelog entries are organized in a user-friendly, scannable format
   - **Better Content Presentation**: Multi-level markdown documents are now displayed with professional styling
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
 
 ## [1.1] - 2025-07-01
 
@@ -51,6 +89,12 @@ All recent updates and improvements to our landing page.
 
 - **Version Information**: You can now see the current version in the footer
 - **What's New Dialog**: Click "What's New" in the footer to see recent updates
+
+### 🚀 Improvements
+
+- **Consistent Design**: Unified visual style throughout the application
+- **Performance**: Faster loading and smoother navigation
+- **Accessibility**: Better support for screen readers and keyboard navigation
 - **Better Documentation**: Improved help and guidance throughout the site
 
 ### 🐛 Fixes
@@ -59,19 +103,13 @@ All recent updates and improvements to our landing page.
 - **Better Readability**: Improved contrast and text clarity across all pages
 - **Mobile Experience**: Enhanced display on mobile devices and tablets
 
-### 🚀 Improvements
-
-- **Consistent Design**: Unified visual style throughout the application
-- **Performance**: Faster loading and smoother navigation
-- **Accessibility**: Better support for screen readers and keyboard navigation
-
 ## [1.0] - 2025-06-30
 
-### 🎉 Initial Release
+### 📦 Installations
 
 - **Landing Page**: Complete showcase for our applications
 - **Privacy Policy**: Comprehensive privacy information in German and English
-- **App Information**: Details about z-control QR Code app and download options
+- **App Information**: Details about z-control QR Code Generator app and download options
 - **Mobile Ready**: Fully responsive design for all devices
 - **Professional Design**: Clean, modern interface following best practices
 

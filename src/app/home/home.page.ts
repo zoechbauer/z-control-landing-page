@@ -21,7 +21,7 @@ import { HeaderComponent, FooterComponent } from '../ui';
 import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
 
 enum App {
-  qrCode = 'z-control QR Code App',
+  qrCode = 'z-control QR Code Generator App',
   other = 'Other Apps '
 }
 @Component({
