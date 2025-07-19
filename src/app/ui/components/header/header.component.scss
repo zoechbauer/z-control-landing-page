@@ -40,11 +40,14 @@
 /* Mobile adjustments */
 @media (max-width: 480px) {
   .logo-container {
-    max-width: calc(100vw - 180px);
+    left: 16px; /* Default: move logo to left edge on mobile */
+    max-width: calc(100vw - 100px);
   }
-
+  .logo-container.with-back-button {
+    left: 56px; /* If back button is shown, move logo right to avoid overlap */
+  }
   .selected-accordion {
-    max-width: 250px;
+    max-width: 180px;
     font-size: 0.9rem;
   }
 }

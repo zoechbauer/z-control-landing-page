@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -28,12 +28,21 @@ import {
     IonIcon,
   ],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  public isMobile = false;
+
   @Input() selectedAccordion: string = '';
   @Input() showBackButton: boolean = false;
 
   constructor(private readonly router: Router) {
     this.registerIcons();
+  }
+
+  ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 600;
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth <= 600;
+    });
   }
 
   private registerIcons() {
