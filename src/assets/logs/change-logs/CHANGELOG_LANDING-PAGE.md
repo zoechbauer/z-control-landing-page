@@ -2,6 +2,16 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.6] – 2025-07-21
+
+### 🚀 Improvements
+
+  - Improved header layout: Logo now correctly positioned on mobile and desktop and avoids overlapping with the back button
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+
 ## [1.5] - 2025-07-19
 
 ### 🚀 Improvements
