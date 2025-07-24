@@ -2,6 +2,12 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.8] – 2025-07-24
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+
 ## [1.7] – 2025-07-22
 
 ### 🚀 Improvements
@@ -10,7 +16,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 
 ## [1.6] – 2025-07-21
@@ -21,7 +27,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.5] - 2025-07-19
 
@@ -31,7 +37,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.4] - 2025-07-17
 
@@ -42,7 +48,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.3] - 2025-07-03
 
@@ -87,7 +93,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.2] - 2025-07-02
 
@@ -102,7 +108,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the Change log entry
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.1] - 2025-07-01
 
