@@ -9,14 +9,13 @@
   <div class="general info">
     <h2>Welcome to our applications</h2>
     <p>
-      This is a landing page for the <i>z-control QR Code Generator</i> app and other
-      future applications.
+      This is a landing page for the <i>z-control QR Code Generator</i> app and
+      other future applications.
     </p>
     <p>
       Here you can find information about our apps, how to use them, and how to
       contact us.
     </p>
-    <!-- <p class="under-construction">This site is under construction!</p> -->
   </div>
 
   <ion-accordion-group
@@ -27,7 +26,7 @@
       <ion-item slot="header" color="light">
         <ion-label>z-control QR Code Generator App</ion-label>
       </ion-item>
-      <div class="ion-padding" slot="content">
+      <div slot="content">
         <ion-card>
           <ion-card-header>
             <ion-card-title>What can the app do?</ion-card-title>
@@ -55,16 +54,127 @@
         <ion-accordion-group (ionChange)="subAccordionChange('group 1')">
           <ion-accordion value="1a">
             <ion-item slot="header" color="light">
+              <ion-label>What are QR Codes and how can you use them?</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                QR codes (Quick Response Codes) are two-dimensional barcodes
+                that store information in a square pattern. They can be read
+                with a camera or QR code scanner and allow quick access to
+                information, websites, or actions.
+              </p>
+              <h5>
+                <ion-icon name="person"></ion-icon>
+                How can I use them privately?
+              </h5>
+              <p>In everyday life, QR codes offer many possible uses:</p>
+              <ul>
+                <li>
+                  <b>Contact information:</b> QR codes can store your contact
+                  details, which others can scan to contact you.
+                </li>
+                <li>
+                  <b>Links to websites:</b> You can create QR codes that link to
+                  websites to share information quickly.
+                </li>
+                <li>
+                  <b>Wi-Fi access:</b> A QR code can be used to quickly and
+                  easily provide guests with access details for your home Wi-Fi.
+                </li>
+                <li>
+                  <b>Digital photo albums & recipes:</b> A QR code on a greeting
+                  card can share a link to an online photo album or a digitized
+                  family recipe.
+                </li>
+                <li>
+                  <b>Pets & valuables:</b> On pet tags, keychains, or bicycles,
+                  a QR code with contact details can help with recovery in case
+                  of loss.
+                </li>
+                <li>
+                  <b>Emergency and health data:</b> For example, on a medical
+                  bracelet, so important information is quickly available in an
+                  emergency.
+                </li>
+                <li>
+                  <b>Social media & online profiles:</b> Share personal
+                  profiles, playlists, or curated content with friends or
+                  family.
+                </li>
+              </ul>
+              <p>
+                QR codes are practical, flexible tools for easily sharing and
+                using digital content, contact details, or personal information
+                in everyday life.
+              </p>
+              <h5>
+                <ion-icon name="home"></ion-icon>
+                How can companies use QR codes?
+              </h5>
+              <p>
+                QR codes are used by companies in many ways to make digital
+                content easily accessible and to strengthen customer loyalty.
+                Typical applications include:
+              </p>
+              <ul>
+                <li>
+                  <b>Marketing and advertising:</b> QR codes on product
+                  packaging, flyers, posters, or business cards lead customers
+                  directly to websites, offers, social media profiles, or app
+                  downloads, increasing reach and interaction.
+                </li>
+                <li>
+                  <b>Customer service and information:</b> QR codes allow quick
+                  access to user manuals, product videos, or further details,
+                  improving user convenience.
+                </li>
+                <li>
+                  <b>Events and admission control:</b> QR codes serve as digital
+                  tickets and enable efficient check-in at events.
+                </li>
+                <li>
+                  <b>Payments and vouchers:</b> They facilitate contactless
+                  payments and redeeming discount coupons.
+                </li>
+                <li>
+                  <b>Logistics and product tracking:</b> QR codes support
+                  tracking goods in supply chains and promote transparency in
+                  the process.
+                </li>
+                <li>
+                  <b>Digital business cards:</b> Contact details can be quickly
+                  and accurately transferred to smartphones via QR code.
+                </li>
+                <li>
+                  <b>Customer feedback and interaction:</b> Companies use QR
+                  codes to make reviews, surveys, or calendar entries directly
+                  available.
+                </li>
+              </ul>
+              <p>
+                QR codes enable a seamless transition from the offline to the
+                online world, always providing clear added value to the user. It
+                is important to make the benefit of the code visible and to
+                optimize the target pages for mobile devices.
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1b">
+            <ion-item slot="header" color="light">
               <ion-label>Start app as Web App without installation</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
-              <h5>🌐 Try Before You Download</h5>
+              <h5>Try Before You Download</h5>
               <p>
-                Test the full functionality of z-control QR Code Generator directly in
-                your browser without any installation required.
+                Test the full functionality of z-control QR Code Generator
+                directly in your browser without any installation required.
               </p>
 
-              <h6>✅ Web App Benefits:</h6>
+              <h5>
+                <ion-icon name="checkmark"></ion-icon>
+                Benefits:
+              </h5>
               <ul>
                 <li>
                   <strong>Instant Access:</strong> Start using immediately
@@ -83,7 +193,10 @@
                 </li>
               </ul>
 
-              <h6>⚠️ Web Browser Limitations:</h6>
+              <h5>
+                <ion-icon name="warning"></ion-icon>
+                Limitations:
+              </h5>
               <ul>
                 <li>
                   <strong>File Management:</strong> Downloaded QR codes remain
@@ -100,8 +213,8 @@
               </ul>
 
               <div class="comparison-note">
-                <ion-icon name="information-circle-outline"></ion-icon>
-                <strong>💡 Pro Tip:</strong> The native mobile app handles file
+                <ion-icon name="sunny"></ion-icon>
+                <strong>Pro Tip:</strong> The native mobile app handles file
                 management and email attachments automatically for a seamless
                 experience.
               </div>
@@ -114,18 +227,24 @@
                   expand="block"
                   class="web-app-button"
                 >
-                  <ion-icon name="globe-outline" slot="start"></ion-icon>
+                  <ion-icon name="logo-firebase" slot="start"></ion-icon>
                   Launch Web App
                 </ion-button>
               </div>
+              <div
+                class="firebase-note"
+              >
+                <ion-icon name="logo-firebase"></ion-icon>
+                Hosted on Google Firebase
+              </div>
 
               <p class="help-tip">
-                <ion-icon name="help-circle-outline"></ion-icon>
                 <strong>Need Help?</strong> Click the <strong>?</strong> icon in
                 the app for online assistance.
               </p>
               <div class="platform-note">
                 <h5>
+                  <ion-icon name="rocket"></ion-icon>
                   <strong
                     >How to use the QR code email feature in different
                     platforms</strong
@@ -160,8 +279,9 @@
                     QR Text, Manual Instructions, Cancel)
                   </li>
                   <li>
-                    <strong>iOS Safari/browsers:</strong>
-                    ⚠️ <strong>Limited functionality</strong><br />
+                    <strong>iOS Safari/browsers: </strong>
+                    <ion-icon name="warning"></ion-icon>
+                    <strong>Limited functionality</strong><br />
                     QR code downloads but email options dialog may not appear
                     due to iOS browser restrictions
                   </li>
@@ -170,19 +290,25 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1b">
+          <ion-accordion value="1c">
             <ion-item slot="header" color="light">
               <ion-label>Get the Mobile App</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
-              <h5>📱 Download the Native Android App</h5>
+              <h5>
+                <ion-icon name="cloud-download"></ion-icon>
+                Download the Native Android App
+              </h5>
               <p>
-                Experience the full power of z-control QR Code Generator with our native
-                Android application, available on the
+                Experience the full power of z-control QR Code Generator with
+                our native Android application, available on the
                 <strong>Google Play Store</strong>.
               </p>
 
-              <h6>🚀 Key Features:</h6>
+              <h6>
+                <ion-icon name="rocket"></ion-icon>
+                Key Features:
+              </h6>
               <ul>
                 <li>
                   <strong>Offline QR Generation:</strong> Create QR codes
@@ -215,9 +341,12 @@
               </ul>
 
               <p>
-                <strong>✅ 100% Free</strong> •
-                <strong>🔐 No Registration Required</strong> •
-                <strong>📱 Optimized for Mobile</strong>
+                <ion-icon name="checkmark"></ion-icon>
+                <strong>100% Free</strong> •
+                <ion-icon name="lock-closed"></ion-icon>
+                <strong>No Registration Required</strong> •
+                <ion-icon name="phone-portrait"></ion-icon>
+                <strong>Optimized for Mobile</strong>
               </p>
 
               <!-- TODO: change test link to production link if app is released for production in Google Play Store -->
@@ -238,7 +367,7 @@
               </div>
 
               <div class="platform-note">
-                <ion-icon name="information-circle-outline"></ion-icon>
+                <ion-icon name="information"></ion-icon>
                 <strong>Using a PC/Desktop?</strong> This is an Android mobile
                 app. For computer users, try our
                 <a
@@ -251,29 +380,42 @@
                 instead - it works in any browser!
               </div>
 
-              <p class="under-construction">
-                <ion-icon name="construct-outline"></ion-icon>
-                <strong>Note:</strong> The mobile app has been
-                hosted on the Google Play Store and is currently in <i>Closed
-                Test</i> status. If you have a <i>Google Account</i> you can download and test the version with <i>Internal
-                Test</i> status.
+              <p class="test-status">
+                <ion-icon name="construct"></ion-icon>
+                <strong>Note:</strong> The mobile app has been hosted on the
+                Google Play Store and is currently in <i>Closed Test</i> status.
+                If you have a <i>Google Account</i> you can download and test
+                the version with <i>Internal Test</i> status.
               </p>
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1c">
+          <ion-accordion value="1d">
             <ion-item slot="header" color="light">
               <ion-label>Inline Help</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
-              <h5>📖 Comprehensive Help & Tutorials</h5>
+              <h5>
+                <ion-icon name="book"></ion-icon>
+                Comprehensive Help & Tutorials
+              </h5>
               <p>
                 Both the <i>Web App</i> and <i>Android App</i> include detailed
                 inline help accessible by clicking the <strong>?</strong> icon
                 in the top right corner.
               </p>
-
-              <h6>📚 Help Topics Covered:</h6>
+              <p>
+                <ion-icon name="warning"></ion-icon>
+                <strong>Note:</strong> The
+                <strong>tutorial refers to the use of mobile devices</strong>,
+                as this is the main application. Variations in the use as a web
+                application are described in the section
+                <i>Start app as Web App without installation</i>>.
+              </p>
+              <h6>
+                <ion-icon name="library"></ion-icon>
+                Help Topics Covered:
+              </h6>
               <ul>
                 <li>
                   <strong>Step-by-step usage guide:</strong> Complete
@@ -284,6 +426,14 @@
                   email addresses
                 </li>
                 <li>
+                  <strong>QR Code Printing:</strong> How to print QR Codes in a
+                  specific size
+                </li>
+                <li>
+                  <strong>Troubleshooting:</strong> If you accidentally selected
+                  an app other than email when sending
+                </li>
+                <li>
                   <strong>Technical details:</strong> File storage,
                   auto-cleanup, and QR code specifications
                 </li>
@@ -292,12 +442,23 @@
                   English and German
                 </li>
                 <li>
+                  <strong>Version & History:</strong> Information about what has
+                  changed in the individual versions
+                </li>
+                <li>
                   <strong>Privacy information:</strong> Data handling and
                   storage details
                 </li>
+                <li>
+                  <strong>QR Codes:</strong> What are QR Codes and how can you
+                  use them
+                </li>
               </ul>
 
-              <h6>🌐 Try the Interactive Help:</h6>
+              <h6>
+                <ion-icon name="globe"></ion-icon>
+                Try the Interactive Help:
+              </h6>
               <p>
                 Open the
                 <a
@@ -315,20 +476,21 @@
               </p>
 
               <div class="comparison-note">
-                <ion-icon name="information-circle-outline"></ion-icon>
-                <strong>💡 Pro Tip:</strong> The help includes a table of
-                contents with jump-to-section navigation for quick access to
-                specific topics.
+                <ion-icon name="sunny"></ion-icon>
+                <strong>Pro Tip:</strong> The help includes a table of contents
+                with jump-to-section navigation for quick access to specific
+                topics.
               </div>
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1d">
+          <ion-accordion value="1e">
             <ion-item slot="header" color="light">
               <ion-label>Email us about errors</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
               <p>
+                <ion-icon name="mail"></ion-icon>
                 Please report errors and suggestions for improvement to
                 <a href="mailto:hans.zoechbauer@gmail.com"
                   >Hans Z&ouml;chbauer</a
@@ -337,12 +499,15 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1e">
+          <ion-accordion value="1f">
             <ion-item slot="header" color="light">
               <ion-label>Privacy Policy</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
-              <p>Your privacy is important to us.</p>
+              <p>
+                <ion-icon name="checkmark"></ion-icon>
+                Your privacy is important to us.
+              </p>
               <p>
                 Please review our
                 <a
@@ -355,26 +520,30 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1f">
+          <ion-accordion value="1g">
             <ion-item slot="header" color="light">
               <ion-label>What's new? (Release Notes)</ion-label>
             </ion-item>
             <div class="ion-padding accordion-content" slot="content">
-              <p>All new features, improvements and bug fixes of the QR Code app are tracked in</p>
+              <p>
+                <ion-icon name="checkmark"></ion-icon>
+                All new features, improvements and bug fixes of the QR Code app
+                are tracked in
+              </p>
               <ion-button
-              fill="clear"
-              size="small"
-              (click)="openChangelog()"
-              (keydown.enter)="openChangelog()"
-              class="changelog-button"
-            >
-              <ion-icon name="list-outline" slot="start"></ion-icon>
-              Release Notes
-            </ion-button>
+                fill="clear"
+                size="small"
+                (click)="openChangelog()"
+                (keydown.enter)="openChangelog()"
+                class="changelog-button"
+              >
+                <ion-icon name="list" slot="start"></ion-icon>
+                Release Notes
+              </ion-button>
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1g">
+          <ion-accordion value="1h">
             <ion-item slot="header" color="light">
               <ion-label>Get the Source Code</ion-label>
             </ion-item>
@@ -385,14 +554,18 @@
                 so you can review how the app works and how your data is handled
                 at any time.
               </p>
-              <ion-button>
-                <a
+              <div class="button-wrapper">
+                <ion-button
                   href="https://github.com/zoechbauer/z-control-qr-code-generator"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  >Get from GitHub</a
+                  color="primary"
+                  expand="block"
+                  class="download-button"
                 >
-              </ion-button>
+                  <ion-icon name="logo-github" slot="start"></ion-icon>
+                  Get from GitHub
+                </ion-button>
+              </div>
             </div>
           </ion-accordion>
         </ion-accordion-group>

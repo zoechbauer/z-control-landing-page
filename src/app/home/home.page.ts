@@ -1,7 +1,29 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { code, logoGooglePlaystore } from 'ionicons/icons';
+import {
+  download,
+  mail,
+  book,
+  library,
+  lockClosed,
+  phonePortrait,
+  rocket,
+  cloud,
+  person,
+  home,
+  checkmark,
+  warning,
+  information,
+  globe,
+  help,
+  construct,
+  list,
+  sunny,
+  logoGooglePlaystore,
+  logoFirebase,
+  logoGithub
+} from 'ionicons/icons';
 import {
   IonContent,
   IonButton,
@@ -14,7 +36,7 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  ModalController
+  ModalController,
 } from '@ionic/angular/standalone';
 
 import { HeaderComponent, FooterComponent } from '../ui';
@@ -22,7 +44,7 @@ import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdo
 
 enum App {
   qrCode = 'z-control QR Code Generator App',
-  other = 'Other Apps '
+  other = 'Other Apps ',
 }
 @Component({
   selector: 'app-home',
@@ -58,7 +80,27 @@ export class HomePage implements AfterViewInit {
 
   private registerIcons() {
     addIcons({
+      sunny: sunny,
+      person: person,
+      home: home,
+      checkmark: checkmark,
+      warning: warning,
+      globe: globe,
+      help: help,
+      construct: construct,
+      list: list,
+      information: information,
+      'cloud-download': cloud,
+      rocket: rocket,
+      'lock-closed': lockClosed,
+      'phone-portrait': phonePortrait,
+      book: book,
+      library: library,
+      mail: mail,
+      download: download,
       'logo-google-playstore': logoGooglePlaystore,
+      'logo-firebase': logoFirebase,
+      'logo-github': logoGithub,
     });
   }
 
@@ -134,8 +176,8 @@ export class HomePage implements AfterViewInit {
       default:
         console.error(`No changelog available for ${this.selectedAccordion}`);
         return '';
+    }
   }
-}
 
   async openChangelog() {
     const modal = await this.modalController.create({

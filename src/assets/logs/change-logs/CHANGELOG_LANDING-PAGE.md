@@ -2,6 +2,30 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.9] – 2025-07-26
+
+### ✨ New Features
+
+- …
+
+### 🚀 Improvements
+
+- A new accordion entry for QR code use cases has been added
+- Hard coded icons have been replaced by ion-icon usages
+- Layout improvements of the landing page when accessed from mobile devices
+
+### 🐛 Fixes
+
+- …
+
+### 🛡 Security
+
+- …
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+
 ## [1.8] – 2025-07-24
 
 ### 📦 Installations
@@ -140,10 +164,6 @@ All recent updates and improvements to our **landing page**.
 - **Mobile Ready**: Fully responsive design for all devices
 - **Professional Design**: Clean, modern interface following best practices
 
-## What's Coming Next
 
-We're continuously working to improve your experience. Future updates will include:
-
-- Publishing our QR-Code App to Google Play Store for all users
-
+---
 Thank you for using our applications!
