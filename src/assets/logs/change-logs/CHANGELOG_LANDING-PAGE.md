@@ -10,8 +10,9 @@ All recent updates and improvements to our **landing page**.
 
 ### 🚀 Improvements
 
-  The footer has been improved. There's no longer any difference between desktop and mobile devices.
-
+- Unified footer styling across desktop and mobile for a consistent appearance.
+- Enhanced ion-card design for improved contrast and readability.
+- Code cleanup: ion-icon usage order standardized for improved maintainability
 
 ### 🐛 Fixes
 
