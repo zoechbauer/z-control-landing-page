@@ -12,9 +12,11 @@ All recent updates and improvements to our **landing page**.
 
   The footer has been improved. There's no longer any difference between desktop and mobile devices.
 
+
 ### 🐛 Fixes
 
-- …
+- Fixed incorrect link to GitHub source code on the privacy policy page.
+- Updated browser title to "z-control-4070" for better identification.
 
 ### 🛡 Security
 
