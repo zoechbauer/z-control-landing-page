@@ -2,7 +2,7 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [1.9] – 2025-07-26
+## [1.10] – YYYY-MM-DD
 
 ### ✨ New Features
 
@@ -10,9 +10,7 @@ All recent updates and improvements to our **landing page**.
 
 ### 🚀 Improvements
 
-- A new accordion entry for QR code use cases has been added
-- Hard coded icons have been replaced by ion-icon usages
-- Layout improvements of the landing page when accessed from mobile devices
+  The footer has been improved. There's no longer any difference between desktop and mobile devices.
 
 ### 🐛 Fixes
 
@@ -21,6 +19,18 @@ All recent updates and improvements to our **landing page**.
 ### 🛡 Security
 
 - …
+
+### 📦 Installations
+
+- …
+
+## [1.9] – 2025-07-26
+
+### 🚀 Improvements
+
+- A new accordion entry for QR code use cases has been added
+- Copied icons have been replaced by ion-icon usages
+- Layout improvements of the landing page when accessed from mobile devices
 
 ### 📦 Installations
 

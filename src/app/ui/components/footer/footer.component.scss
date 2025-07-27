@@ -1,219 +1,75 @@
-// Responsive footer component styles
-.footer-content {
-  padding: 12px 16px;
-}
-
 .footer-compact {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  min-height: 60px;
+  text-align: center;
+}
 
-  .footer-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
+.footer-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 auto;
+  padding-left: 27px;
+}
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: center;
-      gap: 16px;
-      flex: none; // Don't expand on desktop since email moves to right
-    }
+.footer-email {
+  font-size: 0.95em;
+  word-break: break-all;
+  margin-bottom: 0;
+}
 
-    .footer-brand {
-      font-weight: 500;
-      font-size: 14px;
-      margin: 0;
-    }
+.footer-link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.95em;
+
+  &:hover {
+    color: inherit;
+    text-decoration: underline;
   }
+}
 
-  .footer-email {
-    font-size: 12px;
-
-    @media (min-width: 768px) {
-      font-size: 14px;
-    }
-
-    .footer-link {
-      color: var(--ion-color-primary);
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    // Mobile-only email (under copyright)
-    &.mobile-only {
-      @media (min-width: 768px) {
-        display: none;
-      }
-    }
-
-    // Desktop-only email (right side)
-    &.desktop-only {
-      display: none;
-
-      @media (min-width: 768px) {
-        display: block;
-        margin-right: 12px; // Space from expand button area
-      }
-    }
-  }
-
-  .expand-button {
-    --padding-start: 8px;
-    --padding-end: 8px;
-    height: 32px;
-    margin: 0;
-
-    // Hide expand button on desktop where we show full footer
-    @media (min-width: 768px) {
-      display: none;
-    }
-
-    ion-icon {
-      font-size: 18px;
-      color: var(--ion-color-medium);
-    }
-  }
+.expand-button {
+  margin-left: auto;
 }
 
 .footer-details {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
-    padding 0.3s ease-out;
+  display: none;
+  flex-direction: column;
+  background: var(--ion-toolbar-background, #f8f8f8);
+  border-top: 1px solid #e0e0e0;
+  animation: fadeIn 0.2s;
+  text-align: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
 
-  // Center content on mobile to match header alignment
-  @media (max-width: 767px) {
-    margin-right: 40px; // Account for expand button space for perfect centering
-    text-align: center;
-  }
+.footer-details.expanded {
+  display: flex;
+}
 
-  &.expanded {
-    max-height: 300px;
-    opacity: 1;
-    padding-top: 16px;
-  }
+.footer-version {
+  font-size: 0.95em;
+  color: #888;
+  margin: 0px;
+}
 
-  // On desktop, always show details and disable animation
-  @media (min-width: 768px) {
-    max-height: none !important;
-    opacity: 1 !important;
-    padding-top: 0 !important;
-    transition: none !important;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-    margin-top: 12px;
-    margin-right: 0; // Reset margin on desktop
-  }
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: center;
+}
 
-  .footer-section {
-    text-align: center;
-    margin-bottom: 16px;
+.contact-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.95em;
 
-    @media (min-width: 768px) {
-      text-align: left;
-      margin-bottom: 0;
-    }
-
-    .footer-tagline {
-      margin: 4px 0;
-      font-size: 12px;
-      color: var(--ion-color-medium);
-    }
-
-    .version-info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-
-      @media (min-width: 768px) {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .footer-version {
-        font-size: 10px;
-        margin: 0;
-        color: var(--ion-color-medium);
-      }
-
-      .changelog-button {
-        --color: var(--ion-color-primary);
-        --padding-start: 8px;
-        --padding-end: 8px;
-        font-size: 10px;
-        height: 24px;
-
-        @media (min-width: 768px) {
-          font-size: 11px;
-          height: 28px;
-        }
-
-        ion-icon {
-          font-size: 12px;
-        }
-      }
-    }
-  }
-
-  .footer-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-    margin-bottom: 16px;
-
-    @media (min-width: 768px) {
-      text-align: left;
-      margin-bottom: 0;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      justify-content: center;
-
-      @media (min-width: 768px) {
-        justify-content: flex-start;
-        font-size: 14px;
-      }
-
-      ion-icon {
-        font-size: 14px;
-        color: var(--ion-color-primary);
-      }
-    }
-  }
-
-  .footer-info {
-    text-align: center;
-
-    @media (min-width: 768px) {
-      text-align: right;
-    }
-
-    .footer-note {
-      margin: 0;
-      font-size: 11px;
-      color: var(--ion-color-medium);
-      font-style: italic;
-
-      @media (min-width: 768px) {
-        font-size: 12px;
-      }
-    }
+  &.small {
+    font-size: 0.8em;
   }
 }
