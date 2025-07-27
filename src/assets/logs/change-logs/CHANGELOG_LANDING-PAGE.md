@@ -2,11 +2,7 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [1.10] – YYYY-MM-DD
-
-### ✨ New Features
-
-- …
+## [1.10] – 2025-07-27
 
 ### 🚀 Improvements
 
@@ -18,14 +14,6 @@ All recent updates and improvements to our **landing page**.
 
 - Fixed incorrect link to GitHub source code on the privacy policy page.
 - Updated browser title to "z-control-4070" for better identification.
-
-### 🛡 Security
-
-- …
-
-### 📦 Installations
-
-- …
 
 ## [1.9] – 2025-07-26
 
