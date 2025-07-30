@@ -2,6 +2,28 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.11] – YYYY-MM-DD
+
+### ✨ New Features
+
+- …
+
+### 🚀 Improvements
+
+- Updated the z-control support email address.
+
+### 🐛 Fixes
+
+- …
+
+### 🛡 Security
+
+- …
+
+### 📦 Installations
+
+- …
+
 ## [1.10] – 2025-07-27
 
 ### 🚀 Improvements
