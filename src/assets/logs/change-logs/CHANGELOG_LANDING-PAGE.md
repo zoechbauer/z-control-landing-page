@@ -2,27 +2,15 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [1.11] – YYYY-MM-DD
-
-### ✨ New Features
-
-- …
+## [1.11] – 2025-07-30
 
 ### 🚀 Improvements
 
 - Updated the z-control support email address.
 
-### 🐛 Fixes
-
-- …
-
-### 🛡 Security
-
-- …
-
 ### 📦 Installations
 
-- …
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.10] – 2025-07-27
 

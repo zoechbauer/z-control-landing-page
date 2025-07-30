@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   version: {
     major: 1,
-    minor: 10,
-    date: '2025-07-27',
+    minor: 11,
+    date: '2025-07-30',
   },
 };
 
