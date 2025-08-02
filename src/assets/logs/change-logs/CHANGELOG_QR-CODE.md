@@ -2,6 +2,24 @@
 
 All recent updates and improvements to our **z-control QR Code Generator** app.
 
+## [1.12] – 2025-08-01
+
+### 🚀 Improvements
+
+- When the text is modified after generating a QR code, the QR code is cleared and a notification is shown for 3 seconds.
+- A FAQ-section has been added to the user help page.
+- Added information about BlueMail issues to the FAQ section.
+- Added details about toolbar display issues to the FAQ section.
+
+### 🐛 Fixes
+
+- On some older Android versions, the status bar (top system bar) overlapped the toolbar. The toolbar now displays correctly.
+- The app title font size has been reduced to prevent truncation when system font size is increased.
+
+### 📦 Installations
+
+- App is hosted at Google Play for **Internal Test** group and **Closed Test** group.
+
 ## [1.11] – 2025-07-30
 
 ### 🚀 Improvements
