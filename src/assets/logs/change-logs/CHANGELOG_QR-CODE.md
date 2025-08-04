@@ -2,6 +2,17 @@
 
 All recent updates and improvements to our **z-control QR Code Generator** app.
 
+## [1.13] – 2025-08-04
+
+### 🚀 Improvements
+
+- Uploaded updated and new screenshots for both English and German versions of the app to the Google Play Console.
+- Updated app infrastructure for improved stability and performance.
+
+### 📦 Installations
+
+- App is hosted at Google Play for **Internal Test** group and **Closed Test** group.
+
 ## [1.12] – 2025-08-01
 
 ### 🚀 Improvements
