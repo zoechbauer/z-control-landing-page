@@ -3,11 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   version: {
     major: 1,
-    minor: 14,
-    date: '2025-08-05',
+    minor: 15,
+    date: '2025-08-13',
   },
 };
 

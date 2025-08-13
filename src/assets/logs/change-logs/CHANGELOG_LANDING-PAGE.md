@@ -2,6 +2,12 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.15] – 2025-08-13
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+
 ## [1.14] – 2025-08-05
 
 ### 📦 Installations

@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   version: {
     major: 1,
-    minor: 14,
-    date: '2025-08-05',
+    minor: 15,
+    date: '2025-08-13',
   },
 };
