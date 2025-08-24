@@ -2,6 +2,54 @@
 
 All recent updates and improvements to our **z-control QR Code Generator** app.
 
+## [1.17] – 2025-08-24
+
+### ✨ New Features
+
+- Added a workflow feature that dynamically displays the next recommended user action, guiding users step-by-step through the QR code creation and email process.
+
+### 🚀 Improvements
+
+- Added new screenshots demonstrating the smart Keyboard Alert and multi-criteria text detection features for small devices to the documentation folder, providing clearer visual guidance for users.
+- Added additional helpful information and clarifications to the user help page.
+
+### 📦 Installations
+
+- App is hosted at Google Play for **Internal Test** group and **Closed Test** group.
+
+## [1.16] – 2025-08-20
+
+### ✨ New Features
+
+- **Smart Keyboard Alert for Small Devices**: Added intelligent detection system for text input that may be covered by keyboard on small Android devices (Galaxy J5 and similar)
+- **Multi-Criteria Text Detection for Small Devices**: Automatic alert appears when users type substantial content (90+ characters, 15+ words, 4+ line breaks, or long sentences)
+- **Contextual Help Navigation**: Alert provides direct links to floating keyboard instructions and web version for better typing experience
+- **Clear Input Confirmation**: Added confirmation dialog when clearing QR Code input field with more than 100 characters (configurable threshold)
+- **Disabled Button Tooltips**: Added helpful tooltips when clicking disabled buttons to explain why they're unavailable
+- **Enhanced Email Content**: Added QR code printing instructions and help page references to email templates
+- **Comprehensive Web Documentation**: Added detailed web version documentation for creating QR codes with longer texts
+- **Storage Permission Guide**: Added step-by-step storage permission instructions to the user help page
+- **Floating Keyboard Instructions**: Added step-by-step floating keyboard instructions to the user help page for smaller screens
+- **Email Address Counter:** The number of stored email addresses is now displayed on the email management page for easier overview.
+
+### 🚀 Improvements
+
+- **Redesigned Email Layout**: Fixed keyboard overlap issues on smaller Android devices (Galaxy J5) with responsive flexbox layout
+- **Enhanced Error Messages**: Improved error message clarity when storage permissions are not granted
+- **Better Navigation**: Moved navigation button in user help page from bottom to header to prevent overlap with Samsung navigation bar
+- **Improved Text Input**: Enhanced placeholder text for QR Code text entry field
+- **Larger Text Area**: Increased default text area height from 3 to 6 lines for better user experience
+
+### 🐛 Fixes
+
+- Fixed app name display in Android Settings/Apps to show "z-control QR Code Generator"
+- Fixed extra space at the bottom to prevent overlap with the navigation bar when present
+- Fixed logic for detecting small mobile devices to avoid false positives in landscape mode on modern phones
+
+### 📦 Installations
+
+- App is hosted at Google Play for **Internal Test** group and **Closed Test** group.
+
 ## [1.15] – 2025-08-13
 
 ### 🚀 Improvements
