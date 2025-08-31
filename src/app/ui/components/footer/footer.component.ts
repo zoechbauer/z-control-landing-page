@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { addIcons } from 'ionicons';
 import {
   personOutline,
@@ -7,6 +7,7 @@ import {
   chevronUpOutline,
   chevronDownOutline,
   listOutline,
+  downloadOutline,
 } from 'ionicons/icons';
 import {
   IonFooter,
@@ -16,8 +17,8 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 
-import { environment } from 'src/environments/environment';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -29,7 +30,9 @@ import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.comp
 export class FooterComponent {
   showDetails = false;
 
-  constructor(private readonly modalController: ModalController) {
+  constructor(
+    private readonly modalController: ModalController
+  ) {
     this.registerIcons();
   }
 
@@ -57,6 +60,10 @@ export class FooterComponent {
     return `Version ${major}.${minor} (${date})`;
   }
 
+  get mailtoLink() {
+    return "mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback";
+  }
+
   private registerIcons() {
     addIcons({
       'person-outline': personOutline,
@@ -65,6 +72,7 @@ export class FooterComponent {
       'chevron-up-outline': chevronUpOutline,
       'chevron-down-outline': chevronDownOutline,
       'list-outline': listOutline,
+      'download-outline': downloadOutline,
     });
   }
 }

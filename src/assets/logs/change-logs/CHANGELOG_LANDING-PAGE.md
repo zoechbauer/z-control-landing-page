@@ -2,6 +2,18 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.18] – 2025-08-31
+
+### 🚀 Improvements
+
+- Updated the download link for the z-control QR Code Generator app to point directly to Google Play.
+- Enhanced the footer design for a consistent look and feel with the z-control QR Code Generator app.
+- Added a new section in "What are CQ Codes and how can you use them?" detailing the features and capabilities of the z-control QR Code Generator app.
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+
 ## [1.17] – 2025-08-24
 
 ### 📦 Installations
