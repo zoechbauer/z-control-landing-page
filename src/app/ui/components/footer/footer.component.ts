@@ -46,6 +46,7 @@ export class FooterComponent {
       componentProps: {
         fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
       },
+      cssClass: 'change-log-modal',
     });
 
     await modal.present();

@@ -185,6 +185,7 @@ export class HomePage implements AfterViewInit {
       componentProps: {
         fullChangeLogPath: this.getFullChangeLogPath(),
       },
+      cssClass: 'change-log-modal',
     });
 
     await modal.present();

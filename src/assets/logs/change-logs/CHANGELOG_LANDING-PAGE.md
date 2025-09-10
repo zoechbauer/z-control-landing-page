@@ -2,6 +2,17 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.19] – 2025-09-06
+
+### 🚀 Improvements
+
+- Increased the height of the changelog dialog to display more information at once.
+- The feedback email sent from the privacy policy page now includes a relevant subject line for easier identification.
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+
 ## [1.18] – 2025-08-31
 
 ### 🚀 Improvements
