@@ -1,6 +1,51 @@
-# What's New
+# What's New?
 
 All recent updates and improvements to our **z-control QR Code Generator** app.
+
+## [2.2.] – 2025-09-25
+
+### ✨ New Features
+
+- **Flexible QR Code Printing:** Users can now print QR codes in various sizes, with customizable options for size, gap, and quantity. The app automatically calculates the number of QR codes to print, or users can manually enter their preferred amount. The printed QR code size is now always consistent, regardless of the text length, thanks to a new scaling algorithm.
+- **Enhanced Print Options Management:** A dedicated accordion has been added to the Settings page for managing print options, making it easier to configure and review printing preferences.
+- **Email Integration Improvements:** Selected print options are now appended to the email subject line, and the email body has been updated to provide clearer information about the chosen print settings. Printing instructions are now tailored for webmail clients, and only a snippet of the QR code text is included in the email body to avoid browser limitations.
+- **Email Maintenance Notifications:** The Email Maintenance page now displays toast notifications when an email address is added, removed, or if a duplicate is detected.
+- **User Help Redesign:** The FAQ section in the user help page has been replaced with two new sections: **General Usage** and **Troubleshooting & Problem Solving**. These sections offer clearer guidance and more focused support. User help content is now context-aware: information relevant to native app or web app is shown only for the active version.
+- **Documentation Updates:** The user help pages have been revised to include detailed instructions and tips for using the new print features.
+
+### 🚀 Improvements
+
+- **Improved User Interface:** When an accordion is opened on the Settings page, all other accordions are temporarily hidden, allowing users to focus on the selected section. Closing the accordion restores the display of all sections for easier navigation.
+- **Webmail Email Body Update:** In webmail clients, the email body now includes the file names of QR code images that need to be manually attached, along with only a snippet of the QR code text due to browser limitations with sendmail.
+- Calculated print height of qr codes so that the selected hight is allways the same for short and long texts.
+- **Improved Toast Message Visibility:** Toast notifications are now displayed below the app header, ensuring they are not obscured by the header bar on any device.
+
+### 🐛 Fixes
+
+- Reverted the reduction of header height in landscape mode due to display issues on Huawei phones and tablets.
+- In web version the email client did not open if very long text was entered due to Browser limitations in sendmail. Now only the first 500 chars of the qr code text are printed in the email body to avoid this problem.
+- **Enhanced Layout on Native App:** Increased the right margin in the native app for phones to improve visual alignment and layout consistency across various devices.
+
+### 📦 Installations
+
+- The app is available on Google Play for the **Internal Test** and **Closed Test** groups.
+- The web app version is deployed and installable via **Google Firebase**.
+
+## [2.1] – 2025-09-07
+
+### 🚀 Improvements
+
+- Removed the black border from the Release Notes for a cleaner appearance.
+- Reduced header height in landscape mode for better use of screen space.
+
+### 🐛 Fixes
+
+- Added extra padding to the bottom and right edges in landscape mode to prevent overlap with the navigation bar, addressing issues on devices that report incorrect navigation bar dimensions (e.g., Samsung Galaxy A55).
+
+### 📦 Installations
+
+- The app is available on Google Play for the **Internal Test** and **Closed Test** groups.
+- The web app version is deployed and installable via **Google Firebase**.
 
 ## [2.0] – 2025-09-06
 
@@ -32,7 +77,8 @@ All recent updates and improvements to our **z-control QR Code Generator** app.
 
 ### 📦 Installations
 
-- App is hosted at Google Play for **Internal Test** group and **Closed Test** group.
+- The app is available on Google Play for the **Internal Test** and **Closed Test** groups.
+- The web app version is deployed and installable via **Google Firebase**.
 
 ## [1.19] – 2025-08-31
 
