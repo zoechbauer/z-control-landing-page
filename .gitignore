@@ -76,3 +76,7 @@ z-control
 
 # index.html with real measurement ID and Firebase debug
 src/index_DEBUG_FIREBASE-config.html
+
+# envionment files to protect the secret firebase config - show only placeholder values
+src/environments/environment.prod.ts
+src/environments/environment.ts
