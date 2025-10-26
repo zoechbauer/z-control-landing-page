@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
+import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
+
 export interface PrivacyPolicy {
-  type: 'basic' | 'premium';
+  type: 'qr-code-generator' | 'landing-page' | 'premium';
   language: 'en' | 'de';
   title: string;
   content: string;
@@ -23,9 +25,15 @@ export interface PrivacyPolicyMeta {
 export class PrivacyService {
   private readonly availablePolicies: PrivacyPolicyMeta[] = [
     {
-      type: 'basic',
+      type: 'qr-code-generator',
       languages: ['en', 'de'],
-      description: 'Standard privacy policy for z-control QR Code Generator App',
+      description:
+        'Standard privacy policy for z-control QR Code Generator App',
+    },
+    {
+      type: 'landing-page',
+      languages: ['en', 'de'],
+      description: 'Standard privacy policy for z-control Landing Page App',
     },
     {
       type: 'premium',
@@ -33,8 +41,12 @@ export class PrivacyService {
       description: 'Privacy policy for premium features (future)',
     },
   ];
+  private readonly landingPageApp = 'Landing Page';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly fa: FirebaseAnalyticsService,
+    private readonly http: HttpClient
+  ) {}
 
   /**
    * Get list of available privacy policy types
@@ -51,23 +63,29 @@ export class PrivacyService {
       return of(null);
     }
 
+    this.fa.logEvent('open_privacy_policy', {
+      privacy_type: type,
+      privacy_language: language,
+      app: this.landingPageApp,
+    });
+
     return this.loadPolicyContent(type, language).pipe(
       map((content) => ({
         type: type as any,
         language: language as any,
         title: this.getTitle(type, language),
         content,
-        lastUpdated: '2025-06-30',
+        lastUpdated: '2025-10-24',
       })),
       catchError(() => of(null))
     );
   }
 
   /**
-   * Get default policy (basic/en) for landing page
+   * Get default policy (qr-code-generator/en) for landing page
    */
   getDefaultPolicy(): Observable<PrivacyPolicy | null> {
-    return this.getPolicy('basic', 'en');
+    return this.getPolicy('qr-code-generator', 'en');
   }
 
   /**
@@ -87,19 +105,22 @@ export class PrivacyService {
   ): Observable<string> {
     const fileName = `${type}-${language}.html`;
     const filePath = `assets/privacy/policies/${type}/${fileName}`;
-
     return this.http.get(filePath, { responseType: 'text' });
   }
 
   private getTitle(type: string, language: string): string {
     const titles: Record<string, Record<string, string>> = {
-      basic: {
-        en: 'Privacy Policy - z-control QR Code Generator App',
-        de: 'Datenschutzerklärung - z-control QR-Code-Generator-App',
+      'qr-code-generator': {
+        en: 'Privacy Policy\nz-control QR Code Generator App',
+        de: 'Datenschutzerklärung\nz-control QR-Code-Generator-App',
+      },
+      'landing-page': {
+        en: 'Privacy Policy\nz-control Landing Page App',
+        de: 'Datenschutzerklärung\nz-control Startseite App',
       },
       premium: {
-        en: 'Privacy Policy - Premium Features',
-        de: 'Datenschutzerklärung - Premium-Funktionen',
+        en: 'Privacy Policy\nPremium Features',
+        de: 'Datenschutzerklärung\nPremium-Funktionen',
       },
     };
 

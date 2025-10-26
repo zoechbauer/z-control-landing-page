@@ -1,3 +1,8 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+
+  <app-consent-banner
+    *ngIf="showConsentBanner"
+    (consent)="onConsentDecision($event)"
+  ></app-consent-banner>
 </ion-app>

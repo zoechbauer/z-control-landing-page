@@ -7,23 +7,23 @@ A modern, responsive landing page built with Ionic Angular, showcasing the z-con
 - **Modern Design**: Clean, professional interface following Ionic design principles
 - **Dark Mode Support**: Automatic light/dark theme switching with proper contrast
 - **Mobile Responsive**: Optimized for all devices from mobile to desktop
-- **Multi-language Support**: Privacy policies available in German and English
+- **Multi-language Support for Privacy**: Privacy policies available in German and English
 - **Version Management**: Built-in changelog system with user-friendly updates
-- **Firebase Ready**: Configured for Firebase hosting and deployment
+- **Firebase Ready**: Configured for Firebase hosting and deployment with Firebase Analytics
 - **Accessibility**: WCAG compliant with keyboard navigation and screen reader support
 
 ## 🚀 Live Demo
 
-🔗 **[View Live Site](https://z-control-4070.web.app)**
+🔗 **[View Live Site](https://z-control-4070.web.app)** on Google Firebase
 
 ## 📱 Showcased Applications
 
 ### z-control QR Code App
 
 - **Web App**: [Try directly in browser](https://z-control-qr-code.web.app) without installation
-- **Android App**: [Available on Google Play Store](https://play.google.com/apps/internaltest/4700763022412481257) _(currently in internal testing)_
+- **Android App**: [Available on Google Play Store](https://play.google.com/apps/internaltest/4700763022412481257)
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-qr-code-generator)
-- **Features**: QR code generation, offline functionality, multi-language support
+- **Features**: QR code generation, offline functionality, multi-language support, qr code settings, configured e-mail sending
 
 ## 🛠️ Tech Stack
 
@@ -38,23 +38,86 @@ A modern, responsive landing page built with Ionic Angular, showcasing the z-con
 
 ```
 landing-page/
-├── src/
-│   ├── app/
-│   │   ├── home/              # Main landing page
-│   │   ├── privacy/           # Privacy policy system
-│   │   ├── services/          # Application services
-│   │   └── ui/
-│   │       └── components/    # Reusable UI components
-│   ├── assets/                # Static assets (including logs/change-logs)
-│   │   └── logs/
-│   │       └── change-logs/  # Changelogs for each app (e.g., CHANGELOG_LANDING-PAGE.md, CHANGELOG_QR-CODE.md)
-│   ├── environments/         # Environment configurations
-│   └── theme/                # Global styling
-├── tools/                    # Project-wide dev tools (e.g. CHANGELOG-Templates)
-├── docs/                     # Technical documentation
-├── firebase.json            # Firebase configuration
-└── README.md                # This file
+├─ .angular/
+├─ .browserslistrc
+├─ .editorconfig
+├─ .env.local                   # local secrets (do NOT commit)
+├─ .eslintrc.json
+├─ .gitignore
+├─ .vscode/
+├─ angular.json
+├─ capacitor.config.ts
+├─ firebase-example.json
+├─ ionic.config.json
+├─ karma.conf.js
+├─ LICENSE
+├─ package-lock.json
+├─ package.json
+├─ README.md
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.spec.json
+├─ docs/                        # technical documentation
+│  ├─ FIREBASE_ANALYTICS.md
+│  ├─ FIREBASE_CONFIG_ENVIRONMENT_FILES.md
+│  ├─ FIREBASE_DEPLOYMENT_GUIDE.md
+│  ├─ FIREBASE_SECURITY.md
+│  ├─ PRIVACY_POLICY_ARCHITECTURE.md
+│  └─ ...other docs...
+├─ node_modules/
+├─ scripts/                     # utility scripts (e.g. generate-env.js)
+├─ tools/                       # developer tools (changelog templates etc.)
+└─ src/
+   ├─ index.html
+   ├─ index_DEBUG_FIREBASE-config.html  # local debug index (do NOT commit)
+   ├─ environments/
+   │  ├─ environment.ts
+   │  └─ environment.prod.ts
+   ├─ assets/
+   │  ├─ icon/
+   │  ├─ logs/
+   │  │  └─ change-logs/        # CHANGELOG_LANDING-PAGE.md etc.
+   │  └─ privacy/
+   │     └─ policies/
+   │        ├─ basic/
+   │        │  ├─ basic-en.html
+   │        │  └─ basic-de.html
+   │        ├─ landing-page/
+   │        │  ├─ landing-page-en.html
+   │        │  └─ landing-page-de.html
+   │        └─ premium/
+   │           ├─ premium-en.html
+   │           └─ premium-de.html
+   └─ app/
+      ├─ app.component.ts
+      ├─ app.component.html
+      ├─ home/                    # main landing page sources
+      ├─ privacy/                 # privacy policy system
+      │  ├─ components/
+      │  │  └─ privacy-viewer/
+      │  │     ├─ privacy-viewer.component.ts
+      │  │     └─ privacy-viewer.component.html
+      │  └─ services/
+      │     └─ privacy.service.ts
+      ├─ services/                # app-wide / cross-cutting services
+      │  └─ firebase-analytics.service.ts
+      ├─ ui/
+      │  └─ components/
+      │     ├─ footer/
+      │     │  ├─ footer.component.ts
+      │     │  └─ footer.component.html
+      │     ├─ consent-banner/
+      │     │  ├─ consent-banner.component.ts
+      │     │  └─ consent-banner.component.html
+      │     └─ header/
+      │        ├─ header.component.ts
+      │        └─ header.component.html
+      └─ theme/                    # global styling (variables, global.scss)
 ```
+
+Notes
+- Keep real Firebase config and local debug index out of VCS (.env.local, index_DEBUG_FIREBASE-config.html).
+- The privacy policy HTML templates live in src/assets/privacy/policies and are loaded dynamically by the privacy service.
 
 ## 🏁 Quick Start
 
@@ -69,7 +132,7 @@ landing-page/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/z-control-landing-page.git
+   git clone https://github.com/zoechbauer/z-control-landing-page.git
    cd z-control-landing-page
    ```
 
@@ -85,13 +148,24 @@ landing-page/
    npm install -g @ionic/cli
    ```
 
-4. **Start development server**
+4. **Create environment files from secret Firebase configuration**
+
+   ```
+   Important: After cloning run:
+   1. Copy your Firebase values to a local `.env.local` (never commit).
+   2. Run `npm run generate-env` to generate `src/environments/environment*.ts`.
+   3. Then run `ionic serve` or `npm run build`.
+   
+   more details see in docs/FIREBASE_CONFIG_ENVIRONMENT_FILES.md
+   ```
+
+5. **Start development server**
 
    ```bash
    ionic serve
    ```
 
-5. **Open in browser**
+6. **Open in browser**
    ```
    http://localhost:8100
    ```
@@ -101,6 +175,9 @@ landing-page/
 ### Available Scripts
 
 ```bash
+# generate environment files
+npm run generate-env
+
 # Development server
 ionic serve
 
@@ -119,18 +196,32 @@ ionic build && ionic serve --prod
 
 ### Environment Configuration
 
-Update version information in `src/environments/environment.ts`:
+Update version information and firebase config in `.env.local and run npm run generate-env`:
 
 ```typescript
 export const environment = {
-  production: false,
+  production: __PRODUCTION__,
   version: {
-    major: 1,
-    minor: 1,
-    date: "2025-07-01",
+    major: __MAJOR__,
+    minor: __MINOR__,
+    date: '__DATE__',
+  },
+  firebase: {
+    apiKey: '__FIREBASE_API_KEY__',
+    authDomain: '__FIREBASE_AUTH_DOMAIN__',
+    projectId: '__FIREBASE_PROJECT_ID__',
+    storageBucket: '__FIREBASE_STORAGE_BUCKET__',
+    messagingSenderId: '__FIREBASE_MESSAGING_SENDER_ID__',
+    appId: '__FIREBASE_APP_ID__',
+    measurementId: '__FIREBASE_MEASUREMENT_ID__',
   },
 };
 ```
+
+**Important: do NOT commit generated files**
+- Keep real Firebase config in `.env.local` (listed in .gitignore).
+- Run `npm run generate-env` locally or in CI to create `src/environments/environment*.ts`.
+- Do not commit `src/environments/environment*.ts` or an index.html with real measurement ID.
 
 ## 🚀 Deployment
 
@@ -195,22 +286,19 @@ Changelogs for each app are stored in `src/assets/logs/change-logs/`:
 
 ```bash
 # Run unit tests
-ng test
-
-# Run e2e tests
-ng e2e
+npm run test
 
 # Check code coverage
-ng test --code-coverage
+npm run test:coverage
 ```
 
 ## 📱 Mobile App Development
 
 This landing page showcases the z-control ion-title {
-  text-align: center;
-  width: 100%;
-  justify-content: center;
-  display: flex;
+text-align: center;
+width: 100%;
+justify-content: center;
+display: flex;
 } mobile application. The mobile app is now available on the Google Play Store (currently in internal testing). For updates and source code, see the [z-control QR Code Generator app in GitHub repository](https://github.com/zoechbauer/z-control-qr-code-generator).
 
 ## 🤝 Contributing
@@ -237,15 +325,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built with [Ionic Framework](https://ionicframework.com/)
 - Icons by [Ionicons](https://ionic.io/ionicons)
 - Hosted on [Firebase](https://firebase.google.com/)
+- Hosted on [Google Play](https://play.google.com/)
 
 ## 📊 Project Status
 
-- ✅ Landing Page: Complete and deployed
-- ✅ Privacy Policy System: Complete
-- ✅ Dark Mode Support: Complete
-- ✅ Firebase Hosting: Complete
-- 🔄 Mobile App: in testing mode
-- 🔄 Google Play Store: in testing mode
+- 🔄 Landing Page: under construction
+- ✅ Firebase Hosting Landing page: Complete
+- ✅ Firebase Hosting z-control QR Code Generator: Complete
+- ✅ Google Play z-control QR Code Generator: Complete
 
 ---
 

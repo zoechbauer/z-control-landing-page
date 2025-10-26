@@ -115,7 +115,7 @@ Add new policy types in `privacy.service.ts`:
 ```typescript
 private availablePolicies: PrivacyPolicyMeta[] = [
   {
-    type: 'basic',
+    type: 'qr-code-generator',
     languages: ['en', 'de'],
     description: 'Standard privacy policy for z-control QR Code App',
   },
@@ -159,11 +159,21 @@ The existing route structure already supports new apps:
 
 Add links/buttons for the new app in your landing page components.
 
-### 5. Build and Deploy
+### 5. Update Version and Date
 
 ```powershell
 cd " path\to\your\landing-page"
-npm run build
+update values in .env.local
+npm run generate-env
+check values with ionic serve
+```
+
+
+### 6. Build and Deploy
+
+```powershell
+cd " path\to\your\landing-page"
+npm run build --prod
 firebase deploy --only hosting
 ```
 
@@ -224,18 +234,19 @@ Your `firebase.json` should look like this:
 ### After Deployment:
 
 1. **Verify URLs Work**
+- z-control QR Code App (English): `https://z-control-4070.web.app/privacy/basic/en`
+- z-control QR Code App (German): `https://z-control-4070.web.app/privacy/basic/de`
+- Landing Page App (English): `https://z-control-4070.web.app/privacy/landing-page/en`
+- Landing Page App (German): `https://z-control-4070.web.app/privacy/landing-page/de`
+- Future Premium Features (English): `https://z-control-4070.web.app/privacy/premium/en`
+- Future Premium Features (German): `https://z-control-4070.web.app/privacy/premium/de`
 
-   - `https://z-control-4070.web.app/privacy/basic/en`
-   - `https://z-control-4070.web.app/privacy/basic/de`
-   - `https://z-control-4070.web.app/privacy/premium/en`
-   - `https://z-control-4070.web.app/privacy/premium/de`
-
-2. **Test From z-control QR Code Generator App**
+1. **Test From z-control QR Code Generator App**
 
    - Ensure privacy links from z-control QR Code Generator app point to correct URLs
    - Test both English and German versions
 
-3. **Check Analytics** (if enabled)
+2. **Check Analytics** (if enabled)
    - Monitor Firebase Analytics for any 404 errors
    - Check page load times
 
@@ -244,9 +255,14 @@ Your `firebase.json` should look like this:
 ## Quick Commands Reference
 
 ```powershell
+#update environment files - insert secrete firebase values and version infos
+update values in .env.local
+npm run generate-env
+check values with ionic serve
+
 # Build and deploy landing page
 cd " path\to\your\landing-page"
-npm run build && firebase deploy --only hosting
+npm run build --prod && firebase deploy --only hosting
 
 # Build and deploy specific target
 firebase deploy --only hosting:target-name

@@ -14,6 +14,8 @@ This folder contains technical documentation and guides for the Landing Page app
 
 - **[FIREBASE_DEPLOYMENT_GUIDE.md](./FIREBASE_DEPLOYMENT_GUIDE.md)** - Step-by-step Firebase hosting deployment instructions
 - **[FIREBASE_SECURITY.md](./FIREBASE_SECURITY.md)** - Firebase security configuration and best practices
+- **[FIREBASE_ANALYTICS.md](./FIREBASE_ANALYTICS.md)** - Firebase Analytics (GA4) — Usage & Testing
+- **[FIREBASE_CONFIG_ENVIRONMENT_FILES.md](./FIREBASE_CONFIG_ENVIRONMENT_FILES.md)** - Environment files / Firebase config
 
 ## Main Project Files
 

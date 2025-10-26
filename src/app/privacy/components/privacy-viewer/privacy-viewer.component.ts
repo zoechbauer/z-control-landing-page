@@ -33,7 +33,7 @@ export class PrivacyViewerComponent implements OnInit {
   loading = true;
   error = false;
   selectedAccordion = '';
-  policyType = 'basic';
+  policyType = 'qr-code-generator';
   language = 'en';
   availableLanguages: string[] = [];
 
@@ -47,32 +47,46 @@ export class PrivacyViewerComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.policyType = params['type'] || 'basic';
+      this.policyType = params['type'] || 'qr-code-generator';
       this.language = params['language'] || 'en';
       this.loadPolicy();
     });
 
     // Get selectedAccordion from query params for header + support legacy approach
     this.route.queryParams.subscribe((params) => {
-      console.log('route.queryParams:', params  );
-      
       this.selectedAccordion = params['from'] || 'Privacy Policy';
       // Support legacy query parameter approach
       if (params['from']) {
         this.policyType = this.mapLegacyFromParam(params['from']);
       }
     });
+    this.registerIcons();
+  }
+
+  get otherLanguage(): string {
+    return this.language === 'en' ? 'de' : 'en';
+  }
+
+  get otherLanguageLabel(): string {
+    return this.language === 'en' ? 'Switch to German' : 'Zu Englisch wechseln';
+  }
+
+  get hasOtherLanguage(): boolean {
+    return this.availableLanguages.includes(this.otherLanguage);
+  }
+
+  get backToHomeButtonLabel(): string {
+    return this.language === 'de' ? 'Zurück zur Startseite' : 'Back to Home';
   }
 
   private mapLegacyFromParam(from: string): string {
     // Map legacy 'from' parameter values to policy types
     const mapping: { [key: string]: string } = {
-      'z-control QR Code Generator App': 'basic',
-      'Z-Control QR Code Generator App': 'basic',
+      'z-control QR Code Generator App': 'qr-code-generator',
+      'z-control Landing Page App': 'landing-page',
       'Future App 1': 'premium',
-      'Future App 2': 'enterprise',
     };
-    return mapping[from] || 'basic';
+    return mapping[from] || 'qr-code-generator';
   }
 
   private loadPolicy() {
@@ -91,7 +105,7 @@ export class PrivacyViewerComponent implements OnInit {
         this.language = 'en';
       } else {
         // Fallback to basic policy if the type is not available
-        this.policyType = 'basic';
+        this.policyType = 'qr-code-generator';
         this.language = 'en';
       }
     }
@@ -131,15 +145,10 @@ export class PrivacyViewerComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  get otherLanguage(): string {
-    return this.language === 'en' ? 'de' : 'en';
-  }
-
-  get otherLanguageLabel(): string {
-    return this.language === 'en' ? 'Deutsch' : 'English';
-  }
-
-  get hasOtherLanguage(): boolean {
-    return this.availableLanguages.includes(this.otherLanguage);
-  }
+    private registerIcons() {
+      addIcons({
+        'globe-outline': globeOutline,
+        'chevron-back-outline': chevronBackOutline,
+      });
+    }
 }

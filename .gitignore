@@ -70,3 +70,9 @@ testem.log
 Thumbs.db
 
 z-control
+
+# local env with secrets
+.env.local
+
+# index.html with real measurement ID and Firebase debug
+src/index_DEBUG_FIREBASE-config.html

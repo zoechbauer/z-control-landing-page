@@ -12,10 +12,12 @@ The privacy policy HTML templates have been moved to the `assets/privacy/policie
 
 ## Template Locations
 
-- **Basic Policy (English)**: `src/assets/privacy/policies/basic/basic-en.html`
-- **Basic Policy (German)**: `src/assets/privacy/policies/basic/basic-de.html`
-- **Premium Policy (English)**: `src/assets/privacy/policies/premium/premium-en.html`
-- **Premium Policy (German)**: `src/assets/privacy/policies/premium/premium-de.html`
+- **z-control QR Code Generstor (English)**: `src/assets/privacy/policies/qr-code-generator/qr-code-generator-en.html`
+- **z-control QR Code Generstor (German)**: `src/assets/privacy/policies/qr-code-generator/qr-code-generator-de.html`
+- **z-control Landing Page (English)**: `src/assets/privacy/policies/landing-page/landing-page-en.html`
+- **z-control Landing Page (German)**: `src/assets/privacy/policies/landing-page/landing-page-de.html`
+- **Premium Policy (English) - not used**: `src/assets/privacy/policies/premium/premium-en.html`
+- **Premium Policy (German) - not used**: `src/assets/privacy/policies/premium/premium-de.html`
 
 ## How It Works
 
@@ -34,7 +36,7 @@ private loadPolicyContent(type: string, language: string): Observable<string> {
 To edit privacy policy content:
 
 1. Navigate to `src/assets/privacy/policies/`
-2. Edit the appropriate HTML file (e.g., `basic/basic-en.html`)
+2. Edit the appropriate HTML file (e.g., `landing-page/landing-page-en.html`)
 3. The changes will be reflected immediately in the application
 
 ## Do Not Duplicate

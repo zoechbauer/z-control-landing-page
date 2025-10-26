@@ -1,0 +1,11 @@
+<ion-toolbar class="consent-banner" role="region" aria-label="Analytics consent">
+  <div class="consent-content">
+    <ion-text>
+      We use anonymous analytics to improve the app. Do you allow collection of usage data (page views, opened sections, button clicks)?
+    </ion-text>
+    <div class="consent-actions">
+      <ion-button fill="clear" (click)="decline()">Decline</ion-button>
+      <ion-button color="primary" (click)="accept()">Accept</ion-button>
+    </div>
+  </div>
+</ion-toolbar>

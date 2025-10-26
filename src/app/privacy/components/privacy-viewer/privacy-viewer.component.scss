@@ -38,13 +38,7 @@
   .language-switcher {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 1.5rem;
-
-    .language-button {
-      --border-radius: 20px;
-      height: 32px;
-      font-size: 0.8rem;
-    }
+    margin-bottom: 0.5rem;
   }
 
   .policy-header {
@@ -53,26 +47,12 @@
     margin-bottom: 2rem;
 
     h1 {
-      color: var(--ion-color-primary);
-      font-size: 1.8rem;
-      font-weight: 600;
+      font-size: 1.3rem;
+      font-weight: 400;
       margin: 0 0 0.5rem 0;
       line-height: 1.3;
-    }
-
-    .policy-meta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-
-      span {
-        color: var(--ion-color-medium);
-        font-size: 0.85rem;
-        padding: 0.25rem 0.75rem;
-        background: var(--ion-color-light);
-        border-radius: 12px;
-        font-weight: 500;
-      }
+      white-space: pre-line; /* makes "\n" produce line breaks */
+      text-align: center;
     }
   }
 
@@ -138,8 +118,6 @@
   }
 
   .action-buttons {
-    margin-top: 2rem;
-    padding-top: 2rem;
     border-top: 1px solid var(--ion-color-light);
     text-align: center;
   }
@@ -148,21 +126,6 @@
 // Responsive design
 @media (max-width: 768px) {
   .policy-container {
-    .policy-header {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .policy-meta {
-        flex-direction: column;
-        gap: 0.5rem;
-
-        span {
-          width: fit-content;
-        }
-      }
-    }
-
     .language-switcher {
       justify-content: center;
     }

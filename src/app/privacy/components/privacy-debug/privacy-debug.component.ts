@@ -56,7 +56,7 @@ export class PrivacyDebugComponent implements OnInit {
     // Test 2: Get basic English policy
     try {
       const policy = await this.privacyService
-        .getPolicy('basic', 'en')
+        .getPolicy('qr-code-generator', 'en')
         .toPromise();
       this.testResults.push({
         name: 'Get Basic EN Policy',
@@ -80,7 +80,7 @@ export class PrivacyDebugComponent implements OnInit {
     // Test 3: Get basic German policy
     try {
       const policy = await this.privacyService
-        .getPolicy('basic', 'de')
+        .getPolicy('qr-code-generator', 'de')
         .toPromise();
       this.testResults.push({
         name: 'Get Basic DE Policy',

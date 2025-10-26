@@ -41,6 +41,7 @@ import {
 
 import { HeaderComponent, FooterComponent } from '../ui';
 import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
+import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 
 enum App {
   qrCode = 'z-control QR Code Generator App',
@@ -69,12 +70,22 @@ enum App {
 })
 export class HomePage implements AfterViewInit {
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
+
+  nativeDownloadUrl =
+    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp';
+  sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
+  webAppUrl = 'https://z-control-qr-code.web.app';
+
+  private readonly landingPageApp = 'Landing Page';
   maxInputLength = 1000;
   selectedAccordion: string = '';
   currentMainAccordion: string = '';
   subAccordionOpened: boolean = false;
 
-  constructor(private readonly modalController: ModalController) {
+  constructor(
+    private readonly modalController: ModalController,
+    private readonly fa: FirebaseAnalyticsService
+  ) {
     this.registerIcons();
   }
 
@@ -111,15 +122,44 @@ export class HomePage implements AfterViewInit {
     }
   }
 
+  onDownloadNative() {
+    window.open(this.nativeDownloadUrl, '_blank');
+    this.fa.logEvent('download_native', {
+      platform: 'android',
+      url: this.nativeDownloadUrl,
+      app: this.landingPageApp,
+    });
+  }
+
+  onGetSourceCode() {
+    window.open(this.sourceCodeUrl, '_blank');
+    this.fa.logEvent('get_source_code', {
+      repo: 'z-control-qr-code-generator',
+      app: this.landingPageApp,
+    });
+  }
+
+  onOpenWebApp() {
+    window.open(this.webAppUrl, '_blank');
+    this.fa.logEvent('open_web_app', {
+      url: this.webAppUrl,
+      app: this.landingPageApp,
+    });
+  }
+
   accordionGroupChange(event: CustomEvent) {
-    const value = event.detail.value;
+    const value: string = event.detail.value;
+    this.fa.logEvent('accordion_change', {
+      accordion_value: value,
+      app: this.landingPageApp,
+    });
 
     // Only handle main accordion changes
-    if (value === 'group 1') {
+    if (value?.startsWith('group 1')) {
       this.currentMainAccordion = 'group 1';
       this.setSelectedAccordion('group 1');
       this.subAccordionOpened = false;
-    } else if (value === 'group 2') {
+    } else if (value?.startsWith('group 2')) {
       this.currentMainAccordion = 'group 2';
       this.setSelectedAccordion('group 2');
       this.subAccordionOpened = false;
@@ -146,7 +186,6 @@ export class HomePage implements AfterViewInit {
 
   subAccordionChange(parentGroup?: string) {
     this.subAccordionOpened = true;
-    // console.log(`Sub-accordion changed, parent: ${parentGroup}`);
   }
 
   setSelectedAccordion(group: string) {
@@ -180,6 +219,11 @@ export class HomePage implements AfterViewInit {
   }
 
   async openChangelog() {
+    this.fa.logEvent('open_changelog', {
+      changelog_for: this.selectedAccordion,
+      app: this.landingPageApp,
+    });
+
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
       componentProps: {
@@ -191,7 +235,7 @@ export class HomePage implements AfterViewInit {
     await modal.present();
   }
 
-    get mailtoLinkForQRCodeApp() {
-    return "mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback";
+  get mailtoLinkForQRCodeApp() {
+    return 'mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback';
   }
 }

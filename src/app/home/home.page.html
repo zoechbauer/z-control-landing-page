@@ -22,7 +22,7 @@
     #accordionGroup
     (ionChange)="accordionGroupChange($event)"
   >
-    <ion-accordion value="group 1">
+    <ion-accordion value="group 1: QR Code Generator">
       <ion-item slot="header" color="light">
         <img
           class="z-control-qrcode-generator-logo"
@@ -62,7 +62,7 @@
         </ion-card>
 
         <ion-accordion-group (ionChange)="subAccordionChange('group 1')">
-          <ion-accordion value="1a">
+          <ion-accordion value="1a: What are QR Codes">
             <ion-item slot="header" color="light">
               <ion-label>What are QR Codes and how can you use them?</ion-label>
             </ion-item>
@@ -241,7 +241,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1b">
+          <ion-accordion value="1b: Start Web App">
             <ion-item slot="header" color="light">
               <ion-label>Start app as Web App without installation</ion-label>
             </ion-item>
@@ -309,14 +309,13 @@
 
               <div class="button-wrapper">
                 <ion-button
-                  href="https://z-control-qr-code.web.app"
-                  target="_blank"
+                  (click)="onOpenWebApp()"
                   color="secondary"
                   expand="block"
                   class="web-app-button"
                 >
                   <ion-icon name="logo-firebase" slot="start"></ion-icon>
-                  Launch Web App
+                  Open Web App
                 </ion-button>
               </div>
               <div class="firebase-note">
@@ -376,7 +375,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1c">
+          <ion-accordion value="1c: Get Mobile App">
             <ion-item slot="header" color="light">
               <ion-label>Get the Mobile App</ion-label>
             </ion-item>
@@ -437,8 +436,7 @@
 
               <div class="button-wrapper">
                 <ion-button
-                  href="https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp"
-                  target="_blank"
+                  (click)="onDownloadNative()"
                   color="primary"
                   expand="block"
                   class="download-button"
@@ -447,7 +445,7 @@
                     name="logo-google-playstore"
                     slot="start"
                   ></ion-icon>
-                  Download for Android
+                  Download Native App
                 </ion-button>
               </div>
 
@@ -466,7 +464,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1d">
+          <ion-accordion value="1d: Inline Help">
             <ion-item slot="header" color="light">
               <ion-label>Inline Help</ion-label>
             </ion-item>
@@ -573,7 +571,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1e">
+          <ion-accordion value="1e: Feedback">
             <ion-item slot="header" color="light">
               <ion-label>Send Us Feedback</ion-label>
             </ion-item>
@@ -591,7 +589,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1f">
+          <ion-accordion value="1f: Privacy Policy">
             <ion-item slot="header" color="light">
               <ion-label>Privacy Policy</ion-label>
             </ion-item>
@@ -612,7 +610,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1g">
+          <ion-accordion value="1g: Release Notes">
             <ion-item slot="header" color="light">
               <ion-label>What's new? (Release Notes)</ion-label>
             </ion-item>
@@ -635,7 +633,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1h">
+          <ion-accordion value="1h: Get Source Code">
             <ion-item slot="header" color="light">
               <ion-label>Get the Source Code</ion-label>
             </ion-item>
@@ -648,14 +646,13 @@
               </p>
               <div class="button-wrapper">
                 <ion-button
-                  href="https://github.com/zoechbauer/z-control-qr-code-generator"
-                  target="_blank"
+                  (click)="onGetSourceCode()"
                   color="primary"
                   expand="block"
                   class="download-button"
                 >
                   <ion-icon name="logo-github" slot="start"></ion-icon>
-                  Get from GitHub
+                  Get Source Code
                 </ion-button>
               </div>
             </div>
@@ -664,7 +661,7 @@
       </div>
     </ion-accordion>
 
-    <ion-accordion value="group 2">
+    <ion-accordion value="group 2: Other Apps">
       <ion-item slot="header" color="light">
         <ion-label>Other Apps</ion-label>
       </ion-item>

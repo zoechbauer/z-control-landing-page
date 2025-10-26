@@ -1,25 +1,70 @@
 # Privacy Policy System Architecture
 
-### **File Structure**
+### Project file structure (cleaned)
 
 ```
-src/
-├── assets/privacy/policies/           # ✅ HTML templates served by web server
-│   ├── basic/
-│   │   ├── basic-en.html             # ✅ z-control QR Code App - English
-│   │   └── basic-de.html             # ✅ z-control QR Code App - German
-│   └── premium/
-│       ├── premium-en.html           # ✅ Premium features - English
-│       └── premium-de.html           # ✅ Premium features - German
-|
-└── app/privacy/
-    ├── services/
-    │   └── privacy.service.ts         # ✅ HTTP-based HTML loading service
-    ├── components/
-    │   └── privacy-viewer/            # ✅ Professional viewer component
-    └── policies/
-        └── README.md                  # ✅ Explains template location
+/ (repo root)
+├─ .gitignore
+├─ README.md
+├─ angular.json
+├─ capacitor.config.ts
+├─ firebase-example.json
+├─ ionic.config.json
+├─ package.json
+├─ tsconfig.json
+├─ docs/
+│  ├─ FIREBASE_ANALYTICS.md
+│  ├─ FIREBASE_CONFIG_ENVIRONMENT_FILES.md
+│  ├─ FIREBASE_DEPLOYMENT_GUIDE.md
+│  ├─ FIREBASE_SECURITY.md
+│  ├─ PRIVACY_POLICY_ARCHITECTURE.md
+│  └─ ...other docs...
+├─ src/
+│  ├─ index.html
+│  ├─ index_DEBUG_FIREBASE-config.html      # local debug index (do NOT commit)
+│  ├─ environments/
+│  │  ├─ environment.ts
+│  │  └─ environment.prod.ts
+│  ├─ assets/
+│  │  ├─ icon/
+│  │  └─ privacy/
+│  │     └─ policies/
+│  │        ├─ basic/
+│  │        │  ├─ basic-en.html
+│  │        │  └─ basic-de.html
+│  │        ├─ landing-page/
+│  │        │  ├─ landing-page-en.html
+│  │        │  └─ landing-page-de.html
+│  │        └─ premium/
+│  │           ├─ premium-en.html
+│  │           └─ premium-de.html
+│  └─ app/
+│     ├─ app.component.ts
+│     ├─ app.component.html
+│     ├─ privacy/
+│     │  ├─ components/
+│     │  │  └─ privacy-viewer/
+│     │  │     ├─ privacy-viewer.component.ts
+│     │  │     └─ privacy-viewer.component.html
+│     │  └─ services/
+│     │     └─ privacy.service.ts
+│     ├─ services/
+│     │  └─ firebase-analytics.service.ts     # app-wide analytics service
+│     ├─ ui/
+│     │  └─ components/
+│     │     ├─ footer/
+│     │     │  ├─ footer.component.ts
+│     │     │  └─ footer.component.html
+│     │     └─ consent-banner/
+│     │        ├─ consent-banner.component.ts
+│     │        └─ consent-banner.component.html
+│     └─ ...other app code...
 ```
+
+Notes
+- Keep real Firebase config and local debug index out of VCS (use .gitignore).
+- Assets folder is the single source of policy HTML templates; the privacy service loads templates via HTTP.
+- FirebaseAnalyticsService stays in src/app/services as an app-wide cross-cutting service.
 
 ### **Key Technical Implementation**
 
@@ -89,13 +134,14 @@ bootstrapApplication(AppComponent, {
 
 #### **Landing Page (Web)**
 
-- Privacy Policy: `https://z-control-4070.web.app/privacy/basic/en`
-- German Version: `https://z-control-4070.web.app/privacy/basic/de`
+- Privacy Policy: `https://z-control-4070.web.app/privacy/landing-page/en`
+- German Version: `https://z-control-4070.web.app/privacy/landing-page/de`
 
 #### **Mobile Apps**
 
 - **z-control QR Code App (English)**: `https://z-control-4070.web.app/privacy/basic/en`
 - **z-control QR Code App (German)**: `https://z-control-4070.web.app/privacy/basic/de`
+
 - **Future Premium Features (English)**: `https://z-control-4070.web.app/privacy/premium/en`
 - **Future Premium Features (German)**: `https://z-control-4070.web.app/privacy/premium/de`
 

@@ -28,7 +28,6 @@
         fill="outline"
         size="small"
         (click)="switchLanguage(otherLanguage)"
-        class="language-button"
       >
         <ion-icon name="globe-outline" slot="start"></ion-icon>
         {{ otherLanguageLabel }}
@@ -38,10 +37,6 @@
     <!-- Policy Header -->
     <div class="policy-header">
       <h1>{{ policy.title }}</h1>
-      <div class="policy-meta">
-        <span class="policy-version">Version {{ policy.lastUpdated }}</span>
-        <span class="policy-language">{{ language.toUpperCase() }}</span>
-      </div>
     </div>
 
     <!-- Policy Content -->
@@ -49,9 +44,9 @@
 
     <!-- Back Button -->
     <div class="action-buttons">
-      <ion-button fill="outline" (click)="goBack()">
+      <ion-button fill="outline" (click)="goBack()" size="small">
         <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
-        Back to Home
+        {{ backToHomeButtonLabel }}
       </ion-button>
     </div>
   </div>

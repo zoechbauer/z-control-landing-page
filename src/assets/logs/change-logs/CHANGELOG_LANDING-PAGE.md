@@ -2,6 +2,22 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.21] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- Added Firebase Analytics (GA4) integration with explicit user consent gating. Analytics collection is disabled by default and only enabled after user consent.
+- Implemented a non‑blocking ConsentBanner to reliably request consent in production.
+- Added FirebaseAnalyticsService and common analytics events:
+  - page_view (on route changes)
+  - accordion_change (opened sections)
+  - download_native, get_source, open_web_app (CTA clicks)
+- Added scripts/generate-env.js and environment templates to generate environment files from local/CI secrets; prevents committing real credentials.
+- Documented DebugView testing, local debug index usage (index_DEBUG_FIREBASE-config.html), and deployment guidance in docs/FIREBASE_ANALYTICS.md and README.
+- Created a dedicated privacy policy for the Landing Page (DE/EN) and updated the z-control QR Code Generator privacy page for improved layout and clarity.
+- Minor README and documentation updates describing env generation, testing steps, and opt‑out instructions.
+
+
 ## [1.20] – 2025-09-25
 
 ### 📦 Installations

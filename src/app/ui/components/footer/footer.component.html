@@ -35,6 +35,12 @@
       <div class="footer-details" [class.expanded]="showDetails">
         <div class="footer-section">
           <p>Innovative Mobile Solutions</p>
+          <div class="footer-privacy-policy">
+            <ion-icon name="document-text-outline"></ion-icon>
+            <a class="footer-link" [routerLink]="privacyPolicyLink">
+              Privacy Policy
+            </a>
+          </div>
           <div
             class="version-info"
             (click)="openChangelog()"

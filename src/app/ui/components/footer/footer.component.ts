@@ -8,6 +8,7 @@ import {
   chevronDownOutline,
   listOutline,
   downloadOutline,
+  documentTextOutline,
 } from 'ionicons/icons';
 import {
   IonFooter,
@@ -16,7 +17,9 @@ import {
   IonButton,
   ModalController,
 } from '@ionic/angular/standalone';
+import { RouterModule } from '@angular/router';
 
+import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { environment } from 'src/environments/environment';
 
@@ -25,22 +28,33 @@ import { environment } from 'src/environments/environment';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
-  imports: [IonFooter, IonToolbar, IonIcon, IonButton],
+  imports: [IonFooter, IonToolbar, IonIcon, IonButton, RouterModule],
 })
 export class FooterComponent {
   showDetails = false;
+  private readonly landingPageApp = 'Landing Page';
 
   constructor(
+    private readonly fa: FirebaseAnalyticsService,
     private readonly modalController: ModalController
   ) {
     this.registerIcons();
   }
 
   toggleFooterDetails() {
+    if (!this.showDetails) {
+      this.fa.logEvent('open_footer', {
+        app: this.landingPageApp,
+      });
+    }
     this.showDetails = !this.showDetails;
   }
 
   async openChangelog() {
+    this.fa.logEvent('open_changelog', {
+      changelog_for: this.landingPageApp,
+      app: this.landingPageApp,
+    });
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
       componentProps: {
@@ -62,7 +76,11 @@ export class FooterComponent {
   }
 
   get mailtoLink() {
-    return "mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback";
+    return 'mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback';
+  }
+
+  get privacyPolicyLink() {
+    return ['/privacy', 'landing-page', 'en'];
   }
 
   private registerIcons() {
@@ -74,6 +92,7 @@ export class FooterComponent {
       'chevron-down-outline': chevronDownOutline,
       'list-outline': listOutline,
       'download-outline': downloadOutline,
+      'document-text-outline': documentTextOutline,
     });
   }
 }
