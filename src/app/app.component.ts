@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { filter } from 'rxjs';
 import { Platform } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs';
 
 import { FirebaseAnalyticsService } from './services/firebase-analytics.service';
 import { ConsentBannerComponent } from './ui/components/consent-banner/consent-banner.component';
-import { CommonModule } from '@angular/common';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly fa: FirebaseAnalyticsService,
-    private readonly platform: Platform
+    private readonly platform: Platform,
+    private readonly localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -31,10 +33,10 @@ export class AppComponent implements OnInit {
 
     this.platform.ready().then(() => {
       try {
-        const consent = localStorage.getItem('analytics_consent');
-        this.showConsentBanner = consent !== 'true';
+        const consent = this.localStorageService.getAnalyticsConsent();
+        this.showConsentBanner = consent !== true;
         if (consent !== null) {
-          this.fa.enableCollection(consent === 'true');
+          this.fa.enableCollection(consent);
         }
       } catch (err) {
         console.error('Consent check error', err);
@@ -54,7 +56,7 @@ export class AppComponent implements OnInit {
   }
 
   onConsentDecision(allow: boolean) {
-    localStorage.setItem('analytics_consent', allow.toString());
+    this.localStorageService.setAnalyticsConsent(allow);
     this.fa.enableCollection(allow);
     this.showConsentBanner = false;
   }

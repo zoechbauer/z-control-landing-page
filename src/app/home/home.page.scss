@@ -71,21 +71,28 @@ ion-card-content {
   }
 
   ul {
-    text-align: left;
-    margin: 12px 0;
-    padding-left: 0;
-    list-style: none;
+    padding-left: 0px;
+    margin: 0px;
 
     li {
-      margin-bottom: 8px;
-      padding-left: 0;
-      position: relative;
-      line-height: 1.5;
+      list-style-type: none;
+      margin: 0px;
+    }
 
-      strong,
-      b {
-        font-weight: 600;
+    &.ul-li-disc {
+      padding-left: 20px;
+      li {
+        list-style-type: disc;
       }
+    }
+  }
+
+  ol {
+    padding-left: 20px;
+    margin: 0px;
+
+    li {
+      margin: 0px;
     }
   }
 

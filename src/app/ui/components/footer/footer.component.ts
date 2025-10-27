@@ -76,7 +76,7 @@ export class FooterComponent {
   }
 
   get mailtoLink() {
-    return 'mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback';
+    return 'mailto:zcontrol.app.qr@gmail.com?subject=z-control%20Landing%20Page%20Feedback';
   }
 
   get privacyPolicyLink() {

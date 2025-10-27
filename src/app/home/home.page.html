@@ -8,19 +8,30 @@
 <ion-content class="ion-padding">
   <div class="general info">
     <h2>Welcome to our applications</h2>
-    <p>
-      This is a landing page for the <i>z-control QR Code Generator</i> app and
-      other future applications.
-    </p>
-    <p>
-      Here you can find information about our apps, how to use them, and how to
-      contact us.
-    </p>
+    <div *ngIf="isAnalyticsAllowed">
+      <p>
+        This is a landing page for the <i>z-control QR Code Generator</i> app
+        and other future applications.
+      </p>
+      <p>
+        Here you can find information about our apps, how to use them, and how
+        to contact us.
+      </p>
+    </div>
+    <div *ngIf="!isAnalyticsAllowed">
+      <p class="ion-text-left">
+        Please enable anonymous analytics using the control at the bottom of the
+        page to continue using the app. This only collects non‑identifying usage
+        data to help us improve the service. If you previously declined, enable
+        analytics and reload the page.
+      </p>
+    </div>
   </div>
 
   <ion-accordion-group
     #accordionGroup
     (ionChange)="accordionGroupChange($event)"
+    [disabled]="!isAnalyticsAllowed"
   >
     <ion-accordion value="group 1: QR Code Generator">
       <ion-item slot="header" color="light">
@@ -34,28 +45,30 @@
       <div slot="content">
         <ion-card color="medium">
           <ion-card-header>
-            <ion-card-title>What can the app do?</ion-card-title>
+            <ion-card-title>What the app does</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <p>
               <strong
-                >The QR code is created from the entered text and sent by
-                email.</strong
+                >The app creates a QR code from the text you enter and sends it
+                by email.</strong
               >
-              The text cannot be formatted and can be up to {{ maxInputLength }}
-              characters long. Text or a link to a web page can be entered.
+              Input is plain text (no formatting) up to {{ maxInputLength }}
+              characters. You can enter any text or paste a URL.
             </p>
             <p>
-              The QR code is attached to the email as an image and PDF, and the
-              entered text is included in the email. This way you can
-              immediately see which text is contained in the QR code, in case
-              you create multiple QR codes.
+              The QR code is attached to the email as both an image (PNG) and a
+              PDF, and the original text is included in the message so you can
+              easily identify each QR code.
             </p>
             <p>
-              <strong
-                >To avoid having to enter the email address every time you send
-                an email, you can save email addresses.</strong
-              >
+              <strong>Print options:</strong> Choose the QR code size in the
+              print settings. The system can fill an A4 page or print a specific
+              number of QR codes per page.
+            </p>
+            <p>
+              <strong>Save email addresses:</strong> Store frequently used
+              addresses so you don’t need to re-enter them each time.
             </p>
             <p>This web version is hosted on Google Firebase.</p>
           </ion-card-content>
@@ -72,100 +85,6 @@
                 that store information in a square pattern. They can be read
                 with a camera or QR code scanner and allow quick access to
                 information, websites, or actions.
-              </p>
-              <h5>
-                <ion-icon name="person"></ion-icon>
-                How can I use them privately?
-              </h5>
-              <p>In everyday life, QR codes offer many possible uses:</p>
-              <ul>
-                <li>
-                  <b>Contact information:</b> QR codes can store your contact
-                  details, which others can scan to contact you.
-                </li>
-                <li>
-                  <b>Links to websites:</b> You can create QR codes that link to
-                  websites to share information quickly.
-                </li>
-                <li>
-                  <b>Wi-Fi access:</b> A QR code can be used to quickly and
-                  easily provide guests with access details for your home Wi-Fi.
-                </li>
-                <li>
-                  <b>Digital photo albums & recipes:</b> A QR code on a greeting
-                  card can share a link to an online photo album or a digitized
-                  family recipe.
-                </li>
-                <li>
-                  <b>Pets & valuables:</b> On pet tags, keychains, or bicycles,
-                  a QR code with contact details can help with recovery in case
-                  of loss.
-                </li>
-                <li>
-                  <b>Emergency and health data:</b> For example, on a medical
-                  bracelet, so important information is quickly available in an
-                  emergency.
-                </li>
-                <li>
-                  <b>Social media & online profiles:</b> Share personal
-                  profiles, playlists, or curated content with friends or
-                  family.
-                </li>
-              </ul>
-              <p>
-                QR codes are practical, flexible tools for easily sharing and
-                using digital content, contact details, or personal information
-                in everyday life.
-              </p>
-              <h5>
-                <ion-icon name="home"></ion-icon>
-                How can companies use QR codes?
-              </h5>
-              <p>
-                QR codes are used by companies in many ways to make digital
-                content easily accessible and to strengthen customer loyalty.
-                Typical applications include:
-              </p>
-              <ul>
-                <li>
-                  <b>Marketing and advertising:</b> QR codes on product
-                  packaging, flyers, posters, or business cards lead customers
-                  directly to websites, offers, social media profiles, or app
-                  downloads, increasing reach and interaction.
-                </li>
-                <li>
-                  <b>Customer service and information:</b> QR codes allow quick
-                  access to user manuals, product videos, or further details,
-                  improving user convenience.
-                </li>
-                <li>
-                  <b>Events and admission control:</b> QR codes serve as digital
-                  tickets and enable efficient check-in at events.
-                </li>
-                <li>
-                  <b>Payments and vouchers:</b> They facilitate contactless
-                  payments and redeeming discount coupons.
-                </li>
-                <li>
-                  <b>Logistics and product tracking:</b> QR codes support
-                  tracking goods in supply chains and promote transparency in
-                  the process.
-                </li>
-                <li>
-                  <b>Digital business cards:</b> Contact details can be quickly
-                  and accurately transferred to smartphones via QR code.
-                </li>
-                <li>
-                  <b>Customer feedback and interaction:</b> Companies use QR
-                  codes to make reviews, surveys, or calendar entries directly
-                  available.
-                </li>
-              </ul>
-              <p>
-                QR codes enable a seamless transition from the offline to the
-                online world, always providing clear added value to the user. It
-                is important to make the benefit of the code visible and to
-                optimize the target pages for mobile devices.
               </p>
               <h5>
                 <ion-icon name="logo-google-playstore"></ion-icon>
@@ -210,9 +129,23 @@
                   create a QR code from your text.
                 </li>
                 <li>
-                  <b>Send or print:</b> You can email the QR code as an image or
-                  PDF, or print it for use on labels, cards, or documents.
+                  <b>Send or print:</b>
+                  <ul class="ul-li-disc">
+                    <li>
+                      You can email the QR code as an image or PDF, or print it
+                      for use on labels, cards, or documents.
+                    </li>
+                    <li>
+                      You can also share the QR code via messaging apps or
+                      social media.
+                    </li>
+                    <li>
+                      You can define the size and number of the printed QR code
+                      in the print settings.
+                    </li>
+                  </ul>
                 </li>
+
                 <li>
                   <b>Scan to retrieve:</b> Anyone can scan the QR code with a
                   standard QR code reader to view the plain text you entered.
@@ -488,12 +421,11 @@
                 especially for new users.
               </p>
               <p>
-                <ion-icon name="warning"></ion-icon>
-                <strong>Note:</strong> The
-                <strong>tutorial refers to the use of mobile devices</strong>,
-                as this is the main application. Variations in the use as a web
-                application are described in the section
-                <i>Start app as Web App without installation</i>>.
+                <ion-icon name="checkmark"></ion-icon>
+                <strong>Note:</strong> The tutorial is specific to the version
+                you are using. Information relevant to mobile apps is omitted in
+                the web-app help, and web-app specific guidance is omitted in
+                the mobile-app help.
               </p>
               <h6>
                 <ion-icon name="library"></ion-icon>
@@ -501,44 +433,36 @@
               </h6>
               <ul>
                 <li>
-                  <strong>Frequently Asked Questions:</strong> Find clear
-                  answers to the most common questions about using the app
+                  <strong>Getting Started:</strong> Quick answers to common
+                  questions and how to begin.
                 </li>
                 <li>
-                  <strong>Step-by-step usage guide:</strong> Complete
-                  walkthrough from text entry to QR code generation
+                  <strong>App Features:</strong> A concise overview of what the
+                  app can do.
                 </li>
                 <li>
-                  <strong>Email management:</strong> How to save and organize
-                  email addresses
+                  <strong>How to Use the App:</strong> Step-by-step instructions
+                  for generating QR codes and managing settings.
                 </li>
                 <li>
-                  <strong>QR Code Printing:</strong> How to print QR Codes in a
-                  specific size
+                  <strong>Web Version for Long Texts:</strong> Benefits and
+                  limitations of using the browser-based app.
                 </li>
                 <li>
-                  <strong>Troubleshooting:</strong> If you accidentally selected
-                  an app other than email when sending
+                  <strong>Email Integration:</strong> Differences between web
+                  and native email handling and which clients are supported.
                 </li>
                 <li>
-                  <strong>Technical details:</strong> File storage,
-                  auto-cleanup, and QR code specifications
+                  <strong>Printing QR Codes:</strong> How to choose print size
+                  and the differences between PNG and PDF output.
                 </li>
                 <li>
-                  <strong>Language switching:</strong> How to change between
-                  English and German
+                  <strong>Technical Details:</strong> File storage, automatic
+                  cleanup, and QR code specifications.
                 </li>
                 <li>
-                  <strong>Version & History:</strong> Information about what has
-                  changed in the individual versions
-                </li>
-                <li>
-                  <strong>Privacy information:</strong> Data handling and
-                  storage details
-                </li>
-                <li>
-                  <strong>QR Codes:</strong> What are QR Codes and how can you
-                  use them
+                  <strong>Troubleshooting:</strong> Solutions for common issues
+                  and tips for reliable operation.
                 </li>
               </ul>
 

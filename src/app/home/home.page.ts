@@ -42,6 +42,8 @@ import {
 import { HeaderComponent, FooterComponent } from '../ui';
 import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
+import { LocalStorageService } from '../services/local-storage.service';
+import { CommonModule } from '@angular/common';
 
 enum App {
   qrCode = 'z-control QR Code Generator App',
@@ -66,6 +68,7 @@ enum App {
     IonCardTitle,
     HeaderComponent,
     FooterComponent,
+    CommonModule
   ],
 })
 export class HomePage implements AfterViewInit {
@@ -84,7 +87,8 @@ export class HomePage implements AfterViewInit {
 
   constructor(
     private readonly modalController: ModalController,
-    private readonly fa: FirebaseAnalyticsService
+    private readonly fa: FirebaseAnalyticsService,
+    private readonly localStorageService: LocalStorageService
   ) {
     this.registerIcons();
   }
@@ -237,5 +241,9 @@ export class HomePage implements AfterViewInit {
 
   get mailtoLinkForQRCodeApp() {
     return 'mailto:zcontrol.app.qr@gmail.com?subject=z-control%20QR%20Code%20Generator%20App%20Feedback';
+  }
+
+  get isAnalyticsAllowed(): boolean {
+    return this.localStorageService.getAnalyticsConsent() === true;
   }
 }

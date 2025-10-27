@@ -2,6 +2,34 @@
 
 All recent updates and improvements to our **z-control QR Code Generator** app.
 
+## [2.4] – 2025-10-26 (Web-only release – Firebase)
+
+### 🚀 Improvements
+
+- Improved the "Select Email App" section in the User Help page (web): explained differences between webmail and native mail apps.
+
+### 📦 Installations
+
+- **Web (Firebase)**: The web app version has been updated and is available via the hosting URL.
+- **Mobile (Google Play)**: No mobile APK/AAB was published because changes are web-only.
+
+## [2.3] – 2025-10-20 (Web-only release – Firebase)
+
+### 🚀 Improvements
+
+- Refactored codebase for better readability and maintainability, and updated unit tests to ensure continued reliability.
+- Improved mouse pointer behavior: The cursor now changes to a pointer when hovering over the header logo in the web app.
+- Removed extra bottom margin after the action buttons in the web app, as there is no navigation bar that could obscure them.
+
+### 🐛 Fixes
+
+- Updated unit tests to support the new tab-based layout and navigation structure.
+
+### 📦 Installations
+
+- **Web (Firebase)**: The web app version has been updated and is available via the hosting URL.
+- **Mobile (Google Play)**: No mobile APK/AAB was published because changes are web-only (unit tests and web-specific UI tweaks). Google Play remains at the previous published mobile version.
+
 ## [2.2.] – 2025-09-25
 
 ### ✨ New Features
@@ -28,8 +56,8 @@ All recent updates and improvements to our **z-control QR Code Generator** app.
 
 ### 📦 Installations
 
-- The app is available on Google Play for the **Internal Test** and **Closed Test** groups.
-- The web app version is deployed and installable via **Google Firebase**.
+- **Web**: The web app version is hosted on Google Firebase and can be accessed via browser.
+- **Mobile (Google Play)**: the app is available on Google Play (Internal Test, Closed Test groups and **production**).
 
 ## [2.1] – 2025-09-07
 
@@ -45,7 +73,7 @@ All recent updates and improvements to our **z-control QR Code Generator** app.
 ### 📦 Installations
 
 - The app is available on Google Play for the **Internal Test** and **Closed Test** groups.
-- The web app version is deployed and installable via **Google Firebase**.
+- The web app version is hosted on **Google Firebase** and can be accessed via browser.
 
 ## [2.0] – 2025-09-06
 
@@ -78,7 +106,7 @@ All recent updates and improvements to our **z-control QR Code Generator** app.
 ### 📦 Installations
 
 - The app is available on Google Play for the **Internal Test** and **Closed Test** groups.
-- The web app version is deployed and installable via **Google Firebase**.
+- The web app version is hosted on **Google Firebase** and can be accessed via browser.
 
 ## [1.19] – 2025-08-31
 

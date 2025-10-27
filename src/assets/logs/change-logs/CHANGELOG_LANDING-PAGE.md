@@ -2,6 +2,14 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [1.22] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- Require explicit consent for anonymous analytics: app access is disabled until the user opts in; if analytics consent is declined, display a clear informational message explaining the limitation.
+- Updated footer feedback email subject to include contextual details for quicker identification and handling.
+- Updated z-control QR Code Generator App information: removed outdated or incorrect details and added current, accurate release and installation notes. See the app's release notes for full details.
+
 ## [1.21] – 2025-05-25
 
 ### 🚀 Improvements
