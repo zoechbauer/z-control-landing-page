@@ -49,17 +49,24 @@
     }
 
     .footer-privacy-policy {
-      margin: 25px 0;
+      margin: 25px 0 10px 10px;
+      font-size: 1.1em;
 
       ion-icon {
         margin-bottom: -3px;
       }
     }
 
+    .footer-analytics {
+      margin: 10px 0 30px 0;
+      font-size: 0.85em;
+    }
+
     .version-info {
       .footer-version {
         font-size: 0.95em;
         margin: 0px;
+        cursor: pointer;
       }
 
       .changelog-button::part(native) {

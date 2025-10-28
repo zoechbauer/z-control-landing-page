@@ -7,12 +7,15 @@ import {
   Analytics,
 } from 'firebase/analytics';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAnalyticsService {
   private app: FirebaseApp | null = null;
   private analytics: Analytics | null = null;
-  public enabled = false;
+  private enabled = false;
+  private readonly enabledSub = new BehaviorSubject<boolean>(this.enabled);
+  public enabled$ = this.enabledSub.asObservable();
 
   init(): void {
     if (globalThis.window === undefined) return;
@@ -27,6 +30,7 @@ export class FirebaseAnalyticsService {
           console.warn('setAnalyticsCollectionEnabled failed', e);
         }
         this.enabled = false;
+        this.enabledSub.next(this.enabled);
       }
     } catch (err) {
       console.warn('Firebase init error', err);
@@ -36,7 +40,7 @@ export class FirebaseAnalyticsService {
   logEvent(name: string, params?: { [key: string]: any }) {
     // Disable logging from localhost by default during development.
     // Set to true temporarily if you need to test analytics from a local host.
-    const doLoggingInDevMode = false;
+    const doLoggingInDevMode = true;
 
     if (globalThis.window !== undefined && !doLoggingInDevMode) {
       const host = globalThis.window.location.hostname;
@@ -56,11 +60,13 @@ export class FirebaseAnalyticsService {
   enableCollection(allow: boolean) {
     if (!this.analytics) {
       this.enabled = false;
+      this.enabledSub.next(this.enabled);
       return;
     }
     try {
       setAnalyticsCollectionEnabled(this.analytics, allow);
       this.enabled = allow;
+      this.enabledSub.next(this.enabled);
     } catch (e) {
       console.warn('setAnalyticsCollectionEnabled failed', e);
     }

@@ -2,7 +2,7 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [1.22] – YYYY-MM-DD
+## [2.1] – YYYY-MM-DD
 
 ### 🚀 Improvements
 
@@ -10,9 +10,11 @@ All recent updates and improvements to our **landing page**.
 - Disable Firebase Analytics on localhost by default; enable it only by explicitly setting the analytics logging variable.
 - Updated footer feedback email subject to include contextual details for quicker identification and handling.
 - Added a new ion-accordion in the z-control QR Code Generator that documents the differences between the web and mobile apps and provides an overview of the app’s structure.
+- Clicking the logo toggles the footer (open/close) and records a Firebase Analytics event to track the interaction.
+- Added a footer ion-toggle allowing users to opt in/out of analytics collection and updated the landing page privacy policy to reflect this choice.
 - Code cleanup for improved maintainability.
 
-## [1.21] – 2025-05-25
+## [2.0] – 2025-10-25
 
 ### 🚀 Improvements
 

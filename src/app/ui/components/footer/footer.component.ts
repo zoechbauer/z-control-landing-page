@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { addIcons } from 'ionicons';
 import {
   personOutline,
@@ -15,28 +15,34 @@ import {
   IonToolbar,
   IonIcon,
   IonButton,
+  IonToggle,
   ModalController,
 } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/services/utils.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
-  imports: [IonFooter, IonToolbar, IonIcon, IonButton, RouterModule],
+  imports: [IonFooter, IonToolbar, IonIcon, IonButton, RouterModule, IonToggle, AsyncPipe],
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
   showDetails = false;
   private readonly landingPageApp = 'Landing Page';
 
   constructor(
-    private readonly fa: FirebaseAnalyticsService,
-    private readonly modalController: ModalController
+    public readonly fa: FirebaseAnalyticsService,
+    private readonly modalController: ModalController,
+    private readonly utilsService: UtilsService,
+    private readonly localStorageService: LocalStorageService
   ) {
     this.registerIcons();
   }
@@ -94,5 +100,24 @@ export class FooterComponent {
       'download-outline': downloadOutline,
       'document-text-outline': documentTextOutline,
     });
+  }
+
+  ngOnInit(): void {
+    this.utilsService.logoClicked$.subscribe(() => {
+      this.fa.logEvent('logo_clicked', {
+        app: this.landingPageApp,
+      });
+      this.showDetails = !this.showDetails;
+    });
+  }
+
+  onChangeEnableAnalytics(enabled: boolean) {
+    const eventName = enabled ? 'enable_analytics_footer' : 'disable_analytics_footer';
+    this.fa.logEvent(eventName, {
+      app: this.landingPageApp,
+    });
+
+    this.localStorageService.setAnalyticsConsent(enabled);
+    this.fa.enableCollection(enabled);
   }
 }

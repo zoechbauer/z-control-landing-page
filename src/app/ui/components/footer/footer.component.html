@@ -41,6 +41,13 @@
               Privacy Policy
             </a>
           </div>
+          <div class="footer-analytics">
+            <ion-toggle
+              [checked]="fa.enabled$ | async"
+              (ionChange)="onChangeEnableAnalytics($event.detail.checked)"
+              >Enable Analytics</ion-toggle
+            >
+          </div>
           <div
             class="version-info"
             (click)="openChangelog()"

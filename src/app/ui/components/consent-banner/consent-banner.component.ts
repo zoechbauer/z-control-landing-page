@@ -7,7 +7,7 @@ import { IonToolbar, IonButton, IonButtons, IonText } from '@ionic/angular/stand
   templateUrl: './consent-banner.component.html',
   styleUrls: ['./consent-banner.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonToolbar, IonButton, IonButtons, IonText],
+  imports: [CommonModule, IonToolbar, IonButton, IonText],
 })
 export class ConsentBannerComponent {
   @Output() consent = new EventEmitter<boolean>();

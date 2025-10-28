@@ -11,6 +11,7 @@ import {
   IonButton,
   IonIcon,
 } from '@ionic/angular/standalone';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,10 @@ export class HeaderComponent implements OnInit {
   @Input() selectedAccordion: string = '';
   @Input() showBackButton: boolean = false;
 
-  constructor(private readonly router: Router) {
+  constructor(
+    private readonly router: Router,
+    private readonly utilsService: UtilsService
+  ) {
     this.registerIcons();
   }
 
@@ -53,5 +57,10 @@ export class HeaderComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/home']);
+  }
+
+  openFooter() {
+    // firebase analytics event handled in footer component
+    this.utilsService.onLogoClicked();
   }
 }
