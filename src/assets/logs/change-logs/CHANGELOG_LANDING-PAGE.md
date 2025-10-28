@@ -7,8 +7,10 @@ All recent updates and improvements to our **landing page**.
 ### 🚀 Improvements
 
 - Require explicit consent for anonymous analytics: app access is disabled until the user opts in; if analytics consent is declined, display a clear informational message explaining the limitation.
+- Disable Firebase Analytics on localhost by default; enable it only by explicitly setting the analytics logging variable.
 - Updated footer feedback email subject to include contextual details for quicker identification and handling.
-- Updated z-control QR Code Generator App information: removed outdated or incorrect details and added current, accurate release and installation notes. See the app's release notes for full details.
+- Added a new ion-accordion in the z-control QR Code Generator that documents the differences between the web and mobile apps and provides an overview of the app’s structure.
+- Code cleanup for improved maintainability.
 
 ## [1.21] – 2025-05-25
 
@@ -24,7 +26,6 @@ All recent updates and improvements to our **landing page**.
 - Documented DebugView testing, local debug index usage (index_DEBUG_FIREBASE-config.html), and deployment guidance in docs/FIREBASE_ANALYTICS.md and README.
 - Created a dedicated privacy policy for the Landing Page (DE/EN) and updated the z-control QR Code Generator privacy page for improved layout and clarity.
 - Minor README and documentation updates describing env generation, testing steps, and opt‑out instructions.
-
 
 ## [1.20] – 2025-09-25
 
@@ -140,18 +141,17 @@ All recent updates and improvements to our **landing page**.
 
 ### 🚀 Improvements
 
-  - Improved header layout: Logo now correctly positioned on mobile and desktop and avoids overlapping with the back button
+- Improved header layout: Logo now correctly positioned on mobile and desktop and avoids overlapping with the back button
 
 ### 📦 Installations
 
 - **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
-
 ## [1.6] – 2025-07-21
 
 ### 🚀 Improvements
 
-  - Improved header layout: Logo now correctly positioned on mobile and desktop and avoids overlapping with the back button
+- Improved header layout: Logo now correctly positioned on mobile and desktop and avoids overlapping with the back button
 
 ### 📦 Installations
 
@@ -172,7 +172,7 @@ All recent updates and improvements to our **landing page**.
 ### ✨ New Features
 
 - **Separate change logs for each application**
-    - z-control QR Code Generator app has a new accordion entry for change log
+  - z-control QR Code Generator app has a new accordion entry for change log
 
 ### 📦 Installations
 
@@ -197,14 +197,14 @@ All recent updates and improvements to our **landing page**.
 
   - **Solution**: new user experience flow for e-mail sending
 
-    - ***Native Apps (Android)***
+    - **_Native Apps (Android)_**
 
       1. User clicks "Mail Code"
       2. QR code downloads automatically
       3. Email client opens with pre-filled recipients, content and attachments
       4. User sends email
 
-    - ***Desktop Web***
+    - **_Desktop Web_**
 
       1. User clicks "Mail Code"
       2. QR code downloads to Downloads folder
@@ -212,12 +212,12 @@ All recent updates and improvements to our **landing page**.
       4. Email client opens via mailto: with recipients and content pre-filled
       5. User manually attaches downloaded files and sends
 
-    - ***Mobile Web***
+    - **_Mobile Web_**
 
-        - **Android browsers**: Full functionality with options dialog (Try Email App, 
-            Copy QR Text, Manual Instructions, Cancel)
+      - **Android browsers**: Full functionality with options dialog (Try Email App,
+        Copy QR Text, Manual Instructions, Cancel)
 
-        - **iOS Safari/browsers**: ⚠️ **Limited functionality** - QR code downloads but email options dialog may not appear due to iOS browser restrictions
+      - **iOS Safari/browsers**: ⚠️ **Limited functionality** - QR code downloads but email options dialog may not appear due to iOS browser restrictions
 
 ### 📦 Installations
 
@@ -268,6 +268,6 @@ All recent updates and improvements to our **landing page**.
 - **Mobile Ready**: Fully responsive design for all devices
 - **Professional Design**: Clean, modern interface following best practices
 
-
 ---
+
 Thank you for using our applications!

@@ -174,7 +174,111 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1b: Start Web App">
+          <ion-accordion
+            value="1b: Differences between Web and Mobile App and Structure of the app"
+          >
+            <ion-item slot="header" color="light">
+              <ion-label
+                >Differences between Web and Mobile App and Structure of the
+                app</ion-label
+              >
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              <p>
+                You can use z-control QR Code Generator as Web App in your
+                browser or as mobile app installed from the Google Play Store.
+                There is only one source code for both apps.
+              </p>
+              <h5>
+                <ion-icon name="eye-outline"></ion-icon>
+                App Structure & Navigation
+              </h5>
+              <p>The app uses two main tabs for navigation:</p>
+              <ul>
+                <li><b>QR Code:</b> For creating and sending QR codes.</li>
+                <li>
+                  <b>Settings:</b> For managing QR code size for PDFs, email
+                  addresses, language settings, and viewing app information.
+                </li>
+              </ul>
+              <p>Navigation</p>
+              <p>
+                <b>On mobile devices in portrait mode:</b> Use the tabs at the
+                bottom of the screen to switch between QR Code and Settings.
+              </p>
+              <p>
+                <b>On tablets, desktops, or in landscape mode:</b> Use the
+                navigation button in the top right of the header to switch
+                between QR Code and Settings.
+              </p>
+              <p>
+                The web app offers advantages for creating longer QR code texts,
+                but it has limitations compared to the mobile app.
+              </p>
+              <h5>
+                <ion-icon name="contrast-outline"></ion-icon>
+                Differences between Web and Mobile App
+              </h5>
+              <h6>Mobile App</h6>
+              <p>
+                On Android devices the system picker opens so you can choose
+                your preferred mail app. This choice can be reset in the Android
+                settings.
+              </p>
+              <p>
+                The generated QR codes are saved in the "Documents" folder and
+                automatically attached to the email. When the app starts, QR
+                code files older than 3 hours are deleted automatically.
+              </p>
+              <p>
+                The email body includes the full QR code text and more detailed
+                printing instructions.
+              </p>
+              <p>
+                The app is available on the Google Play Store and can be used
+                offline. Emails are sent automatically once an internet
+                connection is available again.
+              </p>
+              <p>
+                Web-specific information is omitted from this help page —
+                consult the web app for platform-specific details and
+                instructions.
+              </p>
+              <h6>Web App</h6>
+              <p>
+                The browser or operating system opens the registered email
+                client. On desktop systems this is either the system's default
+                mail client or a webmail interface configured in the browser.
+              </p>
+              <p>
+                For privacy and security reasons browsers cannot attach files
+                automatically to emails. Therefore you must manually add the QR
+                code files from the Downloads folder as attachments. Browsers
+                also cannot delete files automatically; cleanup must be done
+                manually.
+              </p>
+              <p>
+                The email body includes references to both QR code files (PDF
+                and PNG), the QR code text, and shortened printing instructions.
+                Because sending is done via mailto:, the mail body is length
+                limited; typically only the first ~400 characters (of a maximum
+                of 1000) of the QR code text and a reduced printing instruction
+                are included.
+              </p>
+              <p>
+                The Web App is platform-independent and requires no
+                installation. It can be used directly in the browser but
+                requires an internet connection.
+              </p>
+              <p>
+                Mobile-specific information is omitted from this help page —
+                consult the native mobile app for platform-specific details and
+                instructions.
+              </p>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="1c: Start Web App">
             <ion-item slot="header" color="light">
               <ion-label>Start app as Web App without installation</ion-label>
             </ion-item>
@@ -308,7 +412,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1c: Get Mobile App">
+          <ion-accordion value="1d: Get Mobile App">
             <ion-item slot="header" color="light">
               <ion-label>Get the Mobile App</ion-label>
             </ion-item>
@@ -397,7 +501,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1d: Inline Help">
+          <ion-accordion value="1e: Inline Help">
             <ion-item slot="header" color="light">
               <ion-label>Inline Help</ion-label>
             </ion-item>
@@ -495,7 +599,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1e: Feedback">
+          <ion-accordion value="1f: Feedback">
             <ion-item slot="header" color="light">
               <ion-label>Send Us Feedback</ion-label>
             </ion-item>
@@ -513,7 +617,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1f: Privacy Policy">
+          <ion-accordion value="1g: Privacy Policy">
             <ion-item slot="header" color="light">
               <ion-label>Privacy Policy</ion-label>
             </ion-item>
@@ -534,7 +638,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1g: Release Notes">
+          <ion-accordion value="1h: Release Notes">
             <ion-item slot="header" color="light">
               <ion-label>What's new? (Release Notes)</ion-label>
             </ion-item>
@@ -557,7 +661,7 @@
             </div>
           </ion-accordion>
 
-          <ion-accordion value="1h: Get Source Code">
+          <ion-accordion value="1i: Get Source Code">
             <ion-item slot="header" color="light">
               <ion-label>Get the Source Code</ion-label>
             </ion-item>

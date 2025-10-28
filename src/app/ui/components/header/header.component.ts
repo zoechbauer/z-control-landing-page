@@ -39,9 +39,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isMobile = window.innerWidth <= 600;
-    window.addEventListener('resize', () => {
-      this.isMobile = window.innerWidth <= 600;
+    this.isMobile = globalThis.window.innerWidth <= 600;
+    globalThis.window.addEventListener('resize', () => {
+      this.isMobile = globalThis.window.innerWidth <= 600;
     });
   }
 

@@ -15,7 +15,7 @@ export class FirebaseAnalyticsService {
   public enabled = false;
 
   init(): void {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
     try {
       this.app = initializeApp(environment.firebase);
       if (environment.firebase?.measurementId) {
@@ -34,6 +34,17 @@ export class FirebaseAnalyticsService {
   }
 
   logEvent(name: string, params?: { [key: string]: any }) {
+    // Disable logging from localhost by default during development.
+    // Set to true temporarily if you need to test analytics from a local host.
+    const doLoggingInDevMode = false;
+
+    if (globalThis.window !== undefined && !doLoggingInDevMode) {
+      const host = globalThis.window.location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1' || host === '::1') {
+        return; // skip analytics on local dev hosts
+      }
+    }
+
     if (!this.analytics || !this.enabled) return; // do not send if collection disabled
     try {
       firebaseLogEvent(this.analytics, name, params);

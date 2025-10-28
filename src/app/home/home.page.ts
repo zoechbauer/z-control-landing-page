@@ -6,7 +6,9 @@ import {
   checkmark,
   cloud,
   construct,
+  contrastOutline,
   download,
+  eyeOutline,
   globe,
   help,
   home,
@@ -68,7 +70,7 @@ enum App {
     IonCardTitle,
     HeaderComponent,
     FooterComponent,
-    CommonModule
+    CommonModule,
   ],
 })
 export class HomePage implements AfterViewInit {
@@ -116,6 +118,8 @@ export class HomePage implements AfterViewInit {
       rocket: rocket,
       sunny: sunny,
       warning: warning,
+      'eye-outline': eyeOutline,
+      'contrast-outline': contrastOutline,
     });
   }
 
@@ -127,7 +131,7 @@ export class HomePage implements AfterViewInit {
   }
 
   onDownloadNative() {
-    window.open(this.nativeDownloadUrl, '_blank');
+    globalThis.window.open(this.nativeDownloadUrl, '_blank');
     this.fa.logEvent('download_native', {
       platform: 'android',
       url: this.nativeDownloadUrl,
@@ -136,7 +140,7 @@ export class HomePage implements AfterViewInit {
   }
 
   onGetSourceCode() {
-    window.open(this.sourceCodeUrl, '_blank');
+    globalThis.window.open(this.sourceCodeUrl, '_blank');
     this.fa.logEvent('get_source_code', {
       repo: 'z-control-qr-code-generator',
       app: this.landingPageApp,
@@ -144,7 +148,7 @@ export class HomePage implements AfterViewInit {
   }
 
   onOpenWebApp() {
-    window.open(this.webAppUrl, '_blank');
+    globalThis.window.open(this.webAppUrl, '_blank');
     this.fa.logEvent('open_web_app', {
       url: this.webAppUrl,
       app: this.landingPageApp,
@@ -177,14 +181,14 @@ export class HomePage implements AfterViewInit {
   }
 
   private handlePotentialMainAccordionClose() {
-    if (!this.subAccordionOpened) {
-      // Main accordion is actually closing
-      this.currentMainAccordion = '';
-      this.selectedAccordion = '';
-    } else {
+    if (this.subAccordionOpened) {
       // This was triggered by sub-accordion activity - keep header
       // Reset the flag for next time
       this.subAccordionOpened = false;
+    } else {
+      // Main accordion is actually closing
+      this.currentMainAccordion = '';
+      this.selectedAccordion = '';
     }
   }
 

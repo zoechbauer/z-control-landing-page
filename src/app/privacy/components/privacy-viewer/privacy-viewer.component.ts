@@ -38,9 +38,9 @@ export class PrivacyViewerComponent implements OnInit {
   availableLanguages: string[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private privacyService: PrivacyService
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly privacyService: PrivacyService
   ) {
     addIcons({ chevronBackOutline, globeOutline });
   }
