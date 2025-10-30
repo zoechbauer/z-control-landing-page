@@ -10,15 +10,13 @@
     <h2>Welcome to our applications</h2>
     <div *ngIf="isAnalyticsAllowed">
       <p>
-        This is a landing page for the <i>z-control QR Code Generator</i> app
-        and other future applications.
-      </p>
-      <p>
-        Here you can find information about our apps, how to use them, and how
-        to contact us.
+        This landing page presents the <i>z-control QR Code Generator</i> and
+        other apps we are developing.<br />
+        Explore features, platform-specific guidance, and support options to get
+        started or find help.
       </p>
     </div>
-    <div *ngIf="!isAnalyticsAllowed">
+    <div *ngIf="!isAnalyticsAllowed" class="analytics-not-allowed">
       <p class="ion-text-left">
         Please enable anonymous analytics using the control at the bottom of the
         page to continue using the app. This only collects non‑identifying usage
@@ -37,7 +35,10 @@
     (ionChange)="accordionGroupChange($event)"
     [disabled]="!isAnalyticsAllowed"
   >
-    <ion-accordion value="group 1: QR Code Generator">
+    <ion-accordion
+      value="group 1: QR Code Generator"
+      title="{{ currentMainAccordion === 'group 1' ? 'Collapse QR Code Generator section' : 'Expand QR Code Generator section' }}"
+    >
       <ion-item slot="header" color="light">
         <img
           class="z-control-qrcode-generator-logo"
@@ -46,7 +47,7 @@
         />
         <ion-label>z-control QR Code Generator App</ion-label>
       </ion-item>
-      <div slot="content">
+      <div slot="content" title="">
         <ion-card color="medium">
           <ion-card-header>
             <ion-card-title>What the app does</ion-card-title>
@@ -78,12 +79,15 @@
           </ion-card-content>
         </ion-card>
 
-        <ion-accordion-group (ionChange)="subAccordionChange('group 1')">
+        <ion-accordion-group
+          (ionChange)="subAccordionChange('group 1')"
+          title="{{ subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
+        >
           <ion-accordion value="1a: What are QR Codes">
             <ion-item slot="header" color="light">
               <ion-label>What are QR Codes and how can you use them?</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <p>
                 QR codes (Quick Response Codes) are two-dimensional barcodes
                 that store information in a square pattern. They can be read
@@ -187,7 +191,7 @@
                 app</ion-label
               >
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <p>
                 You can use <i>z-control QR Code Generator</i> as Web App in
                 your browser or as mobile app installed from the Google Play
@@ -286,7 +290,7 @@
             <ion-item slot="header" color="light">
               <ion-label>Start app as Web App without installation</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <h5>Try Before You Download or Use It for Longer Texts</h5>
               <p>
                 Test the full functionality of z-control QR Code Generator
@@ -354,6 +358,7 @@
                   color="secondary"
                   expand="block"
                   class="web-app-button"
+                  title="Open Web App in a new tab — QR code files will download to your device; attach them manually to emails (browser security prevents automatic attachments)"
                 >
                   <ion-icon name="logo-firebase" slot="start"></ion-icon>
                   Open Web App
@@ -420,7 +425,7 @@
             <ion-item slot="header" color="light">
               <ion-label>Get the Mobile App</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <h5>
                 <ion-icon name="cloud-download"></ion-icon>
                 Download the Native Android App
@@ -481,6 +486,7 @@
                   color="primary"
                   expand="block"
                   class="download-button"
+                  title="Download the native Android app from the Google Play Store"
                 >
                   <ion-icon
                     name="logo-google-playstore"
@@ -497,6 +503,7 @@
                   href="https://z-control-qr-code.web.app"
                   target="_blank"
                   class="web-app-link"
+                  title="Open Web App in a new tab — QR code files will download to your device; attach them manually to emails (browser security prevents automatic attachments)"
                 >
                   <strong>Web App</strong>
                 </a>
@@ -509,7 +516,7 @@
             <ion-item slot="header" color="light">
               <ion-label>Inline Help</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <h5>
                 <ion-icon name="book"></ion-icon>
                 Comprehensive Help & Tutorials
@@ -584,6 +591,7 @@
                   href="https://z-control-qr-code.web.app"
                   target="_blank"
                   class="web-app-link"
+                  title="Open z-control QR Code Generator as Web App in a new tab"
                 >
                   <strong>Web App</strong>
                 </a>
@@ -607,15 +615,19 @@
             <ion-item slot="header" color="light">
               <ion-label>Send Us Feedback</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <p>
                 We value your feedback!
                 <br />
                 <ion-icon name="mail"></ion-icon>
                 If you have questions, suggestions, or comments, please contact
                 us at
-                <a href="{{ mailtoLinkForQRCodeApp }}">
-                  z-control Support & Feedback </a
+                <a
+                  href="{{ mailtoLinkForQRCodeApp }}"
+                  title="Open your email client with recipient and subject prefilled."
+                >
+                  z-control Support & Feedback
+                </a>
                 >.
               </p>
             </div>
@@ -625,7 +637,7 @@
             <ion-item slot="header" color="light">
               <ion-label>Privacy Policy</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <p>
                 <ion-icon name="checkmark"></ion-icon>
                 Your privacy is important to us.
@@ -635,6 +647,7 @@
                 <a
                   [routerLink]="['/privacy/basic/en']"
                   [queryParams]="{ from: selectedAccordion }"
+                  title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section (returns you to the same place)."
                   >Privacy Policy</a
                 >
                 to learn how we handle your data.
@@ -646,7 +659,7 @@
             <ion-item slot="header" color="light">
               <ion-label>What's new? (Release Notes)</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <p>
                 <ion-icon name="checkmark"></ion-icon>
                 All new features, improvements and bug fixes of the QR Code app
@@ -658,6 +671,7 @@
                 (click)="openChangelog()"
                 (keydown.enter)="openChangelog()"
                 class="changelog-button"
+                title="Open release notes (changelog) — grouped by category and sorted newest first"
               >
                 <ion-icon name="list" slot="start"></ion-icon>
                 Release Notes
@@ -669,7 +683,7 @@
             <ion-item slot="header" color="light">
               <ion-label>Get the Source Code</ion-label>
             </ion-item>
-            <div class="ion-padding accordion-content" slot="content">
+            <div class="ion-padding accordion-content" slot="content" title="">
               <p>
                 The app is open source, and the source code is available on
                 <i>GitHub</i>
@@ -682,6 +696,8 @@
                   color="primary"
                   expand="block"
                   class="download-button"
+                  title="Open GitHub repository in a new tab — view source, license, changelog, and contribution info"
+                  aria-label="Open GitHub repository (opens in a new tab)"
                 >
                   <ion-icon name="logo-github" slot="start"></ion-icon>
                   Get Source Code
@@ -693,11 +709,14 @@
       </div>
     </ion-accordion>
 
-    <ion-accordion value="group 2: Other Apps">
+    <ion-accordion
+      value="group 2: Other Apps"
+      title="{{ currentMainAccordion === 'group 2' ? 'Collapse Other Apps section' : 'Expand Other Apps section' }}"
+    >
       <ion-item slot="header" color="light">
         <ion-label>Other Apps</ion-label>
       </ion-item>
-      <div class="ion-padding" slot="content">
+      <div class="ion-padding" slot="content" title="">
         <ion-card>
           <ion-card-header>
             <ion-card-title>Procedure</ion-card-title>

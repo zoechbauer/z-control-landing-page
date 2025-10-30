@@ -9,20 +9,27 @@
     >
       <!-- Compact footer  -->
       <div class="footer-compact">
-        <div class="footer-main logo-container">
-          <span class="footer-copyright">© 2025</span>
-          <img
-            class="logo"
-            src="assets/icon/z-bell-48px.png"
-            alt="z-control logo"
-          />
-          <span class="footer-copyright">z-control</span>
+        <div
+          class="logo-container"
+          title="z-control — Innovative Mobile Solutions"
+        >
+          <div class="footer-copyright">© 2025</div>
+          <div>
+            <img
+              class="logo"
+              src="assets/icon/z-bell-48px.png"
+              alt="z-control logo"
+            />
+          </div>
+          <div class="z-control-name">z-control</div>
         </div>
+
         <ion-button
           fill="clear"
           size="small"
           class="expand-button"
           (keydown.enter)="toggleFooterDetails()"
+          title="{{ showDetails ? 'Collapse details' : 'Expand details' }}"
         >
           <ion-icon
             [name]="showDetails ? 'chevron-up-outline' : 'chevron-down-outline'"
@@ -37,7 +44,11 @@
           <p>Innovative Mobile Solutions</p>
           <div class="footer-privacy-policy">
             <ion-icon name="document-text-outline"></ion-icon>
-            <a class="footer-link" [routerLink]="privacyPolicyLink">
+            <a
+              class="footer-link"
+              [routerLink]="privacyPolicyLink"
+              title="Read our privacy policy"
+            >
               Privacy Policy
             </a>
           </div>
@@ -45,13 +56,17 @@
             <ion-toggle
               [checked]="fa.enabled$ | async"
               (ionChange)="onChangeEnableAnalytics($event.detail.checked)"
-              >Enable Analytics</ion-toggle
+              title="Enable or disable anonymous analytics"
+              color="dark"
             >
+              Enable Analytics
+            </ion-toggle>
           </div>
           <div
             class="version-info"
             (click)="openChangelog()"
             (keydown.enter)="openChangelog()"
+            title="Open release notes"
           >
             <p class="footer-version">{{ versionInfo }}</p>
             <ion-button fill="clear" size="small" class="changelog-button">
@@ -61,17 +76,26 @@
           </div>
         </div>
         <div class="footer-contact">
-          <div class="footer-email">
+          <div
+            class="footer-email"
+            title="Contact support via email"
+          >
             <ion-icon name="mail-outline"></ion-icon>
             <a class="footer-link" href="{{ mailtoLink }}"
               >z-control Support & Feedback</a
             >
           </div>
-          <div class="contact-item">
+          <div
+            class="contact-item"
+            title="Programmer and owner of z-control"
+          >
             <ion-icon name="person-outline"></ion-icon>
             <span>Hans Zöchbauer</span>
           </div>
-          <div class="contact-item small">
+          <div
+            class="contact-item"
+            title="Location of z-control"
+          >
             <ion-icon name="location-outline"></ion-icon>
             <span>Austria</span>
           </div>

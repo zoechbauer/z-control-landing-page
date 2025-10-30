@@ -209,3 +209,15 @@ ion-icon {
 .test-status {
   color: var(--ion-color-step-50);
 }
+
+.analytics-not-allowed {
+  margin-top: 20px;
+  padding: 12px;
+  border: 3px solid var(--ion-color-danger);
+  border-radius: 8px;
+
+    p {
+    margin: 0;
+    font-size: 16px;
+  }
+}

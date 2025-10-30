@@ -6,13 +6,21 @@
         fill="clear"
         (click)="goBack()"
         (keydown.enter)="goBack()"
+        title="Go back"
       >
         <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <div (click)="openFooter()"
-    class="logo-container" [class.with-back-button]="showBackButton">
+    <div
+      (click)="openFooter()"
+      (keydown.enter)="openFooter()"
+      class="logo-container"
+      [class.with-back-button]="showBackButton"
+      tabindex="0"
+      role="button"
+      title="Toggle footer — show or hide information about z-control and this app"
+    >
       <img
         class="logo"
         src="assets/icon/z-bell-32px.png"
@@ -25,6 +33,7 @@
       slot="end"
       class="selected-accordion"
       *ngIf="selectedAccordion"
+      title="selected accordion"
       >{{ selectedAccordion }}</ion-title
     >
   </ion-toolbar>

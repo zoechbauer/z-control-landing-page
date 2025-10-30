@@ -12,6 +12,8 @@ All recent updates and improvements to our **landing page**.
 - Added a new ion-accordion in the z-control QR Code Generator that documents the differences between the web and mobile apps and provides an overview of the app’s structure.
 - Clicking the logo toggles the footer (open/close) and records a Firebase Analytics event to track the interaction.
 - Added a footer ion-toggle allowing users to opt in/out of analytics collection and updated the landing page privacy policy to reflect this choice.
+- Added descriptive tooltips to accordions, buttons, and links to improve clarity, accessibility, and usability.
+- Improved styling and text of Welcome section.
 - Code cleanup for improved maintainability.
 
 ## [2.0] – 2025-10-25

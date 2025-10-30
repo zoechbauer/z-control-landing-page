@@ -124,10 +124,7 @@ export class HomePage implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.accordionGroup) {
-      this.accordionGroup.value = 'group 1';
-      this.setSelectedAccordion('group 1');
-    }
+    this.openQRCodeGeneratorAccordion();
   }
 
   onDownloadNative() {
@@ -157,6 +154,7 @@ export class HomePage implements AfterViewInit {
 
   accordionGroupChange(event: CustomEvent) {
     const value: string = event.detail.value;
+    console.log('Accordion group changed, new value:', value);
     this.fa.logEvent('accordion_change', {
       accordion_value: value,
       app: this.landingPageApp,
@@ -249,5 +247,11 @@ export class HomePage implements AfterViewInit {
 
   get isAnalyticsAllowed(): boolean {
     return this.localStorageService.getAnalyticsConsent() === true;
+  }
+
+  private openQRCodeGeneratorAccordion() {
+    (this.accordionGroup as any).value = 'group 1: QR Code Generator';
+    this.currentMainAccordion = 'group 1';
+    this.setSelectedAccordion('group 1');
   }
 }

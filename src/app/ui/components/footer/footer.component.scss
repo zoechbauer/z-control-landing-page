@@ -8,11 +8,11 @@
     justify-content: center;
     min-height: 60px;
     text-align: center;
+    margin-left: 27px;
 
-    .footer-main {
+    .logo-container {
       display: flex;
-      flex-direction: row;
-      align-items: end;
+      align-items: center;
       justify-content: center;
       flex: 1 1 auto;
 
@@ -22,11 +22,6 @@
         flex-shrink: 0;
         margin: 10px;
         border-radius: 8px;
-      }
-
-      .footer-copyright {
-        font-size: 0.95em;
-        margin-bottom: 10px;
       }
     }
 
@@ -74,10 +69,6 @@
       }
     }
 
-    .footer-playstore {
-      margin: 10px 0;
-    }
-
     .footer-contact {
       display: flex;
       flex-direction: column;
@@ -90,7 +81,6 @@
 
       .footer-email {
         font-size: 0.95em;
-        word-break: break-all;
         margin: 15px 0 25px 0;
 
         ion-icon {
@@ -102,10 +92,6 @@
         display: flex;
         align-items: center;
         font-size: 0.95em;
-
-        &.small {
-          font-size: 0.8em;
-        }
       }
     }
     .footer-navigation-bar {
