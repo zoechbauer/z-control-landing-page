@@ -294,12 +294,7 @@ npm run test:coverage
 
 ## 📱 Mobile App Development
 
-This landing page showcases the z-control ion-title {
-text-align: center;
-width: 100%;
-justify-content: center;
-display: flex;
-} mobile application. The mobile app is now available on the Google Play Store (currently in internal testing). For updates and source code, see the [z-control QR Code Generator app in GitHub repository](https://github.com/zoechbauer/z-control-qr-code-generator).
+This landing page showcases the z-control mobile application. The mobile app is now available on the Google Play Store. For updates and source code, see the [z-control QR Code Generator app in GitHub repository](https://github.com/zoechbauer/z-control-qr-code-generator).
 
 ## 🤝 Contributing
 
@@ -329,7 +324,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Status
 
-- 🔄 Landing Page: under construction
+- 🔄 Landing Page: working on unit-tests
 - ✅ Firebase Hosting Landing page: Complete
 - ✅ Firebase Hosting z-control QR Code Generator: Complete
 - ✅ Google Play z-control QR Code Generator: Complete
