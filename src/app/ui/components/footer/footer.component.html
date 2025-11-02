@@ -47,12 +47,13 @@
             <a
               class="footer-link"
               [routerLink]="privacyPolicyLink"
+              [queryParams]="{ internal: 'true' }"
               title="Read our privacy policy"
             >
               Privacy Policy
             </a>
           </div>
-          <div class="footer-analytics">
+          <div class="footer-analytics" [class.not-enabled]="!(fa.enabled$ | async)">
             <ion-toggle
               [checked]="fa.enabled$ | async"
               (ionChange)="onChangeEnableAnalytics($event.detail.checked)"
@@ -76,26 +77,17 @@
           </div>
         </div>
         <div class="footer-contact">
-          <div
-            class="footer-email"
-            title="Contact support via email"
-          >
+          <div class="footer-email" title="Contact support via email">
             <ion-icon name="mail-outline"></ion-icon>
             <a class="footer-link" href="{{ mailtoLink }}"
               >z-control Support & Feedback</a
             >
           </div>
-          <div
-            class="contact-item"
-            title="Programmer and owner of z-control"
-          >
+          <div class="contact-item" title="Programmer and owner of z-control">
             <ion-icon name="person-outline"></ion-icon>
             <span>Hans Zöchbauer</span>
           </div>
-          <div
-            class="contact-item"
-            title="Location of z-control"
-          >
+          <div class="contact-item" title="Location of z-control">
             <ion-icon name="location-outline"></ion-icon>
             <span>Austria</span>
           </div>

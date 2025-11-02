@@ -6,13 +6,13 @@ import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 
 import { FirebaseAnalyticsService } from './services/firebase-analytics.service';
-import { ConsentBannerComponent } from './ui/components/consent-banner/consent-banner.component';
 import { LocalStorageService } from './services/local-storage.service';
+import { UtilsService } from './services/utils.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, ConsentBannerComponent, CommonModule],
+  imports: [IonApp, IonRouterOutlet, CommonModule],
 })
 export class AppComponent implements OnInit {
   showConsentBanner = false;
@@ -21,7 +21,8 @@ export class AppComponent implements OnInit {
     private readonly router: Router,
     private readonly fa: FirebaseAnalyticsService,
     private readonly platform: Platform,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
+    private readonly utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -32,16 +33,10 @@ export class AppComponent implements OnInit {
     }
 
     this.platform.ready().then(() => {
-      try {
-        const consent = this.localStorageService.getAnalyticsConsent();
-        this.showConsentBanner = consent !== true;
-        if (consent !== null) {
-          this.fa.enableCollection(consent);
-        }
-      } catch (err) {
-        console.error('Consent check error', err);
-        // fallback: show banner so user can decide
-        this.showConsentBanner = true;
+      const consent = this.localStorageService.getAnalyticsConsent();
+      this.fa.enableCollection(consent ?? false);
+      if (consent !== true) {
+        this.openFooter();
       }
     });
 
@@ -55,9 +50,10 @@ export class AppComponent implements OnInit {
       });
   }
 
-  onConsentDecision(allow: boolean) {
-    this.localStorageService.setAnalyticsConsent(allow);
-    this.fa.enableCollection(allow);
-    this.showConsentBanner = false;
+  private openFooter() {
+    // firebase analytics event handled in footer component
+    setTimeout(() => {
+      this.utilsService.onLogoClicked();
+    }, 1000);
   }
 }

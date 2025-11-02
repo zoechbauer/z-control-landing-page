@@ -2,6 +2,20 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.2] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- Show the back button and footer on the Privacy Policy page only when the page is opened from the Landing Page; hide them when opened from external sources (e.g., the z-control QR Code Generator app).
+- Replaced the app-consent-banner with an expanded footer that contains the analytics opt-in toggle.
+- Added query parameters to routing so the Privacy Policy can detect whether it was opened from the Landing Page or from an external app.
+- Updated the informational text shown when analytics are disabled for clearer guidance.
+- Code cleanup: replaced *ngIf usage with @if in templates for improved readability.
+
+### 🐛 Fixes
+
+- Fixed an issue that caused the Privacy Policy to always display in English; it now respects the user's selected language on the Landing Page and in linked web/mobile apps.
+
 ## [2.1] – 2025-10-30
 
 ### 🚀 Improvements

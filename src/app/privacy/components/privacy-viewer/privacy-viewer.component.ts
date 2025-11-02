@@ -36,6 +36,7 @@ export class PrivacyViewerComponent implements OnInit {
   policyType = 'qr-code-generator';
   language = 'en';
   availableLanguages: string[] = [];
+  showBackButtonAndFooter = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -46,8 +47,15 @@ export class PrivacyViewerComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Check for internal navigation first
+    this.detectInternalNavigation();
+
     this.route.params.subscribe((params) => {
       this.policyType = params['type'] || 'qr-code-generator';
+      if (this.policyType === 'basic') {
+        // Map legacy 'basic' type to 'qr-code-generator' because only that is available now in assets/privacy/policies
+        this.policyType = 'qr-code-generator';
+      }
       this.language = params['language'] || 'en';
       this.loadPolicy();
     });
@@ -55,12 +63,29 @@ export class PrivacyViewerComponent implements OnInit {
     // Get selectedAccordion from query params for header + support legacy approach
     this.route.queryParams.subscribe((params) => {
       this.selectedAccordion = params['from'] || 'Privacy Policy';
+
+      // Check for internal parameter - if present, show footer/back button
+      if (params['internal'] === 'true') {
+        this.showBackButtonAndFooter = true;
+      }
+
       // Support legacy query parameter approach
       if (params['from']) {
         this.policyType = this.mapLegacyFromParam(params['from']);
       }
     });
     this.registerIcons();
+  }
+
+  private detectInternalNavigation() {
+    // Check if navigation came from Angular Router with state
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state?.['internal']) {
+      this.showBackButtonAndFooter = true;
+    } else {
+      // Default to false (external access)
+      this.showBackButtonAndFooter = false;
+    }
   }
 
   get otherLanguage(): string {
@@ -145,10 +170,10 @@ export class PrivacyViewerComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-    private registerIcons() {
-      addIcons({
-        'globe-outline': globeOutline,
-        'chevron-back-outline': chevronBackOutline,
-      });
-    }
+  private registerIcons() {
+    addIcons({
+      'globe-outline': globeOutline,
+      'chevron-back-outline': chevronBackOutline,
+    });
+  }
 }

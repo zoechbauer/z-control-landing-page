@@ -154,7 +154,6 @@ export class HomePage implements AfterViewInit {
 
   accordionGroupChange(event: CustomEvent) {
     const value: string = event.detail.value;
-    console.log('Accordion group changed, new value:', value);
     this.fa.logEvent('accordion_change', {
       accordion_value: value,
       app: this.landingPageApp,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { addIcons } from 'ionicons';
 import {
   personOutline,
@@ -20,6 +20,7 @@ import {
 } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
@@ -32,11 +33,20 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
-  imports: [IonFooter, IonToolbar, IonIcon, IonButton, RouterModule, IonToggle, AsyncPipe],
+  imports: [
+    IonFooter,
+    IonToolbar,
+    IonIcon,
+    IonButton,
+    RouterModule,
+    IonToggle,
+    AsyncPipe,
+  ],
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
   showDetails = false;
   private readonly landingPageApp = 'Landing Page';
+  private sub = new Subscription();
 
   constructor(
     public readonly fa: FirebaseAnalyticsService,
@@ -45,6 +55,17 @@ export class FooterComponent implements OnInit {
     private readonly localStorageService: LocalStorageService
   ) {
     this.registerIcons();
+  }
+
+  ngOnInit(): void {
+    this.sub = this.utilsService.logoClicked$.subscribe((clicked) => {
+      if (clicked) {
+        this.fa.logEvent('logo_clicked', {
+          app: this.landingPageApp,
+        });
+      }
+      this.showDetails = !this.showDetails;
+    });
   }
 
   toggleFooterDetails() {
@@ -102,22 +123,19 @@ export class FooterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.utilsService.logoClicked$.subscribe(() => {
-      this.fa.logEvent('logo_clicked', {
-        app: this.landingPageApp,
-      });
-      this.showDetails = !this.showDetails;
-    });
-  }
-
   onChangeEnableAnalytics(enabled: boolean) {
-    const eventName = enabled ? 'enable_analytics_footer' : 'disable_analytics_footer';
+    const eventName = enabled
+      ? 'enable_analytics_footer'
+      : 'disable_analytics_footer';
     this.fa.logEvent(eventName, {
       app: this.landingPageApp,
     });
 
     this.localStorageService.setAnalyticsConsent(enabled);
     this.fa.enableCollection(enabled);
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

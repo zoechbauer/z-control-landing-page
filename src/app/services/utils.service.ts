@@ -5,12 +5,12 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class UtilsService {
-  private readonly logoClickedSub = new Subject<void>();
+  private readonly logoClickedSub = new Subject<boolean>();
   logoClicked$ = this.logoClickedSub.asObservable();
 
   constructor() { }
 
   onLogoClicked() {
-    this.logoClickedSub.next();
+    this.logoClickedSub.next(true);
   }
 }

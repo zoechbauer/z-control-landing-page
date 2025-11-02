@@ -55,6 +55,10 @@
     .footer-analytics {
       margin: 10px 0 30px 0;
       font-size: 0.85em;
+
+      &.not-enabled {
+        color: #bb0000;
+      }
     }
 
     .version-info {

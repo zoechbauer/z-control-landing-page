@@ -8,26 +8,28 @@
 <ion-content class="ion-padding">
   <div class="general info">
     <h2>Welcome to our applications</h2>
-    <div *ngIf="isAnalyticsAllowed">
-      <p>
-        This landing page presents the <i>z-control QR Code Generator</i> and
-        other apps we are developing.<br />
-        Explore features, platform-specific guidance, and support options to get
-        started or find help.
+    @if (isAnalyticsAllowed) {
+    <p>
+      This landing page presents the <i>z-control QR Code Generator</i> and
+      other apps we are developing.<br />
+      Explore features, platform-specific guidance, and support options to get
+      started or find help.
+    </p>
+    } 
+    @if (!isAnalyticsAllowed) {
+    <div class="analytics-not-allowed">
+      <p class="ion-text-left">
+        <b>Important:</b> Please enable anonymous analytics to continue using
+        the Landing Page. We collect only non‑identifying usage data to help
+        improve the app.
+      </p>
+      <p class="ion-text-left">
+        Analytics are controlled in the footer. If the footer is closed, click
+        the z‑control icon to open it and enable analytics. You can change this
+        setting at any time.
       </p>
     </div>
-    <div *ngIf="!isAnalyticsAllowed" class="analytics-not-allowed">
-      <p class="ion-text-left">
-        Please enable anonymous analytics using the control at the bottom of the
-        page to continue using the app. This only collects non‑identifying usage
-        data to help us improve the service.
-      </p>
-      <p class="ion-text-left">
-        If you previously declined, reload the page and enable anonymous
-        analytics. Alternatively, open the footer (click the logo button) to
-        change your analytics preference.
-      </p>
-    </div>
+    }
   </div>
 
   <ion-accordion-group
@@ -646,7 +648,7 @@
                 Please review our
                 <a
                   [routerLink]="['/privacy/basic/en']"
-                  [queryParams]="{ from: selectedAccordion }"
+                  [queryParams]="{ from: selectedAccordion, internal: 'true'  }"
                   title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section (returns you to the same place)."
                   >Privacy Policy</a
                 >

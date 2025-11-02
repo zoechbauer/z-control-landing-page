@@ -1,6 +1,6 @@
 <app-header
   [selectedAccordion]="selectedAccordion"
-  [showBackButton]="true"
+  [showBackButton]="showBackButtonAndFooter"
 ></app-header>
 
 <ion-content class="ion-padding">
@@ -43,7 +43,7 @@
     <div class="policy-content" [innerHTML]="policy.content"></div>
 
     <!-- Back Button -->
-    <div class="action-buttons">
+    <div class="action-buttons" *ngIf="showBackButtonAndFooter">
       <ion-button fill="outline" (click)="goBack()" size="small">
         <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
         {{ backToHomeButtonLabel }}
@@ -52,4 +52,4 @@
   </div>
 </ion-content>
 
-<app-footer></app-footer>
+<app-footer *ngIf="showBackButtonAndFooter"></app-footer>
