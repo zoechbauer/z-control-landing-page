@@ -2,7 +2,7 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [2.2] – YYYY-MM-DD
+## [2.2] – 2025-11-02
 
 ### 🚀 Improvements
 
@@ -15,6 +15,10 @@ All recent updates and improvements to our **landing page**.
 ### 🐛 Fixes
 
 - Fixed an issue that caused the Privacy Policy to always display in English; it now respects the user's selected language on the Landing Page and in linked web/mobile apps.
+
+### 📦 Installations
+
+- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [2.1] – 2025-10-30
 
