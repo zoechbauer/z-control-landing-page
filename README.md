@@ -63,6 +63,9 @@ landing-page/
 │  ├─ FIREBASE_DEPLOYMENT_GUIDE.md
 │  ├─ FIREBASE_SECURITY.md
 │  ├─ PRIVACY_POLICY_ARCHITECTURE.md
+│  ├─ unit-tests/               # unit testing documentation
+│  │  ├─ FIREBASE_ANALYTICS_SERVICE_TESTS.md
+│  │  └─ UNIT_TESTING_PLAN.md
 │  └─ ...other docs...
 ├─ node_modules/
 ├─ scripts/                     # utility scripts (e.g. generate-env.js)
@@ -116,6 +119,7 @@ landing-page/
 ```
 
 Notes
+
 - Keep real Firebase config and local debug index out of VCS (.env.local, index_DEBUG_FIREBASE-config.html).
 - The privacy policy HTML templates live in src/assets/privacy/policies and are loaded dynamically by the privacy service.
 
@@ -155,7 +159,7 @@ Notes
    1. Copy your Firebase values to a local `.env.local` (never commit).
    2. Run `npm run generate-env` to generate `src/environments/environment*.ts`.
    3. Then run `ionic serve` or `npm run build`.
-   
+
    more details see in docs/FIREBASE_CONFIG_ENVIRONMENT_FILES.md
    ```
 
@@ -204,21 +208,22 @@ export const environment = {
   version: {
     major: __MAJOR__,
     minor: __MINOR__,
-    date: '__DATE__',
+    date: "__DATE__",
   },
   firebase: {
-    apiKey: '__FIREBASE_API_KEY__',
-    authDomain: '__FIREBASE_AUTH_DOMAIN__',
-    projectId: '__FIREBASE_PROJECT_ID__',
-    storageBucket: '__FIREBASE_STORAGE_BUCKET__',
-    messagingSenderId: '__FIREBASE_MESSAGING_SENDER_ID__',
-    appId: '__FIREBASE_APP_ID__',
-    measurementId: '__FIREBASE_MEASUREMENT_ID__',
+    apiKey: "__FIREBASE_API_KEY__",
+    authDomain: "__FIREBASE_AUTH_DOMAIN__",
+    projectId: "__FIREBASE_PROJECT_ID__",
+    storageBucket: "__FIREBASE_STORAGE_BUCKET__",
+    messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+    appId: "__FIREBASE_APP_ID__",
+    measurementId: "__FIREBASE_MEASUREMENT_ID__",
   },
 };
 ```
 
 **Important: do NOT commit generated files**
+
 - Keep real Firebase config in `.env.local` (listed in .gitignore).
 - Run `npm run generate-env` locally or in CI to create `src/environments/environment*.ts`.
 - Do not commit `src/environments/environment*.ts` or an index.html with real measurement ID.

@@ -2,6 +2,13 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.3] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- Added unit tests for FirebaseAnalyticsService to improve coverage and validate event tracking, route handling, and edge cases.
+- Added detailed test documentation (purpose, setup, execution steps, and test-case descriptions) to make the test suite reproducible and easier to maintain.
+
 ## [2.2] – 2025-11-02
 
 ### 🚀 Improvements
