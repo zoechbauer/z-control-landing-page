@@ -1,0 +1,26 @@
+# Environment files containing sensitive data
+.env
+.env.local
+.env.production
+.env.staging
+.env.development
+
+# Firebase configuration files
+firebase-config.json
+firebase-adminsdk-*.json
+serviceAccountKey.json
+
+# Other sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+config/secrets.*
+
+# API keys and credentials
+**/credentials/**
+**/secrets/**
+
+# Database connection strings
+database.json
+db-config.*

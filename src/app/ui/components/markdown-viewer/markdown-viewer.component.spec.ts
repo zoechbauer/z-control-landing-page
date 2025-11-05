@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ModalController } from '@ionic/angular/standalone';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { MarkdownViewerComponent } from './markdown-viewer.component';
 
@@ -8,9 +10,17 @@ describe('MarkdownViewerComponent', () => {
   let fixture: ComponentFixture<MarkdownViewerComponent>;
 
   beforeEach(waitForAsync(() => {
+    const modalControllerSpy = jasmine.createSpyObj('ModalController', [
+      'dismiss',
+    ]);
+
     TestBed.configureTestingModule({
-      declarations: [ MarkdownViewerComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [
+        MarkdownViewerComponent,
+        HttpClientTestingModule,
+        MarkdownModule.forRoot(),
+      ],
+      providers: [{ provide: ModalController, useValue: modalControllerSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MarkdownViewerComponent);
