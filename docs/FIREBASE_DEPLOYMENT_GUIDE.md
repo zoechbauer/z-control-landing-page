@@ -420,3 +420,50 @@ deploy both:
 ```powershell
 firebase deploy --only hosting
 ```
+
+## Deploying Cloud Functions with GitHub Token
+
+Important: use Landing Page folder structure
+Before deploying your cloud functions, set the GitHub token from your `.env.local`:
+
+```powershell
+firebase functions:config:set github.token="YOUR_GITHUB_TOKEN"
+```
+
+You only need to run this when the token changes or on first setup.  
+After setting, deploy your functions:
+
+```powershell
+firebase deploy --only functions
+```
+
+---
+
+## What To Do When You Change Cloud Function Code
+
+If you make changes to your cloud function code (for example, updating `functions/src/githubAnalytics.ts`):
+
+1. **Test Locally (optional):**
+   - Run unit tests or use the Firebase emulator to verify your changes.
+
+2. **Update GitHub Token (if changed):**
+   - If you updated the token in `.env.local`, run:
+     ```powershell
+     firebase functions:config:set github.token="YOUR_GITHUB_TOKEN"
+     ```
+   - If the token did not change, you can skip this step.
+
+3. **Deploy Cloud Functions:**
+   - Deploy only the functions (no need to redeploy hosting unless frontend changed):
+     ```powershell
+     firebase deploy --only functions
+     ```
+
+4. **Verify Deployment:**
+   - Check the Firebase console for function logs and status.
+   - Confirm that analytics data is being updated in Firestore as expected.
+
+**Note:**  
+You do not need to rebuild or redeploy your frontend unless you also changed frontend code.
+
+---

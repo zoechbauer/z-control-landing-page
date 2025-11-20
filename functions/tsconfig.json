@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "skipLibCheck": true, // Added to skip type checking of declaration files, problem in node_modules/@google-cloud/storage/build/cjs/src/crc32c.d.ts on Int32Array, npm run build crashed
+  },
+  "compileOnSave": true,
+  "include": [
+    "src"
+  ]
+}

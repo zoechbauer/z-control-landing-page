@@ -4,10 +4,21 @@ All recent updates and improvements to our **landing page**.
 
 ## [2.3] – YYYY-MM-DD
 
+### ✨ New Features
+
+- Added **GitHub Analytics Cloud Function** to fetch and store GitHub repository traffic data (views and clones) for key repositories.
+
 ### 🚀 Improvements
 
-- Added unit tests for FirebaseAnalyticsService to improve coverage and validate event tracking, route handling, and edge cases.
-- Added detailed test documentation (purpose, setup, execution steps, and test-case descriptions) to make the test suite reproducible and easier to maintain.
+- Improved analytics consent storage reliability with better error handling to prevent data loss.
+- Enhanced code quality with comprehensive test coverage for Firebase Analytics tracking, ensuring accurate event logging and route monitoring.
+
+### 📚 Documentation
+
+- Added comprehensive **GitHub Copilot Guide** covering all features, modes, and best practices for AI-assisted development.
+- Created **Code Review Guidelines** to maintain consistent code quality standards across the project.
+- Added **Testing Documentation** with detailed guides for web automation and end-to-end testing strategies.
+- Established **Project Coding Standards** defining naming conventions, code style, and quality requirements.
 
 ## [2.2] – 2025-11-02
 
@@ -17,7 +28,7 @@ All recent updates and improvements to our **landing page**.
 - Replaced the app-consent-banner with an expanded footer that contains the analytics opt-in toggle.
 - Added query parameters to routing so the Privacy Policy can detect whether it was opened from the Landing Page or from an external app.
 - Updated the informational text shown when analytics are disabled for clearer guidance.
-- Code cleanup: replaced *ngIf usage with @if in templates for improved readability.
+- Code cleanup: replaced \*ngIf usage with @if in templates for improved readability.
 
 ### 🐛 Fixes
 

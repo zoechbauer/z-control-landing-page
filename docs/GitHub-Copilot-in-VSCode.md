@@ -203,6 +203,7 @@ Copilot Edits will:
 - Can search across all files
 - Provides context-aware answers
 - Suggests code changes based on existing patterns
+- Only Agent Mode can execute tools
 
 **Best for**:
 
