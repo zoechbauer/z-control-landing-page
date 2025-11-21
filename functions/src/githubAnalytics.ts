@@ -1,11 +1,14 @@
 import * as functions from 'firebase-functions/v1';
 import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 // Load dotenv for local test with firebase emulators
 // GITHUB_TOKEN for production must be defined as environment variable in https://console.cloud.google.com/functions
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config({ path: require('node:path')
-  .resolve(__dirname, '../../.env.local') });
+require('dotenv').config({
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  path: require('node:path').resolve(__dirname, '../../.env.local'),
+});
 
 admin.initializeApp();
 
@@ -69,7 +72,8 @@ export const runGitHubAnalyticsFetch = async (): Promise<void> => {
         views,
         clones,
       });
-      console.log(`Analytics updated for ${repo}`);
+      // console.log(`Analytics updated for ${repo}`);
+      await saveDailyGitHubAnalyticsDetails(owner, repo);
     } catch (error) {
       console.error(`Error fetching analytics for ${repo}:`, error);
     }
@@ -77,18 +81,112 @@ export const runGitHubAnalyticsFetch = async (): Promise<void> => {
 };
 
 /**
+ * Persists daily GitHub analytics data in Firestore.
+ * The 'dailyGitHubAnalytics' collection holds historical data for each day,
+ * appending new entries to an array in each repo document.
+ * Each document in 'dailyGitHubAnalytics' matches the structure of
+ * 'githubAnalytics', but contains a 'views' and 'clones' array with all
+ * daily entries since the function started.
+ * @param {string} owner - GitHub repository owner.
+ * @param {string} repo - GitHub repository name.
+ */
+export const saveDailyGitHubAnalyticsDetails = async (
+  owner: string,
+  repo: string
+): Promise<void> => {
+  try {
+    // Get latest analytics snapshot for the repo
+    const docRef = admin.firestore().collection('githubAnalytics').doc(repo);
+    const docSnap = await docRef.get();
+
+    if (!docSnap.exists) {
+      console.warn(`No analytics data found for ${repo}.`);
+      return;
+    }
+
+    const analyticsData = docSnap.data();
+    if (
+      !analyticsData?.views ||
+      !Array.isArray(analyticsData?.views.views) ||
+      !analyticsData?.clones ||
+      !Array.isArray(analyticsData?.clones.clones)
+    ) {
+      console.warn(`Invalid analytics data structure for ${repo}.`);
+      return;
+    }
+
+    const dailyDocRef = admin
+      .firestore()
+      .collection('dailyGitHubAnalytics')
+      .doc(repo);
+    const dailyDocSnap = await dailyDocRef.get();
+
+    // Always set repo field and initialize arrays if missing
+    const updateData: Record<string, any> = {
+      repo,
+      timestamp: new Date().toISOString(),
+      views: [],
+      clones: [],
+    };
+
+    if (!dailyDocSnap.exists) {
+      // First run: append all entries from githubAnalytics
+      updateData.views = FieldValue.arrayUnion(...analyticsData.views.views);
+      updateData.clones = FieldValue.arrayUnion(...analyticsData.clones.clones);
+      // If no entries, still create the document
+      if (
+        !analyticsData.views.views.length &&
+        !analyticsData.clones.clones.length
+      ) {
+        updateData.initialized = true;
+      }
+    } else {
+      // Subsequent runs: append only yesterday's entries
+      const now = new Date();
+      now.setDate(now.getDate() - 1); // Move to yesterday
+      const yesterday = now.toISOString().slice(0, 10); // YYYY-MM-DD
+      const yesterdayViews = analyticsData.views.views.find(
+        (v: any) => v.timestamp?.slice(0, 10) === yesterday ||
+        v.date === yesterday
+      );
+      const yesterdayClones = analyticsData.clones.clones.find(
+        (c: any) => c.timestamp?.slice(0, 10) === yesterday ||
+        c.date === yesterday
+      );
+      if (yesterdayViews) {
+        updateData.views = FieldValue.arrayUnion(yesterdayViews);
+      }
+      if (yesterdayClones) {
+        updateData.clones = FieldValue.arrayUnion(yesterdayClones);
+      }
+    }
+
+    // console.log('[DEBUG] analyticsData:', analyticsData);
+    // console.log('[DEBUG] updateData:', updateData);
+
+    await dailyDocRef.set(updateData, { merge: true });
+  } catch (error) {
+    console.error(
+      `[ERROR] saveDailyGitHubAnalyticsDetails for ${repo}:`,
+      error
+    );
+  }
+};
+
+/**
  * Scheduled function to fetch GitHub analytics and store in Firestore.
- * Runs every day at 00:01 AM Europe/Vienna time.
+ * Runs every day at 03:00 AM Europe/Vienna time to be sure that GitHub
+ * has finalized the previous day's data.
  *
- * cron expression '1 0 * * *' means:
- * minute: 1
- * hour: 0
+ * cron expression '0 3 * * *' means:
+ * minute: 0
+ * hour: 3
  * day: every day
  * month: every month
  * day-of-week: every day of the week
  */
 export const fetchGitHubAnalytics = functions.pubsub
-  .schedule('1 0 * * *')
+  .schedule('0 3 * * *') // Runs at 03:00 AM local time
   .timeZone('Europe/Vienna')
   .onRun(async () => {
     await runGitHubAnalyticsFetch();
