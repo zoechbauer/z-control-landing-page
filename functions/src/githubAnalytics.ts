@@ -1,6 +1,25 @@
 import * as functions from 'firebase-functions/v1';
 import * as admin from 'firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';
+import { REPOS, COLLECTION } from './shared/GitHubConstants';
+
+interface GithubTrafficEntry {
+  timestamp?: string;
+  date?: string;
+  count?: number;
+  uniques?: number;
+}
+
+// Temporary logs for debugging
+let logInfo: {
+  calledBy?: string;
+  repo?: string;
+  analyticsData?: unknown;
+  updateData?: unknown;
+} = {};
+
+// firebase logger: console.log/error is not visible in Firebase Functions logs
+const logger = functions.logger;
 
 // Load dotenv for local test with firebase emulators
 // GITHUB_TOKEN for production must be defined as environment variable in https://console.cloud.google.com/functions
@@ -11,12 +30,6 @@ require('dotenv').config({
 });
 
 admin.initializeApp();
-
-const REPOS = [
-  { owner: 'zoechbauer', repo: 'copilot-learning-calculator' },
-  { owner: 'zoechbauer', repo: 'z-control-qr-code-generator' },
-  { owner: 'zoechbauer', repo: 'z-control-landing-page' },
-];
 
 /**
  * Fetches traffic analytics data from GitHub for the specified
@@ -50,7 +63,7 @@ const fetchTraffic = async (
     }
     return await response.json();
   } catch (error) {
-    console.error(
+    logger.error(
       `Failed to fetch traffic for ${owner}/${repo} (${endpoint}):`,
       error
     );
@@ -59,44 +72,81 @@ const fetchTraffic = async (
 };
 
 /**
- * Runs the GitHub analytics fetch and stores results in Firestore.
- * Used by both scheduled and HTTP functions.
+ * Fetches GitHub analytics traffic data (views and clones) for each repository
+ * in `REPOS`,  * optionally updates the Firestore collection with the latest
+ * traffic data, and saves the traffic history for each repository.
+ *
+ * @param {boolean} updateTraffic - If `true`,
+ *        updates the Firestore collection with the latest traffic data.
+ * @param {number} [repoIndex] - Optional index of the repository in `REPOS`
+ * @return {Promise<void>} A Promise that resolves
+ *        when all analytics data has been fetched and processed.
  */
-export const runGitHubAnalyticsFetch = async (): Promise<void> => {
-  for (const { owner, repo } of REPOS) {
-    try {
-      const views = await fetchTraffic(owner, repo, 'views');
-      const clones = await fetchTraffic(owner, repo, 'clones');
-      await admin.firestore().collection('githubAnalytics').doc(repo).set({
-        timestamp: new Date().toISOString(),
-        views,
-        clones,
-      });
-      // console.log(`Analytics updated for ${repo}`);
-      await saveDailyGitHubAnalyticsDetails(owner, repo);
-    } catch (error) {
-      console.error(`Error fetching analytics for ${repo}:`, error);
+export const runGitHubAnalyticsFetch = async (
+  updateTraffic = true,
+  repoIndex?: number
+): Promise<void> => {
+  // If repoIndex is a valid number, process only that repo
+  if (
+    typeof repoIndex === 'number' &&
+    repoIndex >= 0 &&
+    repoIndex < REPOS.length
+  ) {
+    const { owner, repo } = REPOS[repoIndex];
+    await processRepo(owner, repo, updateTraffic);
+  // If repoIndex is missing or invalid, process all repos
+  } else {
+    for (const { owner, repo } of REPOS) {
+      await processRepo(owner, repo, updateTraffic);
     }
+  }
+};
+
+const processRepo = async (
+  owner: string,
+  repo: string,
+  updateTraffic: boolean
+): Promise<void> => {
+  try {
+    const views = await fetchTraffic(owner, repo, 'views');
+    const clones = await fetchTraffic(owner, repo, 'clones');
+    if (updateTraffic) {
+      await admin
+        .firestore()
+        .collection(COLLECTION.GITHUB_ANALYTICS_TRAFFIC)
+        .doc(repo)
+        .set({
+          timestamp: new Date().toISOString(),
+          views,
+          clones,
+        });
+    }
+    await saveGithubAnalyticsTrafficHistory(owner, repo);
+  } catch (error) {
+    logger.error(`Error fetching analytics for ${repo}:`, error);
   }
 };
 
 /**
  * Persists daily GitHub analytics data in Firestore.
- * The 'dailyGitHubAnalytics' collection holds historical data for each day,
- * appending new entries to an array in each repo document.
- * Each document in 'dailyGitHubAnalytics' matches the structure of
- * 'githubAnalytics', but contains a 'views' and 'clones' array with all
+ * The 'githubAnalyticsTrafficHistory' collection holds historical data
+ * for each day, appending new entries to an array in each repo document.
+ * Each document in 'githubAnalyticsTrafficHistory' matches the structure of
+ * 'githubAnalyticsTraffic', but contains a 'views' and 'clones' array with all
  * daily entries since the function started.
  * @param {string} owner - GitHub repository owner.
  * @param {string} repo - GitHub repository name.
  */
-export const saveDailyGitHubAnalyticsDetails = async (
+export const saveGithubAnalyticsTrafficHistory = async (
   owner: string,
   repo: string
 ): Promise<void> => {
   try {
     // Get latest analytics snapshot for the repo
-    const docRef = admin.firestore().collection('githubAnalytics').doc(repo);
+    const docRef = admin
+      .firestore()
+      .collection(COLLECTION.GITHUB_ANALYTICS_TRAFFIC)
+      .doc(repo);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
@@ -115,43 +165,31 @@ export const saveDailyGitHubAnalyticsDetails = async (
       return;
     }
 
-    const dailyDocRef = admin
+    const docRefHistory = admin
       .firestore()
-      .collection('dailyGitHubAnalytics')
+      .collection(COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY)
       .doc(repo);
-    const dailyDocSnap = await dailyDocRef.get();
+    const docSnapHistory = await docRefHistory.get();
 
-    // Always set repo field and initialize arrays if missing
-    const updateData: Record<string, any> = {
+    // Always set repo field and timestamp
+    const updateData: Record<string, unknown> = {
       repo,
       timestamp: new Date().toISOString(),
-      views: [],
-      clones: [],
     };
 
-    if (!dailyDocSnap.exists) {
-      // First run: append all entries from githubAnalytics
-      updateData.views = FieldValue.arrayUnion(...analyticsData.views.views);
-      updateData.clones = FieldValue.arrayUnion(...analyticsData.clones.clones);
-      // If no entries, still create the document
-      if (
-        !analyticsData.views.views.length &&
-        !analyticsData.clones.clones.length
-      ) {
-        updateData.initialized = true;
-      }
-    } else {
-      // Subsequent runs: append only yesterday's entries
+    if (docSnapHistory.exists) {
+      // Subsequent runs: only append yesterday's views/clones if found
       const now = new Date();
-      now.setDate(now.getDate() - 1); // Move to yesterday
+      now.setDate(now.getDate() - 1);
       const yesterday = now.toISOString().slice(0, 10); // YYYY-MM-DD
+
       const yesterdayViews = analyticsData.views.views.find(
-        (v: any) => v.timestamp?.slice(0, 10) === yesterday ||
-        v.date === yesterday
+        (v: GithubTrafficEntry) =>
+          v.timestamp?.slice(0, 10) === yesterday || v.date === yesterday
       );
       const yesterdayClones = analyticsData.clones.clones.find(
-        (c: any) => c.timestamp?.slice(0, 10) === yesterday ||
-        c.date === yesterday
+        (c: GithubTrafficEntry) =>
+          c.timestamp?.slice(0, 10) === yesterday || c.date === yesterday
       );
       if (yesterdayViews) {
         updateData.views = FieldValue.arrayUnion(yesterdayViews);
@@ -159,15 +197,33 @@ export const saveDailyGitHubAnalyticsDetails = async (
       if (yesterdayClones) {
         updateData.clones = FieldValue.arrayUnion(yesterdayClones);
       }
+    } else {
+      // First run: append all entries from githubAnalyticsTraffic
+      updateData.views = analyticsData.views.views ?? [];
+      updateData.clones = analyticsData.clones.clones ?? [];
+      if (
+        !(updateData.views as GithubTrafficEntry[]).length &&
+        !(updateData.clones as GithubTrafficEntry[]).length
+      ) {
+        updateData.initialized = true;
+      }
     }
 
-    // console.log('[DEBUG] analyticsData:', analyticsData);
-    // console.log('[DEBUG] updateData:', updateData);
+    if (logInfo.calledBy === 'testGitHubAnalytics') {
+      logger.log('[DEBUG] analyticsData:', analyticsData);
+      logger.log('[DEBUG] updateData:', updateData);
+      logInfo = {
+        repo,
+        analyticsData,
+        updateData,
+        calledBy: logInfo.calledBy,
+      };
+    }
 
-    await dailyDocRef.set(updateData, { merge: true });
+    await docRefHistory.set(updateData, { merge: true });
   } catch (error) {
-    console.error(
-      `[ERROR] saveDailyGitHubAnalyticsDetails for ${repo}:`,
+    logger.error(
+      `[ERROR] saveGithubAnalyticsTrafficHistory for ${repo}:`,
       error
     );
   }
@@ -193,7 +249,12 @@ export const fetchGitHubAnalytics = functions.pubsub
   });
 
 /**
- * HTTP function for local testing of GitHub analytics fetch.
+ * HTTP function for testing of GitHub analytics fetch.
+ * examples:
+ * curl "http://localhost:5001/<project-id>/us-central1/testGitHubAnalytics
+ *    ?updateTraffic=false"&repoIndex=0 -> updateTraffic=false, only first repo
+ * curl "http://localhost:5001/<project-id>/us-central1/testGitHubAnalytics"
+ *    -> updateTraffic=true & process all repos
  * @param req - The HTTP request object.
  * @param res - The HTTP response object.
  * @returns {Promise<void>} Resolves when response is sent.
@@ -201,18 +262,28 @@ export const fetchGitHubAnalytics = functions.pubsub
 export const testGitHubAnalytics = functions.https.onRequest(
   async (req, res) => {
     try {
-      await runGitHubAnalyticsFetch();
-      res.status(200).send('GitHub analytics fetched and stored.');
+      logInfo.calledBy = 'testGitHubAnalytics';
+      const updateTraffic = req.query.updateTraffic !== 'false';
+      const repoIndexString = req.query.repoIndex;
+      const repoIndex = repoIndexString ?
+        Number.parseInt(repoIndexString as string, 10) :
+        undefined;
+
+      await runGitHubAnalyticsFetch(updateTraffic, repoIndex);
+
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json({
+        message: 'GitHub analytics fetched and stored.',
+        logInfo: logInfo,
+      });
     } catch (error) {
-      console.error('Error in testGitHubAnalytics:', error);
+      logger.error('Error in testGitHubAnalytics:', error);
       // Send error details in response
-      res
-        .status(500)
-        .send(
-          `Internal Server Error: ${
-            error instanceof Error ? error.message : String(error)
-          }`
-        );
+      res.status(500).json({
+        error: `Internal Server Error: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      });
     }
   }
 );

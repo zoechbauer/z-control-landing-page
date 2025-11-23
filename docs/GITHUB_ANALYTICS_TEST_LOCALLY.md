@@ -10,7 +10,8 @@ This guide describes how to test the GitHub analytics Cloud Function locally usi
 - Java 11+ installed
 - Firebase CLI installed (`volta install firebase-tools` or `npm install -g firebase-tools`)
 - `.env.local` file in your project root with a valid GitHub token:
-  ```
+
+  ```text
   GITHUB_TOKEN=your_github_token_here
   ```
 
@@ -56,15 +57,38 @@ firebase emulators:start
 ### 6. Trigger the Function
 
 - Use the HTTP endpoint for manual testing:
-  ```
+
+  ```bash
   http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics
   ```
-- You should see a success message if the function runs correctly.
+
+- **Query Parameters:**
+  - `updateTraffic=false` — skips updating Firestore with the latest traffic data.
+  - `repoIndex=0` — processes only the first repository (use `1` or `2` for others).
+
+- **Examples:**
+  - Process all repos and update Firestore:
+
+    ```bash
+    curl "http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics"
+    ```
+
+  - Process only the first repo and skip Firestore update:
+
+    ```bash
+    curl "http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics?updateTraffic=false&repoIndex=0"
+    ```
 
 ### 7. View Firestore Data
 
 - Open [http://localhost:4000/firestore](http://localhost:4000/firestore)
 - Check the `githubAnalytics` collection for new documents.
+
+**Summary:**
+
+- The HTTP test function now supports `updateTraffic` and `repoIndex` query parameters for flexible local and remote testing.
+
+- Logging works both locally and after deployment.
 
 ---
 
