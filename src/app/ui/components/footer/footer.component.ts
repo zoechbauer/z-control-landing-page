@@ -9,6 +9,7 @@ import {
   listOutline,
   downloadOutline,
   documentTextOutline,
+  logoGithub,
 } from 'ionicons/icons';
 import {
   IonFooter,
@@ -27,6 +28,7 @@ import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.comp
 import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/services/utils.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
 
 @Component({
   selector: 'app-footer',
@@ -45,6 +47,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 })
 export class FooterComponent implements OnInit, OnDestroy {
   showDetails = false;
+  // TODO move to a shared constants file
   private readonly landingPageApp = 'Landing Page';
   private sub = new Subscription();
 
@@ -120,6 +123,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       'list-outline': listOutline,
       'download-outline': downloadOutline,
       'document-text-outline': documentTextOutline,
+      'logo-github': logoGithub,
     });
   }
 
@@ -133,6 +137,18 @@ export class FooterComponent implements OnInit, OnDestroy {
 
     this.localStorageService.setAnalyticsConsent(enabled);
     this.fa.enableCollection(enabled);
+  }
+
+  async getGitHubAnalytics() {
+    this.fa.logEvent('view_github_analytics', {
+      app: this.landingPageApp,
+    });
+    const modal = await this.modalController.create({
+      component: GithubAnalyticsComponent,
+      cssClass: 'github-analytics-modal',
+    });
+
+    await modal.present();
   }
 
   ngOnDestroy(): void {

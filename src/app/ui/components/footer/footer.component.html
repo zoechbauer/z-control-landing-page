@@ -53,7 +53,10 @@
               Privacy Policy
             </a>
           </div>
-          <div class="footer-analytics" [class.not-enabled]="!(fa.enabled$ | async)">
+          <div
+            class="footer-analytics"
+            [class.not-enabled]="!(fa.enabled$ | async)"
+          >
             <ion-toggle
               [checked]="fa.enabled$ | async"
               (ionChange)="onChangeEnableAnalytics($event.detail.checked)"
@@ -73,6 +76,17 @@
             <ion-button fill="clear" size="small" class="changelog-button">
               <ion-icon name="list-outline" slot="start"></ion-icon>
               Release Notes
+            </ion-button>
+          </div>
+            <div
+            class="version-info"
+            (click)="getGitHubAnalytics()"
+            (keydown.enter)="getGitHubAnalytics()"
+            title="View source code and GitHub analytics"
+          >
+            <ion-button fill="clear" size="small" class="changelog-button">
+              <ion-icon name="logo-github" slot="start"></ion-icon>
+              Souce Code & GitHub Analytics
             </ion-button>
           </div>
         </div>

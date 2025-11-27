@@ -11,6 +11,8 @@ A modern, responsive landing page built with Ionic Angular, showcasing the z-con
 - **Version Management**: Built-in changelog system with user-friendly updates
 - **Firebase Ready**: Configured for Firebase hosting and deployment with Firebase Analytics
 - **Accessibility**: WCAG compliant with keyboard navigation and screen reader support
+- **Firebase Analytics**: Integrated event tracking and consent management ([see details](./docs/FIREBASE_ANALYTICS_USED_IN_APP.md))
+- **GitHub Analytics**: Automated fetching and display of repository traffic ([see details](./docs/GITHUB_ANALYTICS_ARCHITECTURE.md))
 
 ## 🚀 Live Demo
 
@@ -33,6 +35,9 @@ A modern, responsive landing page built with Ionic Angular, showcasing the z-con
 - **Hosting**: Firebase Hosting
 - **Build Tool**: Angular CLI
 - **Icons**: Ionicons
+- **Firebase Analytics**: Event tracking, consent management
+- **Firebase Storage**
+- **GitHub Analytics API**: Automated traffic data collection and display
 
 ## 📁 Project Structure
 
@@ -59,11 +64,14 @@ landing-page/
 ├─ tsconfig.spec.json
 ├─ docs/                        # technical documentation
 │  ├─ FIREBASE_ANALYTICS.md
+│  ├─ FIREBASE_ANALYTICS_USED_IN_APP.md
 │  ├─ FIREBASE_CONFIG_ENVIRONMENT_FILES.md
 │  ├─ FIREBASE_DEPLOYMENT_GUIDE.md
 │  ├─ FIREBASE_SECURITY.md
+│  ├─ GITHUB_ANALYTICS_ARCHITECTURE.md
+│  ├─ GITHUB_ANALYTICS_TEST_LOCALLY.md
 │  ├─ PRIVACY_POLICY_ARCHITECTURE.md
-│  ├─ unit-tests/               # unit testing documentation
+│  ├─ unit-tests/
 │  │  ├─ FIREBASE_ANALYTICS_SERVICE_TESTS.md
 │  │  └─ UNIT_TESTING_PLAN.md
 │  └─ ...other docs...
@@ -103,7 +111,10 @@ landing-page/
       │  └─ services/
       │     └─ privacy.service.ts
       ├─ services/                # app-wide / cross-cutting services
-      │  └─ firebase-analytics.service.ts
+      │  ├─ firebase-analytics.service.ts
+      │  ├─ firebase-firestore.service.ts
+      │  ├─ local-storage.service.ts
+      │  ├─ utils.service.ts
       ├─ ui/
       │  └─ components/
       │     ├─ footer/
@@ -112,67 +123,19 @@ landing-page/
       │     ├─ consent-banner/
       │     │  ├─ consent-banner.component.ts
       │     │  └─ consent-banner.component.html
-      │     └─ header/
-      │        ├─ header.component.ts
-      │        └─ header.component.html
+      │     ├─ header/
+      │     │  ├─ header.component.ts
+      │     │  └─ header.component.html
+      │     └─ github-analytics/
+      │        ├─ github-analytics.component.ts
+      │        └─ github-analytics.component.html
       └─ theme/                    # global styling (variables, global.scss)
 ```
 
-Notes
-
-- Keep real Firebase config and local debug index out of VCS (.env.local, index_DEBUG_FIREBASE-config.html).
-- The privacy policy HTML templates live in src/assets/privacy/policies and are loaded dynamically by the privacy service.
-
-## 🏁 Quick Start
-
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or yarn
-- Ionic CLI
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/zoechbauer/z-control-landing-page.git
-   cd z-control-landing-page
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Install Ionic CLI** (if not already installed)
-
-   ```bash
-   npm install -g @ionic/cli
-   ```
-
-4. **Create environment files from secret Firebase configuration**
-
-   ```
-   Important: After cloning run:
-   1. Copy your Firebase values to a local `.env.local` (never commit).
-   2. Run `npm run generate-env` to generate `src/environments/environment*.ts`.
-   3. Then run `ionic serve` or `npm run build`.
-
-   more details see in docs/FIREBASE_CONFIG_ENVIRONMENT_FILES.md
-   ```
-
-5. **Start development server**
-
-   ```bash
-   ionic serve
-   ```
-
-6. **Open in browser**
-   ```
-   http://localhost:8100
-   ```
+**Notes:**
+- Real Firebase config and local debug index are not committed (`.env.local`, `index_DEBUG_FIREBASE-config.html`).
+- Privacy policy HTML templates are in `src/assets/privacy/policies` and loaded dynamically.
+- GitHub analytics architecture and Firestore integration are described in [docs/GITHUB_ANALYTICS_ARCHITECTURE.md](./docs/GITHUB_ANALYTICS_ARCHITECTURE.md).
 
 ## 🔧 Development
 
@@ -280,7 +243,14 @@ Technical documentation is available in the `/docs` folder:
 
 - **[Dark Mode Guide](./docs/IONIC_DARK_MODE_COLOR_GUIDE.md)** - Implementation details for dark mode support
 - **[Firebase Security](./docs/FIREBASE_SECURITY.md)** - Security configuration and best practices
+- **[Firebase Analytics Usage](./docs/FIREBASE_ANALYTICS_USED_IN_APP.md)** - Analytics integration and event tracking
+- **[Firebase Analytics Architecture](./docs/FIREBASE_ANALYTICS.md)** - Service architecture and implementation
+- **[GitHub Analytics Architecture](./docs/GITHUB_ANALYTICS_ARCHITECTURE.md)** - Automated traffic data collection and Firestore integration
 - **[Privacy Policy Architecture](./docs/PRIVACY_POLICY_ARCHITECTURE.md)** - Multi-language privacy system details
+- **[Firebase Deployment Guide](./docs/FIREBASE_DEPLOYMENT_GUIDE.md)** - Deployment procedures
+- **[Firebase Config Environment Files](./docs/FIREBASE_CONFIG_ENVIRONMENT_FILES.md)** - Environment setup and secrets management
+- **[Unit Testing Plan](./docs/unit-tests/UNIT_TESTING_PLAN.md)** - Comprehensive testing strategy
+- **[Firebase Analytics Service Tests](./docs/unit-tests/FIREBASE_ANALYTICS_SERVICE_TESTS.md)** - Detailed test documentation
 
 Changelogs for each app are stored in `src/assets/logs/change-logs/`:
 

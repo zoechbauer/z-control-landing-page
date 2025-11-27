@@ -190,6 +190,7 @@ export const testGitHubAnalytics = functions.https.onRequest(
 ## 6. Frontend Integration Example (Landing Page)
 
 The landing page fetches analytics data from Firestore and displays it.
+Here is a simplified example of how to retrieve and log the data:
 
 ```typescript
 import { getFirestore, doc, getDoc } from "firebase/firestore";

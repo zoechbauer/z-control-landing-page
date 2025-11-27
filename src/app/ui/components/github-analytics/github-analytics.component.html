@@ -1,0 +1,215 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Source Code & GitHub Analytics</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        fill="clear"
+        (click)="closeModal()"
+        (keydown.enter)="closeModal()"
+      >
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <main>
+    <section [hidden]="!isMobilePortrait" class="orientation-info">
+      <ion-item color="warning">
+      <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+      <ion-label>
+        For optimal viewing, please rotate your device to
+        <strong>landscape mode</strong>.
+      </ion-label>
+      </ion-item>
+    </section>
+    <h4>GitHub Analytics Data</h4>
+    <p>
+      These analytics offer insights into the views and clones of my GitHub
+      repositories over time. Since GitHub only supplies data for the past 14
+      days, the statistics are updated daily at 2 AM to preserve a historical
+      record.
+    </p>
+    <p>
+      The data is fetched using the GitHub REST API and stored in Firestore for
+      historical tracking.
+    </p>
+    <section>
+      <table class="repo-table">
+          <thead>
+            <tr>
+              <th class="repo">Repository</th>
+              <th class="count">Views Count</th>
+              <th class="count">Clones Count</th>
+            </tr>
+          </thead>
+        <tbody>
+          <tr *ngFor="let item of analyticsData">
+            <td colspan="3" style="padding: 0">
+              <ion-accordion-group>
+                <ion-accordion [value]="item.repo">
+                  <ion-item slot="header">
+                    <table class="repo-table">
+                      <tr>
+                        <td class="repo">{{ item.repo }}</td>
+                        <td class="count">
+                          {{ item.views.count }}
+                        </td>
+                        <td class="count">
+                          {{ item.clones.count }}
+                        </td>
+                      </tr>
+                    </table>
+                  </ion-item>
+                  <div slot="content" class="repo-details">
+                    <table>
+                      <thead>
+                        <tr>
+                          <td colspan="2" style="padding: 0">
+                            <div>
+                              <strong>Last Updated:</strong>
+                              {{
+                                item.timestamp | date : "yyyy-MM-dd HH:mm:ss"
+                              }}
+                            </div>
+                            <div [hidden]="getMostRecentItem(item) == null">
+                              <strong>Most Recent Record Date:</strong>
+                              {{
+                                getMostRecentItem(item) | date : "yyyy-MM-dd"
+                              }}
+                            </div>
+                            <div [hidden]="getOldestItem(item) == null">
+                              <strong>First Record Date:</strong>
+                              {{ getOldestItem(item) | date : "yyyy-MM-dd" }}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="button-wrapper">
+                              <ion-button
+                                (click)="onGetSourceCode(item.repo)"
+                                color="primary"
+                                expand="block"
+                                class="download-button"
+                                title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
+                                aria-label="Open GitHub repository (opens in a new tab)"
+                              >
+                                <ion-icon
+                                  name="logo-github"
+                                  slot="start"
+                                ></ion-icon>
+                                Get Source Code
+                              </ion-button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="views-clones">
+                            <section class="views">
+                              <h6>Views</h6>
+                              <table style="margin-bottom: 1em">
+                                <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th class="right-aligned">Count</th>
+                                    <th class="right-aligned">Unique</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let view of item.views.views">
+                                    <td>
+                                      {{ view.timestamp | date : "yyyy-MM-dd" }}
+                                    </td>
+                                    <td class="right-aligned">
+                                      {{ view.count }}
+                                    </td>
+                                    <td class="right-aligned">
+                                      {{ view.uniques }}
+                                    </td>
+                                  </tr>
+                                  <tr
+                                    style="
+                                      font-weight: bold;
+                                      background: #f8f8f8;
+                                    "
+                                  >
+                                    <td>Total</td>
+                                    <td class="right-aligned">
+                                      {{ getViewsTotalCount(item) }}
+                                    </td>
+                                    <td class="right-aligned">
+                                      {{ getViewsTotalUniques(item) }}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </section>
+                          </td>
+                          <td></td>
+                          <td class="views-clones">
+                            <section class="clones">
+                              <h6>Clones</h6>
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th class="right-aligned">Count</th>
+                                    <th class="right-aligned">Unique</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let clone of item.clones.clones">
+                                    <td>
+                                      {{
+                                        clone.timestamp | date : "yyyy-MM-dd"
+                                      }}
+                                    </td>
+                                    <td class="right-aligned">
+                                      {{ clone.count }}
+                                    </td>
+                                    <td class="right-aligned">
+                                      {{ clone.uniques }}
+                                    </td>
+                                  </tr>
+                                  <tr
+                                    style="
+                                      font-weight: bold;
+                                      background: #f8f8f8;
+                                    "
+                                  >
+                                    <td>Total</td>
+                                    <td class="right-aligned">
+                                      {{ getClonesTotalCount(item) }}
+                                    </td>
+                                    <td class="right-aligned">
+                                      {{ getClonesTotalUniques(item) }}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </section>
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                </ion-accordion>
+              </ion-accordion-group>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <hr />
+    <ion-accordion-group>
+      <ion-accordion value="rawData">
+        <ion-item slot="header">
+          <ion-label>Show Raw JSON Data</ion-label>
+        </ion-item>
+        <div slot="content" style="max-height: 300px; overflow-y: auto">
+          <pre>{{ analyticsData | json }}</pre>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </main>
+</ion-content>

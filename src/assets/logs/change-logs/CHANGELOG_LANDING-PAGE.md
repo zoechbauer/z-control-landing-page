@@ -7,6 +7,7 @@ All recent updates and improvements to our **landing page**.
 ### ✨ New Features
 
 - Added **GitHub Analytics Cloud Function** to fetch and store GitHub repository traffic data (views and clones) for key repositories.
+- Added **GitHub Analytics Data Display** on the landing page, showing recent views and clones for each repository.
 
 ### 🚀 Improvements
 
