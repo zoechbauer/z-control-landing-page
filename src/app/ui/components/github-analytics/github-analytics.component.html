@@ -17,19 +17,19 @@
   <main>
     <section [hidden]="!isMobilePortrait" class="orientation-info">
       <ion-item color="warning">
-      <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
-      <ion-label>
-        For optimal viewing, please rotate your device to
-        <strong>landscape mode</strong>.
-      </ion-label>
+        <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+        <ion-label>
+          For optimal viewing, please rotate your device to
+          <strong>landscape mode</strong>.
+        </ion-label>
       </ion-item>
     </section>
     <h4>GitHub Analytics Data</h4>
     <p>
       These analytics offer insights into the views and clones of my GitHub
       repositories over time. Since GitHub only supplies data for the past 14
-      days, the <strong>statistics are updated daily at 2 AM</strong> to preserve a historical
-      record.
+      days, the <strong>statistics are updated daily at 2 AM</strong> to
+      preserve a historical record.
     </p>
     <p>
       The data is fetched using the GitHub REST API and stored in Firestore for
@@ -37,13 +37,13 @@
     </p>
     <section>
       <table class="repo-table">
-          <thead>
-            <tr>
-              <th class="repo">Repository</th>
-              <th class="count">Views Count</th>
-              <th class="count">Clones Count</th>
-            </tr>
-          </thead>
+        <thead>
+          <tr>
+            <th class="repo">Repository</th>
+            <th class="count">Views Count</th>
+            <th class="count">Clones Count</th>
+          </tr>
+        </thead>
         <tbody>
           <tr *ngFor="let item of analyticsData">
             <td colspan="3" style="padding: 0">
@@ -127,12 +127,7 @@
                                       {{ view.uniques }}
                                     </td>
                                   </tr>
-                                  <tr
-                                    style="
-                                      font-weight: bold;
-                                      background: #f8f8f8;
-                                    "
-                                  >
+                                  <tr style="font-weight: bold">
                                     <td>Total</td>
                                     <td class="right-aligned">
                                       {{ getViewsTotalCount(item) }}
@@ -171,12 +166,7 @@
                                       {{ clone.uniques }}
                                     </td>
                                   </tr>
-                                  <tr
-                                    style="
-                                      font-weight: bold;
-                                      background: #f8f8f8;
-                                    "
-                                  >
+                                  <tr style="font-weight: bold">
                                     <td>Total</td>
                                     <td class="right-aligned">
                                       {{ getClonesTotalCount(item) }}
