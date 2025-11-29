@@ -4,9 +4,10 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
+import { APPS } from 'shared/GitHubConstants';
 
 export interface PrivacyPolicy {
-  type: 'qr-code-generator' | 'landing-page' | 'premium';
+  type: typeof APPS[keyof typeof APPS];
   language: 'en' | 'de';
   title: string;
   content: string;
@@ -41,7 +42,6 @@ export class PrivacyService {
       description: 'Privacy policy for premium features (future)',
     },
   ];
-  private readonly landingPageApp = 'Landing Page';
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
@@ -66,7 +66,7 @@ export class PrivacyService {
     this.fa.logEvent('open_privacy_policy', {
       privacy_type: type,
       privacy_language: language,
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
 
     return this.loadPolicyContent(type, language).pipe(

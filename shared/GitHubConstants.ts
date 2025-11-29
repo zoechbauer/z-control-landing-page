@@ -51,3 +51,8 @@ export enum TrafficType {
 };
 
 export const ALL_REPOS = 'all';
+export const APPS = {
+  LANDING_PAGE: 'Landing Page',
+  QR_CODE_GENERATOR: 'QR Code Generator',
+  OTHER_APPS: 'Other Apps',
+}

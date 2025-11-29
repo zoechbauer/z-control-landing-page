@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
 import {
   IonContent,
   IonButton,
@@ -8,10 +7,13 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../../ui/components/header/header.component';
-import { FooterComponent } from '../../../ui/components/footer/footer.component';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline, globeOutline } from 'ionicons/icons';
+
+import { APPS } from 'shared/GitHubConstants';
+import { HeaderComponent } from '../../../ui/components/header/header.component';
+import { FooterComponent } from '../../../ui/components/footer/footer.component';
+import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
 
 @Component({
   selector: 'app-privacy-viewer',
@@ -107,8 +109,8 @@ export class PrivacyViewerComponent implements OnInit {
   private mapLegacyFromParam(from: string): string {
     // Map legacy 'from' parameter values to policy types
     const mapping: { [key: string]: string } = {
-      'z-control QR Code Generator App': 'qr-code-generator',
-      'z-control Landing Page App': 'landing-page',
+      'z-control QR Code Generator App': APPS.QR_CODE_GENERATOR,
+      'z-control Landing Page App': APPS.LANDING_PAGE,
       'Future App 1': 'premium',
     };
     return mapping[from] || 'qr-code-generator';

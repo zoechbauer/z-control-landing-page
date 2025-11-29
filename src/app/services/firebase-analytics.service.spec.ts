@@ -274,7 +274,9 @@ describe('FirebaseAnalyticsService', () => {
       }).not.toThrow();
 
       // Cleanup
-      subscriptions.forEach((sub) => sub.unsubscribe());
+      for (const sub of subscriptions) {
+        sub.unsubscribe();
+      }
     });
 
     it('should handle rapid successive calls', () => {
@@ -500,7 +502,7 @@ describe('FirebaseAnalyticsService', () => {
       // Since we can't mock this easily, we test the opposite case and document the branch
 
       // This documents that we're aware of the SSR branch
-      if (typeof globalThis.window === 'undefined') {
+      if (globalThis.window === undefined) {
         // This would be the SSR case - early return
         expect(true).toBe(true);
       } else {
@@ -730,7 +732,7 @@ describe('FirebaseAnalyticsService', () => {
       // This test aims to hit as many code branches as possible without Firebase mocking
 
       // 1. Test SSR-like behavior (can't mock window = undefined, but test awareness)
-      if (typeof globalThis.window !== 'undefined') {
+      if (globalThis.window !== undefined) {
         expect(() => service.init()).not.toThrow();
       }
 

@@ -70,7 +70,7 @@
             class="version-info"
             (click)="openChangelog()"
             (keydown.enter)="openChangelog()"
-            title="Open release notes (changelog) — grouped by category and sorted newest first"
+            title="{{enableAnalytics ? 'Open release notes (changelog) — grouped by category and sorted newest first' : ''}}"
           >
             <p class="footer-version">{{ versionInfo }}</p>
             <ion-button fill="clear" size="small" class="changelog-button">
@@ -82,7 +82,7 @@
             class="version-info"
             (click)="getGitHubAnalytics()"
             (keydown.enter)="getGitHubAnalytics()"
-            title="View source code and GitHub analytics"
+            title="{{enableAnalytics ? 'View source code and GitHub analytics' : ''}}"
           >
             <ion-button fill="clear" size="small" class="changelog-button">
               <ion-icon name="logo-github" slot="start"></ion-icon>

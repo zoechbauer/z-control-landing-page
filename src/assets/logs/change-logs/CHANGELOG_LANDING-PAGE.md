@@ -2,6 +2,14 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.4] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- Removed tooltips from the Version Info and GitHub Analytics buttons in the footer when analytics are disabled.
+- Disabled the Version Info and GitHub Analytics buttons in the footer when analytics are disabled.
+- Performed codebase cleanup for improved maintainability.
+
 ## [2.3] – 2025-11-27
 
 ### ✨ New Features

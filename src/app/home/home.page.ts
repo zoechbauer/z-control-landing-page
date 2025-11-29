@@ -46,6 +46,7 @@ import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdo
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { CommonModule } from '@angular/common';
+import { APPS } from 'shared/GitHubConstants';
 
 enum App {
   qrCode = 'z-control QR Code Generator App',
@@ -81,7 +82,6 @@ export class HomePage implements AfterViewInit {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
   webAppUrl = 'https://z-control-qr-code.web.app';
 
-  private readonly landingPageApp = 'Landing Page';
   maxInputLength = 1000;
   selectedAccordion: string = '';
   currentMainAccordion: string = '';
@@ -132,7 +132,7 @@ export class HomePage implements AfterViewInit {
     this.fa.logEvent('download_native', {
       platform: 'android',
       url: this.nativeDownloadUrl,
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
   }
 
@@ -140,7 +140,7 @@ export class HomePage implements AfterViewInit {
     globalThis.window.open(this.sourceCodeUrl, '_blank');
     this.fa.logEvent('get_source_code', {
       repo: 'z-control-qr-code-generator',
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
   }
 
@@ -148,7 +148,7 @@ export class HomePage implements AfterViewInit {
     globalThis.window.open(this.webAppUrl, '_blank');
     this.fa.logEvent('open_web_app', {
       url: this.webAppUrl,
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
   }
 
@@ -156,7 +156,7 @@ export class HomePage implements AfterViewInit {
     const value: string = event.detail.value;
     this.fa.logEvent('accordion_change', {
       accordion_value: value,
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
 
     // Only handle main accordion changes
@@ -226,7 +226,7 @@ export class HomePage implements AfterViewInit {
   async openChangelog() {
     this.fa.logEvent('open_changelog', {
       changelog_for: this.selectedAccordion,
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
 
     const modal = await this.modalController.create({

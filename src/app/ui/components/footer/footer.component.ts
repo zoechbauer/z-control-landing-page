@@ -29,6 +29,7 @@ import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/services/utils.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
+import { APPS } from 'shared/GitHubConstants';
 
 @Component({
   selector: 'app-footer',
@@ -47,9 +48,8 @@ import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.c
 })
 export class FooterComponent implements OnInit, OnDestroy {
   showDetails = false;
-  // TODO move to a shared constants file
-  private readonly landingPageApp = 'Landing Page';
-  private sub = new Subscription();
+  enableAnalytics = false;
+  private readonly sub = new Subscription();
 
   constructor(
     public readonly fa: FirebaseAnalyticsService,
@@ -61,29 +61,39 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sub = this.utilsService.logoClicked$.subscribe((clicked) => {
-      if (clicked) {
-        this.fa.logEvent('logo_clicked', {
-          app: this.landingPageApp,
-        });
-      }
-      this.showDetails = !this.showDetails;
-    });
+    this.sub.add(
+      this.fa.enabled$.subscribe((enabled) => {
+        this.enableAnalytics = enabled;
+      })
+    );
+    this.sub.add(
+      this.utilsService.logoClicked$.subscribe((clicked) => {
+        if (clicked) {
+          this.fa.logEvent('logo_clicked', {
+            app: APPS.LANDING_PAGE,
+          });
+        }
+        this.showDetails = !this.showDetails;
+      })
+    );
   }
 
   toggleFooterDetails() {
     if (!this.showDetails) {
       this.fa.logEvent('open_footer', {
-        app: this.landingPageApp,
+        app: APPS.LANDING_PAGE,
       });
     }
     this.showDetails = !this.showDetails;
   }
 
   async openChangelog() {
+    if (!this.enableAnalytics) {
+      return;
+    }
     this.fa.logEvent('open_changelog', {
-      changelog_for: this.landingPageApp,
-      app: this.landingPageApp,
+      changelog_for: APPS.LANDING_PAGE,
+      app: APPS.LANDING_PAGE,
     });
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
@@ -132,7 +142,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       ? 'enable_analytics_footer'
       : 'disable_analytics_footer';
     this.fa.logEvent(eventName, {
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
 
     this.localStorageService.setAnalyticsConsent(enabled);
@@ -140,8 +150,11 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   async getGitHubAnalytics() {
+    if (!this.enableAnalytics) {
+      return;
+    }
     this.fa.logEvent('view_github_analytics', {
-      app: this.landingPageApp,
+      app: APPS.LANDING_PAGE,
     });
     const modal = await this.modalController.create({
       component: GithubAnalyticsComponent,

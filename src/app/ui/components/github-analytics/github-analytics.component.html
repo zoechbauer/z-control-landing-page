@@ -50,7 +50,7 @@
               <ion-accordion-group>
                 <ion-accordion [value]="item.repo">
                   <ion-item slot="header">
-                    <table class="repo-table">
+                    <table aria-hidden="true" class="repo-table">
                       <tr>
                         <td class="repo">{{ item.repo }}</td>
                         <td class="count">
@@ -63,7 +63,7 @@
                     </table>
                   </ion-item>
                   <div slot="content" class="repo-details">
-                    <table>
+                    <table aria-hidden="true">
                       <thead>
                         <tr>
                           <td colspan="2" style="padding: 0">
