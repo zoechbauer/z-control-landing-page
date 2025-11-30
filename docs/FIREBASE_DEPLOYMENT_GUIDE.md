@@ -166,6 +166,7 @@ cd " path\to\your\landing-page"
 update values in .env.local
 npm run generate-env
 check values with ionic serve
+set debug_mode to false in index_DEBUG_FIREBASE-config
 ```
 
 

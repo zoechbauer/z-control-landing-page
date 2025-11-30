@@ -1,4 +1,5 @@
-import * as functions from 'firebase-functions/v1';
+import { https, scheduler } from 'firebase-functions/v2';
+import * as logger from 'firebase-functions/logger';
 import * as admin from 'firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';
 import { REPOS, COLLECTION } from './shared/GitHubConstants';
@@ -17,9 +18,6 @@ let logInfo: {
   analyticsData?: unknown;
   updateData?: unknown;
 } = {};
-
-// firebase logger: console.log/error is not visible in Firebase Functions logs
-const logger = functions.logger;
 
 // Load dotenv for local test with firebase emulators
 // GITHUB_TOKEN for production must be defined as environment variable in https://console.cloud.google.com/functions
@@ -94,7 +92,7 @@ export const runGitHubAnalyticsFetch = async (
   ) {
     const { owner, repo } = REPOS[repoIndex];
     await processRepo(owner, repo, updateTraffic);
-  // If repoIndex is missing or invalid, process all repos
+    // If repoIndex is missing or invalid, process all repos
   } else {
     for (const { owner, repo } of REPOS) {
       await processRepo(owner, repo, updateTraffic);
@@ -241,12 +239,15 @@ export const saveGithubAnalyticsTrafficHistory = async (
  * month: every month
  * day-of-week: every day of the week
  */
-export const fetchGitHubAnalytics = functions.pubsub
-  .schedule('0 3 * * *') // Runs at 03:00 AM local time
-  .timeZone('Europe/Vienna')
-  .onRun(async () => {
+export const fetchGitHubAnalytics = scheduler.onSchedule(
+  {
+    schedule: '0 3 * * *', // Runs at 03:00 AM local time
+    timeZone: 'Europe/Vienna',
+  },
+  async () => {
     await runGitHubAnalyticsFetch();
-  });
+  }
+);
 
 /**
  * HTTP function for testing of GitHub analytics fetch.
@@ -259,7 +260,7 @@ export const fetchGitHubAnalytics = functions.pubsub
  * @param res - The HTTP response object.
  * @returns {Promise<void>} Resolves when response is sent.
  */
-export const testGitHubAnalytics = functions.https.onRequest(
+export const testGitHubAnalytics = https.onRequest(
   async (req, res) => {
     try {
       logInfo.calledBy = 'testGitHubAnalytics';

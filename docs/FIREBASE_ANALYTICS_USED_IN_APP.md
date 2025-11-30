@@ -23,21 +23,21 @@ This document provides a comprehensive guide to Firebase Analytics implementatio
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    Application Layer                     │
+│                    Application Layer                    │
 ├─────────────────────────────────────────────────────────┤
-│  AppComponent │ HomePage │ FooterComponent │ Others      │
-│      ↓             ↓            ↓              ↓         │
+│  AppComponent │ HomePage │ FooterComponent │ Others     │
+│      ↓             ↓            ↓              ↓        │
 │  ┌──────────────────────────────────────────────────┐   │
 │  │      FirebaseAnalyticsService (Singleton)        │   │
 │  └──────────────────────────────────────────────────┘   │
-│                        ↓                                 │
+│                        ↓                                │
 │  ┌──────────────────────────────────────────────────┐   │
-│  │          Firebase Analytics SDK                   │   │
+│  │          Firebase Analytics SDK                  │   │
 │  │  (initializeApp, getAnalytics, logEvent)         │   │
 │  └──────────────────────────────────────────────────┘   │
-│                        ↓                                 │
+│                        ↓                                │
 │  ┌──────────────────────────────────────────────────┐   │
-│  │         Google Analytics (Cloud)                  │   │
+│  │         Google Analytics (Cloud)                 │   │
 │  └──────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
 ```

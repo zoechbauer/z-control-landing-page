@@ -6,9 +6,13 @@ All recent updates and improvements to our **landing page**.
 
 ### 🚀 Improvements
 
-- Removed tooltips from the Version Info and GitHub Analytics buttons in the footer when analytics are disabled.
-- Disabled the Version Info and GitHub Analytics buttons in the footer when analytics are disabled.
-- Performed codebase cleanup for improved maintainability.
+- Footer buttons for **Version Info** and **GitHub Analytics** are now disabled and tooltips removed when analytics are turned off, ensuring a clearer user experience.
+- Upgraded all **Firebase Cloud Functions from v1 to v2** ahead of the March 2026 deprecation, improving performance and future compatibility.
+- Refactored codebase for better maintainability, readability, and adherence to project coding standards.
+
+### 🐛 Fixes
+
+- Resolved issues with initial unit tests to ensure reliable test coverage and accurate results.
 
 ## [2.3] – 2025-11-27
 
