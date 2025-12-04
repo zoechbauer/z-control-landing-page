@@ -77,7 +77,7 @@ landing-page/
 │  └─ ...other docs...
 ├─ node_modules/
 ├─ scripts/                     # utility scripts (e.g. generate-env.js)
-├─ tools/                       # developer tools (changelog templates etc.)
+├─ tools/                       # developer tools (changelog templates, backup scripts, etc.)
 └─ src/
    ├─ index.html
    ├─ index_DEBUG_FIREBASE-config.html  # local debug index (do NOT commit)

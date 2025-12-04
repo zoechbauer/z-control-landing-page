@@ -2,6 +2,12 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.5] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- Added backup scripts to the tools folder to safeguard non-committed files, including configuration and environment files.
+
 ## [2.4] – 2025-11-30
 
 ### 🚀 Improvements
