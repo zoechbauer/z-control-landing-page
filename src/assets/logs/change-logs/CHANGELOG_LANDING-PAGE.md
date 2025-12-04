@@ -2,7 +2,7 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [2.5] – YYYY-MM-DD
+## [2.5] – 2025-12-05
 
 ### 🚀 Improvements
 
