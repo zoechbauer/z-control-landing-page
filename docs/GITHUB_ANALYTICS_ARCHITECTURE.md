@@ -4,6 +4,7 @@ This document describes the architecture for automated fetching and storage of G
 
 - `zoechbauer/z-control-landing-page`
 - `zoechbauer/z-control-qr-code-generator`
+- `zoechbauer/z-control-Backup-scripts`
 - `zoechbauer/copilot-learning-calculator`
 
 The analytics data is retrieved via a scheduled Firebase Cloud Function and stored in Firestore for display in the landing page app.
@@ -53,11 +54,13 @@ Firestore structure:
 githubAnalyticsTraffic/
   ├─ copilot-learning-calculator
   ├─ z-control-qr-code-generator
+  ├─ z-control-Backup-scripts
   └─ z-control-landing-page
 
 githubAnalyticsTrafficHistory/
   ├─ copilot-learning-calculator
   ├─ z-control-qr-code-generator
+  ├─ z-control-Backup-scripts
   └─ z-control-landing-page
 ```
 
@@ -78,14 +81,15 @@ A shared constants file is used for both backend and frontend to keep repository
 ```typescript
 // filepath: shared/GitHubConstants.ts
 export const REPOS = [
-  { owner: 'zoechbauer', repo: 'z-control-landing-page' },
-  { owner: 'zoechbauer', repo: 'z-control-qr-code-generator' },
-  { owner: 'zoechbauer', repo: 'copilot-learning-calculator' },
+  { owner: "zoechbauer", repo: "z-control-landing-page" },
+  { owner: "zoechbauer", repo: "z-control-qr-code-generator" },
+  { owner: "zoechbauer", repo: "z-control-Backup-scripts" },
+  { owner: "zoechbauer", repo: "copilot-learning-calculator" },
 ];
 
 export const COLLECTION = {
-  GITHUB_ANALYTICS_TRAFFIC: 'githubAnalyticsTraffic',
-  GITHUB_ANALYTICS_TRAFFIC_HISTORY: 'githubAnalyticsTrafficHistory',
+  GITHUB_ANALYTICS_TRAFFIC: "githubAnalyticsTraffic",
+  GITHUB_ANALYTICS_TRAFFIC_HISTORY: "githubAnalyticsTrafficHistory",
 };
 ```
 
@@ -105,33 +109,27 @@ export const COLLECTION = {
 ### Example: `githubAnalytics.ts` (with query parameters)
 
 ```typescript
-export const testGitHubAnalytics = functions.https.onRequest(
-  async (req, res) => {
-    try {
-      logInfo.calledBy = 'testGitHubAnalytics';
-      const updateTraffic = req.query.updateTraffic !== 'false';
-      const repoIndexString = req.query.repoIndex;
-      const repoIndex = repoIndexString ?
-        Number.parseInt(repoIndexString as string, 10) :
-        undefined;
+export const testGitHubAnalytics = functions.https.onRequest(async (req, res) => {
+  try {
+    logInfo.calledBy = "testGitHubAnalytics";
+    const updateTraffic = req.query.updateTraffic !== "false";
+    const repoIndexString = req.query.repoIndex;
+    const repoIndex = repoIndexString ? Number.parseInt(repoIndexString as string, 10) : undefined;
 
-      await runGitHubAnalyticsFetch(updateTraffic, repoIndex);
+    await runGitHubAnalyticsFetch(updateTraffic, repoIndex);
 
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json({
-        message: 'GitHub analytics fetched and stored.',
-        logInfo: logInfo,
-      });
-    } catch (error) {
-      logger.error('Error in testGitHubAnalytics:', error);
-      res.status(500).json({
-        error: `Internal Server Error: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-      });
-    }
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).json({
+      message: "GitHub analytics fetched and stored.",
+      logInfo: logInfo,
+    });
+  } catch (error) {
+    logger.error("Error in testGitHubAnalytics:", error);
+    res.status(500).json({
+      error: `Internal Server Error: ${error instanceof Error ? error.message : String(error)}`,
+    });
   }
-);
+});
 ```
 
 **Query Parameters:**
@@ -176,6 +174,7 @@ export const testGitHubAnalytics = functions.https.onRequest(
   ```
 
 - **Set GitHub token as environment variable in Cloud Console:**
+
   - Go to Cloud Functions in the Firebase or Google Cloud Console.
   - Edit your function and add `GITHUB_TOKEN` in the environment variables section.
 
@@ -204,8 +203,8 @@ async function fetchAnalytics() {
   if (docSnap.exists()) {
     const data = docSnap.data();
     // Display data in your app
-    console.log('Views:', data.views);
-    console.log('Clones:', data.clones);
+    console.log("Views:", data.views);
+    console.log("Clones:", data.clones);
   } else {
     console.log("No analytics data found.");
   }
@@ -228,7 +227,7 @@ async function fetchAnalytics() {
 - [Firebase Functions Documentation](https://firebase.google.com/docs/functions)
 - [Firestore Documentation](https://firebase.google.com/docs/firestore)
 
-## 9. Local Testing with Firebase Emulator Suite
+## 9. Local Testing with Firebase Emulator Suite when adding new repos
 
 To test the GitHub analytics function locally:
 
@@ -249,7 +248,7 @@ To test the GitHub analytics function locally:
 3. **Ensure your function code loads environment variables:**
 
    ```typescript
-   require('dotenv').config({ path: require('node:path').resolve(__dirname, '../../.env.local') });
+   require("dotenv").config({ path: require("node:path").resolve(__dirname, "../../.env.local") });
    ```
 
 4. **Start the Firebase Emulator Suite:**
@@ -259,6 +258,7 @@ To test the GitHub analytics function locally:
    ```
 
 5. **Trigger the function manually for testing:**
+
    - Use the HTTP endpoint (e.g., `/testGitHubAnalytics`) in your browser or with curl:
 
      ```bash
@@ -266,14 +266,39 @@ To test the GitHub analytics function locally:
      ```
 
 6. **View results in the Emulator UI:**
+
    - Open [http://localhost:4000/firestore](http://localhost:4000/firestore) and check the `githubAnalyticsTraffic` and `githubAnalyticsTrafficHistory` collections.
 
 7. **Troubleshooting:**
+
    - Ensure ports are free before starting the emulator.
    - Use LF line endings in `.env.local`.
    - Check logs for errors and verify environment variables are loaded.
 
+8. **Using Firebase Emulator for testing new repo in Frontend:**
+
+   - Add new repo to shared GithubConstants.ts (both frontend and backend copies).
+   - Run npm run build:functions to update backend build output.
+   - Configure your frontend app to connect to the Firestore emulator when running locally:
+   set `useFirebaseEmulator = true` in GithubAnalyticsComponent
+   - if ok, set `useFirebaseEmulator = false` for production.
+   - Deploy functions and frontend as usual.
+
+   ```typescript
+   private async showAnalyticsData() {
+    const collection = COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
+    const repo = ALL_REPOS;
+    const useFirebaseEmulator = false;   <= set to true for local testing>
+
+    this.analyticsData = await this.firestoreService.getAnalyticsData(
+      collection,
+      repo,
+      useFirebaseEmulator
+    );
+   }
+   ```
+
 ---
 
 **Maintained by:** Hans Zöchbauer  
-**Last Updated:** November 22, 2025
+**Last Updated:** December 6, 2025

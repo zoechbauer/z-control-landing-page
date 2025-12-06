@@ -2,6 +2,12 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.6] – YYYY-MM-DD
+
+### ✨ New Features
+
+- Added repository <i>z-control-Backup-scripts</i> to the list of tracked repositories for GitHub Analytics.
+
 ## [2.5] – 2025-12-05
 
 ### 🚀 Improvements
