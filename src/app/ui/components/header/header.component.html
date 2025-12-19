@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" class="back-button">
       @if (showBackButton) {
-      <ion-button
+      <ion-button 
         fill="clear"
         (click)="goBack()"
         (keydown.enter)="goBack()"
@@ -13,30 +13,34 @@
       }
     </ion-buttons>
 
-    <div
-      (click)="openFooter()"
-      (keydown.enter)="openFooter()"
-      class="logo-container"
-      [class.with-back-button]="showBackButton"
-      tabindex="0"
-      role="button"
-      title="Toggle footer — show or hide information about z-control and this app"
-    >
-      <img
-        class="logo"
-        src="assets/icon/z-bell-32px.png"
-        alt="z-control logo"
-      />
-      <span class="app-title">z-control</span>
+    <div class="header-flex-row">
+      <div class="logo-container"
+        (click)="openFooter()"
+        (keydown.enter)="openFooter()"
+        [class.with-back-button]="showBackButton"
+        tabindex="0"
+        role="button"
+        title="Toggle footer — show or hide information about z-control and this app"
+      >
+        <img
+          class="logo"
+          src="assets/icon/z-bell-32px.png"
+          alt="z-control logo"
+        />
+        <span class="app-title">z-control</span>
+      </div>
+      <div class="center-title">
+        <span>Apps & Tools</span>
+      </div>
+      <div class="selected-accordion-container">
+        @if (selectedAccordion) {
+        <span
+          class="selected-accordion"
+          title="selected accordion"
+          >{{ selectedAccordion }}</span
+        >
+        }
+      </div>
     </div>
-
-    @if (selectedAccordion) {
-    <ion-title
-      slot="end"
-      class="selected-accordion"
-      title="selected accordion"
-      >{{ selectedAccordion }}</ion-title
-    >
-    }
   </ion-toolbar>
 </ion-header>

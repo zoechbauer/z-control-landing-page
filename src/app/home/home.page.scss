@@ -30,6 +30,17 @@ ion-card-content {
   p:last-child {
     margin-bottom: 0;
   }
+
+  ul,ol {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: var(--ion-text-color);
+  }
+
+  .open-source-note {
+    margin-top: 30px;
+    font-size: 0.9rem;
+  }
 }
 
 .accordion-expanded {
@@ -193,7 +204,14 @@ ion-icon {
   color: var(--ion-text-color);
 }
 
-.z-control-qrcode-generator-logo {
+.feature-icon {
+  margin-right: 6px;
+  vertical-align: middle;
+  color: var(--ion-color-primary, #3880ff);
+}
+
+.z-control-qrcode-generator-logo,
+.z-control-backup-scripts-logo {
   border-radius: 8px;
   margin-right: 6px;
   vertical-align: middle;
@@ -216,7 +234,7 @@ ion-icon {
   border: 3px solid var(--ion-color-danger);
   border-radius: 8px;
 
-    p {
+  p {
     margin: 0;
     font-size: 16px;
   }

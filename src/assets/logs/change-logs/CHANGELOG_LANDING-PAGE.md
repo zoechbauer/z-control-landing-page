@@ -2,6 +2,19 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.7] – YYYY-MM-DD
+
+### ✨ New Features & Improvements
+
+- Added a dedicated accordion for **z-control Backup Scripts** to the landing page for easier access.
+- Simplified navigation by removing the _Other Apps_ accordion—now only two main sections remain.
+- Improved header with a clearer, more descriptive title for better recognition.
+- Updated footer text and tooltips for greater clarity and usability.
+- The QR Code Generator accordion no longer auto-opens on page load, reducing confusion when multiple accordions are present.
+- Enlarged the Release Notes dialog to show more information at once.
+- Refreshed the Welcome section with clearer, more engaging text.
+- Updated `README.md` to reflect the new accordion and recent enhancements.
+
 ## [2.6] – 2025-12-06
 
 ### ✨ New Features

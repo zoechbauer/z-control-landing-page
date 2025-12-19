@@ -1,6 +1,6 @@
 # z-control Landing Page
 
-A modern, responsive landing page built with Ionic Angular, showcasing the z-control QR Code app and serving as a central hub for future applications.
+A modern, mobile-first landing page built with Ionic and Angular, highlighting the z-control open-source applications and developer tools. Designed for responsiveness, accessibility, and seamless user experience across all devices.
 
 ## 🌟 Features
 
@@ -75,39 +75,65 @@ landing-page/
 │  │  ├─ FIREBASE_ANALYTICS_SERVICE_TESTS.md
 │  │  └─ UNIT_TESTING_PLAN.md
 │  └─ ...other docs...
+├─ functions/                   # Firebase Cloud Functions (GitHub Analytics)
+│  ├─ lib/
+│  ├─ node_modules/
+│  ├─ src/
+│  │  ├─ shared/
+│  │  │  └─ GitHubConstants.ts
+│  │  ├─ GitHubAnalytics.ts
+│  │  ├─Index.ts
+│  │  └─ testEnv.ts
+│  └─ ...other files, like package.json, tsconfig.json...
 ├─ node_modules/
-├─ scripts/                     # utility scripts (e.g. generate-env.js)
-├─ tools/                       # developer tools (changelog templates, backup scripts, etc.)
+├─ scripts/
+│  └─ generate-env.js
+├─ shared/
+│  └─ GitHubConstants.ts
+├─ tools/
+│  ├─ backup_non_committed_files.ps1
+│  ├─ backup_non_committed_files.txt
+│  ├─ CHANGELOG_template.md
+│  ├─ CHANGELOG_template DE.md
+│  └─ README.md
 └─ src/
    ├─ index.html
    ├─ index_DEBUG_FIREBASE-config.html  # local debug index (do NOT commit)
+   ├─ global.scss
+   ├─ main.html
    ├─ environments/
    │  ├─ environment.ts
    │  └─ environment.prod.ts
    ├─ assets/
    │  ├─ icon/
    │  ├─ logs/
-   │  │  └─ change-logs/        # CHANGELOG_LANDING-PAGE.md etc.
+   │  │  └─ change-logs/
+   │  │        ├─ CHANGELOG_LANDING-PAGE.md
+   │  │        └─ CHANGELOG_QR-CODE.md
    │  └─ privacy/
    │     └─ policies/
-   │        ├─ basic/
-   │        │  ├─ basic-en.html
-   │        │  └─ basic-de.html
+   │        ├─ premium/
+   │        │  ├─ premium-en.html
+   │        │  └─ premium-de.html
    │        ├─ landing-page/
    │        │  ├─ landing-page-en.html
    │        │  └─ landing-page-de.html
-   │        └─ premium/
-   │           ├─ premium-en.html
-   │           └─ premium-de.html
+   │        └─ qr-code-generator/
+   │           ├─ qr-code-generator-en.html
+   │           └─ qr-code-generator-de.html
    └─ app/
       ├─ app.component.ts
       ├─ app.component.html
+      ├─ app.component.scss
+      ├─ app.routes.ts
       ├─ home/                    # main landing page sources
       ├─ privacy/                 # privacy policy system
       │  ├─ components/
       │  │  └─ privacy-viewer/
       │  │     ├─ privacy-viewer.component.ts
       │  │     └─ privacy-viewer.component.html
+      │  ├─ policies/
+      │  │  └─ README.md     
       │  └─ services/
       │     └─ privacy.service.ts
       ├─ services/                # app-wide / cross-cutting services
@@ -119,15 +145,19 @@ landing-page/
       │  └─ components/
       │     ├─ footer/
       │     │  ├─ footer.component.ts
+      │     │  ├─ footer.component.scss
       │     │  └─ footer.component.html
-      │     ├─ consent-banner/
-      │     │  ├─ consent-banner.component.ts
-      │     │  └─ consent-banner.component.html
+      │     ├─ markdown-viewer/
+      │     │  ├─ markdown-viewer.component.ts
+      │     │  ├─ markdown-viewer.component.scss
+      │     │  └─ markdown-viewer.component.html
       │     ├─ header/
       │     │  ├─ header.component.ts
+      │     │  ├─ header.component.scss
       │     │  └─ header.component.html
       │     └─ github-analytics/
       │        ├─ github-analytics.component.ts
+      │        ├─ github-analytics.component.scss
       │        └─ github-analytics.component.html
       └─ theme/                    # global styling (variables, global.scss)
 ```

@@ -1,54 +1,71 @@
-.logo-container {
-  position: absolute;
-  left: 56px; /* Fixed position regardless of back button */
-  top: 50%;
-  transform: translateY(-50%);
+.back-button {
+  margin-right: -20px;
+}
+
+.header-flex-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  z-index: 10;
-  max-width: calc(100vw - 200px); /* Prevent overlap on mobile */
-  cursor: pointer;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.logo {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
+.logo-container {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-left: 16px;
+  gap: 3px;
 }
 
-.app-title {
-  font-size: 1.25rem;
-  font-weight: 500;
-  --color: #000;
-  margin: 0;
+.center-title {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  padding: 0 16px;
+}
+
+.selected-accordion-container {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-right: 20px;
 }
 
 .selected-accordion {
   font-size: 1rem;
   font-weight: 400;
-  --color: #666;
-  text-align: right;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 500px;
 }
 
-/* Mobile adjustments */
-@media (max-width: 480px) {
-  .logo-container {
-    left: 16px; /* Default: move logo to left edge on mobile */
-    max-width: calc(100vw - 100px);
+/* Responsive: stack vertically on small screens */
+@media (max-width: 600px) {
+  .header-flex-row {
+    flex-direction: column;
+    align-items: stretch;
   }
-  .logo-container.with-back-button {
-    left: 56px; /* If back button is shown, move logo right to avoid overlap */
+  .logo-container,
+  .center-title,
+  .selected-accordion-container {
+    justify-content: center;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .center-title {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 1rem;
   }
   .selected-accordion {
-    max-width: 180px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    text-align: center;
+    width: 100%;
   }
 }

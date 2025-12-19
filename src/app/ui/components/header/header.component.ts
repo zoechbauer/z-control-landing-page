@@ -6,7 +6,6 @@ import { arrowBack } from 'ionicons/icons';
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonButtons,
   IonButton,
   IonIcon,
@@ -23,7 +22,6 @@ import { UtilsService } from 'src/app/services/utils.service';
     RouterModule,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonButtons,
     IonButton,
     IonIcon,

@@ -34,6 +34,7 @@ import { closeOutline } from 'ionicons/icons';
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() fullChangeLogPath!: string;
+  @Input() title: string = 'Release Notes';
   markdown: string = '';
 
   constructor(

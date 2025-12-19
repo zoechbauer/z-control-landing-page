@@ -127,7 +127,16 @@ ion-footer {
 }
 
 .change-log-modal,
+.documentation-modal,
 .github-analytics-modal {
   --height: 90vh;
   --max-height: 90vh;
+}
+
+ @media (min-width: 768px) {
+  .change-log-modal,
+  .documentation-modal,
+  .github-analytics-modal {
+    --width: 900px;
+  }
 }
