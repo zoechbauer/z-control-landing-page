@@ -154,7 +154,7 @@ export class HomePage implements AfterViewInit {
   onGetQrCodeGeneratorSource() {
     globalThis.window.open(this.sourceCodeUrlQrCodeGenerator, '_blank');
     this.fa.logEvent('get_source_code', {
-      repo: 'z-control-qr-code-generator',
+      repo: App.qrCode,
       app: APPS.LANDING_PAGE,
     });
   }
@@ -169,7 +169,8 @@ export class HomePage implements AfterViewInit {
 
   onGetBackupScriptsSource() {
     globalThis.window.open(this.sourceCodeUrlBackupScripts, '_blank');
-    this.fa.logEvent('get_backup_scripts_source', {
+    this.fa.logEvent('get_source_code', {
+      repo: App.BackupScripts,
       app: APPS.LANDING_PAGE,
     });
   }
@@ -184,8 +185,8 @@ export class HomePage implements AfterViewInit {
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
       componentProps: {
-      fullChangeLogPath: docPath,
-      title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
+        fullChangeLogPath: docPath,
+        title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
       },
       cssClass: 'documentation-modal',
     });

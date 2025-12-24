@@ -138,15 +138,32 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   onChangeEnableAnalytics(enabled: boolean) {
-    const eventName = enabled
-      ? 'enable_analytics_footer'
-      : 'disable_analytics_footer';
-    this.fa.logEvent(eventName, {
-      app: APPS.LANDING_PAGE,
-    });
+    const eventName = 'toggle_analytics_footer';
+    const eventValue = enabled ? 'enabled' : 'disabled';
 
-    this.localStorageService.setAnalyticsConsent(enabled);
-    this.fa.enableCollection(enabled);
+    if (this.enableAnalytics && !enabled) {
+      // log event before disabling otherwise it won't be sent
+      this.fa.logEvent(eventName, {
+        app: APPS.LANDING_PAGE,
+        analytics: eventValue,
+      });
+
+      setTimeout(() => {
+        this.localStorageService.setAnalyticsConsent(enabled);
+        this.fa.enableCollection(enabled);
+        return;
+      }, 300);
+    } else {
+      // analytics being enabled
+      this.localStorageService.setAnalyticsConsent(enabled);
+      this.fa.enableCollection(enabled);
+
+      // log event after enabling
+      this.fa.logEvent(eventName, {
+        app: APPS.LANDING_PAGE,
+        analytics: eventValue,
+      });
+    }
   }
 
   async getGitHubAnalytics() {
