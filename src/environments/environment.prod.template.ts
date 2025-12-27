@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const environment = {
   production: __PRODUCTION__,
   version: { 
