@@ -118,6 +118,9 @@ landing-page/
    │        ├─ landing-page/
    │        │  ├─ landing-page-en.html
    │        │  └─ landing-page-de.html
+   │        ├─ multi-language-translator/
+   │        │  ├─ multi-language-translator-en.html
+   │        │  └─ multi-language-translator-de.html
    │        └─ qr-code-generator/
    │           ├─ qr-code-generator-en.html
    │           └─ qr-code-generator-de.html

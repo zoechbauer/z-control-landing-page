@@ -7,7 +7,7 @@ import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.se
 import { APPS } from 'shared/GitHubConstants';
 
 export interface PrivacyPolicy {
-  type: typeof APPS[keyof typeof APPS];
+  type: (typeof APPS)[keyof typeof APPS];
   language: 'en' | 'de';
   title: string;
   content: string;
@@ -24,7 +24,17 @@ export interface PrivacyPolicyMeta {
   providedIn: 'root',
 })
 export class PrivacyService {
+  // NOTE: When adding a new privacy policy:
+  // 1. Add a new entry here to availablePolicies.
+  // 2. Add a corresponding entry in getTitle below.
+  // The 'type' should match the folder name in assets/privacy/policies/{new-policy-folder}
   private readonly availablePolicies: PrivacyPolicyMeta[] = [
+    {
+      type: 'multi-language-translator',
+      languages: ['en', 'de'],
+      description:
+        'Standard privacy policy for z-control Multi Language Translator App',
+    },
     {
       type: 'qr-code-generator',
       languages: ['en', 'de'],
@@ -109,7 +119,13 @@ export class PrivacyService {
   }
 
   private getTitle(type: string, language: string): string {
+    // NOTE: When adding a new privacy policy:
+    // 1. Add a new entry here matching the 'type' (folder name in assets/privacy/policies/{new-policy-folder}).
     const titles: Record<string, Record<string, string>> = {
+      'multi-language-translator': {
+        en: 'Privacy Policy\nz-control Multi Language Translator App',
+        de: 'Datenschutzerklärung\nz-control Multi-Sprachen-Übersetzer App',
+      },
       'qr-code-generator': {
         en: 'Privacy Policy\nz-control QR Code Generator App',
         de: 'Datenschutzerklärung\nz-control QR-Code-Generator-App',

@@ -29,15 +29,18 @@
 │  │  ├─ icon/
 │  │  └─ privacy/
 │  │     └─ policies/
-│  │        ├─ basic/
-│  │        │  ├─ basic-en.html
-│  │        │  └─ basic-de.html
+│  │        ├─ premium/
+│  │        │  ├─ premium-en.html
+│  │        │  └─ premium-de.html
 │  │        ├─ landing-page/
 │  │        │  ├─ landing-page-en.html
 │  │        │  └─ landing-page-de.html
-│  │        └─ premium/
-│  │           ├─ premium-en.html
-│  │           └─ premium-de.html
+│  │        ├─ multi-language-translator/
+│  │        │  ├─ multi-language-translator-en.html
+│  │        │  └─ multi-language-translator-de.html
+│  │        └─ qr-code-generator/
+│  │           ├─ qr-code-generator-en.html
+│  │           └─ qr-code-generator-de.html
 │  └─ app/
 │     ├─ app.component.ts
 │     ├─ app.component.html
@@ -62,9 +65,34 @@
 ```
 
 Notes
+
 - Keep real Firebase config and local debug index out of VCS (use .gitignore).
 - Assets folder is the single source of policy HTML templates; the privacy service loads templates via HTTP.
 - FirebaseAnalyticsService stays in src/app/services as an app-wide cross-cutting service.
+
+### Adding a new Policy (TODOs)
+
+To add a new privacy policy for an app or feature, follow these steps:
+
+#### Insert the privacy document in the assets folder
+
+1. Create a new folder in `src/assets/privacy/policies/` named after your policy type (e.g., `my-new-app`).
+2. Add the HTML files for each supported language, using the format:  
+   - `my-new-app-en.html`  
+   - `my-new-app-de.html`  
+   (Add more languages as needed.)
+
+#### Update `privacy.service.ts`
+
+1. In `availablePolicies`, add a new entry for your policy type, specifying supported languages and a description.
+2. In the `getTitle` method, add a new entry for your policy type with localized titles for each language.
+3. Ensure the `type` matches the folder name you created in the assets directory.
+
+> **Note:**  
+> The folder name in `assets/privacy/policies/{new-policy-folder}` must match the `type` used in `privacy.service.ts`.
+> 
+> Currently, browsers cache the pages for up to 1 hour, as indicated by the response header: `cache-control: max-age=3600`. Please keep this in mind when testing new privacy policies.
+---
 
 ### **Key Technical Implementation**
 
@@ -141,6 +169,9 @@ bootstrapApplication(AppComponent, {
 
 - **z-control QR Code App (English)**: `https://z-control-4070.web.app/privacy/basic/en`
 - **z-control QR Code App (German)**: `https://z-control-4070.web.app/privacy/basic/de`
+
+- **z-control Multi Language Translator App (English)**: `https://z-control-4070.web.app/privacy/multi-language-translator/en`
+- **z-control Multi Language Translator App (German)**: `https://z-control-4070.web.app/privacy/multi-language-translator/de`
 
 - **Future Premium Features (English)**: `https://z-control-4070.web.app/privacy/premium/en`
 - **Future Premium Features (German)**: `https://z-control-4070.web.app/privacy/premium/de`

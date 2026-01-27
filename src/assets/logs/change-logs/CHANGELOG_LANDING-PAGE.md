@@ -2,6 +2,13 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.8] – YYYY-MM-DD
+
+### ✨ New Features & Improvements
+
+- Introduced a dedicated privacy policy for the new Multi Language Translator app, ensuring clear and transparent data practices for users.
+- Enhanced documentation: Updated project structure with privacy policy of Multi Language Translator app in README file.
+
 ## [2.7] – 2025-12-19
 
 ### ✨ New Features & Improvements
@@ -261,7 +268,6 @@ All recent updates and improvements to our **landing page**.
 ### ✨ New Features
 
 - **What's New Dialog**
-
   - **ngx-markdown Integration**: Replaced custom changelog parser with ngx-markdown viewer for more reliable rendering
   - **WYSIWYG Display**: Markdown content now displays exactly as written, ensuring consistent formatting
   - **Improved Reliability**: No more parsing errors from formatting variations or extra spaces
@@ -270,20 +276,16 @@ All recent updates and improvements to our **landing page**.
 ### 🐛 Fixes
 
 - Email Client Issue on mobile devices when **using the Wep App of z-control QR Code Generator**
-
   - **Issue**: In the web app, the email client does not open on mobile devices when the "Mail Code" button is used
 
   - **Solution**: new user experience flow for e-mail sending
-
     - **_Native Apps (Android)_**
-
       1. User clicks "Mail Code"
       2. QR code downloads automatically
       3. Email client opens with pre-filled recipients, content and attachments
       4. User sends email
 
     - **_Desktop Web_**
-
       1. User clicks "Mail Code"
       2. QR code downloads to Downloads folder
       3. Alert shows instruction to manually attach files
@@ -291,7 +293,6 @@ All recent updates and improvements to our **landing page**.
       5. User manually attaches downloaded files and sends
 
     - **_Mobile Web_**
-
       - **Android browsers**: Full functionality with options dialog (Try Email App,
         Copy QR Text, Manual Instructions, Cancel)
 
@@ -306,7 +307,6 @@ All recent updates and improvements to our **landing page**.
 ### 🚀 Improvements
 
 - **What's New Dialog Redesign**
-
   - **Markdown Structure Support**: Changelog now properly displays nested markdown lists with visual hierarchy
   - **Enhanced Readability**: Main topics and sub-points are now clearly distinguished with proper indentation
   - **Improved Information Architecture**: Complex changelog entries are organized in a user-friendly, scannable format
