@@ -2,12 +2,17 @@
 
 All recent updates and improvements to our **landing page**.
 
-## [2.8] – YYYY-MM-DD
+## [2.8] – 2026-01-30
 
 ### ✨ New Features & Improvements
 
 - Introduced a dedicated privacy policy for the new Multi Language Translator app, ensuring clear and transparent data practices for users.
 - Enhanced documentation: Updated project structure with privacy policy of Multi Language Translator app in README file.
+- Improved Github Analytics Raw Data Display: Added a new method to fetch and display raw analytics data from Firestore for better transparency and debugging.
+  
+### 🐛 Fixes
+
+- Added a function to backfill missing analytics history entries in Firestore, improving the completeness and accuracy of GitHub repository traffic statistics. Due to GitHub's 14-day data retention limit, entries prior to this period (from 28.12. to 14.1.) could not be restored.
 
 ## [2.7] – 2025-12-19
 

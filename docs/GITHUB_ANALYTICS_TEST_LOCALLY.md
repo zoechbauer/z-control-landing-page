@@ -37,9 +37,9 @@ npm install node-fetch dotenv
 At the top of your function file (e.g., `githubAnalytics.ts`):
 
 ```typescript
-import * as dotenv from 'dotenv';
-import * as path from 'node:path';
-dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
+import * as dotenv from "dotenv";
+import * as path from "node:path";
+dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
 ```
 
 ### 4. Build Functions
@@ -101,5 +101,72 @@ firebase emulators:start
 
 ---
 
+## Debugging Firebase Functions (VS Code + Emulator)
+
+You can debug your Firebase Functions running in the emulator and set breakpoints in your TypeScript/JavaScript code using VS Code.
+
+### 1. Start the Emulator in Debug Mode
+
+Stop any running emulator process. Then start the emulator with debugging enabled (use a free port, e.g., 9229):
+
+```sh
+firebase emulators:start --inspect-functions=9229
+```
+
+You should see a line like:
+
+```
+Debugger listening on ws://127.0.0.1:9229/...
+```
+
+### 2. Add a VS Code Debug Configuration
+
+Create or update `.vscode/launch.json` in your project root with:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Firebase Functions Emulator",
+      "port": 9229,
+      "restart": true
+    }
+  ]
+}
+```
+
+Make sure the `port` matches the one you used above.
+
+### 3. Set Breakpoints
+
+- Open your TypeScript file (e.g., `githubAnalytics.ts`) in VS Code.
+- Set breakpoints where you want to pause execution (e.g., inside your function handler).
+
+### 4. Start Debugging
+
+- In VS Code, go to the Run & Debug panel.
+- Select **Attach to Firebase Functions Emulator** and click the green play button.
+- You should see "Connected" in the debug console.
+
+### 5. Trigger Your Function
+
+- **Important:** The first time after starting the emulator (or after clearing data), you must call your function with `updateTraffic=true` (the default) to fetch and store the latest analytics data in Firestore. If you use `updateTraffic=false` before any data exists, no analytics will be available for processing.
+
+- Use your browser or `curl` to call your function, e.g.:
+  ```
+  http://localhost:5001/z-control-4070/us-central1/testGitHubAnalytics?repoIndex=0
+  ```
+- The emulator will hit your breakpoints and VS Code will pause execution, allowing you to inspect variables, step through code, etc.
+
+### 6. Notes
+
+- If you use TypeScript, make sure `"sourceMap": true` is set in your `tsconfig.json` and your code is built (`npm run build` or `tsc --watch`).
+- If you see "breakpoints ignored because generated code not found," check that your `outDir` and `sourceMap` settings are correct and that VS Code is opening the built files with source maps.
+
+---
+
 **Maintained by:** Hans Zöchbauer  
-**Last Updated:** November 19, 2025
+**Last Updated:** January 27, 2026

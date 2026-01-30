@@ -69,19 +69,15 @@
                           <td colspan="2" style="padding: 0">
                             <div>
                               <strong>Last Updated:</strong>
-                              {{
-                                item.timestamp | date : "yyyy-MM-dd HH:mm:ss"
-                              }}
+                              {{ item.timestamp | date: "yyyy-MM-dd HH:mm:ss" }}
                             </div>
                             <div [hidden]="getMostRecentItem(item) == null">
                               <strong>Most Recent Record Date:</strong>
-                              {{
-                                getMostRecentItem(item) | date : "yyyy-MM-dd"
-                              }}
+                              {{ getMostRecentItem(item) | date: "yyyy-MM-dd" }}
                             </div>
                             <div [hidden]="getOldestItem(item) == null">
                               <strong>First Record Date:</strong>
-                              {{ getOldestItem(item) | date : "yyyy-MM-dd" }}
+                              {{ getOldestItem(item) | date: "yyyy-MM-dd" }}
                             </div>
                           </td>
                           <td>
@@ -118,7 +114,7 @@
                                 <tbody>
                                   <tr *ngFor="let view of item.views.views">
                                     <td>
-                                      {{ view.timestamp | date : "yyyy-MM-dd" }}
+                                      {{ view.timestamp | date: "yyyy-MM-dd" }}
                                     </td>
                                     <td class="right-aligned">
                                       {{ view.count }}
@@ -155,9 +151,7 @@
                                 <tbody>
                                   <tr *ngFor="let clone of item.clones.clones">
                                     <td>
-                                      {{
-                                        clone.timestamp | date : "yyyy-MM-dd"
-                                      }}
+                                      {{ clone.timestamp | date: "yyyy-MM-dd" }}
                                     </td>
                                     <td class="right-aligned">
                                       {{ clone.count }}
@@ -192,12 +186,31 @@
     </section>
     <hr />
     <ion-accordion-group>
-      <ion-accordion value="rawData">
+      <ion-accordion value="rawDataAll">
         <ion-item slot="header">
-          <ion-label>Show Raw JSON Data</ion-label>
+          <ion-label>Show Raw Data (JSON)</ion-label>
         </ion-item>
-        <div slot="content" style="max-height: 300px; overflow-y: auto">
-          <pre>{{ analyticsData | json }}</pre>
+        <div slot="content">
+          <ion-accordion-group>
+            <ion-accordion value="rawDataGithubTraffic">
+              <ion-item slot="header">
+                <ion-label>GitHub Traffic API Data (Current 14 Days)</ion-label>
+              </ion-item>
+              <div slot="content" style="max-height: 300px; overflow-y: auto">
+                <pre>{{ githubTrafficData | json }}</pre>
+              </div>
+            </ion-accordion>
+            <ion-accordion value="rawDataGithubAnalytics">
+              <ion-item slot="header">
+                <ion-label
+                  >GitHub Analytics History Data (Aggregated)</ion-label
+                >
+              </ion-item>
+              <div slot="content" style="max-height: 300px; overflow-y: auto">
+                <pre>{{ analyticsData | json }}</pre>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
         </div>
       </ion-accordion>
     </ion-accordion-group>

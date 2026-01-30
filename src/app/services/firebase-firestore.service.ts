@@ -40,7 +40,7 @@ export class FirebaseFirestoreService {
   async getAnalyticsData(
     collection: (typeof COLLECTION)[keyof typeof COLLECTION],
     repo: (typeof REPO)[keyof typeof REPO],
-    useFirebaseEmulator: boolean = false
+    useFirebaseEmulator: boolean = false,
   ): Promise<GithubAnalyticsTrafficDocument[]> {
     let analyticsDataArr: GithubAnalyticsTrafficDocument[] = [];
     this.collection = collection;
@@ -68,6 +68,13 @@ export class FirebaseFirestoreService {
    *
    * If the Firebase emulator is enabled, connects to the local Firestore emulator.
    * Retrieves the analytics document for the repository and processes its data.
+   *
+   * Note: There is a small difference in structure between the
+   * GITHUB_ANALYTICS_TRAFFIC and GITHUB_ANALYTICS_TRAFFIC_HISTORY collections:
+   * - GITHUB_ANALYTICS_TRAFFIC: The 'views' and 'clones' fields are objects containing an array under 'views' and 'clones' keys, respectively (e.g., views.views, clones.clones).
+   * - GITHUB_ANALYTICS_TRAFFIC_HISTORY: The 'views' and 'clones' fields are already arrays.
+   * This function normalizes the data structure for downstream processing.
+   *
    * Throws an error if no analytics data is found.
    *
    * @returns {Promise<GithubAnalyticsTrafficDocument>} A promise that resolves to the processed analytics data.
@@ -83,7 +90,16 @@ export class FirebaseFirestoreService {
 
     if (docSnap.exists()) {
       const data = docSnap.data();
-      return this.processData(data);
+      let processingData = data;
+      if (this.collection === COLLECTION.GITHUB_ANALYTICS_TRAFFIC) {
+        // there is a small difference in structure between TRAFFIC and TRAFFIC_HISTORY
+        processingData = {
+          views: data['views']['views'] || [],
+          clones: data['clones']['clones'] || [],
+          timestamp: data['timestamp'] || '',
+        };
+      }
+      return this.processData(processingData);
     } else {
       console.error('No analytics data found.');
       throw new Error('No analytics data found.');
@@ -105,13 +121,13 @@ export class FirebaseFirestoreService {
       const viewsDoc = this.processStatistics(
         TrafficType.VIEWS,
         viewsArr,
-        timestamp
+        timestamp,
       );
 
       const clonesDoc = this.processStatistics(
         TrafficType.CLONES,
         clonesArr,
-        timestamp
+        timestamp,
       );
 
       const mergedDoc = this.mergeDocuments(viewsDoc, clonesDoc);
@@ -133,7 +149,7 @@ export class FirebaseFirestoreService {
   private processStatistics(
     type: TrafficType,
     data: GithubArrayTrafficEntry[],
-    timestamp: string
+    timestamp: string,
   ): GithubAnalyticsTrafficDocument {
     let totalCount = 0;
     let totalUniques = 0;
@@ -177,7 +193,7 @@ export class FirebaseFirestoreService {
    */
   private mergeDocuments(
     doc1: GithubAnalyticsTrafficDocument,
-    doc2: GithubAnalyticsTrafficDocument
+    doc2: GithubAnalyticsTrafficDocument,
   ): GithubAnalyticsTrafficDocument {
     const mergedDoc: GithubAnalyticsTrafficDocument = {
       collection: this.collection,

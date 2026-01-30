@@ -49,19 +49,29 @@ import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.se
 })
 export class GithubAnalyticsComponent implements OnInit {
   analyticsData: GithubAnalyticsTrafficDocument[] = [];
+  githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
   isMobilePortrait = false;
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
     private readonly firestoreService: FirebaseFirestoreService,
-    private readonly modalController: ModalController
+    private readonly modalController: ModalController,
   ) {
     addIcons({ closeOutline, alertCircleOutline, logoGithub });
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  async init() {
     this.registerIcons();
-    this.showAnalyticsData();
+    this.analyticsData = await this.getAnalyticsData(
+      COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY,
+    );
+    this.githubTrafficData = await this.getAnalyticsData(
+      COLLECTION.GITHUB_ANALYTICS_TRAFFIC,
+    );
     this.checkOrientation();
     window.addEventListener('resize', () => this.checkOrientation());
   }
@@ -115,7 +125,7 @@ export class GithubAnalyticsComponent implements OnInit {
     if (allTimestamps.length === 0) return null;
     const oldest = allTimestamps.reduce(
       (min, ts) => (new Date(ts) < new Date(min) ? ts : min),
-      allTimestamps[0]
+      allTimestamps[0],
     );
     return new Date(oldest);
   }
@@ -133,7 +143,7 @@ export class GithubAnalyticsComponent implements OnInit {
     if (allTimestamps.length === 0) return null;
     const newest = allTimestamps.reduce(
       (max, ts) => (new Date(ts) > new Date(max) ? ts : max),
-      allTimestamps[0]
+      allTimestamps[0],
     );
     return new Date(newest);
   }
@@ -184,15 +194,36 @@ export class GithubAnalyticsComponent implements OnInit {
     });
   }
 
-  private async showAnalyticsData() {
-    const collection = COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
+  /**
+   * Fetches analytics data from Firestore and omits entries with zero values.
+   *
+   * For each document, filters out all view and clone entries where both count and uniques are zero.
+   * Only returns documents that have at least one nonzero view or clone entry.
+   *
+   * @param collection - The Firestore collection to query (e.g., GITHUB_ANALYTICS_TRAFFIC_HISTORY).
+   * @returns Promise resolving to an array of GithubAnalyticsTrafficDocument with zero-value entries omitted.
+   */
+  private async getAnalyticsData(
+    collection: (typeof COLLECTION)[keyof typeof COLLECTION],
+  ): Promise<GithubAnalyticsTrafficDocument[]> {
     const repo = ALL_REPOS;
     const useFirebaseEmulator = false;
 
-    this.analyticsData = await this.firestoreService.getAnalyticsData(
-      collection,
-      repo,
-      useFirebaseEmulator
-    );
+    const data: GithubAnalyticsTrafficDocument[] =
+      await this.firestoreService.getAnalyticsData(
+        collection,
+        repo,
+        useFirebaseEmulator,
+      );
+
+    return data.filter((item: GithubAnalyticsTrafficDocument) => {
+      item.clones.clones = item.clones.clones.filter(
+        (arrItem) => arrItem.count > 0 || arrItem.uniques > 0,
+      );
+      item.views.views = item.views.views.filter(
+        (arrItem) => arrItem.count > 0 || arrItem.uniques > 0,
+      );
+      return item.views.views.length > 0 || item.clones.clones.length > 0;
+    });
   }
 }

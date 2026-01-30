@@ -95,9 +95,10 @@ export const COLLECTION = {
 
 ---
 
+
 ## 4. Cloud Function Implementation
 
-- **Scheduled Trigger:** Runs every day at 03:00 AM Europe/Vienna time (`0 3 * * *`).
+- **Scheduled Trigger:** Runs every day at 18:00 Europe/Vienna time (`0 18 * * *`).
 - **Repositories:** Iterates over all target repos defined in `REPOS`.
 - **API Calls:** Uses GitHub REST API endpoints:
   - `/repos/{owner}/{repo}/traffic/views`
@@ -106,31 +107,31 @@ export const COLLECTION = {
   - `githubAnalyticsTraffic`: Overwrites with the latest analytics snapshot.
   - `githubAnalyticsTrafficHistory`: Appends only the previous day's entries to arrays.
 
+
 ### Example: `githubAnalytics.ts` (with query parameters)
 
 ```typescript
 export const testGitHubAnalytics = functions.https.onRequest(async (req, res) => {
-  try {
-    logInfo.calledBy = "testGitHubAnalytics";
-    const updateTraffic = req.query.updateTraffic !== "false";
-    const repoIndexString = req.query.repoIndex;
-    const repoIndex = repoIndexString ? Number.parseInt(repoIndexString as string, 10) : undefined;
+  // ...existing code...
+});
 
-    await runGitHubAnalyticsFetch(updateTraffic, repoIndex);
-
-    res.setHeader("Content-Type", "application/json");
-    res.status(200).json({
-      message: "GitHub analytics fetched and stored.",
-      logInfo: logInfo,
-    });
-  } catch (error) {
-    logger.error("Error in testGitHubAnalytics:", error);
-    res.status(500).json({
-      error: `Internal Server Error: ${error instanceof Error ? error.message : String(error)}`,
-    });
-  }
+/**
+ * HTTP function to insert missing daily analytics data from
+ * githubAnalyticsTraffic into githubAnalyticsTrafficHistory for each repo.
+ * Only missing dates are inserted.
+ *
+ * Query parameters:
+ *   - repoIndex: (optional) index of the repository to process (default: all repos)
+ *
+ * Example usage:
+ *   curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory"
+ *   curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory?repoIndex=0"
+ */
+export const insertMissingAnalyticsHistory = functions.https.onRequest(async (req, res) => {
+  // ...existing code...
 });
 ```
+
 
 **Query Parameters:**
 
@@ -151,11 +152,23 @@ export const testGitHubAnalytics = functions.https.onRequest(async (req, res) =>
   curl "http://localhost:5001/<project-id>/us-central1/testGitHubAnalytics?updateTraffic=false&repoIndex=0"
   ```
 
+- Insert missing analytics history for all repos:
+
+  ```bash
+  curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory"
+  ```
+
+- Insert missing analytics history for only the first repo:
+
+  ```bash
+  curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory?repoIndex=0"
+  ```
+
 ---
 
 **Notes:**
 
-- The scheduled function runs automatically every day at **03:00 AM Europe/Vienna time** to ensure GitHub statistics are finalized.
+- The scheduled function runs automatically every day at **18:00 Europe/Vienna time** to ensure GitHub statistics are finalized.
 - `githubAnalyticsTraffic` stores only the latest 14 days (overwrites).
 - `githubAnalyticsTrafficHistory` accumulates all daily entries for historical analysis.
 - For local testing, use `.env.local` in your project root with `GITHUB_TOKEN`.
@@ -210,6 +223,9 @@ async function fetchAnalytics() {
   }
 }
 ```
+
+> **Note:**  
+> In Firestore, the `views` and `clones` collections may include entries with zero values. However, the frontend filters out these zero-value entries, displaying only dates where the values are greater than zero.
 
 ---
 
@@ -301,4 +317,4 @@ To test the GitHub analytics function locally:
 ---
 
 **Maintained by:** Hans Zöchbauer  
-**Last Updated:** December 6, 2025
+**Last Updated:** 2026-01-30

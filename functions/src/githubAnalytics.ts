@@ -1,8 +1,23 @@
+// Global error handlers for uncaught exceptions and unhandled rejections
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  logger.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+  logger.error('Unhandled Rejection:', reason);
+});
+
 import { https, scheduler } from 'firebase-functions/v2';
 import * as logger from 'firebase-functions/logger';
 import * as admin from 'firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';
 import { REPOS, COLLECTION } from './shared/GitHubConstants';
+
+type HistoryData = {
+  views?: GithubTrafficEntry[];
+  clones?: GithubTrafficEntry[];
+};
 
 interface GithubTrafficEntry {
   timestamp?: string;
@@ -40,7 +55,7 @@ admin.initializeApp();
 const fetchTraffic = async (
   owner: string,
   repo: string,
-  endpoint: string
+  endpoint: string,
 ): Promise<unknown> => {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
   if (!GITHUB_TOKEN) {
@@ -56,14 +71,14 @@ const fetchTraffic = async (
     });
     if (!response.ok) {
       throw new Error(
-        `GitHub API error: ${response.status} ${response.statusText}`
+        `GitHub API error: ${response.status} ${response.statusText}`,
       );
     }
     return await response.json();
   } catch (error) {
     logger.error(
       `Failed to fetch traffic for ${owner}/${repo} (${endpoint}):`,
-      error
+      error,
     );
     throw error;
   }
@@ -82,9 +97,10 @@ const fetchTraffic = async (
  */
 export const runGitHubAnalyticsFetch = async (
   updateTraffic = true,
-  repoIndex?: number
+  repoIndex?: number,
 ): Promise<void> => {
-  // If repoIndex is a valid number, process only that repo
+  // If repoIndex is a valid number, process only that repo,
+  // else process all repos
   if (
     typeof repoIndex === 'number' &&
     repoIndex >= 0 &&
@@ -92,7 +108,6 @@ export const runGitHubAnalyticsFetch = async (
   ) {
     const { owner, repo } = REPOS[repoIndex];
     await processRepo(owner, repo, updateTraffic);
-    // If repoIndex is missing or invalid, process all repos
   } else {
     for (const { owner, repo } of REPOS) {
       await processRepo(owner, repo, updateTraffic);
@@ -103,7 +118,7 @@ export const runGitHubAnalyticsFetch = async (
 const processRepo = async (
   owner: string,
   repo: string,
-  updateTraffic: boolean
+  updateTraffic: boolean,
 ): Promise<void> => {
   try {
     const views = await fetchTraffic(owner, repo, 'views');
@@ -122,6 +137,7 @@ const processRepo = async (
     await saveGithubAnalyticsTrafficHistory(owner, repo);
   } catch (error) {
     logger.error(`Error fetching analytics for ${repo}:`, error);
+    console.error(`Error fetching analytics for ${repo}:`, error);
   }
 };
 
@@ -137,7 +153,7 @@ const processRepo = async (
  */
 export const saveGithubAnalyticsTrafficHistory = async (
   owner: string,
-  repo: string
+  repo: string,
 ): Promise<void> => {
   try {
     // Get latest analytics snapshot for the repo
@@ -148,6 +164,7 @@ export const saveGithubAnalyticsTrafficHistory = async (
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
+      logger.warn(`No analytics data found for ${repo}.`);
       console.warn(`No analytics data found for ${repo}.`);
       return;
     }
@@ -159,6 +176,7 @@ export const saveGithubAnalyticsTrafficHistory = async (
       !analyticsData?.clones ||
       !Array.isArray(analyticsData?.clones.clones)
     ) {
+      logger.warn(`Invalid analytics data structure for ${repo}.`);
       console.warn(`Invalid analytics data structure for ${repo}.`);
       return;
     }
@@ -183,11 +201,11 @@ export const saveGithubAnalyticsTrafficHistory = async (
 
       const yesterdayViews = analyticsData.views.views.find(
         (v: GithubTrafficEntry) =>
-          v.timestamp?.slice(0, 10) === yesterday || v.date === yesterday
+          v.timestamp?.slice(0, 10) === yesterday || v.date === yesterday,
       );
       const yesterdayClones = analyticsData.clones.clones.find(
         (c: GithubTrafficEntry) =>
-          c.timestamp?.slice(0, 10) === yesterday || c.date === yesterday
+          c.timestamp?.slice(0, 10) === yesterday || c.date === yesterday,
       );
       if (yesterdayViews) {
         updateData.views = FieldValue.arrayUnion(yesterdayViews);
@@ -222,31 +240,37 @@ export const saveGithubAnalyticsTrafficHistory = async (
   } catch (error) {
     logger.error(
       `[ERROR] saveGithubAnalyticsTrafficHistory for ${repo}:`,
-      error
+      error,
+    );
+    console.error(
+      `[ERROR] saveGithubAnalyticsTrafficHistory for ${repo}:`,
+      error,
     );
   }
+  logger.info('saveGithubAnalyticsTrafficHistory completed', { owner, repo });
+  console.log('saveGithubAnalyticsTrafficHistory completed', { owner, repo });
 };
 
 /**
  * Scheduled function to fetch GitHub analytics and store in Firestore.
- * Runs every day at 03:00 AM Europe/Vienna time to be sure that GitHub
+ * Runs every day at 18:00 Europe/Vienna time to be sure that GitHub
  * has finalized the previous day's data.
  *
- * cron expression '0 3 * * *' means:
+ * cron expression '0 18 * * *' means:
  * minute: 0
- * hour: 3
+ * hour: 18
  * day: every day
  * month: every month
  * day-of-week: every day of the week
  */
 export const fetchGitHubAnalytics = scheduler.onSchedule(
   {
-    schedule: '0 3 * * *', // Runs at 03:00 AM local time
+    schedule: '0 18 * * *', // Runs at 18:00 (6 PM) local time
     timeZone: 'Europe/Vienna',
   },
   async () => {
     await runGitHubAnalyticsFetch();
-  }
+  },
 );
 
 /**
@@ -260,31 +284,188 @@ export const fetchGitHubAnalytics = scheduler.onSchedule(
  * @param res - The HTTP response object.
  * @returns {Promise<void>} Resolves when response is sent.
  */
-export const testGitHubAnalytics = https.onRequest(
+export const testGitHubAnalytics = https.onRequest(async (req, res) => {
+  logger.info('testGitHubAnalytics HTTP function started');
+  console.log('testGitHubAnalytics HTTP function started');
+  try {
+    logInfo.calledBy = 'testGitHubAnalytics';
+    const updateTraffic = req.query.updateTraffic !== 'false';
+    const repoIndexString = req.query.repoIndex;
+    const repoIndex = repoIndexString
+      ? Number.parseInt(repoIndexString as string, 10)
+      : undefined;
+
+    await runGitHubAnalyticsFetch(updateTraffic, repoIndex);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({
+      message: 'GitHub analytics fetched and stored.',
+      logInfo: logInfo,
+    });
+  } catch (error) {
+    logger.error('Error in testGitHubAnalytics:', error);
+    console.error('Error in testGitHubAnalytics:', error);
+    // Send error details in response
+    res.status(500).json({
+      error: `Internal Server Error: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    });
+  }
+  logger.info('testGitHubAnalytics HTTP function ended');
+  console.log('testGitHubAnalytics HTTP function ended');
+});
+
+/**
+ * HTTP function to insert missing daily analytics data from
+ * githubAnalyticsTraffic into githubAnalyticsTrafficHistory for each repo.
+ * Only missing dates are inserted.
+ * @param req - The HTTP request object
+ * @param res - The HTTP response object.
+ * @returns {Promise<void>} Resolves when response is sent.
+ */
+export const insertMissingAnalyticsHistory = https.onRequest(
   async (req, res) => {
+    logger.info('insertMissingAnalyticsHistory HTTP function started');
+    console.log('insertMissingAnalyticsHistory HTTP function started');
     try {
-      logInfo.calledBy = 'testGitHubAnalytics';
-      const updateTraffic = req.query.updateTraffic !== 'false';
-      const repoIndexString = req.query.repoIndex;
-      const repoIndex = repoIndexString ?
-        Number.parseInt(repoIndexString as string, 10) :
-        undefined;
+      const reposToProcess = getReposToProcess(req);
 
-      await runGitHubAnalyticsFetch(updateTraffic, repoIndex);
+      const inserted: Record<string, { views: string[]; clones: string[] }> =
+        {};
 
+      for (const repoObj of reposToProcess) {
+        const { repo } = repoObj;
+        inserted[repo] = { views: [], clones: [] };
+
+        const analyticsData = await getAnalyticsData(repo);
+        if (!analyticsData) {
+          logger.warn(`No analytics data found for ${repo}.`);
+          continue;
+        }
+
+        const historyData = await getHistoryData(repo);
+
+        const { historyViews, historyClones } = getHistoryEntries(historyData);
+
+        const historyViewDates = new Set(
+          historyViews.map((v) =>
+            v.timestamp ? v.timestamp.slice(0, 10) : v.date,
+          ),
+        );
+        const historyCloneDates = new Set(
+          historyClones.map((c) =>
+            c.timestamp ? c.timestamp.slice(0, 10) : c.date,
+          ),
+        );
+
+        const trafficViews: GithubTrafficEntry[] =
+          analyticsData?.views?.views ?? [];
+        const missingViews = trafficViews.filter((v) => {
+          const date = v.timestamp ? v.timestamp.slice(0, 10) : v.date;
+          return date && !historyViewDates.has(date);
+        });
+
+        const trafficClones: GithubTrafficEntry[] =
+          analyticsData?.clones?.clones ?? [];
+        const missingClones = trafficClones.filter((c) => {
+          const date = c.timestamp ? c.timestamp.slice(0, 10) : c.date;
+          return date && !historyCloneDates.has(date);
+        });
+
+        const updateData: Record<string, unknown> = {
+          repo,
+          timestamp: new Date().toISOString(),
+        };
+        if (missingViews.length > 0) {
+          updateData.views = FieldValue.arrayUnion(...missingViews);
+          inserted[repo].views = missingViews
+            .map((v) => v.timestamp || v.date)
+            .filter((d): d is string => typeof d === 'string');
+        }
+        if (missingClones.length > 0) {
+          updateData.clones = FieldValue.arrayUnion(...missingClones);
+          inserted[repo].clones = missingClones
+            .map((c) => c.timestamp || c.date)
+            .filter((d): d is string => typeof d === 'string');
+        }
+        if (missingViews.length > 0 || missingClones.length > 0) {
+          await updateHistoryData(repo, updateData);
+          logger.info('Repo:', repo, 'updateData:', updateData);
+          console.log('Repo:', repo, 'updateData:', updateData);
+        } else {
+          logger.info('No missing analytics history to insert', { repo });
+        }
+      }
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json({
-        message: 'GitHub analytics fetched and stored.',
-        logInfo: logInfo,
+        message: 'Insert missing analytics history completed.',
+        inserted,
       });
     } catch (error) {
-      logger.error('Error in testGitHubAnalytics:', error);
-      // Send error details in response
+      logger.error('Error in insertMissingAnalyticsHistory:', error);
       res.status(500).json({
         error: `Internal Server Error: ${
           error instanceof Error ? error.message : String(error)
         }`,
       });
     }
-  }
+  },
 );
+
+// Helper to get analytics data for a repo
+const getAnalyticsData = async (repo: string) => {
+  const docRef = admin
+    .firestore()
+    .collection(COLLECTION.GITHUB_ANALYTICS_TRAFFIC)
+    .doc(repo);
+  const docSnap = await docRef.get();
+  return docSnap.exists ? docSnap.data() : undefined;
+};
+
+// Helper to get history data for a repo
+const getHistoryData = async (repo: string) => {
+  const docRefHistory = admin
+    .firestore()
+    .collection(COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY)
+    .doc(repo);
+  const docSnapHistory = await docRefHistory.get();
+  return docSnapHistory.exists ? (docSnapHistory.data() as HistoryData) : {};
+};
+
+// Helper to extract history entries
+const getHistoryEntries = (historyData: HistoryData) => {
+  const historyViews: GithubTrafficEntry[] = Array.isArray(historyData?.views)
+    ? historyData.views
+    : [];
+  const historyClones: GithubTrafficEntry[] = Array.isArray(historyData?.clones)
+    ? historyData.clones
+    : [];
+  return { historyViews, historyClones };
+};
+
+// Helper to update history data
+const updateHistoryData = async (
+  repo: string,
+  updateData: Record<string, unknown>,
+) => {
+  const docRefHistory = admin
+    .firestore()
+    .collection(COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY)
+    .doc(repo);
+  await docRefHistory.set(updateData, { merge: true });
+};
+
+const getReposToProcess = (
+  req: https.Request,
+): { owner: string; repo: string }[] => {
+  const repoIndexString = req.query.repoIndex;
+  const repoIndex = repoIndexString
+    ? Number.parseInt(repoIndexString as string, 10)
+    : undefined;
+  const reposToProcess =
+    typeof repoIndex === 'number' && repoIndex >= 0 && repoIndex < REPOS.length
+      ? [REPOS[repoIndex]]
+      : REPOS;
+  return reposToProcess;
+};
