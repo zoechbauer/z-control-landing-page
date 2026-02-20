@@ -1,0 +1,264 @@
+<ion-accordion
+  value="group 3: z-control Backup Scripts"
+  title="{{
+    currentMainAccordion === 'group 3'
+      ? 'Collapse z-control Backup Scripts section'
+      : 'Expand z-control Backup Scripts section'
+  }}"
+>
+  <ion-item slot="header" color="light">
+    <img
+      class="z-control-backup-scripts-logo"
+      src="assets/icon/z-control-backup-scripts-logo-32px.png"
+      alt="z-control Backup Scripts Logo"
+    />
+    <ion-label>z-control Backup Scripts</ion-label>
+  </ion-item>
+  <div class="ion-padding" slot="content" title="">
+    <ion-card color="medium">
+      <ion-card-header>
+        <ion-card-title
+          >Automate Backups, Cleanup, and Disk Usage Logging</ion-card-title
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <strong>z-control Backup Scripts</strong> is a collection of
+          open-source PowerShell and batch scripts for Windows, designed to help
+          you:
+        </p>
+        <ul>
+          <li>
+            <b>Back up development projects</b> (with exclusions for
+            build/dependency folders)
+          </li>
+          <li>
+            <b>Back up non-committed files</b> (such as <code>.env</code>,
+            <code>.vscode</code>, etc.)
+          </li>
+          <li>
+            <b>Clean up dev folders</b> (remove <code>node_modules</code>,
+            <code>dist</code>, etc. recursively)
+          </li>
+          <li>
+            <b>Log disk/folder usage</b> (CSV reports for auditing and cleanup)
+          </li>
+        </ul>
+        <p>
+          Each script is documented and can be run interactively or scheduled
+          for automation. All scripts are compatible with PowerShell 5 and 7.
+        </p>
+        <p>
+          <strong>Typical use cases:</strong>
+        </p>
+        <ul>
+          <li>Automated project backups (with logs)</li>
+          <li>Quickly reclaim disk space in dev folders</li>
+          <li>Audit disk usage for large folders</li>
+          <li>Back up important files before deleting or migrating projects</li>
+        </ul>
+        <p>
+          <strong>Read our documentation:</strong>
+        </p>
+        <div class="button-wrapper documents-buttons-wrapper">
+          <ion-button
+            color="primary"
+            expand="block"
+            (click)="
+              openMarkdownDoc(
+                'assets/app-docs/backup-scripts-app/Backup Scripts for Development Projects.md'
+              )
+            "
+            title="View: Backup of Development Projects"
+          >
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Backup Development Projects
+          </ion-button>
+          <ion-button
+            color="primary"
+            expand="block"
+            (click)="
+              openMarkdownDoc(
+                'assets/app-docs/backup-scripts-app/Backup Scripts for non committed files.md'
+              )
+            "
+            title="View: Backup Scripts for Non-Committed Files"
+          >
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Backup Non-Committed Files
+          </ion-button>
+          <ion-button
+            color="primary"
+            expand="block"
+            (click)="
+              openMarkdownDoc(
+                'assets/app-docs/backup-scripts-app/Cleanup Development Projects Scripts.md'
+              )
+            "
+            title="View: Cleanup Development Projects Scripts"
+          >
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Cleanup Dev Projects
+          </ion-button>
+          <ion-button
+            color="primary"
+            expand="block"
+            (click)="
+              openMarkdownDoc(
+                'assets/app-docs/backup-scripts-app/Log Disk Space Scripts.md'
+              )
+            "
+            title="View: Log Disk Space Scripts"
+          >
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Log Disk Space Usage
+          </ion-button>
+          <ion-button
+            color="medium"
+            expand="block"
+            (click)="
+              openMarkdownDoc(
+                'assets/app-docs/backup-scripts-app/Upgrade PowerShell 5 to 7.md'
+              )
+            "
+            title="View: Upgrade PowerShell 5 to 7"
+          >
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Upgrade PowerShell 5 to 7
+          </ion-button>
+        </div>
+        <p class="ion-text-center ion-margin-top open-source-note">
+          <ion-icon name="logo-github"></ion-icon>
+          <b>Open source:</b> Scripts and documentation available on GitHub.
+        </p>
+      </ion-card-content>
+    </ion-card>
+    <ion-accordion-group
+      (ionChange)="subAccordionChange('group 3')"
+      title="{{ subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
+    >
+      <ion-accordion value="3a: Features">
+        <ion-item slot="header" color="light">
+          <ion-label>Key Features</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <ul>
+            <li>
+              <ion-icon
+                name="cloud-upload-outline"
+                class="feature-icon"
+              ></ion-icon>
+              <strong>Recursively back up project folders and files</strong>
+            </li>
+            <li>Exclude common build and dependency folders (customizable)</li>
+            <li>
+              Log processed items to CSV (folders only or folders and files)
+            </li>
+            <li>Example scripts for non-committed files</li>
+            <li>
+              <ion-icon name="trash-outline" class="feature-icon"></ion-icon>
+              <strong>Clean up dev projects</strong> by deleting large or
+              unnecessary folders (e.g., <code>node_modules</code>,
+              <code>www</code>, <code>dist</code>, <code>.angular</code>)
+            </li>
+            <li>
+              Log all deleted folders and (optionally) files to CSV for audit
+            </li>
+            <li>
+              Ready for scheduled automation via batch files (for both backup
+              and cleanup)
+            </li>
+            <li>
+              <ion-icon name="search-outline" class="feature-icon"></ion-icon>
+              <strong>Log disk space usage</strong> for any disk drive or
+              directory, with flexible depth and output formats (CSV,
+              Excel-ready)
+            </li>
+            <li>Example logs and Excel files for disk usage analysis</li>
+          </ul>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="3b: How to Use">
+        <ion-item slot="header" color="light">
+          <ion-label>How to Use</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>Getting started is easy:</h5>
+          <ol>
+            <li>Download scripts from GitHub or your project repository.</li>
+            <li>Review the included markdown guides for each script type.</li>
+            <li>
+              Customize parameters as needed (source, destination, log file,
+              etc.).
+            </li>
+            <li>Run interactively or schedule via Windows Task Scheduler.</li>
+            <li>View logs and CSV reports for results and auditing.</li>
+          </ol>
+          <p>
+            For step-by-step instructions, open the relevant documentation using
+            the buttons above.
+          </p>
+          <h5>Automation with Windows Task Scheduler</h5>
+          <ul>
+            <li>
+              You can use all batch scripts in a Windows Scheduled Task to
+              automate backups.
+            </li>
+            <li>
+              Set the task to run the batch file at your preferred schedule.
+            </li>
+            <li>
+              Ensure the user account running the task has permission to access
+              the source and backup directories.
+            </li>
+          </ul>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="3c: Feedback">
+        <ion-item slot="header" color="light">
+          <ion-label>Send Us Feedback</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            We value your feedback!
+            <br />
+            <ion-icon name="mail"></ion-icon>
+            If you have questions, suggestions, or comments, please contact us
+            at
+            <a
+              href="{{ getMailToLinkForFeedback() }}"
+              title="Open your email client with recipient and subject prefilled."
+            >
+              z-control Support & Feedback
+            </a>
+            >.
+          </p>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="3d: Get Source Code">
+        <ion-item slot="header" color="light">
+          <ion-label>Get the Source Code</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            The backup scripts are open source and available on
+            <i>GitHub</i>. Review, contribute, or adapt them for your own use.
+          </p>
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onGetSourceCode()"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Open z-control Backup Scripts GitHub repository in a new tab"
+              aria-label="Open Backup Scripts GitHub repository (opens in a new tab)"
+            >
+              <ion-icon name="logo-github" slot="start"></ion-icon>
+              Get Backup Scripts Source
+            </ion-button>
+          </div>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+</ion-accordion>

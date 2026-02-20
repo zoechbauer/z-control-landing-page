@@ -2,6 +2,13 @@
 
 All recent updates and improvements to our **landing page**.
 
+## [2.9] – YYYY-MM-DD
+
+### 🚀 Improvements
+
+- **Modular Component Architecture**: Refactored the home page by extracting QR Code Generator and Backup Scripts sections into standalone components, reducing the main template from 976 to 60 lines (~94% reduction). This modular structure prepares the landing page for the upcoming **Multi Language Translator** app and makes adding future apps significantly easier.
+- **Improved Code Organization**: Each app section now has its own dedicated component with isolated logic, templates, and styles, improving maintainability and testability.
+
 ## [2.8] – 2026-01-30
 
 ### ✨ New Features & Improvements
@@ -9,7 +16,7 @@ All recent updates and improvements to our **landing page**.
 - Introduced a dedicated privacy policy for the new Multi Language Translator app, ensuring clear and transparent data practices for users.
 - Enhanced documentation: Updated project structure with privacy policy of Multi Language Translator app in README file.
 - Improved Github Analytics Raw Data Display: Added a new method to fetch and display raw analytics data from Firestore for better transparency and debugging.
-  
+
 ### 🐛 Fixes
 
 - Added a function to backfill missing analytics history entries in Firestore, improving the completeness and accuracy of GitHub repository traffic statistics. Due to GitHub's 14-day data retention limit, entries prior to this period (from 28.12. to 14.1.) could not be restored.

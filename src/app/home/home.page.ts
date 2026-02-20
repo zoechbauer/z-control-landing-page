@@ -29,23 +29,11 @@ import {
   trashOutline,
   warning,
 } from 'ionicons/icons';
-import {
-  IonContent,
-  IonButton,
-  IonAccordion,
-  IonAccordionGroup,
-  IonItem,
-  IonLabel,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonIcon,
-  ModalController,
-} from '@ionic/angular/standalone';
+import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
 
 import { HeaderComponent, FooterComponent } from '../ui';
-import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
+import { QrCodeGeneratorSectionComponent } from '../ui/components/qr-code-generator-section/qr-code-generator-section.component';
+import { BackupScriptsSectionComponent } from '../ui/components/backup-scripts-section/backup-scripts-section.component';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { CommonModule } from '@angular/common';
@@ -60,36 +48,18 @@ enum App {
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
-    IonIcon,
-    IonCard,
-    IonButton,
     IonContent,
-    IonAccordion,
     IonAccordionGroup,
-    IonItem,
-    IonLabel,
     RouterModule,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
     HeaderComponent,
     FooterComponent,
+    QrCodeGeneratorSectionComponent,
+    BackupScriptsSectionComponent,
     CommonModule,
   ],
 })
 export class HomePage implements AfterViewInit {
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
-
-  // z-control QR Code Generator App
-  nativeDownloadUrlQrCodeGenerator =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp';
-  sourceCodeUrlQrCodeGenerator =
-    'https://github.com/zoechbauer/z-control-qr-code-generator';
-  webAppUrlQrCodeGenerator = 'https://z-control-qr-code.web.app';
-
-  // z-control Backup Scripts
-  sourceCodeUrlBackupScripts =
-    'https://github.com/zoechbauer/z-control-backup-scripts';
 
   maxInputLength = 1000;
   selectedAccordion: string = '';
@@ -98,9 +68,8 @@ export class HomePage implements AfterViewInit {
   App = App;
 
   constructor(
-    private readonly modalController: ModalController,
     private readonly fa: FirebaseAnalyticsService,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
   ) {
     this.registerIcons();
   }
@@ -142,55 +111,8 @@ export class HomePage implements AfterViewInit {
     // this.openQRCodeGeneratorAccordion();
   }
 
-  onDownloadQrCodeGeneratorNative() {
-    globalThis.window.open(this.nativeDownloadUrlQrCodeGenerator, '_blank');
-    this.fa.logEvent('download_native', {
-      platform: 'android',
-      url: this.nativeDownloadUrlQrCodeGenerator,
-      app: APPS.LANDING_PAGE,
-    });
-  }
-
-  onGetQrCodeGeneratorSource() {
-    globalThis.window.open(this.sourceCodeUrlQrCodeGenerator, '_blank');
-    this.fa.logEvent('get_source_code', {
-      repo: App.qrCode,
-      app: APPS.LANDING_PAGE,
-    });
-  }
-
-  onOpenQrCodeGeneratorWebApp() {
-    globalThis.window.open(this.webAppUrlQrCodeGenerator, '_blank');
-    this.fa.logEvent('open_web_app', {
-      url: this.webAppUrlQrCodeGenerator,
-      app: APPS.LANDING_PAGE,
-    });
-  }
-
-  onGetBackupScriptsSource() {
-    globalThis.window.open(this.sourceCodeUrlBackupScripts, '_blank');
-    this.fa.logEvent('get_source_code', {
-      repo: App.BackupScripts,
-      app: APPS.LANDING_PAGE,
-    });
-  }
-
-  async openMarkdownDoc(docPath: string) {
-    const docFileName = docPath.split('/').pop();
-    this.fa.logEvent('open_markdown_document', {
-      document: docFileName,
-      app: APPS.LANDING_PAGE,
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: docPath,
-        title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
-      },
-      cssClass: 'documentation-modal',
-    });
-    await modal.present();
+  handleAnalyticsEvent(event: { eventName: string; params: any }) {
+    this.fa.logEvent(event.eventName, event.params);
   }
 
   accordionGroupChange(event: CustomEvent) {
@@ -249,40 +171,6 @@ export class HomePage implements AfterViewInit {
       default:
         this.selectedAccordion = '';
     }
-  }
-
-  private getFullChangeLogPath(): string {
-    const changeLogPath = 'assets/logs/change-logs';
-
-    switch (this.selectedAccordion) {
-      case App.qrCode:
-        return `${changeLogPath}/CHANGELOG_QR-CODE.md`;
-      // Add more cases for future apps here
-      default:
-        console.error(`No changelog available for ${this.selectedAccordion}`);
-        return '';
-    }
-  }
-
-  async openChangelog() {
-    this.fa.logEvent('open_changelog', {
-      changelog_for: this.selectedAccordion,
-      app: APPS.LANDING_PAGE,
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: this.getFullChangeLogPath(),
-      },
-      cssClass: 'change-log-modal',
-    });
-
-    await modal.present();
-  }
-
-  getMailToLinkForFeedback(app: App): string {
-    return `mailto:zcontrol.app.qr@gmail.com?subject=${app}%20Feedback`;
   }
 
   get isAnalyticsAllowed(): boolean {
