@@ -15,11 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'shared/GitHubConstants';
-
-enum App {
-  BackupScripts = 'z-control Backup Scripts',
-}
-
+import { BackupScriptsSectionParameters } from 'shared/app-interfaces';
 @Component({
   selector: 'app-backup-scripts-section',
   templateUrl: './backup-scripts-section.component.html',
@@ -39,10 +35,7 @@ enum App {
   ],
 })
 export class BackupScriptsSectionComponent {
-  @Input() selectedAccordion: string = '';
-  @Input() currentMainAccordion: string = '';
-  @Input() subAccordionOpened: boolean = false;
-  @Input() isAnalyticsAllowed: boolean = true;
+  @Input() parameters?: BackupScriptsSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() subAccordionChangeEvent = new EventEmitter<string>();
@@ -52,7 +45,6 @@ export class BackupScriptsSectionComponent {
   }>();
 
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backup-scripts';
-  App = App;
 
   constructor(private readonly modalController: ModalController) {}
 
@@ -61,7 +53,7 @@ export class BackupScriptsSectionComponent {
     this.analyticsEvent.emit({
       eventName: 'get_source_code',
       params: {
-        repo: App.BackupScripts,
+        repo: APPS.BACKUP_SCRIPTS,
         app: APPS.LANDING_PAGE,
       },
     });
@@ -93,6 +85,6 @@ export class BackupScriptsSectionComponent {
   }
 
   getMailToLinkForFeedback(): string {
-    return `mailto:zcontrol.app.qr@gmail.com?subject=${App.BackupScripts}%20Feedback`;
+    return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKUP_SCRIPTS}%20Feedback`;
   }
 }

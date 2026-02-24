@@ -120,14 +120,9 @@ private availablePolicies: PrivacyPolicyMeta[] = [
     description: 'Standard privacy policy for z-control QR Code App',
   },
   {
-    type: 'premium',
+    type: 'multi-language-translator',
     languages: ['en', 'de'],
-    description: 'Privacy policy for premium features',
-  },
-  {
-    type: 'new-app',  // Add new app type
-    languages: ['en', 'de'],
-    description: 'Privacy policy for New App Name',
+    description: 'Privacy policy for z-control Multi Language Translator',
   },
 ];
 ```
@@ -138,9 +133,9 @@ Create HTML files in assets:
 
 ```
 src/assets/privacy/policies/
-└── new-app/
-    ├── new-app-en.html
-    └── new-app-de.html
+└── multi-language-translator/
+    ├── multi-language-translator-en.html
+    └── multi-language-translator-de.html
 ```
 
 ### 3. Update Routes (if needed)
@@ -235,12 +230,12 @@ Your `firebase.json` should look like this:
 ### After Deployment:
 
 1. **Verify URLs Work**
-- z-control QR Code App (English): `https://z-control-4070.web.app/privacy/basic/en`
-- z-control QR Code App (German): `https://z-control-4070.web.app/privacy/basic/de`
+- z-control QR Code App (English): `https://z-control-4070.web.app/privacy/qr-code-generator/en`
+- z-control QR Code App (German): `https://z-control-4070.web.app/privacy/qr-code-generator/de`
 - Landing Page App (English): `https://z-control-4070.web.app/privacy/landing-page/en`
 - Landing Page App (German): `https://z-control-4070.web.app/privacy/landing-page/de`
-- Future Premium Features (English): `https://z-control-4070.web.app/privacy/premium/en`
-- Future Premium Features (German): `https://z-control-4070.web.app/privacy/premium/de`
+- z-control Multi Language Translator (English): `https://z-control-4070.web.app/privacy/multi-language-translator/en`
+- z-control Multi Language Translator (German): `https://z-control-4070.web.app/privacy/multi-language-translator/de`
 
 1. **Test From z-control QR Code Generator App**
 
@@ -416,7 +411,13 @@ deploy qr-code:
 firebase deploy --only hosting:z-control-qr-code
 ```
 
-deploy both:  
+deploy multi-language-translator:  
+
+```powershell
+firebase deploy --only hosting:z-control-multi-language-translator
+```
+
+deploy all:  
 
 ```powershell
 firebase deploy --only hosting

@@ -29,9 +29,6 @@
 │  │  ├─ icon/
 │  │  └─ privacy/
 │  │     └─ policies/
-│  │        ├─ premium/
-│  │        │  ├─ premium-en.html
-│  │        │  └─ premium-de.html
 │  │        ├─ landing-page/
 │  │        │  ├─ landing-page-en.html
 │  │        │  └─ landing-page-de.html
@@ -167,14 +164,11 @@ bootstrapApplication(AppComponent, {
 
 #### **Mobile Apps**
 
-- **z-control QR Code App (English)**: `https://z-control-4070.web.app/privacy/basic/en`
-- **z-control QR Code App (German)**: `https://z-control-4070.web.app/privacy/basic/de`
+- **z-control QR Code App (English)**: `https://z-control-4070.web.app/privacy/qr-code-generator/en`
+- **z-control QR Code App (German)**: `https://z-control-4070.web.app/privacy/qr-code-generator/de`
 
 - **z-control Multi Language Translator App (English)**: `https://z-control-4070.web.app/privacy/multi-language-translator/en`
 - **z-control Multi Language Translator App (German)**: `https://z-control-4070.web.app/privacy/multi-language-translator/de`
-
-- **Future Premium Features (English)**: `https://z-control-4070.web.app/privacy/premium/en`
-- **Future Premium Features (German)**: `https://z-control-4070.web.app/privacy/premium/de`
 
 ### **Service Usage (Same for All Apps)**
 

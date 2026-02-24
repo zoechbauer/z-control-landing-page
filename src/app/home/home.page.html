@@ -36,20 +36,19 @@
     [disabled]="!isAnalyticsAllowed"
   >
     <app-qr-code-generator-section
-      [selectedAccordion]="selectedAccordion"
-      [currentMainAccordion]="currentMainAccordion"
-      [subAccordionOpened]="subAccordionOpened"
-      [isAnalyticsAllowed]="isAnalyticsAllowed"
-      [maxInputLength]="maxInputLength"
+      [parameters]="qrCodeGeneratorSectionParams"
       (subAccordionChangeEvent)="subAccordionChange($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
 
     <app-backup-scripts-section
-      [selectedAccordion]="selectedAccordion"
-      [currentMainAccordion]="currentMainAccordion"
-      [subAccordionOpened]="subAccordionOpened"
-      [isAnalyticsAllowed]="isAnalyticsAllowed"
+      [parameters]="backupScriptsSectionParams"
+      (subAccordionChangeEvent)="subAccordionChange($event)"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
+    />
+
+    <app-multi-language-translator-section
+      [parameters]="multiLanguageTranslatorSectionParams"
       (subAccordionChangeEvent)="subAccordionChange($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />

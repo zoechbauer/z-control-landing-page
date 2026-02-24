@@ -1,13 +1,23 @@
 # What's New
 
-All recent updates and improvements to our **landing page**.
+All recent updates and improvements to our **z-control Landing Page** app.
 
-## [2.9] – YYYY-MM-DD
+## [2.9] – 2026-02-24
+
+### ✨ New Features
+
+- Added a dedicated accordion for **z-control Multi Language Translator** to the Landing Page for easier access.
+- Added changelog from the Multi Language Translator app to the Landing Page, providing users with a comprehensive overview of updates and improvements across all our applications in one place.
+- Updated the README file to include the new accordion and recent enhancements.
+- Updated privacy policy for the new Multi Language Translator app with statistics about the number of users and translations performed.
 
 ### 🚀 Improvements
 
-- **Modular Component Architecture**: Refactored the home page by extracting QR Code Generator and Backup Scripts sections into standalone components, reducing the main template from 976 to 60 lines (~94% reduction). This modular structure prepares the landing page for the upcoming **Multi Language Translator** app and makes adding future apps significantly easier.
+- **Modular Component Architecture**: Refactored the home page by extracting QR Code Generator and Backup Scripts sections into standalone components, reducing the main template from 976 to 60 lines (~94% reduction). This modular structure prepares the Landing Page for the upcoming **Multi Language Translator** app and makes adding future apps significantly easier.
 - **Improved Code Organization**: Each app section now has its own dedicated component with isolated logic, templates, and styles, improving maintainability and testability.
+- Refactored access to **privacy policies** by introducing a dynamic mapping system that links each app to its corresponding privacy policy, allowing for seamless integration of new apps without hardcoding routes. Updated the documentation to reflect the new architecture and provide clear guidelines for adding future apps and their privacy policies.
+- Improved contrast in the **App descriptions section** by changing the card styling, enhancing readability and visual appeal.
+- Improved prefix in **Firebase Analytics events** for better organization and filtering in analytics tools and added a new environment variable for logging events in development mode, eliminating the need for hardcoded flags in the service.
 
 ## [2.8] – 2026-01-30
 
@@ -25,7 +35,7 @@ All recent updates and improvements to our **landing page**.
 
 ### ✨ New Features & Improvements
 
-- Added a dedicated accordion for **z-control Backup Scripts** to the landing page for easier access.
+- Added a dedicated accordion for **z-control Backup Scripts** to the Landing Page for easier access.
 - Simplified navigation by removing the _Other Apps_ accordion—now only two main sections remain.
 - Improved header with a clearer, more descriptive title for better recognition.
 - Updated footer text and tooltips for greater clarity and usability.
@@ -63,7 +73,7 @@ All recent updates and improvements to our **landing page**.
 ### ✨ New Features
 
 - Added **GitHub Analytics Cloud Function** to fetch and store GitHub repository traffic data (views and clones) for key repositories.
-- Added **GitHub Analytics Data Display** on the landing page, showing views and clones for each repository.
+- Added **GitHub Analytics Data Display** on the Landing Page, showing views and clones for each repository.
 
 ### 🚀 Improvements
 
@@ -104,7 +114,7 @@ All recent updates and improvements to our **landing page**.
 - Updated footer feedback email subject to include contextual details for quicker identification and handling.
 - Added a new ion-accordion in the z-control QR Code Generator that documents the differences between the web and mobile apps and provides an overview of the app’s structure.
 - Clicking the logo toggles the footer (open/close) and records a Firebase Analytics event to track the interaction.
-- Added a footer ion-toggle allowing users to opt in/out of analytics collection and updated the landing page privacy policy to reflect this choice.
+- Added a footer ion-toggle allowing users to opt in/out of analytics collection and updated the Landing Page privacy policy to reflect this choice.
 - Added descriptive tooltips to accordions, buttons, and links to improve clarity, accessibility, and usability.
 - Improved styling and text of Welcome section.
 - Code cleanup for improved maintainability.
@@ -222,7 +232,7 @@ All recent updates and improvements to our **landing page**.
 
 - A new accordion entry for QR code use cases has been added
 - Copied icons have been replaced by ion-icon usages
-- Layout improvements of the landing page when accessed from mobile devices
+- Layout improvements of the Landing Page when accessed from mobile devices
 
 ### 📦 Installations
 

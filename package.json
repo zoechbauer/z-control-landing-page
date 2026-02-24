@@ -4,7 +4,7 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "generate-env": "node scripts/generate-env.js",
+    "generate-env": "node ./tools/generate-env.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

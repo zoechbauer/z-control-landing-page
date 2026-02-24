@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import {
   IonButton,
   IonAccordion,
@@ -14,14 +14,14 @@ import {
   IonIcon,
   ModalController,
 } from '@ionic/angular/standalone';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'shared/GitHubConstants';
-import { QrCodeGeneratorSectionParameters } from 'shared/app-interfaces';
+import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
+import { MultipleLanguageTranslatorSectionParameters } from 'shared/app-interfaces';
 
 @Component({
-  selector: 'app-qr-code-generator-section',
-  templateUrl: './qr-code-generator-section.component.html',
-  styleUrls: ['./qr-code-generator-section.component.scss'],
+  selector: 'app-multi-language-translator-section',
+  templateUrl: './multi-language-translator-section.component.html',
+  styleUrls: ['./multi-language-translator-section.component.scss'],
   imports: [
     CommonModule,
     RouterModule,
@@ -35,11 +35,11 @@ import { QrCodeGeneratorSectionParameters } from 'shared/app-interfaces';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
+    JsonPipe
   ],
 })
-export class QrCodeGeneratorSectionComponent {
-  @Input() parameters?: QrCodeGeneratorSectionParameters;
-
+export class MultiLanguageTranslatorSectionComponent {
+  @Input() parameters?: MultipleLanguageTranslatorSectionParameters;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() subAccordionChangeEvent = new EventEmitter<string>();
   @Output() analyticsEvent = new EventEmitter<{
@@ -49,8 +49,9 @@ export class QrCodeGeneratorSectionComponent {
 
   nativeDownloadUrl =
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp';
-  sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
-  webAppUrl = 'https://z-control-qr-code.web.app';
+  sourceCodeUrl =
+    'https://github.com/zoechbauer/z-control-multi-language-translator';
+  webAppUrl = 'https://z-control-multi-language-translator.web.app';
 
   constructor(private readonly modalController: ModalController) {}
 
@@ -71,7 +72,7 @@ export class QrCodeGeneratorSectionComponent {
     this.analyticsEvent.emit({
       eventName: 'get_source_code',
       params: {
-        repo: APPS.QR_CODE_GENERATOR,
+        repo: APPS.MULTI_LANGUAGE_TRANSLATOR,
         app: APPS.LANDING_PAGE,
       },
     });
@@ -89,7 +90,8 @@ export class QrCodeGeneratorSectionComponent {
   }
 
   async openChangelog() {
-    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_QR-CODE.md';
+    console.log('Opening changelog for', this.parameters?.appSectionParameters.selectedAccordion);
+    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md';
     this.analyticsEvent.emit({
       eventName: 'open_changelog',
       params: {
@@ -114,10 +116,10 @@ export class QrCodeGeneratorSectionComponent {
   }
 
   getMailToLinkForFeedback(): string {
-    return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.QR_CODE_GENERATOR}%20Feedback`;
+    return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.MULTI_LANGUAGE_TRANSLATOR}%20Feedback`;
   }
 
   get privacyPolicyLink() {
-    return ['/privacy', 'qr-code-generator', 'en'];
+    return ['/privacy', 'multi-language-translator', 'en'];
   }
 }

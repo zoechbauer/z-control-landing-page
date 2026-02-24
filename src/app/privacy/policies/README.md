@@ -16,8 +16,8 @@ The privacy policy HTML templates have been moved to the `assets/privacy/policie
 - **z-control QR Code Generstor (German)**: `src/assets/privacy/policies/qr-code-generator/qr-code-generator-de.html`
 - **z-control Landing Page (English)**: `src/assets/privacy/policies/landing-page/landing-page-en.html`
 - **z-control Landing Page (German)**: `src/assets/privacy/policies/landing-page/landing-page-de.html`
-- **Premium Policy (English) - not used**: `src/assets/privacy/policies/premium/premium-en.html`
-- **Premium Policy (German) - not used**: `src/assets/privacy/policies/premium/premium-de.html`
+- **z-control Multi Language Translator (English)**: `src/assets/privacy/policies/multi-language-translator/multi-language-translator-en.html`
+- **z-control Multi Language Translator (German)**: `src/assets/privacy/policies/multi-language-translator/multi-language-translator-de.html`
 
 ## How It Works
 

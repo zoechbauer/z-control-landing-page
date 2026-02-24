@@ -1,7 +1,7 @@
 <ion-accordion
-  value="group 1: QR Code Generator"
+  value="QR: QR Code Generator"
   title="{{
-    currentMainAccordion === 'group 1'
+    parameters?.appSectionParameters?.currentMainAccordion === 'QR'
       ? 'Collapse QR Code Generator section'
       : 'Expand QR Code Generator section'
   }}"
@@ -15,17 +15,17 @@
     <ion-label>z-control QR Code Generator App</ion-label>
   </ion-item>
   <div slot="content" title="">
-    <ion-card color="medium">
+    <ion-card color="dark">
       <ion-card-header>
         <ion-card-title>What the app does</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content class="summarized-app-content">
         <p>
           <strong
             >The app creates a QR code from the text you enter and sends it by
             email.</strong
           >
-          Input is plain text (no formatting) up to {{ maxInputLength }}
+          Input is plain text (no formatting) up to {{ parameters?.maxInputLength }}
           characters. You can enter any text or paste a URL.
         </p>
         <p>
@@ -47,10 +47,10 @@
     </ion-card>
 
     <ion-accordion-group
-      (ionChange)="subAccordionChange('group 1')"
-      title="{{ subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
+      (ionChange)="subAccordionChange('QR')"
+      title="{{ parameters?.appSectionParameters?.subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
     >
-      <ion-accordion value="1a: What are QR Codes">
+      <ion-accordion value="QR: What are QR Codes">
         <ion-item slot="header" color="light">
           <ion-label>What are QR Codes and how can you use them?</ion-label>
         </ion-item>
@@ -97,7 +97,7 @@
           <ol>
             <li>
               <b>Enter your text:</b> Type or paste any text (up to
-              {{ maxInputLength }} characters).
+              {{ parameters?.maxInputLength }} characters).
             </li>
             <li>
               <b>Generate the QR code:</b> Tap the "Generate" button to create a
@@ -150,7 +150,7 @@
       </ion-accordion>
 
       <ion-accordion
-        value="1b: Differences between Web and Mobile App and Structure of the app"
+        value="QR: Differences between Web and Mobile App and Structure of the app"
       >
         <ion-item slot="header" color="light">
           <ion-label
@@ -250,7 +250,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1c: Start Web App">
+      <ion-accordion value="QR: Start Web App">
         <ion-item slot="header" color="light">
           <ion-label>Start app as Web App without installation</ion-label>
         </ion-item>
@@ -261,7 +261,7 @@
             in your browser without any installation required.
           </p>
           <p>
-            While the mobile app supports text up to {{ maxInputLength }}
+            While the mobile app supports text up to {{ parameters?.maxInputLength }}
             characters, typing longer texts on a mobile device can be
             inconvenient. The web version offers the same functionality with the
             comfort of a full keyboard, but with some platform-specific
@@ -380,7 +380,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1d: Get Mobile App">
+      <ion-accordion value="QR: Get Mobile App">
         <ion-item slot="header" color="light">
           <ion-label>Get the Mobile App</ion-label>
         </ion-item>
@@ -468,7 +468,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1e: Inline Help">
+      <ion-accordion value="QR: Inline Help">
         <ion-item slot="header" color="light">
           <ion-label>Inline Help</ion-label>
         </ion-item>
@@ -552,10 +552,7 @@
             </a>
             and click the <strong>?</strong> icon to explore the full help
             system. You can switch between <strong>English</strong> and
-            <strong>German</strong> by clicking the language indicator (<strong
-              >EN</strong
-            >
-            or <strong>DE</strong>) in the top right corner.
+            <strong>German</strong> by changing the language in the settings.
           </p>
 
           <div class="comparison-note">
@@ -566,7 +563,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1f: Feedback">
+      <ion-accordion value="QR: Feedback">
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -588,7 +585,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1g: Privacy Policy">
+      <ion-accordion value="QR: Privacy Policy">
         <ion-item slot="header" color="light">
           <ion-label>Privacy Policy</ion-label>
         </ion-item>
@@ -600,8 +597,8 @@
           <p>
             Please review our
             <a
-              [routerLink]="['/privacy/basic/en']"
-              [queryParams]="{ from: selectedAccordion, internal: 'true' }"
+              [routerLink]="privacyPolicyLink"
+              [queryParams]="{ from: this.parameters?.appSectionParameters?.selectedAccordion, internal: 'true' }"
               title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section (returns you to the same place)."
               >Privacy Policy</a
             >
@@ -610,7 +607,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1h: Release Notes">
+      <ion-accordion value="QR: Release Notes">
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Release Notes)</ion-label>
         </ion-item>
@@ -634,7 +631,7 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="1i: Get Source Code">
+      <ion-accordion value="QR: Get Source Code">
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

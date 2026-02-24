@@ -39,9 +39,8 @@ export class FirebaseAnalyticsService {
 
   logEvent(name: string, params?: { [key: string]: any }) {
     // Disable logging from localhost by default during development.
-    // Set to true temporarily if you need to test analytics from a local host.
-    const doLoggingInDevMode = false;
-
+    // Set to true in .env.local for testing new events from localhost.
+    const doLoggingInDevMode = environment.logAnalyticsInDevMode;
     if (globalThis.window !== undefined && !doLoggingInDevMode) {
       const host = globalThis.window.location.hostname;
       if (host === 'localhost' || host === '127.0.0.1' || host === '::1') {

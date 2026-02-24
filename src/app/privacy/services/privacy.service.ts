@@ -134,10 +134,6 @@ export class PrivacyService {
         en: 'Privacy Policy\nz-control Landing Page App',
         de: 'Datenschutzerklärung\nz-control Startseite App',
       },
-      premium: {
-        en: 'Privacy Policy\nPremium Features',
-        de: 'Datenschutzerklärung\nPremium-Funktionen',
-      },
     };
 
     return titles[type]?.[language] || 'Privacy Policy';

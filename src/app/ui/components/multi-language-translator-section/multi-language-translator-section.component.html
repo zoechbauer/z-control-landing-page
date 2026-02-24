@@ -1,0 +1,464 @@
+<ion-accordion
+  value="MLT: Multi Language Translator"
+  title="{{
+    parameters?.appSectionParameters?.currentMainAccordion === 'MLT'
+      ? 'Collapse Multi Language Translator section'
+      : 'Expand Multi Language Translator section'
+  }}"
+>
+  <ion-item slot="header" color="light">
+    <img
+      class="z-control-multi-language-translator-logo"
+      src="assets/icon/z-control-multi-language-translator-logo-32px.png"
+      alt="z-control Multi Language Translator Logo"
+    />
+    <ion-label>z-control Multi Language Translator App</ion-label>
+  </ion-item>
+  <div slot="content" title="">
+    <ion-card color="dark">
+      <ion-card-header>
+        <ion-card-title>What the app does</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="summarized-app-content">
+        <p>
+          <strong>
+            Enter text up to {{ parameters?.maxInputLength }} characters and
+            translate it into up to
+            {{ parameters?.maxTargetLanguages }} languages using
+            <i>Google Translate</i>, then have it read aloud.
+          </strong>
+          Both the base language (English or German) and target languages can be
+          freely selected in the settings.
+        </p>
+        <p>
+          Ideal for travelers, language learners, or anyone needing quick
+          translations into multiple languages. Use it to improve your language
+          skills or communicate more effectively while traveling abroad.
+        </p>
+        <p><b>Highlights:</b></p>
+        <ul class="no-list-style-inside">
+          <li>
+            <strong>Simultaneous translation</strong> into multiple languages at
+            once, allowing you to practice and use several languages in parallel
+            for maximum flexibility.
+          </li>
+          <li>
+            <strong>Text-to-speech</strong> reads translations aloud, making
+            comprehension easier and supporting pronunciation learning.
+          </li>
+          <li>
+            <strong>Smart completion:</strong> Google Translate can
+            automatically complete incomplete sentences in target languages.
+          </li>
+          <li>
+            <strong>Privacy-focused:</strong> Translations are processed on
+            Google servers; this app does not store your text.
+          </li>
+        </ul>
+        <p>This web version is hosted on Google Firebase.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-accordion-group
+      (ionChange)="subAccordionChange('MLT')"
+      title="{{
+        parameters?.appSectionParameters?.subAccordionOpened
+          ? 'Collapse details'
+          : 'Expand details'
+      }}"
+    >
+      <ion-accordion value="MLT: Limitations and Monthly Quotas">
+        <ion-item slot="header" color="light">
+          <ion-label>What are the limitations and monthly quotas?</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <div class="limitations-info">
+            <h5>Limitations:</h5>
+            <p>
+              <strong>
+                Shared free monthly quota:
+                {{
+                  parameters?.maxTranslateCharsTotalPerMonth
+                    | number: "1.0-0" : "en"
+                }}
+                characters for all users.
+              </strong>
+              If this quota is exceeded, costs will be incurred for
+              <i>z-control</i>.
+            </p>
+            <p>
+              To manage this shared quota, each user is limited to
+              {{ parameters?.maxTargetLanguages }} target languages and
+              {{
+                parameters?.maxTranslateCharsUserPerMonth
+                  | number: "1.0-0" : "en"
+              }}
+              characters per month, ensuring fair access for all users.
+            </p>
+            <p>
+              <strong>
+                Since the Google Translate API is a paid service, quotas are
+                necessary. The app will notify you well in advance when
+                approaching the limit and will prevent further translations once
+                the monthly quota is exhausted.
+              </strong>
+            </p>
+            <p>
+              <strong>
+                Text-to-speech is completely free and unlimited. You can listen
+                to translations as many times as you want without affecting your
+                monthly quota.
+              </strong>
+            </p>
+          </div>
+          <div class="monthly-quota-info">
+            <h5>How do I check my monthly translation quota?</h5>
+            <p><i>On the translation page</i></p>
+            <p>
+              Your current translation quota is displayed at the bottom of the
+              translation page in an expandable <i>Monthly Quota</i> section.
+            </p>
+            <p>
+              When either your personal quota or the shared quota for all users
+              is reached, translations are simulated. All other features (such
+              as text-to-speech) remain fully functional. Quotas automatically
+              reset on the 1st of each month.
+            </p>
+            <p>
+              <strong>Important:</strong> More target languages and longer texts
+              consume your quota faster. Choose target languages and text length
+              wisely to maximize your monthly usage.
+            </p>
+            <p><i>On the Statistics page in Settings</i></p>
+            <p>
+              View detailed, anonymized statistics showing the overall monthly
+              quota usage, device information, and target language preferences
+              across all users. All data is aggregated to protect your privacy.
+            </p>
+          </div>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Differences between Web and Mobile App">
+        <ion-item slot="header" color="light">
+          <ion-label>Differences between Web and Mobile App</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>Mobile Version Advantages:</h5>
+          <p>
+            Use voice input directly through your device's keyboard for
+            hands-free text entry.
+          </p>
+          <p>
+            Customize speech output speed and pitch in the settings for optimal
+            listening.
+          </p>
+          <h5>Web Version Advantages:</h5>
+          <p>Comfortable typing with a full keyboard in your browser.</p>
+          <p>
+            Voice input is available on some operating systems—Windows 11 users
+            can activate it with <i>Windows key + H</i>.
+          </p>
+          <p>
+            The web version supports text-to-speech for all languages, while the
+            mobile version has limited language availability.
+          </p>
+          <p><strong>IMPORTANT</strong></p>
+          <p>
+            When accessing the <strong>web version on your phone</strong>,
+            ensure it displays in <strong>mobile mode</strong> (not desktop
+            mode) for optimal experience. Mobile mode provides a native app-like
+            interface and enables voice input through your keyboard.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Start Web App">
+        <ion-item slot="header" color="light">
+          <ion-label>Start app as Web App without installation</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>Use Voice Input</h5>
+          <p>
+            <strong>On Windows:</strong> Activate voice input using the Windows
+            dictation feature (<i>Windows key + H</i>).
+          </p>
+          <p>
+            <strong>On mobile devices:</strong> Use your keyboard's built-in
+            voice input. Ensure the website displays in mobile mode (not desktop
+            mode) for the best experience.
+          </p>
+
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onOpenWebApp()"
+              color="secondary"
+              expand="block"
+              class="web-app-button"
+              title="Open Web App in a new tab"
+            >
+              <ion-icon name="logo-firebase" slot="start"></ion-icon>
+              Open Web App
+            </ion-button>
+          </div>
+          <div class="firebase-note">
+            <ion-icon name="logo-firebase"></ion-icon>
+            Hosted on Google Firebase
+          </div>
+
+          <p class="help-tip">
+            <strong>Need Help?</strong> Click the <strong>?</strong> icon in the
+            app for online assistance.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Get Mobile App">
+        <ion-item slot="header" color="light">
+          <ion-label>Get the Mobile App</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>
+            <ion-icon name="cloud-download"></ion-icon>
+            Download the Native Android App
+          </h5>
+          <h5>
+            <ion-icon name="mail-outline" class="margin-right"></ion-icon>
+            <b>Limited Availability - Beta Testing Only</b>
+          </h5>
+          <p>
+            Due to the free tier limit of
+            <b
+              >{{
+                parameters?.maxTranslateCharsTotalPerMonth
+                  | number: "1.0-0" : "en-US"
+              }}
+              characters per month</b
+            >
+            on the <i>Google Translate API</i>, we cannot offer the app
+            publicly. It is currently available only to a limited number of beta
+            testers.
+          </p>
+          <p>
+            <strong>Want to join?</strong> Send us your email address via
+            <b>Send Us Feedback</b> to be added to the beta testing group.
+            You'll then receive access to install the test version from Google
+            Play Store.
+          </p>
+
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            <strong>100% Free</strong> •
+            <ion-icon name="lock-closed"></ion-icon>
+            <strong>No Registration Required</strong> •
+            <ion-icon name="phone-portrait"></ion-icon>
+            <strong>Optimized for Mobile</strong>
+          </p>
+
+          <div class="button-wrapper">
+            <ion-button
+              disabled="true"
+              (click)="onDownloadNative()"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Download the native Android app from the Google Play Store"
+            >
+              <ion-icon name="logo-google-playstore" slot="start"></ion-icon>
+              Download Native App
+            </ion-button>
+          </div>
+
+          <div class="platform-note">
+            <strong>Using a PC/Desktop?</strong> This is an Android mobile app.
+            For computer users, try our
+            <a
+              href="https://z-control-qr-code.web.app"
+              target="_blank"
+              class="web-app-link"
+              title="Open Web App in a new tab"
+            >
+              <strong>Web App</strong>
+            </a>
+            instead - it works in any browser!
+          </div>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Inline Help">
+        <ion-item slot="header" color="light">
+          <ion-label>Inline Help</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>
+            <ion-icon name="book"></ion-icon>
+            Comprehensive Help & Tutorials
+          </h5>
+          <p>
+            Both the <i>Web App</i> and <i>Android App</i> include detailed
+            inline help accessible by clicking the <strong>?</strong> icon in
+            the top right corner.
+          </p>
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            <strong>Note:</strong> The tutorial is specific to the version you
+            are using. Information relevant to mobile apps is omitted in the
+            web-app help, and web-app specific guidance is omitted in the
+            mobile-app help.
+          </p>
+          <h6>
+            <ion-icon name="library"></ion-icon>
+            Help Topics Covered:
+          </h6>
+          <ul>
+            <li>
+              <strong>What Can the App Do:</strong> Overview of the app's main
+              features, use cases, limitations, and monthly translation quotas.
+            </li>
+            <li>
+              <strong>How to Use the App:</strong> Detailed instructions on
+              entering text, selecting target languages, starting translations,
+              using speech output, and checking translation quotas.
+            </li>
+            <li>
+              <strong>Web Version versus Mobile Version:</strong> Benefits and
+              limitations of using the browser-based app versus the mobile app.
+            </li>
+            <li>
+              <strong>Technical Information:</strong> Information about Google
+              Translate API and main features.
+            </li>
+            <li>
+              <strong>Troubleshooting:</strong> Solutions for common issues and
+              tips for reliable operation (only available on the mobile
+              version).
+            </li>
+          </ul>
+
+          <h6>
+            <ion-icon name="globe"></ion-icon>
+            Try the Interactive Help:
+          </h6>
+          <p>
+            Open the
+            <a
+              href="https://z-control-qr-code.web.app"
+              target="_blank"
+              class="web-app-link"
+              title="Open z-control QR Code Generator as Web App in a new tab"
+            >
+              <strong>Web App</strong>
+            </a>
+            and click the <strong>?</strong> icon to explore the full help
+            system. You can switch between <strong>English</strong> and
+            <strong>German</strong> by changing the language in the settings.
+          </p>
+
+          <div class="comparison-note">
+            <ion-icon name="sunny"></ion-icon>
+            <strong>Pro Tip:</strong> The help includes a table of contents with
+            jump-to-section navigation for quick access to specific topics.
+          </div>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Feedback">
+        <ion-item slot="header" color="light">
+          <ion-label>Send Us Feedback</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            We value your feedback!
+            <br />
+            <ion-icon name="mail"></ion-icon>
+            If you have questions, suggestions, or comments, please contact us
+            at
+            <a
+              href="{{ getMailToLinkForFeedback() }}"
+              title="Open your email client with recipient and subject prefilled."
+            >
+              z-control Support & Feedback
+            </a>
+            >.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Privacy Policy">
+        <ion-item slot="header" color="light">
+          <ion-label>Privacy Policy</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            Your privacy is important to us.
+          </p>
+          <p>
+            Please review our
+            <a
+              [routerLink]="privacyPolicyLink"
+              [queryParams]="{
+                from: parameters?.appSectionParameters?.selectedAccordion,
+                internal: 'true',
+              }"
+              title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section (returns you to the same place)."
+              >Privacy Policy</a
+            >
+            to learn how we handle your data.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Release Notes">
+        <ion-item slot="header" color="light">
+          <ion-label>What's new? (Release Notes)</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            All new features, improvements and bug fixes of the QR Code app are
+            tracked in
+          </p>
+          <ion-button
+            fill="clear"
+            size="small"
+            (click)="openChangelog()"
+            (keydown.enter)="openChangelog()"
+            class="changelog-button"
+            title="Open release notes (changelog) — grouped by category and sorted newest first"
+          >
+            <ion-icon name="list" slot="start"></ion-icon>
+            Release Notes
+          </ion-button>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="MLT: Get Source Code">
+        <ion-item slot="header" color="light">
+          <ion-label>Get the Source Code</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            The app is open source, and the source code is available on
+            <i>GitHub</i>
+            so you can review how the app works and how your data is handled at
+            any time.
+          </p>
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onGetSourceCode()"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
+              aria-label="Open GitHub repository (opens in a new tab)"
+            >
+              <ion-icon name="logo-github" slot="start"></ion-icon>
+              Get Source Code
+            </ion-button>
+          </div>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+</ion-accordion>

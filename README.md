@@ -27,6 +27,13 @@ A modern, mobile-first landing page built with Ionic and Angular, highlighting t
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-qr-code-generator)
 - **Features**: QR code generation, offline functionality, multi-language support, qr code settings, configured e-mail sending
 
+### z-control Multi Language Translator App
+
+- **Web App**: [Try directly in browser](https://z-control-multi-language-translator.web.app) without installation
+- **Android App**: Planned for beta testing (not yet available on Google Play Store)
+- **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-multi-language-translator)
+- **Features**: Multi-language translation, text-to-speech functionality, customizable translation preferences, generous free translation allowance
+
 ## 🛠️ Tech Stack
 
 - **Framework**: Ionic 8 with Angular 18
@@ -86,11 +93,10 @@ landing-page/
 │  │  └─ testEnv.ts
 │  └─ ...other files, like package.json, tsconfig.json...
 ├─ node_modules/
-├─ scripts/
-│  └─ generate-env.js
 ├─ shared/
 │  └─ GitHubConstants.ts
 ├─ tools/
+│  ├─ generate-env.js
 │  ├─ backup_non_committed_files.ps1
 │  ├─ backup_non_committed_files.txt
 │  ├─ CHANGELOG_template.md
@@ -109,12 +115,10 @@ landing-page/
    │  ├─ logs/
    │  │  └─ change-logs/
    │  │        ├─ CHANGELOG_LANDING-PAGE.md
+   │  │        ├─ CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md
    │  │        └─ CHANGELOG_QR-CODE.md
    │  └─ privacy/
    │     └─ policies/
-   │        ├─ premium/
-   │        │  ├─ premium-en.html
-   │        │  └─ premium-de.html
    │        ├─ landing-page/
    │        │  ├─ landing-page-en.html
    │        │  └─ landing-page-de.html
@@ -136,7 +140,7 @@ landing-page/
       │  │     ├─ privacy-viewer.component.ts
       │  │     └─ privacy-viewer.component.html
       │  ├─ policies/
-      │  │  └─ README.md     
+      │  │  └─ README.md
       │  └─ services/
       │     └─ privacy.service.ts
       ├─ services/                # app-wide / cross-cutting services
@@ -146,26 +150,19 @@ landing-page/
       │  ├─ utils.service.ts
       ├─ ui/
       │  └─ components/
+      │     ├─ backup-scripts-section/
       │     ├─ footer/
-      │     │  ├─ footer.component.ts
-      │     │  ├─ footer.component.scss
-      │     │  └─ footer.component.html
-      │     ├─ markdown-viewer/
-      │     │  ├─ markdown-viewer.component.ts
-      │     │  ├─ markdown-viewer.component.scss
-      │     │  └─ markdown-viewer.component.html
+      │     ├─ github-analytics/
       │     ├─ header/
-      │     │  ├─ header.component.ts
-      │     │  ├─ header.component.scss
-      │     │  └─ header.component.html
-      │     └─ github-analytics/
-      │        ├─ github-analytics.component.ts
-      │        ├─ github-analytics.component.scss
-      │        └─ github-analytics.component.html
+      │     ├─ markdown-viewer/
+      │     ├─ multi-language-translator-section/
+      │     ├─ qr-code-generator-section/
+      │     └─ index.ts
       └─ theme/                    # global styling (variables, global.scss)
 ```
 
 **Notes:**
+
 - Real Firebase config and local debug index are not committed (`.env.local`, `index_DEBUG_FIREBASE-config.html`).
 - Privacy policy HTML templates are in `src/assets/privacy/policies` and loaded dynamically.
 - GitHub analytics architecture and Firestore integration are described in [docs/GITHUB_ANALYTICS_ARCHITECTURE.md](./docs/GITHUB_ANALYTICS_ARCHITECTURE.md).
@@ -196,15 +193,31 @@ ionic build && ionic serve --prod
 
 ### Environment Configuration
 
-Update version information and firebase config in `.env.local and run npm run generate-env`:
+Update version information and firebase config in `.env.local and run npm run generate-env`.
+
+Here is the structure of the generated environment files (`src/environments/environment.ts` and `src/environments/environment.prod.ts`). This structure is committed in environment.template.ts, but the actual files with real values are generated locally and not committed to the repository.
 
 ```typescript
+// @ts-nocheck
 export const environment = {
   production: __PRODUCTION__,
   version: {
     major: __MAJOR__,
     minor: __MINOR__,
     date: "__DATE__",
+  },
+  logAnalyticsInDevMode: __LOG_ANALYTICS_IN_DEV_MODE__,
+  appSection: {
+    QR: {
+      maxInputLength: __appSection.QR.MAX_INPUT_LENGTH__,
+    },
+    MLT: {
+      maxTargetLanguages: __appSection.MLT.MAX_TARGET_LANGUAGES__,
+      maxFreeTranslateCharsPerMonth: __appSection.MLT.MAX_FREE_TRANSLATE_CHARS_PER_MONTH__,
+      maxFreeTranslateCharsPerMonthForUser: __appSection.MLT.MAX_FREE_TRANSLATE_CHARS_PER_MONTH_FOR_USER__,
+      maxFreeTranslateCharsBufferPerMonth: __appSection.MLT.MAX_FREE_TRANSLATE_CHARS_BUFFER_PER_MONTH__,
+      maxInputLength: __appSection.MLT.MAX_INPUT_LENGTH__,
+    },
   },
   firebase: {
     apiKey: "__FIREBASE_API_KEY__",
@@ -264,15 +277,17 @@ The app uses Ionic CSS Variables for consistent theming. Main theme files:
 - `src/global.scss` - Global styles
 - Component-specific SCSS files for custom styling
 
-### Adding New Content
+### Adding New Apps
 
-1. **Update changelog**: Modify `src/services/changelog-simple.service.ts`
-2. **Add new apps**: Update home page content and routing
-3. **Customize styling**: Use Ionic CSS variables for theme consistency
+Update home page content and routing
 
 ## 📚 Documentation & Changelogs
 
-Technical documentation is available in the `/docs` folder:
+### Technical Documentation
+
+📖 For a complete overview and documentation index, see **[docs/README.md](./docs/README.md)**
+
+**Quick Links:**
 
 - **[Dark Mode Guide](./docs/IONIC_DARK_MODE_COLOR_GUIDE.md)** - Implementation details for dark mode support
 - **[Firebase Security](./docs/FIREBASE_SECURITY.md)** - Security configuration and best practices
@@ -285,9 +300,12 @@ Technical documentation is available in the `/docs` folder:
 - **[Unit Testing Plan](./docs/unit-tests/UNIT_TESTING_PLAN.md)** - Comprehensive testing strategy
 - **[Firebase Analytics Service Tests](./docs/unit-tests/FIREBASE_ANALYTICS_SERVICE_TESTS.md)** - Detailed test documentation
 
+### Changelogs
+
 Changelogs for each app are stored in `src/assets/logs/change-logs/`:
 
 - `CHANGELOG_LANDING-PAGE.md` — for the landing page
+- `CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md` — for the multi-language translator app
 - `CHANGELOG_QR-CODE.md` — for the z-control QR Code Generator app
 
 ## 🧪 Testing
@@ -329,13 +347,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Icons by [Ionicons](https://ionic.io/ionicons)
 - Hosted on [Firebase](https://firebase.google.com/)
 - Hosted on [Google Play](https://play.google.com/)
-
-## 📊 Project Status
-
-- 🔄 Landing Page: working on unit-tests
-- ✅ Firebase Hosting Landing page: Complete
-- ✅ Firebase Hosting z-control QR Code Generator: Complete
-- ✅ Google Play z-control QR Code Generator: Complete
 
 ---
 

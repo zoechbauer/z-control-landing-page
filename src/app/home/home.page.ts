@@ -38,11 +38,14 @@ import { FirebaseAnalyticsService } from '../services/firebase-analytics.service
 import { LocalStorageService } from '../services/local-storage.service';
 import { CommonModule } from '@angular/common';
 import { APPS } from 'shared/GitHubConstants';
-
-enum App {
-  qrCode = 'z-control QR Code Generator App',
-  BackupScripts = 'z-control Backup Scripts',
-}
+import { MultiLanguageTranslatorSectionComponent } from '../ui/components/multi-language-translator-section/multi-language-translator-section.component';
+import {
+  AppSectionParameters,
+  BackupScriptsSectionParameters,
+  MultipleLanguageTranslatorSectionParameters,
+  QrCodeGeneratorSectionParameters,
+} from 'shared/app-interfaces';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -55,23 +58,27 @@ enum App {
     FooterComponent,
     QrCodeGeneratorSectionComponent,
     BackupScriptsSectionComponent,
+    MultiLanguageTranslatorSectionComponent,
     CommonModule,
   ],
 })
 export class HomePage implements AfterViewInit {
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
 
-  maxInputLength = 1000;
-  selectedAccordion: string = '';
+  selectedAccordion: string = APPS.LANDING_PAGE;
   currentMainAccordion: string = '';
   subAccordionOpened: boolean = false;
-  App = App;
+  multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
+  qrCodeGeneratorSectionParams?: QrCodeGeneratorSectionParameters;
+  backupScriptsSectionParams?: BackupScriptsSectionParameters;
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
     private readonly localStorageService: LocalStorageService,
   ) {
     this.registerIcons();
+    this.setMultiLanguageTranslatorParameters();
+    this.setQrCodeGeneratorParameters();
   }
 
   private registerIcons() {
@@ -123,13 +130,17 @@ export class HomePage implements AfterViewInit {
     });
 
     // Only handle main accordion changes
-    if (value?.startsWith('group 1')) {
-      this.currentMainAccordion = 'group 1';
-      this.setSelectedAccordion('group 1');
+    if (value?.startsWith('QR')) {
+      this.currentMainAccordion = 'QR';
+      this.setSelectedAccordion('QR');
       this.subAccordionOpened = false;
-    } else if (value?.startsWith('group 3')) {
-      this.currentMainAccordion = 'group 3';
-      this.setSelectedAccordion('group 3');
+    } else if (value?.startsWith('BS')) {
+      this.currentMainAccordion = 'BS';
+      this.setSelectedAccordion('BS');
+      this.subAccordionOpened = false;
+    } else if (value?.startsWith('MLT')) {
+      this.currentMainAccordion = 'MLT';
+      this.setSelectedAccordion('MLT');
       this.subAccordionOpened = false;
     } else if (value === undefined || value === '' || value === null) {
       // it could be main accordion closing or sub-accordion activity
@@ -148,7 +159,7 @@ export class HomePage implements AfterViewInit {
     } else {
       // Main accordion is actually closing
       this.currentMainAccordion = '';
-      this.selectedAccordion = '';
+      this.selectedAccordion = APPS.LANDING_PAGE;
     }
   }
 
@@ -158,18 +169,21 @@ export class HomePage implements AfterViewInit {
 
   setSelectedAccordion(group: string) {
     switch (group) {
-      case 'group 1':
-        this.selectedAccordion = App.qrCode;
+      case 'QR':
+        this.selectedAccordion = APPS.QR_CODE_GENERATOR;
         break;
-      case 'group 3':
-        this.selectedAccordion = App.BackupScripts;
+      case 'BS':
+        this.selectedAccordion = APPS.BACKUP_SCRIPTS;
+        break;
+      case 'MLT':
+        this.selectedAccordion = APPS.MULTI_LANGUAGE_TRANSLATOR;
         break;
       case undefined:
       case '':
-        this.selectedAccordion = '';
+        this.selectedAccordion = APPS.LANDING_PAGE;
         break;
       default:
-        this.selectedAccordion = '';
+        this.selectedAccordion = APPS.LANDING_PAGE;
     }
   }
 
@@ -178,8 +192,40 @@ export class HomePage implements AfterViewInit {
   }
 
   private openQRCodeGeneratorAccordion() {
-    (this.accordionGroup as any).value = 'group 1: QR Code Generator';
-    this.currentMainAccordion = 'group 1';
-    this.setSelectedAccordion('group 1');
+    (this.accordionGroup as any).value = 'QR: QR Code Generator';
+    this.currentMainAccordion = 'QR';
+    this.setSelectedAccordion('QR');
+  }
+
+      private setBackupScriptsParameters() {
+    this.backupScriptsSectionParams = {
+      appSectionParameters: this.getAppParameters(),
+    };
+  }
+
+    private setQrCodeGeneratorParameters() {
+    this.qrCodeGeneratorSectionParams = {
+      appSectionParameters: this.getAppParameters(),
+      maxInputLength: environment.appSection.QR.maxInputLength,
+    };
+  }
+
+  private setMultiLanguageTranslatorParameters() {
+    this.multiLanguageTranslatorSectionParams = {
+      appSectionParameters: this.getAppParameters(),
+      maxInputLength: environment.appSection.MLT.maxInputLength,
+      maxTargetLanguages: environment.appSection.MLT.maxTargetLanguages,
+      maxTranslateCharsTotalPerMonth: environment.appSection.MLT.maxFreeTranslateCharsPerMonth,
+      maxTranslateCharsUserPerMonth: environment.appSection.MLT.maxFreeTranslateCharsPerMonthForUser,
+    };
+  }
+
+  private getAppParameters(): AppSectionParameters {
+    return {
+      selectedAccordion: this.selectedAccordion,
+      currentMainAccordion: this.currentMainAccordion,
+      subAccordionOpened: this.subAccordionOpened,
+      isAnalyticsAllowed: this.isAnalyticsAllowed,
+    };
   }
 }

@@ -35,7 +35,7 @@ export class PrivacyViewerComponent implements OnInit {
   loading = true;
   error = false;
   selectedAccordion = '';
-  policyType = 'qr-code-generator';
+  policyType = '';
   language = 'en';
   availableLanguages: string[] = [];
   showBackButtonAndFooter = false;
@@ -53,27 +53,20 @@ export class PrivacyViewerComponent implements OnInit {
     this.detectInternalNavigation();
 
     this.route.params.subscribe((params) => {
+      console.log('Route params:', params);
       this.policyType = params['type'] || 'qr-code-generator';
-      if (this.policyType === 'basic') {
-        // Map legacy 'basic' type to 'qr-code-generator' because only that is available now in assets/privacy/policies
-        this.policyType = 'qr-code-generator';
-      }
       this.language = params['language'] || 'en';
       this.loadPolicy();
     });
 
     // Get selectedAccordion from query params for header + support legacy approach
     this.route.queryParams.subscribe((params) => {
+      console.log('Route query params:', params);
       this.selectedAccordion = params['from'] || 'Privacy Policy';
 
       // Check for internal parameter - if present, show footer/back button
       if (params['internal'] === 'true') {
         this.showBackButtonAndFooter = true;
-      }
-
-      // Support legacy query parameter approach
-      if (params['from']) {
-        this.policyType = this.mapLegacyFromParam(params['from']);
       }
     });
     this.registerIcons();
@@ -104,16 +97,6 @@ export class PrivacyViewerComponent implements OnInit {
 
   get backToHomeButtonLabel(): string {
     return this.language === 'de' ? 'Zurück zur Startseite' : 'Back to Home';
-  }
-
-  private mapLegacyFromParam(from: string): string {
-    // Map legacy 'from' parameter values to policy types
-    const mapping: { [key: string]: string } = {
-      'z-control QR Code Generator App': APPS.QR_CODE_GENERATOR,
-      'z-control Landing Page App': APPS.LANDING_PAGE,
-      'Future App 1': 'premium',
-    };
-    return mapping[from] || 'qr-code-generator';
   }
 
   private loadPolicy() {

@@ -102,7 +102,7 @@ this.firebaseAnalyticsService.logEvent("download_started", {
 
 **Behavior**:
 
-- Skips logging on localhost (unless `doLoggingInDevMode = true`)
+- Skips logging on localhost (unless `environment.logAnalyticsInDevMode = true`)
 - Requires analytics to be initialized and enabled
 - Accepts optional parameters for detailed tracking
 - Catches and logs errors without crashing app
@@ -110,8 +110,10 @@ this.firebaseAnalyticsService.logEvent("download_started", {
 **Development Mode**:
 
 ```typescript
-// In service code:
-const doLoggingInDevMode = false; // Set to true for local testing
+// in .env.local
+-- logging fireabase analytics events in development mode
+# Set to true temporarily if you need to test analytics from a local host.
+LOG_ANALYTICS_IN_DEV_MODE=true
 ```
 
 ---
@@ -329,7 +331,7 @@ accordionGroupChange(event: CustomEvent) {
 
 **Parameters**:
 
-- `accordion_value`: Which accordion was toggled (e.g., 'group 1', 'group 2')
+- `accordion_value`: Which accordion was toggled (e.g., 'QR', 'MLT')
 - `app`: Source application ('Landing Page')
 
 ---
@@ -611,15 +613,16 @@ Privacy policies explain analytics usage:
 By default, analytics is **disabled on localhost**:
 
 ```typescript
-// In logEvent method
-const doLoggingInDevMode = false;
-
-if (globalThis.window !== undefined && !doLoggingInDevMode) {
-  const host = globalThis.window.location.hostname;
-  if (host === "localhost" || host === "127.0.0.1" || host === "::1") {
-    return; // Skip analytics on local dev hosts
-  }
-}
+  logEvent(name: string, params?: { [key: string]: any }) {
+    // Disable logging from localhost by default during development.
+    // Set to true in .env.local for testing new events from localhost.
+    const doLoggingInDevMode = environment.logAnalyticsInDevMode;
+    if (globalThis.window !== undefined && !doLoggingInDevMode) {
+      const host = globalThis.window.location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1' || host === '::1') {
+        return; // skip analytics on local dev hosts
+      }
+    }
 ```
 
 **Why?**
@@ -631,8 +634,10 @@ if (globalThis.window !== undefined && !doLoggingInDevMode) {
 **To enable for testing**:
 
 ```typescript
-// Temporarily set to true in service
-const doLoggingInDevMode = true;
+// in .env.local
+-- logging fireabase analytics events in development mode
+# Set to true temporarily if you need to test analytics from a local host.
+LOG_ANALYTICS_IN_DEV_MODE=true
 ```
 
 ---
@@ -691,10 +696,6 @@ export const environment = {
 
 **File**: `src/app/services/firebase-analytics.service.spec.ts`
 
-**Coverage**: 76.31% statements (maximum achievable in Karma)
-
-**Test Categories** (37 tests total):
-
 1. ✅ Setup & Initialization (5 tests)
 2. ✅ Service Behavior (8 tests)
 3. ✅ enableCollection Edge Cases (2 tests)
@@ -729,8 +730,12 @@ npm run test:coverage
 1. **Enable localhost logging**:
 
    ```typescript
-   // In firebase-analytics.service.ts
-   const doLoggingInDevMode = true; // Change to true
+# in .env.local
+# Set to true temporarily if you need to test analytics from a local host.
+LOG_ANALYTICS_IN_DEV_MODE=true
+
+# update environment files
+npm run generate-env
    ```
 
 2. **Run app**:
@@ -823,9 +828,9 @@ console.log("Analytics initialized:", this.analytics);
 
 **Solutions**:
 
-- ✅ **Check doLoggingInDevMode flag**:
+- ✅ **Check .env.local flag**:
   ```typescript
-  const doLoggingInDevMode = false; // Should be false for normal dev
+  LOG_ANALYTICS_IN_DEV_MODE=false; // Should be false for normal dev
   ```
 - ✅ **Verify hostname detection**:
   ```typescript
@@ -1097,7 +1102,6 @@ this.firebaseAnalyticsService.enabled$.subscribe((enabled) => {
 
 ---
 
-**Document Version**: 1.0  
-**Last Updated**: November 3, 2025  
+**Document Version**: 1.1  
+**Last Updated**: February 23, 2026  
 **Maintained By**: Hans Zöchbauer  
-**Next Review**: Quarterly or when Firebase SDK updates

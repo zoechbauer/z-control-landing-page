@@ -1,7 +1,7 @@
 <ion-accordion
-  value="group 3: z-control Backup Scripts"
+  value="BS: z-control Backup Scripts"
   title="{{
-    currentMainAccordion === 'group 3'
+    parameters?.appSectionParameters?.currentMainAccordion === 'BS'
       ? 'Collapse z-control Backup Scripts section'
       : 'Expand z-control Backup Scripts section'
   }}"
@@ -15,13 +15,13 @@
     <ion-label>z-control Backup Scripts</ion-label>
   </ion-item>
   <div class="ion-padding" slot="content" title="">
-    <ion-card color="medium">
+    <ion-card color="dark">
       <ion-card-header>
         <ion-card-title
           >Automate Backups, Cleanup, and Disk Usage Logging</ion-card-title
         >
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content class="summarized-app-content">
         <p>
           <strong>z-control Backup Scripts</strong> is a collection of
           open-source PowerShell and batch scripts for Windows, designed to help
@@ -134,10 +134,10 @@
       </ion-card-content>
     </ion-card>
     <ion-accordion-group
-      (ionChange)="subAccordionChange('group 3')"
-      title="{{ subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
+      (ionChange)="subAccordionChange('BS')"
+      title="{{ parameters?.appSectionParameters?.subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
     >
-      <ion-accordion value="3a: Features">
+      <ion-accordion value="BS: Features">
         <ion-item slot="header" color="light">
           <ion-label>Key Features</ion-label>
         </ion-item>
@@ -178,7 +178,7 @@
           </ul>
         </div>
       </ion-accordion>
-      <ion-accordion value="3b: How to Use">
+      <ion-accordion value="BS: How to Use">
         <ion-item slot="header" color="light">
           <ion-label>How to Use</ion-label>
         </ion-item>
@@ -214,7 +214,7 @@
           </ul>
         </div>
       </ion-accordion>
-      <ion-accordion value="3c: Feedback">
+      <ion-accordion value="BS: Feedback">
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -235,7 +235,7 @@
           </p>
         </div>
       </ion-accordion>
-      <ion-accordion value="3d: Get Source Code">
+      <ion-accordion value="BS: Get Source Code">
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

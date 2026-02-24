@@ -55,6 +55,8 @@ export enum TrafficType {
 // used for privacy policy
 export const ALL_REPOS = 'all';
 export const APPS = {
-  LANDING_PAGE: 'Landing Page',
-  QR_CODE_GENERATOR: 'QR Code Generator',
+  LANDING_PAGE: 'z-control Landing Page App',
+  QR_CODE_GENERATOR: 'z-control QR Code Generator App',
+  BACKUP_SCRIPTS: 'z-control Backup Scripts',
+  MULTI_LANGUAGE_TRANSLATOR: 'z-control Multi Language Translator App',
 }

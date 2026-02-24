@@ -14,16 +14,22 @@
   </li>
   <li>
     <strong>Übersetzung:</strong> Die Übersetzung erfolgt über die
-    <i>Google Translate API</i> in der Cloud. Die übersetzten Texte werden
-    weder gespeichert noch weitergegeben.
+    <i>Google Translate API</i> in der Cloud. Die übersetzten Texte werden weder
+    gespeichert noch weitergegeben.
   </li>
   <li>
-    <strong>Tracking:</strong> Wir speichern die Anzahl der übersetzten Zeichen
-    in <i>Google Firebase</i>, um die Übersetzungsfunktion temporär zu stoppen,
-    sobald das monatliche kostenlose Kontingent erreicht ist. So vermeiden wir,
-    dass für die
-    <i>z-control Multi-Sprachen-Übersetzer App</i> unerwartete Kosten entstehen.
-  </li>
+    <strong>Anonyme Nutzungsstatistiken:</strong> Wir speichern folgende anonyme
+    Daten in <i>Google Firebase/Firestore</i>:
+    <ul>
+      <li>Geräte-Informationen (Plattformtyp)</li>
+      <li>Anzahl der übersetzten Zeichen</li>
+      <li>Ausgewählte Zielsprachen</li>
+      <li>Datum der letzten Übersetzung</li>
+      <li>Anonymisierte Benutzer-ID</li>
+    </ul>
+    Diese Daten dienen ausschließlich der Verwaltung des monatlichen
+    Nutzungskontingents und zur Vermeidung unerwarteter Kosten. Es werden keine
+    persönlichen oder sensiblen Daten gespeichert.
 </ul>
 
 <h4>💾 Lokale Datenspeicherung</h4>
@@ -36,15 +42,15 @@
 
 <h4>🌐 Web-App vs. Mobile App</h4>
 <ul>
-  <li>
-    <strong>Web-App:</strong> Verwendet den Local Storage des Browsers.
-  </li>
+  <li><strong>Web-App:</strong> Verwendet den Local Storage des Browsers.</li>
   <li>
     <strong>Mobile App:</strong> Nutzt den geräteeigenen IndexedDB‑Speicher.
   </li>
   <li>
-    <strong>Keine Cloud-Synchronisation:</strong> Daten werden niemals zwischen
-    Geräten synchronisiert.
+    <strong>Keine Cloud-Synchronisation:</strong> Ihre persönlichen
+    Einstellungen und Daten werden niemals zwischen Geräten synchronisiert. Es
+    werden ausschließlich anonyme Nutzungsstatistiken zur Kontingentverwaltung
+    in der Cloud gespeichert.
   </li>
 </ul>
 
@@ -52,11 +58,11 @@
 <p>
   Diese App ist Open Source. Sie können den Quellcode auf
   <a
-    href="https://github.com/zoechbauer/z-control-qr-code-generator"
+    href="https://github.com/zoechbauer/z-control-multi-language-translator"
     target="_blank"
     >GitHub</a
   >
-  einsehen und unsere Datenschutzpraktiken überprüfen.
+  einsehen und nachvollziehen, wie anonyme Statistiken verarbeitet werden.
 </p>
 
 <h4>👶 Datenschutz für Kinder</h4>
@@ -77,11 +83,11 @@
 <p>
   Bei Fragen oder Anliegen zum Datenschutz kontaktieren Sie bitte:
   <a
-    href="mailto:zcontrol.app.qr@gmail.com?subject=z-control%20Datenschutzerklärung%20Feedback"
-    >z-control Support</a
+    href="mailto:zcontrol.app.qr@gmail.com?subject=z-control%20Multi-Sprachen-Übersetzer%20Datenschutzerklärung%20Feedback"
+    >z-control Multi-Sprachen-Übersetzer Support</a
   >
 </p>
 
 <p>
-  <small><strong>Letzte Aktualisierung:</strong> 12. Jänner 2026</small>
+  <small><strong>Letzte Aktualisierung:</strong> 18. Februar 2026</small>
 </p>

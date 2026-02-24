@@ -133,7 +133,7 @@ ion-footer {
   --max-height: 90vh;
 }
 
- @media (min-width: 768px) {
+@media (min-width: 768px) {
   .change-log-modal,
   .documentation-modal,
   .github-analytics-modal {
@@ -142,6 +142,7 @@ ion-footer {
 }
 
 // styling for app sections
+.z-control-multi-language-translator-logo,
 .z-control-qrcode-generator-logo,
 .z-control-backup-scripts-logo {
   border-radius: 8px;
@@ -154,22 +155,17 @@ ion-card-title {
 }
 
 ion-card-content {
-  p {
-    margin-bottom: 15px;
-    font-size: 16px;
-    color: var(--ion-text-color);
+  &.summarized-app-content {
+    p,
+    ul,
+    ol {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
   }
   p:last-child {
     margin-bottom: 0;
   }
-
-  ul,
-  ol {
-    margin-bottom: 15px;
-    font-size: 16px;
-    color: var(--ion-text-color);
-  }
-
 }
 
 .accordion-expanded {
@@ -310,7 +306,6 @@ ion-card-content {
       text-align: center;
     }
   }
-
 }
 
 .web-app-link {
