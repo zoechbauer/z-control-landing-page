@@ -12,6 +12,7 @@ export const REPO = {
   Z_CONTROL_LANDING_PAGE: 'z-control-landing-page',
   Z_CONTROL_QR_CODE_GENERATOR: 'z-control-qr-code-generator',
   Z_CONTROL_BACKUP_SCRIPTS: 'z-control-Backup-scripts',
+  Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR: 'z-control-multi-language-translator',
   COPILOT_LEARNING_CALCULATOR: 'copilot-learning-calculator',
 };
 
@@ -19,6 +20,7 @@ export const REPOS = [
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_LANDING_PAGE },
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_QR_CODE_GENERATOR },
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_BACKUP_SCRIPTS },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR },
   { owner: 'zoechbauer', repo: REPO.COPILOT_LEARNING_CALCULATOR },
 ];
 

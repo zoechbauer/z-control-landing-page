@@ -4,6 +4,7 @@ This document describes the architecture for automated fetching and storage of G
 
 - `zoechbauer/z-control-landing-page`
 - `zoechbauer/z-control-qr-code-generator`
+- `zoechbauer/z-control-multi-language-translator`
 - `zoechbauer/z-control-Backup-scripts`
 - `zoechbauer/copilot-learning-calculator`
 
@@ -53,14 +54,16 @@ Firestore structure:
 ```text
 githubAnalyticsTraffic/
   ├─ copilot-learning-calculator
-  ├─ z-control-qr-code-generator
+  ├─ z-control-multi-language-translator
   ├─ z-control-Backup-scripts
+  ├─ z-control-qr-code-generator
   └─ z-control-landing-page
 
 githubAnalyticsTrafficHistory/
   ├─ copilot-learning-calculator
-  ├─ z-control-qr-code-generator
+  ├─ z-control-multi-language-translator
   ├─ z-control-Backup-scripts
+  ├─ z-control-qr-code-generator
   └─ z-control-landing-page
 ```
 
@@ -81,10 +84,11 @@ A shared constants file is used for both backend and frontend to keep repository
 ```typescript
 // filepath: shared/GitHubConstants.ts
 export const REPOS = [
-  { owner: "zoechbauer", repo: "z-control-landing-page" },
-  { owner: "zoechbauer", repo: "z-control-qr-code-generator" },
-  { owner: "zoechbauer", repo: "z-control-Backup-scripts" },
-  { owner: "zoechbauer", repo: "copilot-learning-calculator" },
+  { owner: 'zoechbauer', repo: 'z-control-landing-page' },
+  { owner: 'zoechbauer', repo: 'z-control-qr-code-generator' },
+  { owner: 'zoechbauer', repo: 'z-control-Backup-scripts' },
+  { owner: 'zoechbauer', repo: 'z-control-multi-language-translator' },
+  { owner: 'zoechbauer', repo: 'copilot-learning-calculator' },
 ];
 
 export const COLLECTION = {
@@ -94,7 +98,6 @@ export const COLLECTION = {
 ```
 
 ---
-
 
 ## 4. Cloud Function Implementation
 
@@ -245,76 +248,9 @@ async function fetchAnalytics() {
 
 ## 9. Local Testing with Firebase Emulator Suite when adding new repos
 
-To test the GitHub analytics function locally:
-
-1. **Install dependencies:**
-
-   ```bash
-   cd functions
-   npm install
-   npm install node-fetch dotenv
-   ```
-
-2. **Create and configure `.env.local` in your project root:**
-
-   ```text
-   GITHUB_TOKEN=your_github_token_here
-   ```
-
-3. **Ensure your function code loads environment variables:**
-
-   ```typescript
-   require("dotenv").config({ path: require("node:path").resolve(__dirname, "../../.env.local") });
-   ```
-
-4. **Start the Firebase Emulator Suite:**
-
-   ```bash
-   firebase emulators:start
-   ```
-
-5. **Trigger the function manually for testing:**
-
-   - Use the HTTP endpoint (e.g., `/testGitHubAnalytics`) in your browser or with curl:
-
-     ```bash
-     curl http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics
-     ```
-
-6. **View results in the Emulator UI:**
-
-   - Open [http://localhost:4000/firestore](http://localhost:4000/firestore) and check the `githubAnalyticsTraffic` and `githubAnalyticsTrafficHistory` collections.
-
-7. **Troubleshooting:**
-
-   - Ensure ports are free before starting the emulator.
-   - Use LF line endings in `.env.local`.
-   - Check logs for errors and verify environment variables are loaded.
-
-8. **Using Firebase Emulator for testing new repo in Frontend:**
-
-   - Add new repo to shared GithubConstants.ts (both frontend and backend copies).
-   - Run npm run build:functions to update backend build output.
-   - Configure your frontend app to connect to the Firestore emulator when running locally:
-   set `useFirebaseEmulator = true` in GithubAnalyticsComponent
-   - if ok, set `useFirebaseEmulator = false` for production.
-   - Deploy functions and frontend as usual.
-
-   ```typescript
-   private async showAnalyticsData() {
-    const collection = COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
-    const repo = ALL_REPOS;
-    const useFirebaseEmulator = false;   <= set to true for local testing>
-
-    this.analyticsData = await this.firestoreService.getAnalyticsData(
-      collection,
-      repo,
-      useFirebaseEmulator
-    );
-   }
-   ```
+For detailed instructions, refer to [GITHUB_ANALYTICS_TEST_LOCALLY.md](GITHUB_ANALYTICS_TEST_LOCALLY.md).
 
 ---
 
 **Maintained by:** Hans Zöchbauer  
-**Last Updated:** 2026-01-30
+**Last Updated:** 2026-02-25

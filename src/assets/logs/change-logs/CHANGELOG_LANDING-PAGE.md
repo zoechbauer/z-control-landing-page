@@ -2,6 +2,13 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.10] – 2026-02-25
+
+### ✨ New Features
+
+- Added **z-control Multi Language Translator** to GitHub Analytics tracking so its repository traffic appears in the Landing Page analytics section.
+- Added a .env.local variable to enable the **Firebase Emulator** for GitHub Analytics fetching, allowing local testing without touching production data.
+
 ## [2.9] – 2026-02-24
 
 ### ✨ New Features

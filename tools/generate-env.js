@@ -39,6 +39,7 @@ function makeEnv(prod = false) {
       date: v("VERSION_DATE", new Date().toISOString().split("T")[0]),
     },
     logAnalyticsInDevMode: v("LOG_ANALYTICS_IN_DEV_MODE", "false") === "true",
+    useFirebaseEmulator: v("USE_FIREBASE_EMULATOR", "false") === "true",
     appSection: {
       QR: {
         maxInputLength: Number(v("appSection.QR.MAX_INPUT_LENGTH", "1000")),

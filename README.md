@@ -36,7 +36,7 @@ A modern, mobile-first landing page built with Ionic and Angular, highlighting t
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Ionic 8 with Angular 18
+- **Framework**: Ionic 8 with Angular 20
 - **Language**: TypeScript
 - **Styling**: SCSS with Ionic CSS Variables
 - **Hosting**: Firebase Hosting
@@ -179,7 +179,7 @@ npm run generate-env
 ionic serve
 
 # Build for production
-ionic build
+ionic build --prod
 
 # Run tests
 ng test
@@ -187,13 +187,11 @@ ng test
 # Lint code
 ng lint
 
-# Build and preview
-ionic build && ionic serve --prod
 ```
 
 ### Environment Configuration
 
-Update version information and firebase config in `.env.local and run npm run generate-env`.
+Update version information and firebase config in `.env.local` and run `npm run generate-env`.
 
 Here is the structure of the generated environment files (`src/environments/environment.ts` and `src/environments/environment.prod.ts`). This structure is committed in environment.template.ts, but the actual files with real values are generated locally and not committed to the repository.
 
@@ -261,7 +259,7 @@ export const environment = {
 
 4. **Build and deploy**
    ```bash
-   ionic build
+   ionic build --prod
    firebase deploy
    ```
 

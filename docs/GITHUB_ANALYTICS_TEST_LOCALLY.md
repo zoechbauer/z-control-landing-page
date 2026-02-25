@@ -168,5 +168,92 @@ Make sure the `port` matches the one you used above.
 
 ---
 
+## Adding a New Repository to GitHub Analytics
+
+This section describes the procedure for adding a new repository to GitHub analytics tracking.
+
+### 1. Update Configuration Files in functions and landing page
+
+Add the new repository to the `REPOS` and `REPO` array in `shared/GitHubConstants.ts:
+
+### 2. Test Locally with Emulator
+
+**Important:** Always test with the emulator before deploying to production.
+
+1. Build the functions:
+
+   ```bash
+   cd functions
+   npm run build
+   ```
+
+2. Start the Firebase Emulator Suite:
+
+   ```bash
+   firebase emulators:start
+   ```
+
+3. Test the new repository:
+
+   ```bash
+   curl "http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics"
+   ```
+
+4. Verify in Firestore Emulator UI ([http://localhost:4000/firestore](http://localhost:4000/firestore))
+
+5. Check the landing page in development mode to see if the new repository's analytics are displayed correctly.
+- change `useFirebaseEmulator` to `true` in `.env.local` to fetch analytics from the emulator.
+- run `npm run generate-env` to update environment variables in the landing page.
+- restart the development server.
+- check the analytics section for the new repository.
+- if test succeeds, change `useFirebaseEmulator` back to `false` for production testing.
+- run `npm run generate-env` to update environment variables in the landing page.
+
+### 4. Deploy to Production
+
+- deploy functions
+- deploy landing page
+
+### 5. Test on Hosted Version
+
+After deployment, test the function on the hosted version before the scheduled run at 18:00:
+
+```bash
+curl "https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/testGitHubAnalytics"
+
+curl "http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics"
+```
+
+#### Why You Can Call It Multiple Times Safely
+
+You can safely call the function multiple times before 18:00 without causing duplicate data:
+
+1. **First Manual Test (e.g., at 14:00):**
+   - Creates the history document for the new repo
+   - Saves all current traffic entries including yesterday's data
+   - Result: ✅ Initial history created
+
+2. **Second Manual Test (e.g., at 16:00):**
+   - Tries to add yesterday's entry using `FieldValue.arrayUnion()`
+   - Detects the entry already exists (exact object match)
+   - Result: ⏭️ No duplicate created, only `timestamp` updated
+
+3. **Scheduled Run (at 18:00):**
+   - Same behavior as second test
+   - Yesterday's data already exists, not added again
+   - Result: ⏭️ No duplicate created
+
+**Key Protection Mechanism:**
+
+`FieldValue.arrayUnion()` prevents duplicates by comparing entire objects. If yesterday's data hasn't changed (which is normal since GitHub finalizes previous day's data), the exact same object already exists in the array and won't be added again.
+
+**Only Risk:** Duplicates would occur only if GitHub updates yesterday's counts between your runs (extremely rare during maintenance). Running at 18:00 ensures GitHub has finalized the data.
+
+### 6. Verify on Landing Page
+
+- Check that the new repository's analytics are displayed correctly
+
+---
+
 **Maintained by:** Hans Zöchbauer  
-**Last Updated:** January 27, 2026
+**Last Updated:** February 25, 2026

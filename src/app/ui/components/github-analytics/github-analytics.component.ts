@@ -25,6 +25,7 @@ import {
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-github-analytics',
@@ -195,7 +196,8 @@ export class GithubAnalyticsComponent implements OnInit {
   }
 
   /**
-   * Fetches analytics data from Firestore and omits entries with zero values.
+   * Fetches analytics data from Firestore and omits entries with zero values 
+   * using the Firebase Emulator if enabled.
    *
    * For each document, filters out all view and clone entries where both count and uniques are zero.
    * Only returns documents that have at least one nonzero view or clone entry.
@@ -207,7 +209,7 @@ export class GithubAnalyticsComponent implements OnInit {
     collection: (typeof COLLECTION)[keyof typeof COLLECTION],
   ): Promise<GithubAnalyticsTrafficDocument[]> {
     const repo = ALL_REPOS;
-    const useFirebaseEmulator = false;
+    const useFirebaseEmulator = environment.useFirebaseEmulator;
 
     const data: GithubAnalyticsTrafficDocument[] =
       await this.firestoreService.getAnalyticsData(
