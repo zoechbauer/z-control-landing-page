@@ -5,6 +5,7 @@
 //
 // Note: Do not use the REPO constant in REPOS on the backend
 // as it is used on the frontend due to compatibility issues.
+// z-control repos ordered by creation date asc
 // **********************************************************
 export const REPOS = [
   { owner: 'zoechbauer', repo: 'z-control-landing-page' },

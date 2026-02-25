@@ -205,6 +205,7 @@ export const environment = {
     date: "__DATE__",
   },
   logAnalyticsInDevMode: __LOG_ANALYTICS_IN_DEV_MODE__,
+  useFirebaseEmulator: __USE_FIREBASE_EMULATOR__,
   appSection: {
     QR: {
       maxInputLength: __appSection.QR.MAX_INPUT_LENGTH__,
