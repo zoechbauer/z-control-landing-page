@@ -2,6 +2,13 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.11] – 2026-02-28
+
+### ✨ New Features
+
+- Implemented **Firestore backup system** for GitHub Analytics and Multi Language Translator data to safeguard against data loss
+- Created comprehensive **backup and restore documentation** with tested procedures, multiple restore strategies (Firebase Console and gcloud CLI), and detailed troubleshooting guides for collection exports and cross-project imports
+
 ## [2.10] – 2026-02-25
 
 ### ✨ New Features

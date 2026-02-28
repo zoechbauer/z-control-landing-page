@@ -16,6 +16,8 @@ This folder contains technical documentation and guides for the Landing Page app
 - **[FIREBASE_SECURITY.md](./FIREBASE_SECURITY.md)** - Firebase security configuration and best practices
 - **[FIREBASE_ANALYTICS.md](./FIREBASE_ANALYTICS.md)** - Firebase Analytics (GA4) — Usage & Testing
 - **[FIREBASE_CONFIG_ENVIRONMENT_FILES.md](./FIREBASE_CONFIG_ENVIRONMENT_FILES.md)** - Environment files / Firebase config
+- **[FIRESTORE_BACKUP_RESTORE_GUIDE.md](./FIRESTORE_BACKUP_RESTORE_GUIDE.md)** - Complete guide for Firestore backups and restores with Firebase Console and gcloud CLI methods, including multiple restore strategies and best practices
+- **[FIRESTORE_EXPORT_IMPORT_TROUBLESHOOTING.md](./FIRESTORE_EXPORT_IMPORT_TROUBLESHOOTING.md)** - Troubleshooting guide for collection filtering issues, subcollection exports, empty data problems, and cross-project import scenarios
 
 ## Main Project Files
 
