@@ -1,12 +1,34 @@
 # What's New?
 
-Welcome to our updates and improvements of the **z-control Multi Language Translator** app!
+Welcome to our updates and improvements of the **z-control Translator** app!
 
-## [1.2] – YYYY-MM-DD
+## [1.3] – 2026-03-03
+
+### ✨ New Features
+
+- App deployed to Google Play Store for Testing by invited users (internal test group and closed test group), making it easily accessible on Android devices without manual installation.
 
 ### 🚀 Improvements
 
-- Added the README.md file to the root of the project for better visibility and accessibility, providing users with comprehensive information about the app, installation instructions, usage guidelines, and support resources in a clear and organized format.
+- Rebranded the app to "z-control Translator" for improved memorability and a more modern, streamlined brand identity.
+
+## [1.2] – 2026-02-24
+
+### 🚀 Improvements
+
+- Enhanced the GetStatisticsComponent for better privacy and usability:
+  - User IDs are now only visible on programmer devices to protect user privacy.
+  - Users with no translations this month are hidden from statistics on user devices for a cleaner view. On programmer devices, all users remain visible in descending order by creation date for monitoring.
+  - Improved dark mode styling for better readability of user details.
+- Enhanced color styling of the Translation page for improved visual consistency in both light and dark modes.
+- Reordered Settings page accordions for quicker access to frequently used features.
+- Improved explanations and instructions in multiple Settings accordions for better user guidance.
+- Added comprehensive README.md to the project root with app information, installation instructions, and usage guidelines.
+- Added a user help entry explaining the Facebook in-app browser speech output issue, including problem description, cause, and step-by-step solution.
+
+### 🐛 Fixes
+
+- Fixed device information comparison in Cloud Functions to prevent unnecessary Firestore updates when only property order differs.
 
 ## [1.1] – 2026-02-18
 
@@ -26,7 +48,7 @@ Welcome to our updates and improvements of the **z-control Multi Language Transl
   - Users who have exceeded their monthly quota are visually marked
   - Added validation to compare total character count with the sum of individual user counts, ensuring data integrity
   - Added collapsible raw data section in JSON format for programmers, enabling detailed debugging and transparency of stored data
-  - Improved information in the "Get Mobile App" component for better clarity and user guidance, and disabled download button because native app is not yet published online.
+- Improved information in the "Get Mobile App" component for better clarity and user guidance, and disabled download button because native app is not yet published online.
 
 ## [1.0] – 2026-02-11
 
@@ -147,7 +169,7 @@ Welcome to our updates and improvements of the **z-control Multi Language Transl
 
 - The app is now fully installable on Android devices using Android Studio, making mobile access seamless.
 - Enhanced layout and responsive styling for a consistent, polished experience across phones, tablets, and web browsers.
-- Added a comprehensive installation guide to help users set up the z-control Multi Language Translator app on Android devices step by step.
+- Added a comprehensive installation guide to help users set up the z-control Translator app on Android devices step by step.
 - Included detailed documentation on Google Cloud Translation API pricing to help users understand potential costs and plan accordingly.
 
 ## [0.2] – 2026-01-02

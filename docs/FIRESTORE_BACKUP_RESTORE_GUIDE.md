@@ -1,6 +1,6 @@
 # Firestore Backup and Restore Guide
 
-This guide explains how to backup and restore Firestore collections for the z-control Multi Language Translator project.
+This guide explains how to backup and restore Firestore collections for the z-control Translator project.
 
 ## Table of Contents
 
@@ -348,6 +348,7 @@ gcloud config set project z-control-4070
 ```
 
 ## Additional Resources
+
 - [z-control Firestore Export/Import Troubleshooting Guide](./FIRESTORE_EXPORT_IMPORT_TROUBLESHOOTING.md)
 
 - [Firestore Export/Import Documentation](https://cloud.google.com/firestore/docs/manage-data/export-import)
@@ -368,5 +369,5 @@ Consider implementing:
 ---
 
 **Last Updated:** 2026-02-27  
-**Project:** z-control Multi Language Translator  
+**Project:** z-control Translator  
 **Maintained by:** Development Team

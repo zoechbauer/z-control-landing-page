@@ -122,7 +122,7 @@ private availablePolicies: PrivacyPolicyMeta[] = [
   {
     type: 'multi-language-translator',
     languages: ['en', 'de'],
-    description: 'Privacy policy for z-control Multi Language Translator',
+    description: 'Privacy policy for z-control Translator',
   },
 ];
 ```
@@ -163,7 +163,6 @@ npm run generate-env
 check values with ionic serve
 set debug_mode to false in index_DEBUG_FIREBASE-config
 ```
-
 
 ### 6. Build and Deploy
 
@@ -230,15 +229,15 @@ Your `firebase.json` should look like this:
 ### After Deployment:
 
 1. **Verify URLs Work**
+
 - z-control QR Code App (English): `https://z-control-4070.web.app/privacy/qr-code-generator/en`
 - z-control QR Code App (German): `https://z-control-4070.web.app/privacy/qr-code-generator/de`
 - Landing Page App (English): `https://z-control-4070.web.app/privacy/landing-page/en`
 - Landing Page App (German): `https://z-control-4070.web.app/privacy/landing-page/de`
-- z-control Multi Language Translator (English): `https://z-control-4070.web.app/privacy/multi-language-translator/en`
-- z-control Multi Language Translator (German): `https://z-control-4070.web.app/privacy/multi-language-translator/de`
+- z-control Translator (English): `https://z-control-4070.web.app/privacy/multi-language-translator/en`
+- z-control Translator (German): `https://z-control-4070.web.app/privacy/multi-language-translator/de`
 
 1. **Test From z-control QR Code Generator App**
-
    - Ensure privacy links from z-control QR Code Generator app point to correct URLs
    - Test both English and German versions
 
@@ -280,7 +279,6 @@ firebase hosting:sites:list
 **Answer these questions:**
 
 1. **Is z-control QR Code Generator app a web app or mobile app?**
-
    - Web app → Continue to Step 2
    - Mobile app (iOS/Android) → Use Option C (App Store/Play Store)
 
@@ -324,12 +322,10 @@ firebase target
 ### Common Issues
 
 1. **404 Errors on Privacy Pages**
-
    - Check that `www/assets/privacy/policies/` folder exists after build
    - Verify HTML files are included in build output
 
 2. **Build Failures**
-
    - Run `npm install` to ensure dependencies are up to date
    - Check for TypeScript errors: `ng build --prod`
 
@@ -356,9 +352,9 @@ z-control/
 |-- firebase.json
 ```
 
-### firebase.json  
+### firebase.json
 
-In z-control folder is the the following firebase.json file.  
+In z-control folder is the the following firebase.json file.
 
 ```json
 {
@@ -387,11 +383,11 @@ In z-control folder is the the following firebase.json file.
     }
   ]
 }
-```  
+```
 
-### Firebase commands for deploying  
+### Firebase commands for deploying
 
-These commands are used from within folder z-control:  
+These commands are used from within folder z-control:
 
 abstract deploy command:
 
@@ -399,25 +395,25 @@ abstract deploy command:
 firebase deploy --only hosting:qr-code-target-name
 ```
 
-deploy landingPage:  
+deploy landingPage:
 
 ```powershell
 firebase deploy --only hosting:z-control-4070
 ```
 
-deploy qr-code:  
+deploy qr-code:
 
 ```powershell
 firebase deploy --only hosting:z-control-qr-code
 ```
 
-deploy multi-language-translator:  
+deploy multi-language-translator:
 
 ```powershell
-firebase deploy --only hosting:z-control-multi-language-translator
+firebase deploy --only hosting:z-control-translator
 ```
 
-deploy all:  
+deploy all:
 
 ```powershell
 firebase deploy --only hosting

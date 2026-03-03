@@ -48,10 +48,10 @@ export class MultiLanguageTranslatorSectionComponent {
   }>();
 
   nativeDownloadUrl =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp';
+    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.translator';
   sourceCodeUrl =
     'https://github.com/zoechbauer/z-control-multi-language-translator';
-  webAppUrl = 'https://z-control-multi-language-translator.web.app';
+  webAppUrl = 'https://z-control-translator.web.app';
 
   constructor(private readonly modalController: ModalController) {}
 

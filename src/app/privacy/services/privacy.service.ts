@@ -32,8 +32,7 @@ export class PrivacyService {
     {
       type: 'multi-language-translator',
       languages: ['en', 'de'],
-      description:
-        'Standard privacy policy for z-control Multi Language Translator App',
+      description: 'Standard privacy policy for z-control Translator App',
     },
     {
       type: 'qr-code-generator',
@@ -55,7 +54,7 @@ export class PrivacyService {
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
   ) {}
 
   /**
@@ -87,7 +86,7 @@ export class PrivacyService {
         content,
         lastUpdated: '2025-10-24',
       })),
-      catchError(() => of(null))
+      catchError(() => of(null)),
     );
   }
 
@@ -111,7 +110,7 @@ export class PrivacyService {
    */
   private loadPolicyContent(
     type: string,
-    language: string
+    language: string,
   ): Observable<string> {
     const fileName = `${type}-${language}.html`;
     const filePath = `assets/privacy/policies/${type}/${fileName}`;
@@ -123,8 +122,8 @@ export class PrivacyService {
     // 1. Add a new entry here matching the 'type' (folder name in assets/privacy/policies/{new-policy-folder}).
     const titles: Record<string, Record<string, string>> = {
       'multi-language-translator': {
-        en: 'Privacy Policy\nz-control Multi Language Translator App',
-        de: 'Datenschutzerklärung\nz-control Multi-Sprachen-Übersetzer App',
+        en: 'Privacy Policy\nz-control Translator App',
+        de: 'Datenschutzerklärung\nz-control Übersetzer App',
       },
       'qr-code-generator': {
         en: 'Privacy Policy\nz-control QR Code Generator App',

@@ -27,10 +27,14 @@ A modern, mobile-first landing page built with Ionic and Angular, highlighting t
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-qr-code-generator)
 - **Features**: QR code generation, offline functionality, multi-language support, qr code settings, configured e-mail sending
 
-### z-control Multi Language Translator App
+### z-control Translator App
 
-- **Web App**: [Try directly in browser](https://z-control-multi-language-translator.web.app) without installation
-- **Android App**: Planned for beta testing (not yet available on Google Play Store)
+- **Web App**: [Try directly in browser](https://z-control-translator.web.app) without installation
+- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.translator) — currently available through closed testing.
+
+  Installation and setup guidance is included in the app's help section.
+
+
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-multi-language-translator)
 - **Features**: Multi-language translation, text-to-speech functionality, customizable translation preferences, generous free translation allowance
 

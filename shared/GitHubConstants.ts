@@ -60,5 +60,5 @@ export const APPS = {
   LANDING_PAGE: 'z-control Landing Page App',
   QR_CODE_GENERATOR: 'z-control QR Code Generator App',
   BACKUP_SCRIPTS: 'z-control Backup Scripts',
-  MULTI_LANGUAGE_TRANSLATOR: 'z-control Multi Language Translator App',
+  MULTI_LANGUAGE_TRANSLATOR: 'z-control Translator App',
 }

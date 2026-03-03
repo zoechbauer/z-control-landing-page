@@ -484,6 +484,6 @@ gcloud firestore import gs://bucket/backup --project=TARGET_PROJECT
 ---
 
 **Last Updated:** 2026-02-28  
-**Project:** z-control Multi Language Translator  
+**Project:** z-control Translator  
 **Related:** Landing Page project  
 **Document Purpose:** Guide for exporting MLT collections from production and importing to test environments

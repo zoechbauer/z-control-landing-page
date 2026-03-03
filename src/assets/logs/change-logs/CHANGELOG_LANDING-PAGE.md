@@ -2,6 +2,14 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.12] – 2026-03-03
+
+### 🚀 Improvements
+
+- Rebranded the app z-control Multi Language Translator to **z-control Translator** for improved memorability and a more modern, streamlined brand identity.
+- Changed hosting URL to https://z-control-translator.web.app/ for a more concise and user-friendly web address.
+- Updated the download link to the new z-control Translator app, now available to Google Play Closed Test group members.
+
 ## [2.11] – 2026-02-28
 
 ### ✨ New Features
