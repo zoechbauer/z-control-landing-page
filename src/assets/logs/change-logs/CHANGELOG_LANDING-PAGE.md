@@ -2,6 +2,13 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.13] – 2026-03-19
+
+### 🚀 Improvements
+
+- Updated app title and favicon to "z-control Landing Page" for improved brand consistency and recognition.
+- Updated z-control Translator Release Notes to reflect the latest changes and improvements to the app.
+
 ## [2.12] – 2026-03-03
 
 ### 🚀 Improvements

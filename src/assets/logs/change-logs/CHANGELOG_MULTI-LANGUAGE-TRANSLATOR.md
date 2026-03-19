@@ -2,6 +2,42 @@
 
 Welcome to our updates and improvements of the **z-control Translator** app!
 
+## [1.6] – 2026-03-15
+
+### ✨ New Features
+
+- In programmer view, the statistics page includes the new section "User Statistics Overview" that summarizes the distribution of users by user type, platform, device model, and number of target languages used, giving programmers a quick overview of user demographics and usage patterns.
+- Device model number is now displayed in the statistics grid and user detail page for programmer devices, providing more detailed insights into the devices being used for translation.
+
+## [1.5] – 2026-03-12
+
+### ✨ New Features
+
+- On programmer devices, the statistics accordion now includes a display mode toggle to switch between programmer view (detailed data) and user view, letting programmers preview the user experience without needing a separate device.
+- In programmer view, the statistics grid now shows the number of target languages used by each user.
+- In programmer view, the statistics grid can now be searched and filtered by user name, platform, translated character count, and target language count for easier monitoring and debugging.
+- On the user detail page, the `isProgrammerDevice` filter has been replaced by the programmer view toggle.
+
+### 🚀 Improvements
+
+- Improved displayed information in the translation page if no target languages are selected, guiding users to select at least one target language before translating.
+
+### 🐛 Fixes
+
+- Fixed web authentication on browser refresh to avoid creating unnecessary new anonymous UIDs, keeping user translation totals consistent and improving callable Cloud Function authentication.
+- Unit tests were stabilized for standalone Angular components by updating spec configuration (`imports` instead of legacy patterns), aligning Firestore-related mocks with current return types, introducing a shared `createTranslateServiceMock()` helper across specs, and fixing TypeScript test-project configuration for reliable Jasmine type resolution.
+
+## [1.4] – 2026-03-07
+
+### ✨ New Features
+
+- Programmer device UIDs are now managed in Firestore and initialized from environment files, enabling runtime updates without requiring code changes or redeployment.
+
+### 🐛 Fixes on Mobile Version
+
+- In native mobile builds, the header now renders at the correct height across all tested Android devices (including Samsung A53).
+- In native mobile builds, the status bar is now consistently visible and correctly styled across all tested Android devices.
+
 ## [1.3] – 2026-03-03
 
 ### ✨ New Features
@@ -11,6 +47,7 @@ Welcome to our updates and improvements of the **z-control Translator** app!
 ### 🚀 Improvements
 
 - Rebranded the app to "z-control Translator" for improved memorability and a more modern, streamlined brand identity.
+- Updated documentation for the Google Play Store publication process.
 
 ## [1.2] – 2026-02-24
 
