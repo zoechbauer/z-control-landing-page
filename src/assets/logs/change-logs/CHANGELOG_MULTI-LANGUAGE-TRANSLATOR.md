@@ -2,12 +2,96 @@
 
 Welcome to our updates and improvements of the **z-control Translator** app!
 
+## [1.12] – 2026-04-29
+
+### ✨ New Features
+
+- When selecting "All Months" in the programmer statistics filter, data across all available months is aggregated and displayed in a single view, enabling a comprehensive overview of translation usage over time.
+
+### 🔧 Internal
+
+- Extended test suite with 52 additional unit tests (Firebase Firestore service, user detail component, statistics filter), reaching 660 specs and 99.38% coverage on all frontend code.
+- Added CSS classes to statistics elements to improve selector stability in tests.
+
+## [1.11] – 2026-04-25
+
+### ✨ New Features
+
+- In statistics programmer view a new filter has been added to select a specific month or all months for the displayed data, allowing programmers to analyze translation usage patterns over time and monitor monthly trends more effectively.
+- Added Apple device detection in programmer statistics, so iPhone, iPad, and Mac usage is now identified and displayed more clearly.
+- Improved platform visibility in programmer view, making it easier to understand which device categories are used for translations.
+
+### 🚀 Improvements
+
+- The user statistics accordion now always displays up-to-date quota data when opened or re-opened, even if the month has changed and no new translations have been made.
+- The monthly statistics accordion now always displays up-to-date data when re-opened, showing both your own translations and those from other users. Previously, this refresh only occurred when a new translation was made.
+- Changed Translation from 'User Translation' to 'User Device' and 'Programmer Translation' to 'Programmer Device' for better clarity.
+- Refactored device and platform detection into a dedicated `DeviceUtilsService` to improve structure, reuse, and maintainability.
+- Introduced dedicated enums for device and platform types, improving consistency and type safety across the app.
+- Improved detection logic for mobile and tablet web clients, with a clearer separation between phone/tablet and desktop behavior.
+- Programmer-only sections in the statistics view are now correctly restricted to authorized devices.
+- Added 61 unit tests, increasing the total suite to 608 specs and improving confidence in platform/device classification and related UI behavior.
+
+## [1.10] – 2026-04-15
+
+### ✨ New Features
+
+- Added 67 template tests, increasing the total test count to 547 specs and improving confidence in the app's most important UI components and pages.
+
+### 🚀 Improvements
+
+- Improved the layout of the statistics page and contingent information component for better readability and usability.
+
+## [1.9] – 2026-04-11
+
+### ✨ New Features
+
+- Added a troubleshooting section to the help page: "No speaker icon is shown for translated texts (mobile)", with a clear solution for Samsung devices. The section explains the issue, its cause, and provides step-by-step instructions to resolve it by selecting "Google Speech Recognition and Synthesis" as the TTS engine.
+- Added a Spinner Component to provide a consistent loading indicator across the app, improving user experience during data fetching and processing operations.
+- Added unit tests for the new Spinner Component, ensuring its functionality and reliability across different scenarios.
+
+## [1.8] – 2026-04-08
+
+### ✨ New Features
+
+- Completed the unit test suite for all TypeScript files, bringing the total to 480 tests and achieving 98% statement coverage for TypeScript code. This ensures robust validation of all features and edge cases, significantly improving overall code quality and reliability. (Note: HTML template logic is not included in this coverage metric.)
+- Introduced a new `isSmallDevice` method in UtilsService for more accurate device detection, enhancing responsive design on all screen sizes and orientations. This method is fully covered by unit tests.
+- Added `CapacitorPlatformService` to provide a unified interface for platform detection, improving both maintainability and testability.
+
+### 🚀 Improvements
+
+- Refined the `isSmallDevice` logic for more precise small screen detection, further enhancing app responsiveness on all devices and orientations.
+- Increased textarea height on small devices in portrait mode for better usability and easier text entry.
+- The translation input card now automatically hides on small devices in landscape mode to maximize space for results, while remaining visible in portrait mode on both native and web platforms.
+- Moved date formatting and validation logic from components to UtilsService for better separation of concerns and testability, with comprehensive unit tests added for all date formatting functions.
+
+## [1.7] – 2025-03-31
+
+### ✨ New Features
+
+- Added comprehensive unit tests across all services, achieving 98% statement coverage for service code and significantly enhancing code quality and reliability. (Note: The 98% coverage metric applies specifically to service code; overall app coverage may differ.)
+- Introduced callable functions (`is-programmer-devices.ts`, `create-missing-contingent-data.ts`) to enhance testability and modularity.
+- Added `firebase-firestore-auth-wrapper.service.ts` to improve authentication handling and test coverage.
+- Updated app title and favicon to "z-control Translator" for improved brand consistency and recognition.
+- Added developer documentation for unit testing with Angular, including a quick-start reference for running tests and a curated list of tutorials and learning resources.
+
+### 🚀 Improvements
+
+- Refined Jasmine and Karma configurations to ensure all tests are fully visible and reliably executed in the browser, streamlining the developer testing experience.
+- Added a createSecureTranslateCallable helper to TranslationGoogleTranslateService to improve testability and reuse when invoking the authenticated Cloud Function.
+- Standardized file names and Enums, corrected typos, and improved naming conventions for greater consistency and readability throughout the codebase.
+- Added new translations for improved localization and user experience.
+
+### 🐛 Fixes
+
+- Fixed typos in Text-to-Speech file names and firebase-firestore-utils file names and import paths to ensure consistent naming and prevent import errors.
+
 ## [1.6] – 2026-03-15
 
 ### ✨ New Features
 
 - In programmer view, the statistics page includes the new section "User Statistics Overview" that summarizes the distribution of users by user type, platform, device model, and number of target languages used, giving programmers a quick overview of user demographics and usage patterns.
-- Device model number is now displayed in the statistics grid and user detail page for programmer devices, providing more detailed insights into the devices being used for translation.
+- In programmer view, the device model is now shown in both the statistics grid and the user details page, providing clearer insight into the devices used for translation. You can also filter by model in the statistics grid to monitor specific devices more easily.
 
 ## [1.5] – 2026-03-12
 
@@ -15,7 +99,7 @@ Welcome to our updates and improvements of the **z-control Translator** app!
 
 - On programmer devices, the statistics accordion now includes a display mode toggle to switch between programmer view (detailed data) and user view, letting programmers preview the user experience without needing a separate device.
 - In programmer view, the statistics grid now shows the number of target languages used by each user.
-- In programmer view, the statistics grid can now be searched and filtered by user name, platform, translated character count, and target language count for easier monitoring and debugging.
+- In programmer view, the statistics grid can now be searched and filtered by user type, platform, translated character count, and target language count for easier monitoring and debugging.
 - On the user detail page, the `isProgrammerDevice` filter has been replaced by the programmer view toggle.
 
 ### 🚀 Improvements
