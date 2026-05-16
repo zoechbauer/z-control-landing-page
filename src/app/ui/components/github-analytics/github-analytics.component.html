@@ -15,15 +15,6 @@
 
 <ion-content class="ion-padding">
   <main>
-    <section [hidden]="!isMobilePortrait" class="orientation-info">
-      <ion-item color="warning">
-        <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
-        <ion-label>
-          For optimal viewing, please rotate your device to
-          <strong>landscape mode</strong>.
-        </ion-label>
-      </ion-item>
-    </section>
     <h4>GitHub Analytics Data</h4>
     <p>
       These analytics offer insights into the views and clones of my GitHub
@@ -35,6 +26,15 @@
       The data is fetched using the GitHub REST API and stored in Firestore for
       historical tracking.
     </p>
+    <section [hidden]="!(isMobilePortrait && isRepoOpened)" class="orientation-info">
+      <ion-item color="warning">
+        <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+        <ion-label>
+          For optimal viewing, please rotate your device to
+          <strong>landscape mode</strong>.
+        </ion-label>
+      </ion-item>
+    </section>
     <section>
       <table class="repo-table">
         <thead>
@@ -47,7 +47,7 @@
         <tbody>
           <tr *ngFor="let item of analyticsData">
             <td colspan="3" style="padding: 0">
-              <ion-accordion-group>
+              <ion-accordion-group (ionChange)="onAccordionGroupChange($event)">
                 <ion-accordion [value]="item.repo">
                   <ion-item slot="header">
                     <table aria-hidden="true" class="repo-table">

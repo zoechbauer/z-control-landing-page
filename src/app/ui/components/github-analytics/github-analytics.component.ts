@@ -52,6 +52,7 @@ export class GithubAnalyticsComponent implements OnInit {
   analyticsData: GithubAnalyticsTrafficDocument[] = [];
   githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
   isMobilePortrait = false;
+  isRepoOpened = false;
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
@@ -75,6 +76,11 @@ export class GithubAnalyticsComponent implements OnInit {
     );
     this.checkOrientation();
     window.addEventListener('resize', () => this.checkOrientation());
+  }
+
+  onAccordionGroupChange(event: CustomEvent) {
+    const openedRepo = event.detail.value;
+    this.isRepoOpened = !!openedRepo;
   }
 
   /**
@@ -196,14 +202,15 @@ export class GithubAnalyticsComponent implements OnInit {
   }
 
   /**
-   * Fetches analytics data from Firestore and omits entries with zero values 
-   * using the Firebase Emulator if enabled.
+   * Fetches analytics data from Firestore and keeps repositories even when they only contain
+   * empty statistics.
    *
-   * For each document, filters out all view and clone entries where both count and uniques are zero.
-   * Only returns documents that have at least one nonzero view or clone entry.
+   * For each document, removes view and clone entries where both `count` and `uniques` are zero.
+   * Repositories with no remaining traffic entries are still returned so they can be shown
+   * with empty statistics.
    *
    * @param collection - The Firestore collection to query (e.g., GITHUB_ANALYTICS_TRAFFIC_HISTORY).
-   * @returns Promise resolving to an array of GithubAnalyticsTrafficDocument with zero-value entries omitted.
+   * @returns Promise resolving to repository documents with zero-value traffic entries omitted.
    */
   private async getAnalyticsData(
     collection: (typeof COLLECTION)[keyof typeof COLLECTION],
@@ -218,6 +225,7 @@ export class GithubAnalyticsComponent implements OnInit {
         useFirebaseEmulator,
       );
 
+    // Remove zero-value traffic rows, but keep repositories even when both arrays become empty.
     return data.filter((item: GithubAnalyticsTrafficDocument) => {
       item.clones.clones = item.clones.clones.filter(
         (arrItem) => arrItem.count > 0 || arrItem.uniques > 0,
@@ -225,7 +233,7 @@ export class GithubAnalyticsComponent implements OnInit {
       item.views.views = item.views.views.filter(
         (arrItem) => arrItem.count > 0 || arrItem.uniques > 0,
       );
-      return item.views.views.length > 0 || item.clones.clones.length > 0;
+      return item.views.views && item.clones.clones;
     });
   }
 }

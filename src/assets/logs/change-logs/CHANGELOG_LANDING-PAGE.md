@@ -2,6 +2,15 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.14] – 2026-05-16
+
+### 🚀 Improvements
+
+- Added **ionic-angular21-vitest-setup** repository to GitHub Analytics tracking for visibility in the Landing Page analytics section.
+- Repositories without GitHub traffic data are now displayed gracefully instead of throwing an error, ensuring all tracked repos appear in the results.
+- Enhanced GitHub Analytics documentation with step-by-step guidance for adding new repositories, including Firebase Emulator testing and Firestore data verification.
+- The info message on the Statistics page about optimal mobile viewing is now shown only when an accordion is opened, since the statistics tables are easier to view in landscape mode.
+
 ## [2.13] – 2026-03-19
 
 ### 🚀 Improvements

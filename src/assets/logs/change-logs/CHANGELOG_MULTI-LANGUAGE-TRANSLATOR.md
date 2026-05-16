@@ -2,6 +2,34 @@
 
 Welcome to our updates and improvements of the **z-control Translator** app!
 
+## [1.14] – 2026-05-08
+
+### 🚀 Improvements
+
+- Improved the translation page layout for better readability and usability. The base language and selected target languages are now shown below the input card, so action buttons are no longer hidden by the keyboard or microphone on mobile devices.
+- Improved the help text in the Select Target Languages accordion with clearer, step-by-step guidance on choosing target languages and starting translation.
+- Improved the message shown when no target languages are selected on the translation page, making it clearer that target languages must be selected in Settings before translating.
+
+### 🐛 Fixes
+
+- Fixed a red message briefly appearing on mobile devices even when languages were selected. The app now waits for language selection to load from Firestore before showing the message.
+
+### 🔧 Internal
+
+- Updated translation-page unit tests for the new layout and messages, including checks for base/target language display below the input card and the updated no-target-languages message. Total: 666 tests, 99.4% frontend coverage.
+
+## [1.13] – 2026-05-07
+
+### 🐛 Fixes
+
+- Fixed an issue in the statistics month filter where user devices could still show data from the previous month. The app now automatically detects a month change and updates the stored month, so users always see current statistics without needing to create a new translation.
+
+### 🔧 Internal
+
+- Added a complete backend Vitest setup for Firebase Functions, including Istanbul coverage reporting and Vitest UI.
+- Added 123 unit tests across 9 backend files, achieving 100% statement and branch coverage of backend code.
+- Updated frontend unit tests after fixing the local-storage month-change issue, reaching 664 tests and 99.3% frontend coverage.
+
 ## [1.12] – 2026-04-29
 
 ### ✨ New Features

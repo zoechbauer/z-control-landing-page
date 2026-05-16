@@ -75,10 +75,9 @@ export class FirebaseFirestoreService {
    * - GITHUB_ANALYTICS_TRAFFIC_HISTORY: The 'views' and 'clones' fields are already arrays.
    * This function normalizes the data structure for downstream processing.
    *
-   * Throws an error if no analytics data is found.
+   * Creates a repository document with empty statistics if no analytics data is found for the repository, ensuring that all repositories are represented in the results.
    *
    * @returns {Promise<GithubAnalyticsTrafficDocument>} A promise that resolves to the processed analytics data.
-   * @throws {Error} If no analytics data is found for the repository.
    */
   private async fetchAnalyticsForRepo(): Promise<GithubAnalyticsTrafficDocument> {
     if (this.useFirebaseEmulator) {
@@ -101,9 +100,27 @@ export class FirebaseFirestoreService {
       }
       return this.processData(processingData);
     } else {
-      console.error('No analytics data found.');
-      throw new Error('No analytics data found.');
+      // If no analytics data is found, create a repository with empty statistics.
+      return this.createRepoWithEmptyStatistics(this.repo);
     }
+  }
+
+  private createRepoWithEmptyStatistics(repo: (typeof REPO)[keyof typeof REPO]): GithubAnalyticsTrafficDocument {
+    return {
+      collection: this.collection,
+      repo,
+      timestamp: '',
+      views: {
+        count: 0,
+        uniques: 0,
+        views: [],
+      },
+      clones: {
+        count: 0,
+        uniques: 0,
+        clones: [],
+      },
+    };
   }
 
   /**

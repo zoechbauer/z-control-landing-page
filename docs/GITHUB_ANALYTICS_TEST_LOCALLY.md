@@ -79,6 +79,15 @@ firebase emulators:start
     curl "http://localhost:5001/YOUR_PROJECT_ID/us-central1/testGitHubAnalytics?updateTraffic=false&repoIndex=0"
     ```
 
+  - Insert missing analytics history for a new repository:
+    - Manually update `githubAnalyticsTraffic` in the Emulator for specific dates
+    - Manually delete `githubAnalyticsTrafficHistory` for those same dates
+    - Call `insertMissingAnalyticsHistory`, which inserts missing data without updating existing records:
+      ```bash
+      curl "http://localhost:5001/YOUR_PROJECT_ID/us-central1/insertMissingAnalyticsHistory"
+      ```
+    - Start the landing page and verify GitHub Analytics are displayed correctly
+
 ### 7. View Firestore Data
 
 - Open [http://localhost:4000/firestore](http://localhost:4000/firestore)
@@ -202,6 +211,7 @@ Add the new repository to the `REPOS` and `REPO` array in `shared/GitHubConstant
 4. Verify in Firestore Emulator UI ([http://localhost:4000/firestore](http://localhost:4000/firestore))
 
 5. Check the landing page in development mode to see if the new repository's analytics are displayed correctly.
+
 - change `useFirebaseEmulator` to `true` in `.env.local` to fetch analytics from the emulator.
 - run `npm run generate-env` to update environment variables in the landing page.
 - restart the development server.

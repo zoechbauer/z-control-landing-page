@@ -13,6 +13,7 @@ export const REPOS = [
   { owner: 'zoechbauer', repo: 'z-control-Backup-scripts' },
   { owner: 'zoechbauer', repo: 'z-control-multi-language-translator' },
   { owner: 'zoechbauer', repo: 'copilot-learning-calculator' },
+  { owner: 'zoechbauer', repo: 'ionic-angular21-vitest-setup' },
 ];
 
 export const COLLECTION = {
