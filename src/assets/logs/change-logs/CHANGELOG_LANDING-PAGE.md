@@ -2,6 +2,12 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.15] – 2026-06-07
+
+### 🚀 Improvements
+
+- Added **z-control-ionic-setup** repository to GitHub Analytics tracking for visibility in the Landing Page analytics section.
+
 ## [2.14] – 2026-05-16
 
 ### 🚀 Improvements

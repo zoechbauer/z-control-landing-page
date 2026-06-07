@@ -13,6 +13,7 @@ export const REPO = {
   Z_CONTROL_QR_CODE_GENERATOR: 'z-control-qr-code-generator',
   Z_CONTROL_BACKUP_SCRIPTS: 'z-control-Backup-scripts',
   Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR: 'z-control-multi-language-translator',
+  Z_CONTROL_IONIC_SETUP: 'z-control-ionic-setup',
   COPILOT_LEARNING_CALCULATOR: 'copilot-learning-calculator',
   IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup',
 };
@@ -22,6 +23,7 @@ export const REPOS = [
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_QR_CODE_GENERATOR },
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_BACKUP_SCRIPTS },
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_IONIC_SETUP },
   { owner: 'zoechbauer', repo: REPO.COPILOT_LEARNING_CALCULATOR },
   { owner: 'zoechbauer', repo: REPO.IONIC_ANGULAR21_VITEST_SETUP },
 ];
@@ -63,5 +65,6 @@ export const APPS = {
   QR_CODE_GENERATOR: 'z-control QR Code Generator App',
   BACKUP_SCRIPTS: 'z-control Backup Scripts',
   MULTI_LANGUAGE_TRANSLATOR: 'z-control Translator App',
+  IONIC_SETUP: 'z-control Ionic Setup App',
   IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup',
 };
