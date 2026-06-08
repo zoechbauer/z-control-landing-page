@@ -12,6 +12,12 @@ export interface MultipleLanguageTranslatorSectionParameters {
   maxTranslateCharsTotalPerMonth: number;
   maxTranslateCharsUserPerMonth: number;
 }
+
+export interface IonicSetupSectionParameters {
+  appSectionParameters: AppSectionParameters;
+  maxFeatureCharsTotalPerMonth: number;
+  maxFeatureCharsUserPerMonth: number;
+}
 export interface AppSectionParameters {
   selectedAccordion: string;
   currentMainAccordion: string;

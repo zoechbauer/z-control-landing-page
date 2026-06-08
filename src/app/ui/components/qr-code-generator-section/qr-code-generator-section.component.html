@@ -25,7 +25,8 @@
             >The app creates a QR code from the text you enter and sends it by
             email.</strong
           >
-          Input is plain text (no formatting) up to {{ parameters?.maxInputLength }}
+          Input is plain text (no formatting) up to
+          {{ parameters?.maxInputLength }}
           characters. You can enter any text or paste a URL.
         </p>
         <p>
@@ -48,7 +49,11 @@
 
     <ion-accordion-group
       (ionChange)="subAccordionChange('QR')"
-      title="{{ parameters?.appSectionParameters?.subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
+      title="{{
+        parameters?.appSectionParameters?.subAccordionOpened
+          ? 'Collapse details'
+          : 'Expand details'
+      }}"
     >
       <ion-accordion value="QR: What are QR Codes">
         <ion-item slot="header" color="light">
@@ -261,7 +266,8 @@
             in your browser without any installation required.
           </p>
           <p>
-            While the mobile app supports text up to {{ parameters?.maxInputLength }}
+            While the mobile app supports text up to
+            {{ parameters?.maxInputLength }}
             characters, typing longer texts on a mobile device can be
             inconvenient. The web version offers the same functionality with the
             comfort of a full keyboard, but with some platform-specific
@@ -568,9 +574,8 @@
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
+          <p>We value your feedback!</p>
           <p>
-            We value your feedback!
-            <br />
             <ion-icon name="mail"></ion-icon>
             If you have questions, suggestions, or comments, please contact us
             at
@@ -598,7 +603,10 @@
             Please review our
             <a
               [routerLink]="privacyPolicyLink"
-              [queryParams]="{ from: this.parameters?.appSectionParameters?.selectedAccordion, internal: 'true' }"
+              [queryParams]="{
+                from: this.parameters?.appSectionParameters?.selectedAccordion,
+                internal: 'true',
+              }"
               title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section (returns you to the same place)."
               >Privacy Policy</a
             >

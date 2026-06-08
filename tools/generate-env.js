@@ -57,6 +57,10 @@ function makeEnv(prod = false) {
         ),
         maxInputLength: Number(v("appSection.MLT.MAX_INPUT_LENGTH", "100")),
       },
+      IS: {
+        maxFeatureCharsTotalPerMonth: Number(v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH", "500000")),
+        maxFeatureCharsUserPerMonth: Number(v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH_FOR_USER", "10000")),
+      },
     },
     firebase: {
       apiKey: v("FIREBASE_API_KEY", ""),

@@ -44,8 +44,10 @@ import {
   BackupScriptsSectionParameters,
   MultipleLanguageTranslatorSectionParameters,
   QrCodeGeneratorSectionParameters,
+  IonicSetupSectionParameters,
 } from 'shared/app-interfaces';
 import { environment } from 'src/environments/environment';
+import { IonicSetupSectionComponent } from '../ui/components/ionic-setup-section/ionic-setup-section.component';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -54,12 +56,13 @@ import { environment } from 'src/environments/environment';
     IonContent,
     IonAccordionGroup,
     RouterModule,
+    CommonModule,
     HeaderComponent,
     FooterComponent,
     QrCodeGeneratorSectionComponent,
     BackupScriptsSectionComponent,
     MultiLanguageTranslatorSectionComponent,
-    CommonModule,
+    IonicSetupSectionComponent,
   ],
 })
 export class HomePage implements AfterViewInit {
@@ -68,9 +71,10 @@ export class HomePage implements AfterViewInit {
   selectedAccordion: string = APPS.LANDING_PAGE;
   currentMainAccordion: string = '';
   subAccordionOpened: boolean = false;
-  multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
   qrCodeGeneratorSectionParams?: QrCodeGeneratorSectionParameters;
   backupScriptsSectionParams?: BackupScriptsSectionParameters;
+  multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
+  ionicSetupSectionParams?: IonicSetupSectionParameters;
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
@@ -79,6 +83,7 @@ export class HomePage implements AfterViewInit {
     this.registerIcons();
     this.setMultiLanguageTranslatorParameters();
     this.setQrCodeGeneratorParameters();
+    this.setIonicSetupParameters();
   }
 
   private registerIcons() {
@@ -131,16 +136,20 @@ export class HomePage implements AfterViewInit {
 
     // Only handle main accordion changes
     if (value?.startsWith('QR')) {
-      this.currentMainAccordion = 'QR';
+      this.currentMainAccordion = 'QR'; // qr code generator
       this.setSelectedAccordion('QR');
       this.subAccordionOpened = false;
-    } else if (value?.startsWith('BS')) {
+    } else if (value?.startsWith('BS')) { // backup scripts
       this.currentMainAccordion = 'BS';
       this.setSelectedAccordion('BS');
       this.subAccordionOpened = false;
-    } else if (value?.startsWith('MLT')) {
+    } else if (value?.startsWith('MLT')) { // multi-language translator
       this.currentMainAccordion = 'MLT';
       this.setSelectedAccordion('MLT');
+      this.subAccordionOpened = false;
+    } else if (value?.startsWith('IS')) { // ionic setup
+      this.currentMainAccordion = 'IS';
+      this.setSelectedAccordion('IS');
       this.subAccordionOpened = false;
     } else if (value === undefined || value === '' || value === null) {
       // it could be main accordion closing or sub-accordion activity
@@ -178,6 +187,9 @@ export class HomePage implements AfterViewInit {
       case 'MLT':
         this.selectedAccordion = APPS.MULTI_LANGUAGE_TRANSLATOR;
         break;
+      case 'IS':
+        this.selectedAccordion = APPS.IONIC_SETUP;
+        break;
       case undefined:
       case '':
         this.selectedAccordion = APPS.LANDING_PAGE;
@@ -197,13 +209,13 @@ export class HomePage implements AfterViewInit {
     this.setSelectedAccordion('QR');
   }
 
-      private setBackupScriptsParameters() {
+  private setBackupScriptsParameters() {
     this.backupScriptsSectionParams = {
       appSectionParameters: this.getAppParameters(),
     };
   }
 
-    private setQrCodeGeneratorParameters() {
+  private setQrCodeGeneratorParameters() {
     this.qrCodeGeneratorSectionParams = {
       appSectionParameters: this.getAppParameters(),
       maxInputLength: environment.appSection.QR.maxInputLength,
@@ -215,8 +227,18 @@ export class HomePage implements AfterViewInit {
       appSectionParameters: this.getAppParameters(),
       maxInputLength: environment.appSection.MLT.maxInputLength,
       maxTargetLanguages: environment.appSection.MLT.maxTargetLanguages,
-      maxTranslateCharsTotalPerMonth: environment.appSection.MLT.maxFreeTranslateCharsPerMonth,
-      maxTranslateCharsUserPerMonth: environment.appSection.MLT.maxFreeTranslateCharsPerMonthForUser,
+      maxTranslateCharsTotalPerMonth:
+        environment.appSection.MLT.maxFreeTranslateCharsPerMonth,
+      maxTranslateCharsUserPerMonth:
+        environment.appSection.MLT.maxFreeTranslateCharsPerMonthForUser,
+    };
+  }
+
+  private setIonicSetupParameters() {
+    this.ionicSetupSectionParams = {
+      appSectionParameters: this.getAppParameters(),
+      maxFeatureCharsTotalPerMonth: environment.appSection.IS.maxFeatureCharsTotalPerMonth,
+      maxFeatureCharsUserPerMonth: environment.appSection.IS.maxFeatureCharsUserPerMonth,
     };
   }
 

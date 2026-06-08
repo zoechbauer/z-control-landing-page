@@ -1,0 +1,521 @@
+<ion-accordion
+  value="IONIC_SETUP: Ionic Setup"
+  title="{{
+    parameters?.appSectionParameters?.currentMainAccordion === 'IONIC_SETUP'
+      ? 'Collapse Ionic Setup section'
+      : 'Expand Ionic Setup section'
+  }}"
+>
+  <ion-item slot="header" color="light">
+    <img
+      class="z-control-ionic-setup-logo"
+      src="assets/icon/z-control-ionic-setup-logo-32px.png"
+      alt="z-control Ionic Setup Logo"
+    />
+    <ion-label>z-control Ionic Setup App</ion-label>
+  </ion-item>
+  <div slot="content" title="">
+    <ion-card color="dark">
+      <ion-card-header>
+        <ion-card-title>What the app does</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="summarized-app-content">
+        <p>
+          The z-control Ionic Setup app is a production-ready starter template
+          for building modern Ionic applications with Angular, Capacitor, and
+          Firebase.
+        </p>
+
+        <p>
+          It provides a clean tab-based user interface, built-in quota
+          management, help and support pages, settings management, and a
+          complete Firebase backend integration to help you accelerate
+          development of your own apps.
+        </p>
+
+        <p>
+          The project also serves as the shared backend foundation for Firebase
+          Functions used across z-control applications.
+        </p>
+
+        <p><b>✨ Key Features</b></p>
+
+        <ul class="no-list-style-inside">
+          <li>
+            <strong>Quota Management:</strong> Monitor API usage with
+            configurable limits, warnings, and automatic monthly resets.
+          </li>
+
+          <li>
+            <strong>Modern Navigation:</strong> Clean tab-based interface with
+            dedicated areas for features, settings, and support.
+          </li>
+
+          <li>
+            <strong>Built-in Help System:</strong> Integrated documentation,
+            FAQs, and user guidance.
+          </li>
+
+          <li>
+            <strong>Settings Framework:</strong> Ready-to-use settings pages
+            with support for configuration, feedback, changelogs, privacy
+            policies, and application information.
+          </li>
+
+          <li>
+            <strong>Privacy-Focused Design:</strong> User input is processed by
+            external services without being stored by the application.
+          </li>
+
+          <li>
+            <strong>Cross-Platform Deployment:</strong> Run as a web application
+            or deploy natively to Android using Capacitor.
+          </li>
+        </ul>
+
+        <p><b>🛠️ Tech Stack</b></p>
+
+        <ul class="no-list-style-inside">
+          <li><strong>Framework:</strong> Ionic 8 + Angular 20</li>
+          <li><strong>Language:</strong> TypeScript</li>
+          <li><strong>Styling:</strong> SCSS and Ionic CSS Variables</li>
+          <li><strong>Build Tools:</strong> Angular CLI</li>
+          <li><strong>Icons:</strong> Ionicons and z-control Icons</li>
+          <li><strong>State Management:</strong> RxJS</li>
+          <li>
+            <strong>Backend:</strong> Firebase (Firestore, Cloud Functions,
+            Hosting)
+          </li>
+          <li>
+            <strong>Testing:</strong> Karma + Jasmine (frontend), Vitest
+            (backend)
+          </li>
+          <li>
+            <strong>Deployment:</strong> Firebase Hosting and Capacitor
+            (Android)
+          </li>
+        </ul>
+
+        <p>
+          The web version of this application is hosted on Google Firebase
+          Hosting.
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-accordion-group
+      (ionChange)="subAccordionChange('IS')"
+      title="{{
+        parameters?.appSectionParameters?.subAccordionOpened
+          ? 'Collapse details'
+          : 'Expand details'
+      }}"
+    >
+      <ion-accordion value="IS: Limitations and Monthly Quotas">
+        <ion-item slot="header" color="light">
+          <ion-label>What are the limitations and monthly quotas?</ion-label>
+        </ion-item>
+
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <div class="limitations-info">
+            <h5>Why are quotas used?</h5>
+
+            <p>
+              This Ionic Setup app demonstrates how monthly usage quotas can be
+              managed for features that consume limited or paid resources.
+            </p>
+
+            <p>
+              Users are notified well before a quota is reached. Once a monthly
+              quota has been exhausted, the affected feature is temporarily
+              unavailable until the beginning of the next month, when all quotas
+              are automatically reset.
+            </p>
+
+            <p>The framework supports two types of quotas:</p>
+
+            <ul class="no-list-style-inside">
+              <li>
+                <strong>Shared monthly quota:</strong> A total usage limit
+                shared by all users of the application.
+              </li>
+
+              <li>
+                <strong>Per-user monthly quota:</strong> An individual usage
+                limit that prevents a single user from consuming a
+                disproportionate share of the available resources.
+              </li>
+            </ul>
+
+            <p>
+              <strong>Quota configuration used in this demo:</strong><br />
+
+              Shared monthly quota:
+              {{
+                parameters?.maxFeatureCharsTotalPerMonth
+                  | number: "1.0-0" : "en"
+              }}
+              characters for all users.<br />
+
+              Per-user monthly quota:
+              {{
+                parameters?.maxFeatureCharsUserPerMonth | number: "1.0-0" : "en"
+              }}
+              characters per user.
+            </p>
+          </div>
+
+          <div class="monthly-quota-info">
+            <h5>How can I check my quota usage?</h5>
+
+            <p><strong>On the Feature Page</strong></p>
+
+            <p>
+              Your current monthly usage is displayed in the expandable
+              <i>Monthly Quota</i> section at the bottom of the feature page.
+            </p>
+
+            <p>
+              If either your personal quota or the shared quota is reached, the
+              main feature (for example, <i>Search Related Words</i>) becomes
+              unavailable until the next monthly reset. All other application
+              features remain available.
+            </p>
+
+            <p><strong>On the Statistics Page</strong></p>
+
+            <p>
+              The Statistics page provides anonymized usage information,
+              including overall quota consumption and aggregated device
+              statistics across all users.
+            </p>
+
+            <p>
+              All statistics are collected and displayed in an aggregated form
+              to help protect user privacy.
+            </p>
+          </div>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Differences between Web and Mobile App">
+        <ion-item slot="header" color="light">
+          <ion-label>Differences between Web and Mobile App</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>Mobile Version Advantages:</h5>
+          <p>
+            Layout optimized for small screens, providing a user-friendly
+            experience on mobile devices.
+          </p>
+          <p>
+            Use voice input directly through your device's keyboard for
+            hands-free text entry.
+          </p>
+          <h5>Web Version Advantages:</h5>
+          <p>Comfortable typing with a full keyboard in your browser.</p>
+          <p>
+            Voice input is available on some operating systems—Windows 11 users
+            can activate it with <i>Windows key + H</i>.
+          </p>
+          <p><strong>IMPORTANT</strong></p>
+          <p>
+            When accessing the <strong>web version on your phone</strong>,
+            ensure it displays in <strong>mobile mode</strong> (not desktop
+            mode) for optimal experience. Mobile mode provides a native app-like
+            interface and enables voice input through your keyboard.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Start Web App">
+        <ion-item slot="header" color="light">
+          <ion-label>Try the Web App (No Installation Required)</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            Explore the z-control Ionic Setup framework directly in your browser
+            using the demo feature <strong>"Search Related Words"</strong>.
+          </p>
+
+          <p>
+            The demo showcases the application's architecture, quota management
+            system, and user interface, allowing you to experience the framework
+            without any installation or configuration.
+          </p>
+
+          <p>
+            <strong
+              >Open the web app on desktop, tablet, or mobile devices</strong
+            >
+            to explore its features and functionality.
+          </p>
+
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onOpenWebApp()"
+              color="secondary"
+              expand="block"
+              class="web-app-button"
+              title="Open Web App in a new tab"
+            >
+              <ion-icon name="logo-firebase" slot="start"></ion-icon>
+              Open Web App
+            </ion-button>
+          </div>
+          <div class="firebase-note">
+            <ion-icon name="logo-firebase"></ion-icon>
+            Hosted on Google Firebase
+          </div>
+
+          <div class="help-tip">
+            <p>
+              <strong>Need Help?</strong> Click the <strong>?</strong> icon
+              within the app to access online assistance and feature
+              documentation.
+            </p>
+
+            <h6>Using Voice Input</h6>
+
+            <p>
+              <strong>Windows:</strong> Activate voice input using the Windows
+              dictation feature (<i>Windows + H</i>).
+            </p>
+
+            <p>
+              <strong>Mobile Devices:</strong> Use your keyboard's built-in
+              voice input feature. For the best experience, ensure the website
+              is displayed in mobile mode rather than desktop mode.
+            </p>
+          </div>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Get Mobile App">
+        <ion-item slot="header" color="light">
+          <ion-label>Get the Mobile App</ion-label>
+        </ion-item>
+
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>
+            <ion-icon name="cloud-download"></ion-icon>
+            Download the Native Android App
+          </h5>
+
+          <h5>
+            <b>Limited Availability – z-control Team Only</b>
+          </h5>
+
+          <p>
+            The Android version of the z-control Ionic Setup app is currently
+            available only to members of the z-control team through the Google
+            Play Internal Testing track.
+          </p>
+
+          <p>
+            As this application serves as a template for creating new apps, it
+            is intended for internal testing and validation rather than public
+            distribution.
+          </p>
+
+          <p>
+            If you would like to explore the native Android experience, you can
+            download the source code and install the application locally on your
+            own Android device.
+          </p>
+
+          <p>Applications built with this setup are:</p>
+
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            <strong>100% Free</strong> •
+            <ion-icon name="lock-closed"></ion-icon>
+            <strong>No Registration Required</strong> •
+            <ion-icon name="phone-portrait"></ion-icon>
+            <strong>Optimized for Mobile</strong>
+          </p>
+
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onDownloadNative()"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Download the native Android app from the Google Play Store"
+            >
+              <ion-icon name="logo-google-playstore" slot="start"></ion-icon>
+              Download Native App
+            </ion-button>
+          </div>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Inline Help">
+        <ion-item slot="header" color="light">
+          <ion-label>Inline Help</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <h5>
+            <ion-icon name="book"></ion-icon>
+            Skeleton Help System to easily adapt for your own app
+          </h5>
+          <p>
+            The Help Page is a skeleton that you can easily adapt when building
+            your own app based on this template. It covers all important topics
+            and must be expanded with your specific information, and
+            instructions.
+          </p>
+          <p>
+            Both the <i>Web App</i> and <i>Android App</i> include this inline
+            help accessible by clicking the <strong>?</strong> icon in the top
+            right corner.
+          </p>
+          <p>
+            The help includes a table of contents with jump-to-section
+            navigation for quick access to specific topics.
+          </p>
+          <p>
+            The tutorial is specific to the version you are using. Information
+            relevant to mobile apps is omitted in the web-app help, and web-app
+            specific guidance is omitted in the mobile-app help.
+          </p>
+
+          <h6>
+            <ion-icon name="library"></ion-icon>
+            Help Topics Covered:
+          </h6>
+          <ol>
+            <li>What Can the App Do</li>
+            <li>How to Use the App</li>
+            <li>Web Version versus Mobile Version</li>
+            <li>Technical Information</li>
+            <li>Troubleshooting</li>
+          </ol>
+
+          <h6>
+            <ion-icon name="globe"></ion-icon>
+            Try the Interactive Help:
+          </h6>
+          <p>
+            Open the
+            <a
+              href="https://z-control-ionic-setup.web.app"
+              target="_blank"
+              class="web-app-link"
+              title="Open z-control Translator as Web App in a new tab"
+            >
+              <strong>Web App</strong>
+            </a>
+            and click the <strong>?</strong> icon to explore the skeleton help
+            system. You can switch between <strong>English</strong> and
+            <strong>German</strong> by changing the language in the settings.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Feedback">
+        <ion-item slot="header" color="light">
+          <ion-label>Send Us Feedback</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>We value your feedback!</p>
+          <p>
+            <ion-icon name="mail"></ion-icon>
+            If you have questions, suggestions, or comments, please contact us
+            at
+            <a
+              href="{{ getMailToLinkForFeedback() }}"
+              title="Open your email client with recipient and subject prefilled."
+            >
+              z-control Support & Feedback
+            </a>
+            >.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Privacy Policy">
+        <ion-item slot="header" color="light">
+          <ion-label>Privacy Policy</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            Your privacy is important to us.
+          </p>
+
+          <p>
+            As the z-control Ionic Setup app is a template for building your own
+            applications, it does not require a dedicated privacy policy.
+          </p>
+
+          <p>
+            For an example of how privacy and data protection are handled in
+            z-control apps, please see the
+            <a
+              [routerLink]="privacyPolicyLink"
+              [queryParams]="{
+                from: parameters?.appSectionParameters?.selectedAccordion,
+                internal: 'true',
+              }"
+              title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section and returns you to the same place."
+              >z-control Translator Privacy Policy</a
+            >.
+          </p>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Release Notes">
+        <ion-item slot="header" color="light">
+          <ion-label>What's new? (Release Notes)</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            <ion-icon name="checkmark"></ion-icon>
+            All new features, improvements and bug fixes of the QR Code app are
+            tracked in
+          </p>
+          <ion-button
+            fill="clear"
+            size="small"
+            (click)="openChangelog()"
+            (keydown.enter)="openChangelog()"
+            class="changelog-button"
+            title="Open release notes (changelog) — grouped by category and sorted newest first"
+          >
+            <ion-icon name="list" slot="start"></ion-icon>
+            Release Notes
+          </ion-button>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="IS: Get Source Code">
+        <ion-item slot="header" color="light">
+          <ion-label>Get the Source Code</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <p>
+            The app is open source, and the source code is available on
+            <i>GitHub</i>
+            so you can review how the app works and how your data is handled at
+            any time.
+          </p>
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onGetSourceCode()"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
+              aria-label="Open GitHub repository (opens in a new tab)"
+            >
+              <ion-icon name="logo-github" slot="start"></ion-icon>
+              Get Source Code
+            </ion-button>
+          </div>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+</ion-accordion>

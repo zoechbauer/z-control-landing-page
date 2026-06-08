@@ -2,15 +2,31 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
-## [2.15] – 2026-06-07
+## [2.16] – 2026-06-08
+
+### ✨ New Features
+
+- Added a dedicated accordion for the **z-control Ionic Setup** repository on the home page, providing an overview of the app along with quick access to the changelog, source code, and online demo.
+- Added the **z-control Ionic Setup** changelog to the Landing Page, giving users a centralized view of updates and improvements across all z-control applications.
 
 ### 🚀 Improvements
+
+- Improved the layout of the **Send Us Feedback** section across all apps for better readability and user experience.
+- Enhanced the text in the **Try the Web App** section of the z-control Translator app to align with the style and structure used in the z-control Ionic Setup app.
+
+### 🐛 Fixes
+
+- Corrected the app name displayed in the privacy policy section of the z-control Translator app description.
+
+## [2.15] – 2026-06-07
+
+### ✨ New Features
 
 - Added **z-control-ionic-setup** repository to GitHub Analytics tracking for visibility in the Landing Page analytics section.
 
 ## [2.14] – 2026-05-16
 
-### 🚀 Improvements
+### ✨ New Features
 
 - Added **ionic-angular21-vitest-setup** repository to GitHub Analytics tracking for visibility in the Landing Page analytics section.
 - Repositories without GitHub traffic data are now displayed gracefully instead of throwing an error, ensuring all tracked repos appear in the results.

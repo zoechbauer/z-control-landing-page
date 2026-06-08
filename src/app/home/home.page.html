@@ -52,6 +52,12 @@
       (subAccordionChangeEvent)="subAccordionChange($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
+
+    <app-ionic-setup-section
+      [parameters]="ionicSetupSectionParams"
+      (subAccordionChangeEvent)="subAccordionChange($event)"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
+    />
   </ion-accordion-group>
 </ion-content>
 

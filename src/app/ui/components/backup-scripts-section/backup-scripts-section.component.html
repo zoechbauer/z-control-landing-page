@@ -135,7 +135,11 @@
     </ion-card>
     <ion-accordion-group
       (ionChange)="subAccordionChange('BS')"
-      title="{{ parameters?.appSectionParameters?.subAccordionOpened ? 'Collapse details' : 'Expand details' }}"
+      title="{{
+        parameters?.appSectionParameters?.subAccordionOpened
+          ? 'Collapse details'
+          : 'Expand details'
+      }}"
     >
       <ion-accordion value="BS: Features">
         <ion-item slot="header" color="light">
@@ -219,9 +223,8 @@
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
+          <p>We value your feedback!</p>
           <p>
-            We value your feedback!
-            <br />
             <ion-icon name="mail"></ion-icon>
             If you have questions, suggestions, or comments, please contact us
             at

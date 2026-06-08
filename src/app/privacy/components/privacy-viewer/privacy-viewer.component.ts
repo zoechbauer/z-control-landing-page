@@ -53,7 +53,6 @@ export class PrivacyViewerComponent implements OnInit {
     this.detectInternalNavigation();
 
     this.route.params.subscribe((params) => {
-      console.log('Route params:', params);
       this.policyType = params['type'] || 'qr-code-generator';
       this.language = params['language'] || 'en';
       this.loadPolicy();
@@ -61,7 +60,6 @@ export class PrivacyViewerComponent implements OnInit {
 
     // Get selectedAccordion from query params for header + support legacy approach
     this.route.queryParams.subscribe((params) => {
-      console.log('Route query params:', params);
       this.selectedAccordion = params['from'] || 'Privacy Policy';
 
       // Check for internal parameter - if present, show footer/back button
