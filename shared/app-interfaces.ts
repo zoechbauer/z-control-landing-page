@@ -5,6 +5,9 @@ export interface QrCodeGeneratorSectionParameters {
 export interface BackupScriptsSectionParameters {
   appSectionParameters: AppSectionParameters;
 }
+export interface BackendFunctionsSectionParameters {
+  appSectionParameters: AppSectionParameters;
+}
 export interface MultipleLanguageTranslatorSectionParameters {
   appSectionParameters: AppSectionParameters;
   maxInputLength: number;

@@ -2,6 +2,20 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.17] – 2026-06-12
+
+### ✨ New Features
+
+- Added a dedicated accordion for the **z-control Backend Functions** repository on the home page, providing an overview of the repository along with documentation, how-to-use guides, and source code.
+
+### 🚀 Improvements
+
+- Updated the release notes for the z-control Translator app and the z-control Ionic Setup repository on the landing page to reflect the latest changes.
+- Added the **z-control-backend-functions** repository to GitHub Analytics tracking for visibility in the landing page analytics section.
+- Updated the README to include the new repository and recent enhancements.
+- Renamed logos for non-app repositories to `z-control-logo` for more consistent branding across the landing page.
+- Grouped backend and utility repositories visually with a shared logo to distinguish them from the main applications.
+
 ## [2.16] – 2026-06-08
 
 ### ✨ New Features

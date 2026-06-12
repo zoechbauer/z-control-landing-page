@@ -31,12 +31,15 @@ A modern, mobile-first landing page built with Ionic and Angular, highlighting t
 
 - **Web App**: [Try directly in browser](https://z-control-translator.web.app) without installation
 - **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.translator) — currently available through closed testing.
-
-  Installation and setup guidance is included in the app's help section.
-
-
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-multi-language-translator)
 - **Features**: Multi-language translation, text-to-speech functionality, customizable translation preferences, generous free translation allowance
+
+### z-control Ionic Setup App
+
+- **Web App**: [Try directly in browser](https://z-control-ionic-setup.web.app) without installation
+- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup) — currently available through internal testing.
+- **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-ionic-setup)
+- **Features**: Starter template for Ionic Apps, Quota management, built in help, and settings tab with accordions for configuration, Feedback, Change-log, Privacy Policy, and support
 
 ## 🛠️ Tech Stack
 
@@ -120,6 +123,7 @@ landing-page/
    │  │  └─ change-logs/
    │  │        ├─ CHANGELOG_LANDING-PAGE.md
    │  │        ├─ CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md
+   │  │        ├─ CHANGELOG_IONIC-SETUP.md
    │  │        └─ CHANGELOG_QR-CODE.md
    │  └─ privacy/
    │     └─ policies/
@@ -160,6 +164,7 @@ landing-page/
       │     ├─ header/
       │     ├─ markdown-viewer/
       │     ├─ multi-language-translator-section/
+      │     ├─ ionic-setup-section/
       │     ├─ qr-code-generator-section/
       │     └─ index.ts
       └─ theme/                    # global styling (variables, global.scss)
@@ -220,6 +225,10 @@ export const environment = {
       maxFreeTranslateCharsPerMonthForUser: __appSection.MLT.MAX_FREE_TRANSLATE_CHARS_PER_MONTH_FOR_USER__,
       maxFreeTranslateCharsBufferPerMonth: __appSection.MLT.MAX_FREE_TRANSLATE_CHARS_BUFFER_PER_MONTH__,
       maxInputLength: __appSection.MLT.MAX_INPUT_LENGTH__,
+    },
+    IS: {
+      maxFeatureCharsTotalPerMonth: __appSection.IS.MAX_FEATURE_CHARS_TOTAL_PER_MONTH__,
+      maxFeatureCharsUserPerMonth: __appSection.IS.MAX_FEATURE_CHARS_USER_PER_MONTH__,
     },
   },
   firebase: {
@@ -309,6 +318,7 @@ Changelogs for each app are stored in `src/assets/logs/change-logs/`:
 
 - `CHANGELOG_LANDING-PAGE.md` — for the landing page
 - `CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md` — for the multi-language translator app
+- `CHANGELOG_IONIC-SETUP.md` — for the ionic setup app
 - `CHANGELOG_QR-CODE.md` — for the z-control QR Code Generator app
 
 ## 🧪 Testing
