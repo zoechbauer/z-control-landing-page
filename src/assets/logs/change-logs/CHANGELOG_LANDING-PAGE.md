@@ -2,6 +2,19 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.18] – 2026-06-14
+
+### ✨ New Features
+
+- Added a `GitHub Analytics for z-control Repositories` accordion to the **z-control Backend Functions** section on the home page. It provides quick access to the existing GitHub Analytics Dashboard and includes links to each repository’s source code.
+
+### 🚀 Improvements
+
+- Moved the Firebase Functions for GitHub Analytics to **z-control-backend-functions** to improve organization, maintainability, and separation of concerns.
+- Moved the GitHub Analytics documents and backend Firebase documents to **z-control-backend-functions**, and updated the landing page references accordingly.
+- Added a **uses z-control Backend Functions** label with a cloud icon to the z-control Translator and z-control Ionic Setup sections on the landing page.
+- Added `key.enter` bindings to accordion buttons on the landing page to improve keyboard accessibility.
+
 ## [2.17] – 2026-06-12
 
 ### ✨ New Features

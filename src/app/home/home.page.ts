@@ -28,6 +28,8 @@ import {
   sunny,
   trashOutline,
   warning,
+  cloudyOutline,
+  cloudCircleOutline
 } from 'ionicons/icons';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
 
@@ -79,7 +81,7 @@ export class HomePage implements AfterViewInit {
   multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
   ionicSetupSectionParams?: IonicSetupSectionParameters;
   backendFunctionsSectionParams?: BackendFunctionsSectionParameters;
-  
+
   constructor(
     private readonly fa: FirebaseAnalyticsService,
     private readonly localStorageService: LocalStorageService,
@@ -120,6 +122,8 @@ export class HomePage implements AfterViewInit {
       'eye-outline': eyeOutline,
       'contrast-outline': contrastOutline,
       'document-text': documentTextOutline,
+      'cloudy-outline': cloudyOutline,
+      'cloud-circle-outline': cloudCircleOutline,
     });
   }
 

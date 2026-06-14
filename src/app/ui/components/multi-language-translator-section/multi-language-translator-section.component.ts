@@ -17,6 +17,7 @@ import {
 import { APPS } from 'shared/GitHubConstants';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { MultipleLanguageTranslatorSectionParameters } from 'shared/app-interfaces';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-multi-language-translator-section',
@@ -53,7 +54,11 @@ export class MultiLanguageTranslatorSectionComponent {
     'https://github.com/zoechbauer/z-control-multi-language-translator';
   webAppUrl = 'https://z-control-translator.web.app';
 
-  constructor(private readonly modalController: ModalController) {}
+  constructor(private readonly modalController: ModalController, private readonly utilsService: UtilsService) {}
+
+  get showBackendFunctionsInfo(): boolean {
+    return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
+  }
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');
@@ -90,7 +95,6 @@ export class MultiLanguageTranslatorSectionComponent {
   }
 
   async openChangelog() {
-    console.log('Opening changelog for', this.parameters?.appSectionParameters.selectedAccordion);
     const changeLogPath = 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md';
     this.analyticsEvent.emit({
       eventName: 'open_changelog',

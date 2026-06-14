@@ -1,5 +1,17 @@
 # GitHub Analytics Architecture for z-control Projects
 
+## Table of Contents
+
+- [1. Overview](#1-overview)
+- [2. Project Structure](#2-project-structure)
+- [3. Shared Constants](#3-shared-constants)
+- [4. Cloud Function Implementation](#4-cloud-function-implementation)
+- [5. Frontend Integration Example (Landing Page)](#5-frontend-integration-example-landing-page)
+- [6. Security & Best Practices](#6-security--best-practices)
+- [7. References](#7-references)
+- [8. Local Testing with Firebase Emulator Suite when adding new repos](#8-local-testing-with-firebase-emulator-suite-when-adding-new-repos)
+
+
 This document describes the architecture for automated fetching and storage of GitHub traffic analytics (views and clones) for the following repositories:
 
 - `zoechbauer/z-control-landing-page`
@@ -30,24 +42,12 @@ landing-page/
 ├─ src/
 │  ├─ app/
 │  └─ ...
-├─ functions/
-│  ├─ src/
-│  │  ├─ githubAnalytics.ts      # Cloud Function: fetches and persists GitHub analytics
-│  │  ├─ index.ts                # Exports all functions
-│  │  └─ shared/
-│  │      └─ GitHubConstants.ts  # Copy of shared constants for backend (required for clean build output)
-│  └─ ...
 ├─ shared/
 │  └─ GitHubConstants.ts         # Shared constants for BE & FE (frontend and general use)
 ├─ package.json
 ├─ tsconfig.json
 └─ ...
 ```
-
-**Note:**  
-A copy of `GitHubConstants.ts` is kept in both `shared/` (for frontend and general use) and `functions/src/shared/` (for backend).  
-This duplication is necessary because TypeScript requires all backend source files to be inside `functions/src` for a clean build structure.  
-If you import from outside `src`, TypeScript will create nested folders in the build output, which causes problems for Firebase Functions deployment and emulator usage.
 
 Firestore structure:
 
@@ -101,108 +101,11 @@ export const COLLECTION = {
 
 ## 4. Cloud Function Implementation
 
-- **Scheduled Trigger:** Runs every day at 18:00 Europe/Vienna time (`0 18 * * *`).
-- **Repositories:** Iterates over all target repos defined in `REPOS`.
-- **API Calls:** Uses GitHub REST API endpoints:
-  - `/repos/{owner}/{repo}/traffic/views`
-  - `/repos/{owner}/{repo}/traffic/clones`
-- **Storage:**
-  - `githubAnalyticsTraffic`: Overwrites with the latest analytics snapshot.
-  - `githubAnalyticsTrafficHistory`: Appends only the previous day's entries to arrays.
-
-
-### Example: `githubAnalytics.ts` (with query parameters)
-
-```typescript
-export const testGitHubAnalytics = functions.https.onRequest(async (req, res) => {
-  // ...existing code...
-});
-
-/**
- * HTTP function to insert missing daily analytics data from
- * githubAnalyticsTraffic into githubAnalyticsTrafficHistory for each repo.
- * Only missing dates are inserted.
- *
- * Query parameters:
- *   - repoIndex: (optional) index of the repository to process (default: all repos)
- *
- * Example usage:
- *   curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory"
- *   curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory?repoIndex=0"
- */
-export const insertMissingAnalyticsHistory = functions.https.onRequest(async (req, res) => {
-  // ...existing code...
-});
-```
-
-
-**Query Parameters:**
-
-- `updateTraffic`: Set to `false` to skip updating Firestore with the latest traffic data (default is `true`).
-- `repoIndex`: Set to a valid index (e.g., `0`, `1`, `2`) to process only the selected repository. If omitted, all repositories are processed.
-
-**Examples:**
-
-- Process all repos and update Firestore:
-
-  ```bash
-  curl "http://localhost:5001/<project-id>/us-central1/testGitHubAnalytics"
-  ```
-
-- Process only the first repo and skip Firestore update:
-
-  ```bash
-  curl "http://localhost:5001/<project-id>/us-central1/testGitHubAnalytics?updateTraffic=false&repoIndex=0"
-  ```
-
-- Insert missing analytics history for all repos:
-
-  ```bash
-  curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory"
-  ```
-
-- Insert missing analytics history for only the first repo:
-
-  ```bash
-  curl "http://localhost:5001/<project-id>/us-central1/insertMissingAnalyticsHistory?repoIndex=0"
-  ```
+see document **github-analytics-architecture.md** in the docs folder of **z-control-backend-functions** repository.
 
 ---
 
-**Notes:**
-
-- The scheduled function runs automatically every day at **18:00 Europe/Vienna time** to ensure GitHub statistics are finalized.
-- `githubAnalyticsTraffic` stores only the latest 14 days (overwrites).
-- `githubAnalyticsTrafficHistory` accumulates all daily entries for historical analysis.
-- For local testing, use `.env.local` in your project root with `GITHUB_TOKEN`.
-- For production, set `GITHUB_TOKEN` as an environment variable in the Cloud Console for your function.
-
----
-
-## 5. Environment Setup
-
-- **Install dependencies:**
-
-  ```bash
-  cd functions
-  npm install node-fetch
-  npm install firebase-functions@latest firebase-admin@latest --save
-  ```
-
-- **Set GitHub token as environment variable in Cloud Console:**
-
-  - Go to Cloud Functions in the Firebase or Google Cloud Console.
-  - Edit your function and add `GITHUB_TOKEN` in the environment variables section.
-
-- **Deploy function:**
-
-  ```bash
-  firebase deploy --only functions
-  ```
-
----
-
-## 6. Frontend Integration Example (Landing Page)
+## 5. Frontend Integration Example (Landing Page)
 
 The landing page fetches analytics data from Firestore and displays it.
 Here is a simplified example of how to retrieve and log the data:
@@ -232,7 +135,7 @@ async function fetchAnalytics() {
 
 ---
 
-## 7. Security & Best Practices
+## 6. Security & Best Practices
 
 - **Token Security:** Store GitHub token only as a Cloud Function environment variable, never in source code.
 - **Error Handling:** Log errors for each repo fetch; do not halt the entire function on a single failure.
@@ -240,17 +143,13 @@ async function fetchAnalytics() {
 
 ---
 
-## 8. References
+## 7. References
 
 - [GitHub Traffic API Docs](https://docs.github.com/en/rest/metrics/traffic)
 - [Firebase Functions Documentation](https://firebase.google.com/docs/functions)
 - [Firestore Documentation](https://firebase.google.com/docs/firestore)
 
-## 9. Local Testing with Firebase Emulator Suite when adding new repos
+## 8. Local Testing with Firebase Emulator Suite when adding new repos
 
 For detailed instructions, refer to [GITHUB_ANALYTICS_TEST_LOCALLY.md](GITHUB_ANALYTICS_TEST_LOCALLY.md).
 
----
-
-**Maintained by:** Hans Zöchbauer  
-**Last Updated:** 2026-02-25

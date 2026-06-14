@@ -17,6 +17,7 @@ import {
 import { APPS } from 'shared/GitHubConstants';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { IonicSetupSectionParameters } from 'shared/app-interfaces';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-ionic-setup-section',
@@ -35,7 +36,7 @@ import { IonicSetupSectionParameters } from 'shared/app-interfaces';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    JsonPipe
+    JsonPipe,
   ],
 })
 export class IonicSetupSectionComponent {
@@ -49,11 +50,17 @@ export class IonicSetupSectionComponent {
 
   nativeDownloadUrl =
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup';
-  sourceCodeUrl =
-    'https://github.com/zoechbauer/z-control-ionic-setup';
+  sourceCodeUrl = 'https://github.com/zoechbauer/z-control-ionic-setup';
   webAppUrl = 'https://z-control-ionic-setup.web.app';
 
-  constructor(private readonly modalController: ModalController) {}
+  constructor(
+    private readonly modalController: ModalController,
+    private readonly utilsService: UtilsService,
+  ) {}
+
+  get showBackendFunctionsInfo(): boolean {
+    return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
+  }
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');
@@ -122,4 +129,3 @@ export class IonicSetupSectionComponent {
     return ['/privacy', 'multi-language-translator', 'en'];
   }
 }
-

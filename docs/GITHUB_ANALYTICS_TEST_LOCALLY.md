@@ -2,6 +2,32 @@
 
 This guide describes how to test the GitHub analytics Cloud Function locally using the Firebase Emulator Suite.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites):
+- [Steps](#steps):
+  - [1. Install Dependencies](#1-install-dependencies)
+  - [2. Configure Environment Variables](#2-configure-environment-variables)
+  - [3. Update Function Code to Load `.env.local`](#3-update-function-code-to-load-envlocal)
+  - [4. Build Functions](#4-build-functions)
+  - [5. Start the Emulator Suite](#5-start-the-emulator-suite)
+  - [6. Trigger the Function](#6-trigger-the-function)
+  - [7. View Firestore Data](#7-view-firestore-data)
+- [Troubleshooting](#troubleshooting)
+- [Debugging Firebase Functions (VS Code + Emulator)](#debugging-firebase-functions-vs-code--emulator)
+  - [1. Start the Emulator in Debug Mode](#1-start-the-emulator-in-debug-mode)
+  - [2. Add a VS Code Debug Configuration](#2-add-a-vs-code-debug-configuration)
+  - [3. Set Breakpoints](#3-set-breakpoints)
+  - [4. Start Debugging](#4-start-debugging)
+  - [5. Notes](#5-notes)
+- [Adding a New Repository to GitHub Analytics](#adding-a-new-repository-to-github-analytics)
+  - [1. Update Configuration Files in functions and landing page](#1-update-configuration-files-in-functions-and-landing-page)
+  - [2. Test Locally with Emulator](#2-test-locally-with-emulator)
+  - [3. Deploy to Production](#3-deploy-to-production)
+  - [4. Test on Hosted Version](#4-test-on-hosted-version)
+  - [5. Verify on Landing Page](#5-verify-on-landing-page)
+- [Insert Missing data on Hosted Version](#insert-missing-data-on-hosted-version)
+
 ---
 
 ## Prerequisites
@@ -219,12 +245,12 @@ Add the new repository to the `REPOS` and `REPO` array in `shared/GitHubConstant
 - if test succeeds, change `useFirebaseEmulator` back to `false` for production testing.
 - run `npm run generate-env` to update environment variables in the landing page.
 
-### 4. Deploy to Production
+### 3. Deploy to Production
 
 - deploy functions
 - deploy landing page
 
-### 5. Test on Hosted Version
+### 4. Test on Hosted Version
 
 After deployment, test the function on the hosted version before the scheduled run at 18:00:
 
@@ -259,11 +285,22 @@ You can safely call the function multiple times before 18:00 without causing dup
 
 **Only Risk:** Duplicates would occur only if GitHub updates yesterday's counts between your runs (extremely rare during maintenance). Running at 18:00 ensures GitHub has finalized the data.
 
-### 6. Verify on Landing Page
+### 5. Verify on Landing Page
 
 - Check that the new repository's analytics are displayed correctly
 
 ---
 
-**Maintained by:** Hans Zöchbauer  
-**Last Updated:** February 25, 2026
+# Insert Missing data on Hosted Version
+
+If you need to insert missing data for a repository on the hosted version, you can use the same test function used for local testing. This ensures that any gaps in the analytics data are filled without creating duplicates.
+
+1. Call the test function on the hosted version:
+
+   ```bash
+   curl "https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/insertMissingAnalyticsHistory"
+   ```
+
+   Note: you can find this url in the Firebase Console under Functions > insertMissingAnalyticsHistory > Detailed usage statistics > URL in header section.
+
+2. Verify in Firestore that the missing data has been inserted correctly.

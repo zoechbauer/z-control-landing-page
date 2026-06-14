@@ -13,6 +13,10 @@
       alt="z-control Logo"
     />
     <ion-label>z-control Backend Functions</ion-label>
+    <ion-icon
+      name="cloud-circle-outline"
+      title="Backend Functions are used by marked Apps with icon"
+    ></ion-icon>
   </ion-item>
   <div class="ion-padding" slot="content" title="">
     <ion-card color="dark">
@@ -48,6 +52,7 @@
             Clear separation between frontend and backend responsibilities.
           </li>
           <li>Safer and more predictable deployments.</li>
+          <li>Centralized z-control Github Analytics functions.</li>
         </ul>
         <p>
           <strong>Read our documentation:</strong>
@@ -57,6 +62,11 @@
             color="primary"
             expand="block"
             (click)="
+              openMarkdownDoc(
+                'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
+              )
+            "
+            (keydown.enter)="
               openMarkdownDoc(
                 'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
               )
@@ -81,21 +91,33 @@
           : 'Expand details'
       }}"
     >
-<ion-accordion value="BF: Features">
-  <ion-item slot="header" color="light">
-    <ion-label>Key Features</ion-label>
-  </ion-item>
+      <ion-accordion value="BF: Features">
+        <ion-item slot="header" color="light">
+          <ion-label>Key Features</ion-label>
+        </ion-item>
 
-  <div class="ion-padding accordion-content" slot="content">
-    <ul class="ul-li-disc">
-      <li>Single source of truth for shared backend code across all z-control apps.</li>
-      <li>Firebase Cloud Functions for API handling, data processing, and Firebase integration.</li>
-      <li>Quota management to control API usage and help avoid unexpected costs.</li>
-      <li>Unit tests with Vitest and coverage reporting.</li>
-      <li>Documentation for setup, usage, deployment, and development workflows.</li>
-    </ul>
-  </div>
-</ion-accordion>
+        <div class="ion-padding accordion-content" slot="content">
+          <ul class="ul-li-disc">
+            <li>
+              Single source of truth for shared backend code across all
+              z-control apps.
+            </li>
+            <li>
+              Firebase Cloud Functions for API handling, data processing, and
+              Firebase integration.
+            </li>
+            <li>
+              Quota management to control API usage and help avoid unexpected
+              costs.
+            </li>
+            <li>Unit tests with Vitest and coverage reporting.</li>
+            <li>
+              Documentation for setup, usage, deployment, and development
+              workflows.
+            </li>
+          </ul>
+        </div>
+      </ion-accordion>
       <ion-accordion value="BF: How to Use">
         <ion-item slot="header" color="light">
           <ion-label>How to Use</ion-label>
@@ -113,6 +135,53 @@
               Deploy the frontend app separately after backend validation.
             </li>
           </ol>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="BF: Github Analytics">
+        <ion-item slot="header" color="light">
+          <ion-label>GitHub Analytics for z-control Repositories</ion-label>
+        </ion-item>
+
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <div>
+            We track GitHub repository activity and contributions to better
+            understand engagement and development trends across z-control
+            projects.
+          </div>
+          <p>
+            GitHub's <strong>Insights &gt; Traffic</strong> section provides
+            useful metrics, but only for the last 14 days. To keep a longer-term
+            record, Firebase Functions periodically collect these metrics and
+            store them in Firestore. This lets us analyze GitHub activity over
+            time instead of being limited to GitHub's built-in reporting window.
+          </p>
+          <p>
+            From the dashboard, you can quickly open the GitHub source code for
+            each repository.
+          </p>
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onOpenGitHubAnalytics()"
+              (keydown.enter)="onOpenGitHubAnalytics()"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Open z-control GitHub Analytics Dashboard"
+              aria-label="Open z-control GitHub Analytics Dashboard"
+            >
+              <ion-icon name="logo-github" slot="start"></ion-icon>
+              Open GitHub Analytics Dashboard
+            </ion-button>
+          </div>
+          <div class="dashboard-access">
+            <p>You can also open the dashboard from the footer:</p>
+            <ol>
+              <li>Open the footer.</li>
+              <li>
+                Select <strong>SOURCE CODE &amp; GITHUB ANALYTICS</strong>.
+              </li>
+            </ol>
+          </div>
         </div>
       </ion-accordion>
       <ion-accordion value="BF: Feedback">
@@ -147,6 +216,7 @@
           <div class="button-wrapper">
             <ion-button
               (click)="onGetSourceCode()"
+              (keydown.enter)="onGetSourceCode()"
               color="primary"
               expand="block"
               class="download-button"

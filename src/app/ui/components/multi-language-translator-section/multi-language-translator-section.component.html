@@ -13,6 +13,8 @@
       alt="z-control Translator Logo"
     />
     <ion-label>z-control Translator App</ion-label>
+    <ion-label *ngIf="showBackendFunctionsInfo">uses z-control Backend Functions</ion-label>
+    <ion-icon name="cloudy-outline" title="Uses z-control Backend Functions"></ion-icon>
   </ion-item>
   <div slot="content" title="">
     <ion-card color="dark">
@@ -476,6 +478,7 @@
           <div class="button-wrapper">
             <ion-button
               (click)="onGetSourceCode()"
+              (keydown.enter)="onGetSourceCode()"
               color="primary"
               expand="block"
               class="download-button"

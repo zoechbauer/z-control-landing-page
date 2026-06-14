@@ -16,6 +16,8 @@ import {
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'shared/GitHubConstants';
 import { BackendFunctionsSectionParameters } from 'shared/app-interfaces';
+import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
+import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 
 @Component({
   selector: 'app-backend-functions-section',
@@ -47,7 +49,10 @@ export class BackendFunctionsSectionComponent {
 
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backend-functions';
 
-  constructor(private readonly modalController: ModalController) {}
+  constructor(
+    private readonly modalController: ModalController,
+    public readonly fa: FirebaseAnalyticsService,
+  ) {}
 
   onGetSourceCode() {
     globalThis.window.open(this.sourceCodeUrl, '_blank');
@@ -87,5 +92,21 @@ export class BackendFunctionsSectionComponent {
 
   getMailToLinkForFeedback(): string {
     return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKEND_FUNCTIONS}%20Feedback`;
+  }
+
+  onOpenGitHubAnalytics() {
+    this.getGitHubAnalytics();
+  }
+
+  async getGitHubAnalytics() {
+    this.fa.logEvent('view_github_analytics', {
+      app: APPS.LANDING_PAGE,
+    });
+    const modal = await this.modalController.create({
+      component: GithubAnalyticsComponent,
+      cssClass: 'github-analytics-modal',
+    });
+
+    await modal.present();
   }
 }
