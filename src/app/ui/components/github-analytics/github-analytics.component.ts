@@ -13,6 +13,7 @@ import {
   IonItem,
   IonLabel,
   IonAccordion,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { closeOutline, logoGithub, alertCircleOutline } from 'ionicons/icons';
@@ -46,6 +47,7 @@ import { environment } from 'src/environments/environment';
     IonTitle,
     IonToolbar,
     JsonPipe,
+    IonSpinner,
   ],
 })
 export class GithubAnalyticsComponent implements OnInit {
@@ -53,6 +55,7 @@ export class GithubAnalyticsComponent implements OnInit {
   githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
   isMobilePortrait = false;
   isRepoOpened = false;
+  isLoading = true;
 
   constructor(
     private readonly fa: FirebaseAnalyticsService,
@@ -67,6 +70,7 @@ export class GithubAnalyticsComponent implements OnInit {
   }
 
   async init() {
+    this.isLoading = true;
     this.registerIcons();
     this.analyticsData = await this.getAnalyticsData(
       COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY,
@@ -76,6 +80,7 @@ export class GithubAnalyticsComponent implements OnInit {
     );
     this.checkOrientation();
     window.addEventListener('resize', () => this.checkOrientation());
+    this.isLoading = false;
   }
 
   onAccordionGroupChange(event: CustomEvent) {

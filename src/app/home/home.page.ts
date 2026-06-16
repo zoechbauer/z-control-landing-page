@@ -87,10 +87,6 @@ export class HomePage implements AfterViewInit {
     private readonly localStorageService: LocalStorageService,
   ) {
     this.registerIcons();
-    this.setMultiLanguageTranslatorParameters();
-    this.setQrCodeGeneratorParameters();
-    this.setIonicSetupParameters();
-    this.setBackendFunctionsParameters();
   }
 
   private registerIcons() {
@@ -197,18 +193,23 @@ export class HomePage implements AfterViewInit {
     switch (group) {
       case 'QR':
         this.selectedAccordion = APPS.QR_CODE_GENERATOR;
+        this.setQrCodeGeneratorParameters();
         break;
       case 'BS':
         this.selectedAccordion = APPS.BACKUP_SCRIPTS;
+        this.setBackupScriptsParameters();
         break;
       case 'MLT':
         this.selectedAccordion = APPS.MULTI_LANGUAGE_TRANSLATOR;
+        this.setMultiLanguageTranslatorParameters();
         break;
       case 'IS':
         this.selectedAccordion = APPS.IONIC_SETUP;
+        this.setIonicSetupParameters();
         break;
       case 'BF':
         this.selectedAccordion = APPS.BACKEND_FUNCTIONS;
+        this.setBackendFunctionsParameters();
         break;
       case undefined:
       case '':

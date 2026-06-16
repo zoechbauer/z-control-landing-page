@@ -54,7 +54,8 @@ export class MultiLanguageTranslatorSectionComponent {
     'https://github.com/zoechbauer/z-control-multi-language-translator';
   webAppUrl = 'https://z-control-translator.web.app';
 
-  constructor(private readonly modalController: ModalController, private readonly utilsService: UtilsService) {}
+  constructor(private readonly modalController: ModalController, private readonly utilsService: UtilsService) {
+  }
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
@@ -108,6 +109,7 @@ export class MultiLanguageTranslatorSectionComponent {
       component: MarkdownViewerComponent,
       componentProps: {
         fullChangeLogPath: changeLogPath,
+        title: `Release Notes for ${this.parameters?.appSectionParameters.selectedAccordion}`,
       },
       cssClass: 'change-log-modal',
     });

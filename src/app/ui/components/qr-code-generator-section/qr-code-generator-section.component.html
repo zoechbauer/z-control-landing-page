@@ -257,7 +257,7 @@
 
       <ion-accordion value="QR: Start Web App">
         <ion-item slot="header" color="light">
-          <ion-label>Start app as Web App without installation</ion-label>
+          <ion-label>Try the Web App (No Installation Required)</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
           <h5>Try Before You Download or Use It for Longer Texts</h5>
@@ -574,7 +574,7 @@
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <p>We value your feedback!</p>
+          <div>We value your feedback!</div>
           <p>
             <ion-icon name="mail"></ion-icon>
             If you have questions, suggestions, or comments, please contact us
@@ -620,11 +620,11 @@
           <ion-label>What's new? (Release Notes)</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <p>
+          <div>
             <ion-icon name="checkmark"></ion-icon>
-            All new features, improvements and bug fixes of the QR Code app are
+            All new features, improvements and bug fixes of the <i>z-control QR Code Generator</i> app are
             tracked in
-          </p>
+          </div>
           <ion-button
             fill="clear"
             size="small"
@@ -644,12 +644,12 @@
           <ion-label>Get the Source Code</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <p>
+          <div>
             The app is open source, and the source code is available on
             <i>GitHub</i>
             so you can review how the app works and how your data is handled at
             any time.
-          </p>
+          </div>
           <div class="button-wrapper">
             <ion-button
               (click)="onGetSourceCode()"

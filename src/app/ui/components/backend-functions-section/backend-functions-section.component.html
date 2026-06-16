@@ -189,7 +189,7 @@
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <p>We value your feedback!</p>
+          <div>We value your feedback!</div>
           <p>
             <ion-icon name="mail"></ion-icon>
             If you have questions, suggestions, or comments, please contact us
@@ -204,15 +204,38 @@
           </p>
         </div>
       </ion-accordion>
+      <ion-accordion value="BF: Changelog">
+        <ion-item slot="header" color="light">
+          <ion-label>What's new? (Changelog)</ion-label>
+        </ion-item>
+        <div class="ion-padding accordion-content" slot="content" title="">
+          <div>
+            <ion-icon name="checkmark"></ion-icon>
+            All new and updated functions, improvements, and bug fixes for the
+            <i>z-control Backend Functions</i> repository are tracked in the
+          </div>
+          <ion-button
+            fill="clear"
+            size="small"
+            (click)="openChangelog()"
+            (keydown.enter)="openChangelog()"
+            class="changelog-button"
+            title="Open change log — grouped by category and sorted newest first"
+          >
+            <ion-icon name="list" slot="start"></ion-icon>
+            Change Log
+          </ion-button>
+        </div>
+      </ion-accordion>
       <ion-accordion value="BF: Get Source Code">
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <p>
+          <div>
             The z-control Backend Functions are open source and available on
             <i>GitHub</i>. Review, contribute, or adapt them for your own use.
-          </p>
+          </div>
           <div class="button-wrapper">
             <ion-button
               (click)="onGetSourceCode()"

@@ -1,21 +1,3 @@
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  min-height: 200px;
-
-  ion-spinner {
-    margin-bottom: 1rem;
-  }
-
-  p {
-    color: var(--ion-color-medium);
-    font-size: 0.9rem;
-  }
-}
-
 .error-container {
   text-align: center;
   padding: 2rem;

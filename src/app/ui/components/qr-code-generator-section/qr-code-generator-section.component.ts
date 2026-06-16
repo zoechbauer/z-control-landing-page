@@ -52,7 +52,8 @@ export class QrCodeGeneratorSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
   webAppUrl = 'https://z-control-qr-code.web.app';
 
-  constructor(private readonly modalController: ModalController) {}
+  constructor(private readonly modalController: ModalController) {
+  }
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');
@@ -102,6 +103,7 @@ export class QrCodeGeneratorSectionComponent {
       component: MarkdownViewerComponent,
       componentProps: {
         fullChangeLogPath: changeLogPath,
+        title: `Release Notes for ${this.parameters?.appSectionParameters.selectedAccordion}`,
       },
       cssClass: 'change-log-modal',
     });

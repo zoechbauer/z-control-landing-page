@@ -109,4 +109,26 @@ export class BackendFunctionsSectionComponent {
 
     await modal.present();
   }
+
+  async openChangelog() {
+    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md';
+    this.analyticsEvent.emit({
+      eventName: 'open_changelog',
+      params: {
+        changelog_for: this.parameters?.appSectionParameters.selectedAccordion,
+        app: APPS.LANDING_PAGE,
+      },
+    });
+
+    const modal = await this.modalController.create({
+      component: MarkdownViewerComponent,
+      componentProps: {
+        fullChangeLogPath: changeLogPath,
+        title: `Changelog for ${this.parameters?.appSectionParameters.selectedAccordion}`,
+      },
+      cssClass: 'change-log-modal',
+    });
+
+    await modal.present();
+  }
 }

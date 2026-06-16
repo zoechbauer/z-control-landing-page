@@ -110,6 +110,7 @@ export class IonicSetupSectionComponent {
       component: MarkdownViewerComponent,
       componentProps: {
         fullChangeLogPath: changeLogPath,
+        title: `Release Notes for ${this.parameters?.appSectionParameters.selectedAccordion}`,
       },
       cssClass: 'change-log-modal',
     });

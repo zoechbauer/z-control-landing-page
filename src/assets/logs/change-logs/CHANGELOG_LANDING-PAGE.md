@@ -2,6 +2,23 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.19] – 2026-06-16
+
+### ✨ New Features
+
+- Added a `What's New` accordion for the **z-control Backend Functions** repository on the home page, giving users a central place to review the latest updates and improvements.
+- Added the **z-control Backend Functions** changelog to the landing page, making detailed release notes and change history easy to access from one place.
+
+### 🚀 Improvements
+
+- Added a loading indicator to the GitHub Analytics section so users get feedback while data is loading.
+- Standardized the app name across all `What's New` accordions for better consistency and clarity.
+- Added the app name to the changelog dialog title when opening `What's New` for better context.
+  
+### 🐛 Fixes
+
+- Fixed an issue where app parameters were not updated correctly when switching accordions, ensuring the correct changelog is shown for each app.
+
 ## [2.18] – 2026-06-14
 
 ### ✨ New Features
@@ -40,6 +57,7 @@ All recent updates and improvements to our **z-control Landing Page** app.
 
 - Improved the layout of the **Send Us Feedback** section across all apps for better readability and user experience.
 - Enhanced the text in the **Try the Web App** section of the z-control Translator app to align with the style and structure used in the z-control Ionic Setup app.
+- Improved the layout of the accordions by reducing the space between the header and content, resulting in a more compact and visually appealing design.
 
 ### 🐛 Fixes
 
