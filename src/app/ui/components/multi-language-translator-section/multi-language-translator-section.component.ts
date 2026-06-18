@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -36,7 +36,6 @@ import { UtilsService } from 'src/app/services/utils.service';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    JsonPipe
   ],
 })
 export class MultiLanguageTranslatorSectionComponent {

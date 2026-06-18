@@ -18,6 +18,7 @@ import { APPS } from 'shared/GitHubConstants';
 import { BackendFunctionsSectionParameters } from 'shared/app-interfaces';
 import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-backend-functions-section',
@@ -51,6 +52,7 @@ export class BackendFunctionsSectionComponent {
 
   constructor(
     private readonly modalController: ModalController,
+    private readonly util: UtilsService,
     public readonly fa: FirebaseAnalyticsService,
   ) {}
 
@@ -63,6 +65,18 @@ export class BackendFunctionsSectionComponent {
         app: APPS.LANDING_PAGE,
       },
     });
+  }
+
+  async onOpenGitHubAnalytics() {
+    const selectedAccordion = this.parameters?.appSectionParameters
+      .selectedAccordion as keyof typeof APPS;
+    await this.util.openGitHubAnalytics(selectedAccordion);
+  }
+
+  async onOpenChangelog() {
+    const selectedAccordion = this.parameters?.appSectionParameters
+      .selectedAccordion as keyof typeof APPS;
+    await this.util.openChangelog(selectedAccordion);
   }
 
   async openMarkdownDoc(docPath: string) {
@@ -92,43 +106,5 @@ export class BackendFunctionsSectionComponent {
 
   getMailToLinkForFeedback(): string {
     return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKEND_FUNCTIONS}%20Feedback`;
-  }
-
-  onOpenGitHubAnalytics() {
-    this.getGitHubAnalytics();
-  }
-
-  async getGitHubAnalytics() {
-    this.fa.logEvent('view_github_analytics', {
-      app: APPS.LANDING_PAGE,
-    });
-    const modal = await this.modalController.create({
-      component: GithubAnalyticsComponent,
-      cssClass: 'github-analytics-modal',
-    });
-
-    await modal.present();
-  }
-
-  async openChangelog() {
-    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md';
-    this.analyticsEvent.emit({
-      eventName: 'open_changelog',
-      params: {
-        changelog_for: this.parameters?.appSectionParameters.selectedAccordion,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: changeLogPath,
-        title: `Changelog for ${this.parameters?.appSectionParameters.selectedAccordion}`,
-      },
-      cssClass: 'change-log-modal',
-    });
-
-    await modal.present();
   }
 }

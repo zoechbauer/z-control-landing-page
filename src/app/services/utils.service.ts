@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
+import { ModalController } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 
+import { APPS } from 'shared/GitHubConstants';
+import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
+import { FirebaseAnalyticsService } from './firebase-analytics.service';
+import { GithubAnalyticsComponent } from '../ui/components/github-analytics/github-analytics.component';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
   private readonly logoClickedSub = new Subject<boolean>();
   logoClicked$ = this.logoClickedSub.asObservable();
 
-  constructor() { }
+  constructor(
+    private readonly modalController: ModalController,
+    private readonly firebaseAnalyticsService: FirebaseAnalyticsService,
+  ) {}
 
   /**
-   * Emits an event when the logo is clicked, 
+   * Emits an event when the logo is clicked,
    * which is used to trigger actions such as opening the footer.
    */
   onLogoClicked() {
@@ -40,5 +49,78 @@ export class UtilsService {
     const isMobileHeight = window.innerHeight <= 640;
     const isMobileWidth = window.innerWidth <= 768;
     return isMobileHeight && isMobileWidth;
+  }
+
+  /**
+   * Opens a modal displaying the GitHub Analytics Dashboard for the selected accordion section.
+   * @param selectedAccordion The selected accordion section for which to display the GitHub Analytics Dashboard.
+   */
+  async openGitHubAnalytics(selectedAccordion: keyof typeof APPS) {
+    this.handleAnalyticsEvent({
+      eventName: 'view_github_analytics',
+      params: {
+        called_from: selectedAccordion,
+        app: APPS.LANDING_PAGE,
+      },
+    });
+    const modal = await this.modalController.create({
+      component: GithubAnalyticsComponent,
+      cssClass: 'github-analytics-modal',
+    });
+
+    await modal.present();
+  }
+
+  /**
+   * Opens a modal displaying the changelog for the selected accordion section.
+   * @param selectedAccordion The selected accordion section for which to display the changelog.
+   */
+  async openChangelog(selectedAccordion: keyof typeof APPS) {
+    const changeLogPath = this.getChangelogPathForAccordion(selectedAccordion);
+    this.handleAnalyticsEvent({
+      eventName: 'open_changelog',
+      params: {
+        changelog_for: selectedAccordion,
+        app: APPS.LANDING_PAGE,
+      },
+    });
+
+    const modal = await this.modalController.create({
+      component: MarkdownViewerComponent,
+      componentProps: {
+        fullChangeLogPath: changeLogPath,
+        title: `Changelog for ${selectedAccordion}`,
+      },
+      cssClass: 'change-log-modal',
+    });
+
+    await modal.present();
+  }
+
+  /**
+   * Handles analytics events by logging them to Firebase Analytics.
+   * @param event The analytics event to log.
+   */
+  private handleAnalyticsEvent(event: { eventName: string; params: any }) {
+    this.firebaseAnalyticsService.logEvent(event.eventName, event.params);
+  }
+
+  private getChangelogPathForAccordion(
+    selectedAccordion: keyof typeof APPS,
+  ): string {
+    switch (selectedAccordion) {
+      case APPS.LANDING_PAGE:
+        return 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md';
+      case APPS.BACKEND_FUNCTIONS:
+        return 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md';
+      case APPS.IONIC_SETUP:
+        return 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md';
+      case APPS.QR_CODE_GENERATOR:
+        return 'assets/logs/change-logs/CHANGELOG_QR-CODE.md';
+      case APPS.MULTI_LANGUAGE_TRANSLATOR:
+        return 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md';
+      default:
+        return '';
+    }
   }
 }

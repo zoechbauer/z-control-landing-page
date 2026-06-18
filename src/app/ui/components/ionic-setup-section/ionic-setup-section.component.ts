@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -36,7 +36,6 @@ import { UtilsService } from 'src/app/services/utils.service';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    JsonPipe,
   ],
 })
 export class IonicSetupSectionComponent {
@@ -97,25 +96,8 @@ export class IonicSetupSectionComponent {
   }
 
   async openChangelog() {
-    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md';
-    this.analyticsEvent.emit({
-      eventName: 'open_changelog',
-      params: {
-        changelog_for: this.parameters?.appSectionParameters.selectedAccordion,
-        app: APPS.IONIC_SETUP,
-      },
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: changeLogPath,
-        title: `Release Notes for ${this.parameters?.appSectionParameters.selectedAccordion}`,
-      },
-      cssClass: 'change-log-modal',
-    });
-
-    await modal.present();
+    const selectedAccordion = this.parameters?.appSectionParameters.selectedAccordion as keyof typeof APPS;
+    this.utilsService.openChangelog(selectedAccordion);
   }
 
   subAccordionChange(parentGroup: string) {

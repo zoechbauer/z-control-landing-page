@@ -55,7 +55,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     public readonly fa: FirebaseAnalyticsService,
     private readonly modalController: ModalController,
     private readonly utilsService: UtilsService,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
   ) {
     this.registerIcons();
   }
@@ -64,7 +64,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.fa.enabled$.subscribe((enabled) => {
         this.enableAnalytics = enabled;
-      })
+      }),
     );
     this.sub.add(
       this.utilsService.logoClicked$.subscribe((clicked) => {
@@ -74,7 +74,7 @@ export class FooterComponent implements OnInit, OnDestroy {
           });
         }
         this.showDetails = !this.showDetails;
-      })
+      }),
     );
   }
 
@@ -85,25 +85,6 @@ export class FooterComponent implements OnInit, OnDestroy {
       });
     }
     this.showDetails = !this.showDetails;
-  }
-
-  async openChangelog() {
-    if (!this.enableAnalytics) {
-      return;
-    }
-    this.fa.logEvent('open_changelog', {
-      changelog_for: APPS.LANDING_PAGE,
-      app: APPS.LANDING_PAGE,
-    });
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
-      },
-      cssClass: 'change-log-modal',
-    });
-
-    await modal.present();
   }
 
   get versionInfo() {
@@ -166,19 +147,29 @@ export class FooterComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getGitHubAnalytics() {
+  async onOpenGitHubAnalytics() {
+    const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
+    await this.utilsService.openGitHubAnalytics(selectedAccordion);
+  }
+
+  async onOpenChangelog() {
     if (!this.enableAnalytics) {
       return;
     }
-    this.fa.logEvent('view_github_analytics', {
+    const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
+    this.utilsService.openChangelog(selectedAccordion);
+  }
+
+  onGetSourceCode() {
+    globalThis.window.open(
+      'https://github.com/zoechbauer/z-control-landing-page',
+      '_blank',
+    );
+
+    this.fa.logEvent('get_source_code', {
+      repo: APPS.LANDING_PAGE,
       app: APPS.LANDING_PAGE,
     });
-    const modal = await this.modalController.create({
-      component: GithubAnalyticsComponent,
-      cssClass: 'github-analytics-modal',
-    });
-
-    await modal.present();
   }
 
   ngOnDestroy(): void {

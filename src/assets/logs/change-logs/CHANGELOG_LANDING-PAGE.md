@@ -2,6 +2,18 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.20] – 2026-06-18
+
+### ✨ New Features
+
+- Added a footer link to the **z-control Landing Page** repository, giving users quick access to the source code and documentation.
+
+### 🚀 Improvements
+
+- Improved the footer layout for better readability and a cleaner user experience.
+- Simplified the footer styling to make it easier to maintain.
+- Refactored changelog and GitHub Analytics dialog handling to use a shared utility function, reducing duplication and improving maintainability.
+
 ## [2.19] – 2026-06-16
 
 ### ✨ New Features

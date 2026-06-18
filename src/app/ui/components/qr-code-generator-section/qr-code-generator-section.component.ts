@@ -17,6 +17,7 @@ import {
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'shared/GitHubConstants';
 import { QrCodeGeneratorSectionParameters } from 'shared/app-interfaces';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-qr-code-generator-section',
@@ -52,8 +53,10 @@ export class QrCodeGeneratorSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
   webAppUrl = 'https://z-control-qr-code.web.app';
 
-  constructor(private readonly modalController: ModalController) {
-  }
+  constructor(
+    private readonly modalController: ModalController,
+    private readonly utilsService: UtilsService,
+  ) {}
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');
@@ -90,25 +93,9 @@ export class QrCodeGeneratorSectionComponent {
   }
 
   async openChangelog() {
-    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_QR-CODE.md';
-    this.analyticsEvent.emit({
-      eventName: 'open_changelog',
-      params: {
-        changelog_for: this.parameters?.appSectionParameters.selectedAccordion,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: changeLogPath,
-        title: `Release Notes for ${this.parameters?.appSectionParameters.selectedAccordion}`,
-      },
-      cssClass: 'change-log-modal',
-    });
-
-    await modal.present();
+    const selectedAccordion = this.parameters?.appSectionParameters
+      .selectedAccordion as keyof typeof APPS;
+    this.utilsService.openChangelog(selectedAccordion);
   }
 
   subAccordionChange(parentGroup: string) {

@@ -1,6 +1,6 @@
 # What's New?
 
-Welcome to our updates and improvements of the **z-control Translator** app!
+Welcome to our updates and improvements of the **z-control Translator** app.
 
 ## Versioning
 
