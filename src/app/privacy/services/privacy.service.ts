@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { APPS } from 'shared/GitHubConstants';
+import { APPS } from 'src/app/shared/GitHubConstants';
 
 export interface PrivacyPolicy {
   type: (typeof APPS)[keyof typeof APPS];

@@ -1,6 +1,6 @@
 # What's New?
 
-All recent updates and improvements to our **z-control QR Code Generator** app.
+All recent updates and improvements to our **z-control Landing Page** app.
 
 ## [Version] – YYYY-MM-DD
 
@@ -16,11 +16,15 @@ All recent updates and improvements to our **z-control QR Code Generator** app.
 
 - …
 
+### 🔧 Internal
+
+- …
+
 ### 🛡 Security
 
 - …
 
-### 📦 Installations
+### 📦 Deployment
 
 - …
 

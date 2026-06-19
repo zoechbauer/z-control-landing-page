@@ -5,7 +5,7 @@ import { ModalController } from '@ionic/angular/standalone';
 import { GithubAnalyticsComponent } from './github-analytics.component';
 import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.service';
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { GithubAnalyticsTrafficDocument } from 'shared/GitHubConstants';
+import { GithubAnalyticsTrafficDocument } from 'src/app/shared/GitHubConstants';
 
 // Mock FirebaseFirestoreService to avoid real Firebase calls
 class MockFirebaseFirestoreService {

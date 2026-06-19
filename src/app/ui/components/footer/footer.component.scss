@@ -1,3 +1,5 @@
+$disabled-color: #888;
+
 .footer-content {
   .footer-compact {
     display: flex;
@@ -48,8 +50,16 @@
     .footer-section {
       cursor: pointer;
 
-      .enable-analytics.not-enabled {
-        color: #bb0000;
+      &.not-enabled {
+        .enable-analytics {
+          color: #bb0000;
+        }
+
+        .check-analytics-enabled {
+          .check-analytics-button::part(native) {
+            color: $disabled-color;
+          }
+        }
       }
 
       .analytics-dashboard-button::part(native) {

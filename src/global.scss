@@ -151,6 +151,12 @@ ion-footer {
   vertical-align: middle;
 }
 
+#toast-anchor-main,
+#toast-anchor-settings {
+  margin: 0;
+  padding: 0;
+}
+
 ion-card-title {
   text-align: center;
 }

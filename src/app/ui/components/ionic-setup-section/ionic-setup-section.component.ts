@@ -14,9 +14,9 @@ import {
   IonIcon,
   ModalController,
 } from '@ionic/angular/standalone';
-import { APPS } from 'shared/GitHubConstants';
+import { APPS } from 'src/app/shared/GitHubConstants';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
-import { IonicSetupSectionParameters } from 'shared/app-interfaces';
+import { IonicSetupSectionParameters } from 'src/app/shared/app-interfaces';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FirebaseFirestoreService } from './firebase-firestore.service';
-import { GithubAnalyticsTrafficDocument } from 'shared/GitHubConstants';
+import { GithubAnalyticsTrafficDocument } from 'src/app/shared/GitHubConstants';
 
 // Mock service to avoid real Firebase calls
 class MockFirebaseFirestoreService {

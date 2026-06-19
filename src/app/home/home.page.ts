@@ -29,7 +29,9 @@ import {
   trashOutline,
   warning,
   cloudyOutline,
-  cloudCircleOutline
+  cloudCircleOutline,
+  informationCircle,
+  closeOutline
 } from 'ionicons/icons';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
 
@@ -39,7 +41,7 @@ import { BackupScriptsSectionComponent } from '../ui/components/backup-scripts-s
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { CommonModule } from '@angular/common';
-import { APPS } from 'shared/GitHubConstants';
+import { APPS } from 'src/app/shared/GitHubConstants';
 import { MultiLanguageTranslatorSectionComponent } from '../ui/components/multi-language-translator-section/multi-language-translator-section.component';
 import {
   AppSectionParameters,
@@ -48,7 +50,7 @@ import {
   QrCodeGeneratorSectionParameters,
   IonicSetupSectionParameters,
   BackendFunctionsSectionParameters,
-} from 'shared/app-interfaces';
+} from 'src/app/shared/app-interfaces';
 import { environment } from 'src/environments/environment';
 import { IonicSetupSectionComponent } from '../ui/components/ionic-setup-section/ionic-setup-section.component';
 import { BackendFunctionsSectionComponent } from '../ui/components/backend-functions-section/backend-functions-section.component';
@@ -120,6 +122,8 @@ export class HomePage implements AfterViewInit {
       'document-text': documentTextOutline,
       'cloudy-outline': cloudyOutline,
       'cloud-circle-outline': cloudCircleOutline,
+      'information-circle': informationCircle,
+      'close-outline': closeOutline,
     });
   }
 

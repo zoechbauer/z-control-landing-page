@@ -40,11 +40,10 @@
 
       <!-- Expandable details -->
       <div class="footer-details" [class.expanded]="showDetails">
-        <div class="footer-section">
+        <div class="footer-section" [class.not-enabled]="!(fa.enabled$ | async)">
           <p>Innovative Open Source Solutions & Tools<br />Always Free</p>
           <div
             class="enable-analytics section-margin-top"
-            [class.not-enabled]="!(fa.enabled$ | async)"
           >
             <ion-toggle
               [checked]="fa.enabled$ | async"
@@ -67,7 +66,7 @@
           </div>
 
           <div
-            class="section-margin-top"
+            class="section-margin-top check-analytics-enabled"
             (click)="onOpenChangelog()"
             (keydown.enter)="onOpenChangelog()"
             title="{{
@@ -77,32 +76,32 @@
             }}"
           >
             <div>{{ versionInfo }}</div>
-            <ion-button fill="clear" size="small">
+            <ion-button fill="clear" size="small" class="check-analytics-button">
               <ion-icon name="list-outline" slot="start"></ion-icon>
               Release Notes
             </ion-button>
           </div>
 
           <div
-            class="section-margin-top"
+            class="section-margin-top check-analytics-enabled"
             (click)="onOpenGitHubAnalytics()"
             (keydown.enter)="onOpenGitHubAnalytics()"
             title="{{
               enableAnalytics ? 'Open z-control GitHub analytics Dashboard' : ''
             }}"
           >
-            <ion-button fill="clear" size="small" class="analytics-dashboard-button">
+            <ion-button fill="clear" size="small" class="analytics-dashboard-button check-analytics-button">
               <ion-icon name="logo-github" slot="start"></ion-icon>
               z-control<br /> GitHub Analytics Dashboard
             </ion-button>
           </div>
           <div
-            class="section-margin-top"
+            class="section-margin-top check-analytics-enabled"
             (click)="onGetSourceCode()"
             (keydown.enter)="onGetSourceCode()"
             title="Open z-control Backend Functions GitHub repository in a new tab"
           >
-            <ion-button fill="clear" size="small">
+            <ion-button fill="clear" size="small" class="check-analytics-button">
               <ion-icon name="logo-github" slot="start"></ion-icon>
               Get Source Code
             </ion-button>

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline, globeOutline } from 'ionicons/icons';
 
-import { APPS } from 'shared/GitHubConstants';
+import { APPS } from 'src/app/shared/GitHubConstants';
 import { HeaderComponent } from '../../../ui/components/header/header.component';
 import { FooterComponent } from '../../../ui/components/footer/footer.component';
 import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';

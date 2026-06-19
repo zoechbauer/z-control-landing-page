@@ -15,8 +15,8 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
-import { APPS } from 'shared/GitHubConstants';
-import { QrCodeGeneratorSectionParameters } from 'shared/app-interfaces';
+import { APPS } from 'src/app/shared/GitHubConstants';
+import { QrCodeGeneratorSectionParameters } from 'src/app/shared/app-interfaces';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({

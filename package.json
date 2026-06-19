@@ -70,5 +70,5 @@
     "markdownlint-cli2": "^0.18.1",
     "typescript": "~5.8.0"
   },
-  "description": "An Ionic project"
+  "description": "The z-control Landing Page is a web application built with Ionic and Angular, designed to provide users with a comprehensive overview of the z-control applications and repositories."
 }

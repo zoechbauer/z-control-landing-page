@@ -14,8 +14,8 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
-import { APPS } from 'shared/GitHubConstants';
-import { BackupScriptsSectionParameters } from 'shared/app-interfaces';
+import { APPS } from 'src/app/shared/GitHubConstants';
+import { BackupScriptsSectionParameters } from 'src/app/shared/app-interfaces';
 @Component({
   selector: 'app-backup-scripts-section',
   templateUrl: './backup-scripts-section.component.html',

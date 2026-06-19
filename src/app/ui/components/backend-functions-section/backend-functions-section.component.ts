@@ -14,8 +14,8 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
-import { APPS } from 'shared/GitHubConstants';
-import { BackendFunctionsSectionParameters } from 'shared/app-interfaces';
+import { APPS } from 'src/app/shared/GitHubConstants';
+import { BackendFunctionsSectionParameters } from 'src/app/shared/app-interfaces';
 import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { UtilsService } from 'src/app/services/utils.service';

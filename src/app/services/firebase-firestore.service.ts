@@ -13,7 +13,7 @@ import {
   GithubAnalyticsTrafficDocument,
   TrafficType,
   ALL_REPOS,
-} from '../../../shared/GitHubConstants';
+} from 'src/app/shared/GitHubConstants';
 
 @Injectable({
   providedIn: 'root',

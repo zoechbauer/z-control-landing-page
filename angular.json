@@ -23,9 +23,7 @@
               "browser": ""
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -41,6 +39,7 @@
           },
           "configurations": {
             "production": {
+              "optimization": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -68,6 +67,7 @@
               "namedChunks": true
             },
             "ci": {
+              "optimization": false,
               "progress": false
             }
           },
@@ -129,9 +129,7 @@
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@ionic/angular-toolkit"
-    ],
+    "schematicCollections": ["@ionic/angular-toolkit"],
     "analytics": false
   },
   "schematics": {

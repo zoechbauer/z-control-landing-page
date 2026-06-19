@@ -7,12 +7,20 @@ All recent updates and improvements to our **z-control Landing Page** app.
 ### ✨ New Features
 
 - Added a footer link to the **z-control Landing Page** repository, giving users quick access to the source code and documentation.
+- Disabled footer links when analytics are turned off, making it clear that certain features are unavailable without consent.
+- Added a toast message when users try to open disabled features, explaining that analytics must be enabled to view the content.
 
 ### 🚀 Improvements
 
 - Improved the footer layout for better readability and a cleaner user experience.
 - Simplified the footer styling to make it easier to maintain.
 - Refactored changelog and GitHub Analytics dialog handling to use a shared utility function, reducing duplication and improving maintainability.
+- Added a new `ToastService` to handle English toast messages consistently across the app, improving user feedback and error handling.
+
+### 🔧 Internal
+
+- Moved the shared folder from root to `src/app` for better organization and to align with Angular best practices.
+- Updated all imports to reflect the new shared folder location.
 
 ## [2.19] – 2026-06-16
 

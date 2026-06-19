@@ -22,7 +22,7 @@ import {
   REPO,
   GithubAnalyticsTrafficDocument,
   ALL_REPOS,
-} from 'shared/GitHubConstants';
+} from 'src/app/shared/GitHubConstants';
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.service';

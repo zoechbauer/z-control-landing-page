@@ -24,12 +24,12 @@ import { AsyncPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/services/utils.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
-import { APPS } from 'shared/GitHubConstants';
+import { APPS } from 'src/app/shared/GitHubConstants';
+import { ToastService } from 'src/app/services/toast-EN.service';
+import { ToastAnchor } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-footer',
@@ -56,6 +56,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     private readonly modalController: ModalController,
     private readonly utilsService: UtilsService,
     private readonly localStorageService: LocalStorageService,
+    private readonly toastService: ToastService,
   ) {
     this.registerIcons();
   }
@@ -148,12 +149,23 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   async onOpenGitHubAnalytics() {
+    if (!this.enableAnalytics) {
+      this.toastService.showToast(
+        'Analytics is disabled. Please enable it to view GitHub Analytics Dashboard.',
+        ToastAnchor.MainPage,
+      );
+      return;
+    }
     const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
     await this.utilsService.openGitHubAnalytics(selectedAccordion);
   }
 
   async onOpenChangelog() {
     if (!this.enableAnalytics) {
+      this.toastService.showToast(
+        'Analytics is disabled. Please enable it to view the Release Notes.',
+        ToastAnchor.MainPage,
+      );
       return;
     }
     const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
@@ -161,6 +173,13 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   onGetSourceCode() {
+    if (!this.enableAnalytics) {
+        this.toastService.showToast(
+          'Analytics is disabled. Please enable it to view the source code.',
+          ToastAnchor.MainPage,
+        );
+      return;
+    }
     globalThis.window.open(
       'https://github.com/zoechbauer/z-control-landing-page',
       '_blank',
