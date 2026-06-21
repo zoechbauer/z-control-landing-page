@@ -2,6 +2,29 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [2.21] – 2026-06-21
+
+### 🚀 Improvements
+- Added a Firestore Adapter Service to centralize Firestore access, support both production and emulator environments, and improve modularity and testability.
+- Refactored the Firebase Firestore Service to use the Firestore Adapter Service for database operations, making the data layer easier to maintain and extend.
+- Added a Firebase Analytics Adapter Service to centralize Firebase Analytics access, support both production and emulator environments, and improve modularity and testability.
+- Added a Window Reference Service to safely access the global window object in a testable way, improving compatibility with server-side rendering and unit testing.
+- Added Firestore support in the Landing Page app to enable direct frontend access to Firestore while keeping the codebase aligned with the new data flow.
+
+### 🐛 Fixes
+
+- Made the Karma test page scrollable in the browser so all test results are visible during local npm test runs.
+- Fixed the ToastService unit test to correctly handle async toast creation and presentation.
+- Updated LocalStorageService tests to properly cover analytics consent storage and retrieval, including error handling.
+
+### 🔧 Internal
+
+- Added unit tests for UtilsService and LocalStorageService to improve coverage and reliability.
+- Updated the FirebaseAnalyticsService to use the new Firebase Analytics Adapter Service and Window Reference Service for better modularity and testability.
+- Refactored the FirebaseAnalyticsService unit tests to use the new adapter and window reference abstractions, improving isolation and maintainability.
+- Removed the unused showDisabledToast method and its tests from ToastService.
+- Removed firebase-admin and firebase-functions from the Landing Page repository because they are only needed in the backend functions project.
+
 ## [2.20] – 2026-06-18
 
 ### ✨ New Features

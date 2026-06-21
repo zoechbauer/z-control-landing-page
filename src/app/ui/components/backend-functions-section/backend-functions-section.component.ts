@@ -16,8 +16,6 @@ import {
 import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'src/app/shared/GitHubConstants';
 import { BackendFunctionsSectionParameters } from 'src/app/shared/app-interfaces';
-import { GithubAnalyticsComponent } from '../github-analytics/github-analytics.component';
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -53,7 +51,6 @@ export class BackendFunctionsSectionComponent {
   constructor(
     private readonly modalController: ModalController,
     private readonly util: UtilsService,
-    public readonly fa: FirebaseAnalyticsService,
   ) {}
 
   onGetSourceCode() {

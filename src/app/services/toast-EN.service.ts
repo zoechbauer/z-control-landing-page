@@ -14,18 +14,6 @@ export class ToastService {
   ) {}
 
   /**
-   * Shows a toast with a message, typically used for disabled actions.
-   * 
-   * @param toastMsg The message to display
-   * @param anchorId Optional anchor ID for positioning the toast
-   */
-  async showDisabledToast(toastMsg: string, anchorId?: ToastAnchor) {
-    this.showToastMessage(toastMsg, anchorId).catch((error) => {
-      console.error('Error presenting toast:', error);
-    });
-  }
-
-  /**
    * Displays a toast message below the header.
    * 
    * @param toastMessage The message to display

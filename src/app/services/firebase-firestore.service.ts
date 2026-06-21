@@ -1,31 +1,36 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
-  getFirestore,
+  Firestore,
+  connectFirestoreEmulator,
   doc,
   getDoc,
-  connectFirestoreEmulator,
-} from 'firebase/firestore';
+} from '@angular/fire/firestore';
+
 import {
+  ALL_REPOS,
+  COLLECTION,
+  GithubAnalyticsTrafficDocument,
+  GithubArrayTrafficEntry,
   REPO,
   REPOS,
-  COLLECTION,
-  GithubArrayTrafficEntry,
-  GithubAnalyticsTrafficDocument,
   TrafficType,
-  ALL_REPOS,
 } from 'src/app/shared/GitHubConstants';
+import { FirestoreAdapterService } from './firestore-adapter.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseFirestoreService {
-  private repo: (typeof REPO)[keyof typeof REPO] = REPOS[0].repo; // z-control-landing-page
+  private readonly firestore = inject(Firestore);
+
+  private repo: (typeof REPO)[keyof typeof REPO] = REPOS[0].repo;
   private collection: (typeof COLLECTION)[keyof typeof COLLECTION] =
     COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
-  private useFirebaseEmulator: boolean = false;
-  private readonly db = getFirestore();
+  private useFirebaseEmulator = false;
 
-  constructor() {}
+  constructor(
+    private readonly firestoreAdapter: FirestoreAdapterService,
+  ) {}
 
   /**
    * Retrieves analytics data for a specified collection and repository from Firestore.
@@ -40,30 +45,28 @@ export class FirebaseFirestoreService {
   async getAnalyticsData(
     collection: (typeof COLLECTION)[keyof typeof COLLECTION],
     repo: (typeof REPO)[keyof typeof REPO],
-    useFirebaseEmulator: boolean = false,
+    useFirebaseEmulator = false,
   ): Promise<GithubAnalyticsTrafficDocument[]> {
-    let analyticsDataArr: GithubAnalyticsTrafficDocument[] = [];
+    const analyticsDataArr: GithubAnalyticsTrafficDocument[] = [];
     this.collection = collection;
     this.repo = repo;
     this.useFirebaseEmulator = useFirebaseEmulator;
 
-    if (this.repo == ALL_REPOS) {
+    if (this.repo === ALL_REPOS) {
       for (const repoEntry of REPOS) {
         this.repo = repoEntry.repo;
-        const analyticsData: GithubAnalyticsTrafficDocument =
-          await this.fetchAnalyticsForRepo();
+        const analyticsData = await this.fetchAnalyticsForRepo();
         analyticsDataArr.push(analyticsData);
       }
     } else {
-      const analyticsData: GithubAnalyticsTrafficDocument =
-        await this.fetchAnalyticsForRepo();
+      const analyticsData = await this.fetchAnalyticsForRepo();
       analyticsDataArr.push(analyticsData);
     }
 
     return analyticsDataArr;
   }
 
-  /**
+   /**
    * Fetches analytics data for a specific GitHub repository from Firestore.
    *
    * If the Firebase emulator is enabled, connects to the local Firestore emulator.
@@ -82,14 +85,15 @@ export class FirebaseFirestoreService {
   private async fetchAnalyticsForRepo(): Promise<GithubAnalyticsTrafficDocument> {
     if (this.useFirebaseEmulator) {
       console.log('Using Firebase Emulator for Firestore');
-      connectFirestoreEmulator(this.db, 'localhost', 8080);
+      this.firestoreAdapter.connectEmulator('localhost', 8080);
     }
-    const docRef = doc(this.db, this.collection, this.repo);
-    const docSnap = await getDoc(docRef);
+
+    const docSnap = await this.firestoreAdapter.getDocSnapshot(this.collection, this.repo);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
       let processingData = data;
+
       if (this.collection === COLLECTION.GITHUB_ANALYTICS_TRAFFIC) {
         // there is a small difference in structure between TRAFFIC and TRAFFIC_HISTORY
         processingData = {
@@ -98,57 +102,28 @@ export class FirebaseFirestoreService {
           timestamp: data['timestamp'] || '',
         };
       }
+
       return this.processData(processingData);
-    } else {
-      // If no analytics data is found, create a repository with empty statistics.
-      return this.createRepoWithEmptyStatistics(this.repo);
     }
+    // If no analytics data is found, create a repository with empty statistics.
+    return this.createRepoWithEmptyStatistics(this.repo);
   }
 
-  private createRepoWithEmptyStatistics(repo: (typeof REPO)[keyof typeof REPO]): GithubAnalyticsTrafficDocument {
-    return {
-      collection: this.collection,
-      repo,
-      timestamp: '',
-      views: {
-        count: 0,
-        uniques: 0,
-        views: [],
-      },
-      clones: {
-        count: 0,
-        uniques: 0,
-        clones: [],
-      },
-    };
-  }
-
-  /**
+   /**
    * Processes analytics data and logs results.
    * @param data - Raw analytics data from Firestore.
    * @private
    */
   private processData(data: any): GithubAnalyticsTrafficDocument {
-    // Process and log analytics data
     try {
       const viewsArr = data?.views ?? [];
       const clonesArr = data?.clones ?? [];
       const timestamp = data?.timestamp ?? '';
 
-      const viewsDoc = this.processStatistics(
-        TrafficType.VIEWS,
-        viewsArr,
-        timestamp,
-      );
+      const viewsDoc = this.processStatistics(TrafficType.VIEWS, viewsArr, timestamp);
+      const clonesDoc = this.processStatistics(TrafficType.CLONES, clonesArr, timestamp);
 
-      const clonesDoc = this.processStatistics(
-        TrafficType.CLONES,
-        clonesArr,
-        timestamp,
-      );
-
-      const mergedDoc = this.mergeDocuments(viewsDoc, clonesDoc);
-      return mergedDoc;
+      return this.mergeDocuments(viewsDoc, clonesDoc);
     } catch (error) {
       console.error('Error processing analytics data:', error);
       throw error;
@@ -182,7 +157,7 @@ export class FirebaseFirestoreService {
     }
 
     // Build the analytics document
-    const analyticsDoc: GithubAnalyticsTrafficDocument = {
+    return {
       collection: this.collection,
       repo: this.repo,
       timestamp,
@@ -197,11 +172,9 @@ export class FirebaseFirestoreService {
         clones: type === TrafficType.CLONES ? dailyEntries : [],
       },
     };
-
-    return analyticsDoc;
   }
 
-  /**
+    /**
    * Merges two analytics documents into one.
    * @param doc1 - First analytics document.
    * @param doc2 - Second analytics document.
@@ -212,7 +185,7 @@ export class FirebaseFirestoreService {
     doc1: GithubAnalyticsTrafficDocument,
     doc2: GithubAnalyticsTrafficDocument,
   ): GithubAnalyticsTrafficDocument {
-    const mergedDoc: GithubAnalyticsTrafficDocument = {
+    return {
       collection: this.collection,
       repo: this.repo,
       timestamp: doc2.timestamp,
@@ -227,6 +200,17 @@ export class FirebaseFirestoreService {
         clones: [...doc1.clones.clones, ...doc2.clones.clones],
       },
     };
-    return mergedDoc;
+  }
+
+  private createRepoWithEmptyStatistics(
+    repo: (typeof REPO)[keyof typeof REPO],
+  ): GithubAnalyticsTrafficDocument {
+    return {
+      collection: this.collection,
+      repo,
+      timestamp: '',
+      views: { count: 0, uniques: 0, views: [] },
+      clones: { count: 0, uniques: 0, clones: [] },
+    };
   }
 }
