@@ -1,5 +1,6 @@
 import { inject, Injectable, InjectionToken } from '@angular/core';
-import { connectFirestoreEmulator, doc, Firestore, getDoc } from 'firebase/firestore';
+import { connectFirestoreEmulator, doc, getDoc } from 'firebase/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 export const FIRESTORE_CONNECT_EMULATOR = new InjectionToken('FIRESTORE_CONNECT_EMULATOR', {
   factory: () => connectFirestoreEmulator,

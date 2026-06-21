@@ -27,13 +27,13 @@ export const FIREBASE_LOG_EVENT = new InjectionToken('FIREBASE_LOG_EVENT', {
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAnalyticsAdapterService {
-  private readonly initApp = inject(FIREBASE_APP_INIT);
+  private readonly initializeAppFn = inject(FIREBASE_APP_INIT);
   private readonly getAnalyticsFn = inject(FIREBASE_GET_ANALYTICS);
   private readonly setCollectionEnabledFn = inject(FIREBASE_SET_COLLECTION_ENABLED);
   private readonly logEventFn = inject(FIREBASE_LOG_EVENT);
 
   initialize(): Analytics {
-    const app = this.initApp(environment.firebase);
+    const app = this.initializeAppFn(environment.firebase);
     return this.getAnalyticsFn(app);
   }
 

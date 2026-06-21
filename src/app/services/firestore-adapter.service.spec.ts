@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import * as firestore from 'firebase/firestore';
-import { Firestore } from 'firebase/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import {
   FirestoreAdapterService,
   FIRESTORE_CONNECT_EMULATOR,

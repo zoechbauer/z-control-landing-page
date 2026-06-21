@@ -43,7 +43,7 @@ describe('FirebaseAnalyticsAdapterService', () => {
 
     expect(initializeAppSpy).toHaveBeenCalledWith(environment.firebase);
     expect(getAnalyticsSpy).toHaveBeenCalledWith({ app: 'app' });
-    expect(result).toContain({ analytics: true });
+    expect(result).toEqual(jasmine.objectContaining({ analytics: true }));
   });
 
   it('should set collection enabled', () => {
