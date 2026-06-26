@@ -1,8 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { addIcons } from 'ionicons';
-import { arrowBack } from 'ionicons/icons';
 import {
   IonHeader,
   IonToolbar,
@@ -27,8 +25,9 @@ import { UtilsService } from 'src/app/services/utils.service';
     IonIcon,
   ],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   public isMobile = false;
+  private resizeHandler?: () => void;
 
   @Input() selectedAccordion: string = '';
   @Input() showBackButton: boolean = false;
@@ -36,21 +35,15 @@ export class HeaderComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly utilsService: UtilsService
-  ) {
-    this.registerIcons();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isMobile = globalThis.window.innerWidth <= 600;
-    globalThis.window.addEventListener('resize', () => {
-      this.isMobile = globalThis.window.innerWidth <= 600;
-    });
-  }
 
-  private registerIcons() {
-    addIcons({
-      'arrow-back': arrowBack,
-    });
+    this.resizeHandler = () => {
+      this.isMobile = globalThis.window.innerWidth <= 600;
+    }
+    globalThis.window.addEventListener('resize', this.resizeHandler);
   }
 
   goBack() {
@@ -60,5 +53,11 @@ export class HeaderComponent implements OnInit {
   openFooter() {
     // firebase analytics event handled in footer component
     this.utilsService.onLogoClicked();
+  }
+
+  ngOnDestroy(): void {
+    if (this.resizeHandler) {
+      globalThis.window.removeEventListener('resize', this.resizeHandler);
+    }
   }
 }

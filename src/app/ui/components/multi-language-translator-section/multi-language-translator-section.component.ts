@@ -12,10 +12,8 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  ModalController,
 } from '@ionic/angular/standalone';
 import { APPS } from 'src/app/shared/GitHubConstants';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { MultipleLanguageTranslatorSectionParameters } from 'src/app/shared/app-interfaces';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -41,7 +39,6 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class MultiLanguageTranslatorSectionComponent {
   @Input() parameters?: MultipleLanguageTranslatorSectionParameters;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() subAccordionChangeEvent = new EventEmitter<string>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
     params: any;
@@ -52,9 +49,9 @@ export class MultiLanguageTranslatorSectionComponent {
   sourceCodeUrl =
     'https://github.com/zoechbauer/z-control-multi-language-translator';
   webAppUrl = 'https://z-control-translator.web.app';
+  selectedSubAccordion: string = '';
 
-  constructor(private readonly modalController: ModalController, private readonly utilsService: UtilsService) {
-  }
+  constructor(private readonly utilsService: UtilsService) {}
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
@@ -94,30 +91,20 @@ export class MultiLanguageTranslatorSectionComponent {
     });
   }
 
-  async openChangelog() {
-    const changeLogPath = 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md';
-    this.analyticsEvent.emit({
-      eventName: 'open_changelog',
-      params: {
-        changelog_for: this.parameters?.appSectionParameters.selectedAccordion,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: changeLogPath,
-        title: `Release Notes for ${this.parameters?.appSectionParameters.selectedAccordion}`,
-      },
-      cssClass: 'change-log-modal',
-    });
-
-    await modal.present();
+  async onOpenChangelog() {
+    const selectedAccordion = this.parameters?.appSectionParameters
+      .selectedAccordion as keyof typeof APPS;
+    await this.utilsService.openChangelog(selectedAccordion);
   }
 
-  subAccordionChange(parentGroup: string) {
-    this.subAccordionChangeEvent.emit(parentGroup);
+  subAccordionChange(event?: CustomEvent) {
+    this.selectedSubAccordion = event?.detail?.value || '';
+  }
+
+  getAccordionTooltip(value: string): string {
+    return this.selectedSubAccordion == value
+      ? `Collapse ${value}`
+      : `Expand ${value}`;
   }
 
   getMailToLinkForFeedback(): string {

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { BackendFunctionsSectionComponent } from './backend-functions-section.component';
 import { UtilsService } from 'src/app/services/utils.service';
 import { APPS } from 'src/app/shared/GitHubConstants';
+import { BackupScriptsSectionComponent } from './backup-scripts-section.component';
 
-describe('BackendFunctionsSectionComponent', () => {
-  let component: BackendFunctionsSectionComponent;
-  let fixture: ComponentFixture<BackendFunctionsSectionComponent>;
+describe('BackupScriptsSectionComponent', () => {
+  let component: BackupScriptsSectionComponent;
+  let fixture: ComponentFixture<BackupScriptsSectionComponent>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
   beforeEach(waitForAsync(() => {
@@ -18,13 +18,13 @@ describe('BackendFunctionsSectionComponent', () => {
     ]);
 
     TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), BackendFunctionsSectionComponent],
+      imports: [IonicModule.forRoot(), BackupScriptsSectionComponent],
       providers: [
         { provide: UtilsService, useValue: utilsServiceSpy },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BackendFunctionsSectionComponent);
+    fixture = TestBed.createComponent(BackupScriptsSectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -33,32 +33,6 @@ describe('BackendFunctionsSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should open GitHub analytics when onOpenGitHubAnalytics is called', async () => {
-    const selectedAccordion = APPS.BACKEND_FUNCTIONS;
-    component.parameters = {
-      appSectionParameters: {
-        selectedAccordion: selectedAccordion,
-      },
-    } as any;
-
-    await component.onOpenGitHubAnalytics();
-    expect(utilsServiceSpy.openGitHubAnalytics).toHaveBeenCalledWith(
-      APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
-    );
-  });
-
-  it('should open changelog when onOpenChangelog is called', async () => {
-    const selectedAccordion = APPS.BACKEND_FUNCTIONS;
-    component.parameters = {
-      appSectionParameters: {
-        selectedAccordion: selectedAccordion,
-      },
-    } as any;
-    await component.onOpenChangelog();
-    expect(utilsServiceSpy.openChangelog).toHaveBeenCalledWith(
-      APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
-    );
-  });
 
   it('should open source code URL in a new tab and emit analytics event when onGetSourceCode is called', () => {
     spyOn(globalThis.window, 'open');
@@ -72,7 +46,7 @@ describe('BackendFunctionsSectionComponent', () => {
     expect(component.analyticsEvent.emit).toHaveBeenCalledWith({
       eventName: 'get_source_code',
       params: {
-        repo: APPS.BACKEND_FUNCTIONS,
+        repo: APPS.BACKUP_SCRIPTS,
         app: APPS.LANDING_PAGE,
       },
     });
@@ -86,7 +60,7 @@ describe('BackendFunctionsSectionComponent', () => {
 
   it('should return correct mailto link for feedback', () => {
     const expectedMailToLink =
-      `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKEND_FUNCTIONS}%20Feedback`;
+      `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKUP_SCRIPTS}%20Feedback`;
     expect(component.getMailToLinkForFeedback()).toBe(expectedMailToLink);
   });
 

@@ -1,5 +1,5 @@
 <ion-accordion
-  value="BS: z-control Backup Scripts"
+  value="BS: Backup Scripts"
   title="{{
     parameters?.appSectionParameters?.currentMainAccordion === 'BS'
       ? 'Collapse z-control Backup Scripts section'
@@ -65,7 +65,7 @@
             color="primary"
             expand="block"
             (click)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backup-scripts-app/Backup Scripts for Development Projects.md'
               )
             "
@@ -78,7 +78,7 @@
             color="primary"
             expand="block"
             (click)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backup-scripts-app/Backup Scripts for non committed files.md'
               )
             "
@@ -91,7 +91,7 @@
             color="primary"
             expand="block"
             (click)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backup-scripts-app/Cleanup Development Projects Scripts.md'
               )
             "
@@ -104,7 +104,7 @@
             color="primary"
             expand="block"
             (click)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backup-scripts-app/Log Disk Space Scripts.md'
               )
             "
@@ -117,7 +117,7 @@
             color="medium"
             expand="block"
             (click)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backup-scripts-app/Upgrade PowerShell 5 to 7.md'
               )
             "
@@ -133,15 +133,11 @@
         </p>
       </ion-card-content>
     </ion-card>
-    <ion-accordion-group
-      (ionChange)="subAccordionChange('BS')"
-      title="{{
-        parameters?.appSectionParameters?.subAccordionOpened
-          ? 'Collapse details'
-          : 'Expand details'
-      }}"
-    >
-      <ion-accordion value="BS: Features">
+    <ion-accordion-group (ionChange)="subAccordionChange($event)">
+      <ion-accordion
+        value="BS: Features"
+        title="{{ getAccordionTooltip('BS: Features') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Key Features</ion-label>
         </ion-item>
@@ -182,7 +178,10 @@
           </ul>
         </div>
       </ion-accordion>
-      <ion-accordion value="BS: How to Use">
+      <ion-accordion
+        value="BS: How to Use"
+        title="{{ getAccordionTooltip('BS: How to Use') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>How to Use</ion-label>
         </ion-item>
@@ -218,7 +217,10 @@
           </ul>
         </div>
       </ion-accordion>
-      <ion-accordion value="BS: Feedback">
+      <ion-accordion
+        value="BS: Feedback"
+        title="{{ getAccordionTooltip('BS: Feedback') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -238,7 +240,10 @@
           </p>
         </div>
       </ion-accordion>
-      <ion-accordion value="BS: Get Source Code">
+      <ion-accordion
+        value="BS: Get Source Code"
+        title="{{ getAccordionTooltip('BS: Get Source Code') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>
@@ -250,6 +255,7 @@
           <div class="button-wrapper">
             <ion-button
               (click)="onGetSourceCode()"
+              (keydown.enter)="onGetSourceCode()"
               color="primary"
               expand="block"
               class="download-button"

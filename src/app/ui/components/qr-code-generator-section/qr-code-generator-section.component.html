@@ -1,9 +1,9 @@
 <ion-accordion
-  value="QR: QR Code Generator"
+  value="QR: QR Code"
   title="{{
     parameters?.appSectionParameters?.currentMainAccordion === 'QR'
-      ? 'Collapse QR Code Generator section'
-      : 'Expand QR Code Generator section'
+      ? 'Collapse z-control QR Code Generator section'
+      : 'Expand z-control QR Code Generator section'
   }}"
 >
   <ion-item slot="header" color="light">
@@ -47,15 +47,11 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-accordion-group
-      (ionChange)="subAccordionChange('QR')"
-      title="{{
-        parameters?.appSectionParameters?.subAccordionOpened
-          ? 'Collapse details'
-          : 'Expand details'
-      }}"
-    >
-      <ion-accordion value="QR: What are QR Codes">
+    <ion-accordion-group (ionChange)="subAccordionChange($event)">
+      <ion-accordion
+        value="QR: What are QR Codes"
+        title="{{ getAccordionTooltip('QR: What are QR Codes') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What are QR Codes and how can you use them?</ion-label>
         </ion-item>
@@ -156,6 +152,11 @@
 
       <ion-accordion
         value="QR: Differences between Web and Mobile App and Structure of the app"
+        title="{{
+          getAccordionTooltip(
+            'QR: Differences between Web and Mobile App and Structure of the app'
+          )
+        }}"
       >
         <ion-item slot="header" color="light">
           <ion-label
@@ -255,7 +256,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Start Web App">
+      <ion-accordion
+        value="QR: Start Web App"
+        title="{{ getAccordionTooltip('QR: Start Web App') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Try the Web App (No Installation Required)</ion-label>
         </ion-item>
@@ -386,7 +390,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Get Mobile App">
+      <ion-accordion
+        value="QR: Get Mobile App"
+        title="{{ getAccordionTooltip('QR: Get Mobile App') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Mobile App</ion-label>
         </ion-item>
@@ -474,7 +481,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Inline Help">
+      <ion-accordion
+        value="QR: Inline Help"
+        title="{{ getAccordionTooltip('QR: Inline Help') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Inline Help</ion-label>
         </ion-item>
@@ -569,7 +579,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Feedback">
+      <ion-accordion
+        value="QR: Feedback"
+        title="{{ getAccordionTooltip('QR: Feedback') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -590,7 +603,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Privacy Policy">
+      <ion-accordion
+        value="QR: Privacy Policy"
+        title="{{ getAccordionTooltip('QR: Privacy Policy') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Privacy Policy</ion-label>
         </ion-item>
@@ -615,22 +631,25 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Release Notes">
+      <ion-accordion
+        value="QR: Release Notes"
+        title="{{ getAccordionTooltip('QR: Release Notes') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Release Notes)</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
           <div>
             <ion-icon name="checkmark"></ion-icon>
-            All new features, improvements and bug fixes of the <i>z-control QR Code Generator</i> app are
-            tracked in
+            All new features, improvements and bug fixes of the
+            <i>z-control QR Code Generator</i> app are tracked in
           </div>
           <ion-button
             fill="clear"
             size="small"
-            (click)="openChangelog()"
-            (keydown.enter)="openChangelog()"
-            class="changelog-button"
+            (click)="onOpenChangelog()"
+            (keydown.enter)="onOpenChangelog()"
+            class="change-log-button"
             title="Open release notes (changelog) — grouped by category and sorted newest first"
           >
             <ion-icon name="list" slot="start"></ion-icon>
@@ -639,7 +658,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="QR: Get Source Code">
+      <ion-accordion
+        value="QR: Get Source Code"
+        title="{{ getAccordionTooltip('QR: Get Source Code') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

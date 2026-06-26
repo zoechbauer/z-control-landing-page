@@ -1,9 +1,9 @@
 <ion-accordion
-  value="IONIC_SETUP: Ionic Setup"
+  value="IS: Ionic Setup"
   title="{{
     parameters?.appSectionParameters?.currentMainAccordion === 'IONIC_SETUP'
-      ? 'Collapse Ionic Setup section'
-      : 'Expand Ionic Setup section'
+      ? 'Collapse z-control Ionic Setup section'
+      : 'Expand z-control Ionic Setup section'
   }}"
 >
   <ion-item slot="header" color="light">
@@ -13,8 +13,13 @@
       alt="z-control Ionic Setup Logo"
     />
     <ion-label>z-control Ionic Setup App</ion-label>
-    <ion-label *ngIf="showBackendFunctionsInfo">uses z-control Backend Functions</ion-label>
-    <ion-icon name="cloudy-outline" title="Uses z-control Backend Functions"></ion-icon>
+    <ion-label *ngIf="showBackendFunctionsInfo"
+      >uses z-control Backend Functions</ion-label
+    >
+    <ion-icon
+      name="cloudy-outline"
+      title="Uses z-control Backend Functions"
+    ></ion-icon>
   </ion-item>
   <div slot="content" title="">
     <ion-card color="dark">
@@ -74,7 +79,8 @@
           <li><strong>State Management:</strong> RxJS</li>
           <li>
             <strong>Backend:</strong> Firebase (Firestore, Cloud Functions,
-            Hosting) managed through the <i>z-control Backend Functions</i> project
+            Hosting) managed through the
+            <i>z-control Backend Functions</i> project
           </li>
           <li>
             <strong>Testing:</strong> Karma + Jasmine (frontend), Vitest
@@ -92,15 +98,11 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-accordion-group
-      (ionChange)="subAccordionChange('IS')"
-      title="{{
-        parameters?.appSectionParameters?.subAccordionOpened
-          ? 'Collapse details'
-          : 'Expand details'
-      }}"
-    >
-      <ion-accordion value="IS: Limitations and Monthly Quotas">
+    <ion-accordion-group (ionChange)="subAccordionChange($event)">
+      <ion-accordion
+        value="IS: Limitations and Monthly Quotas"
+        title="{{ getAccordionTooltip('IS: Limitations and Monthly Quotas') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What are the limitations and monthly quotas?</ion-label>
         </ion-item>
@@ -187,7 +189,12 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Differences between Web and Mobile App">
+      <ion-accordion
+        value="IS: Differences between Web and Mobile App"
+        title="{{
+          getAccordionTooltip('IS: Differences between Web and Mobile App')
+        }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Differences between Web and Mobile App</ion-label>
         </ion-item>
@@ -217,7 +224,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Start Web App">
+      <ion-accordion
+        value="IS: Start Web App"
+        title="{{ getAccordionTooltip('IS: Start Web App') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Try the Web App (No Installation Required)</ion-label>
         </ion-item>
@@ -281,7 +291,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Get Mobile App">
+      <ion-accordion
+        value="IS: Get Mobile App"
+        title="{{ getAccordionTooltip('IS: Get Mobile App') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Mobile App</ion-label>
         </ion-item>
@@ -341,7 +354,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Inline Help">
+      <ion-accordion
+        value="IS: Inline Help"
+        title="{{ getAccordionTooltip('IS: Inline Help') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Inline Help</ion-label>
         </ion-item>
@@ -404,7 +420,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Feedback">
+      <ion-accordion
+        value="IS: Feedback"
+        title="{{ getAccordionTooltip('IS: Feedback') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -425,7 +444,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Privacy Policy">
+      <ion-accordion
+        value="IS: Privacy Policy"
+        title="{{ getAccordionTooltip('IS: Privacy Policy') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Privacy Policy</ion-label>
         </ion-item>
@@ -456,22 +478,25 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Release Notes">
+      <ion-accordion
+        value="IS: Release Notes"
+        title="{{ getAccordionTooltip('IS: Release Notes') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Release Notes)</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
           <div>
             <ion-icon name="checkmark"></ion-icon>
-            All new features, improvements and bug fixes of the <i>z-control Ionic Setup</i> app are
-            tracked in
+            All new features, improvements and bug fixes of the
+            <i>z-control Ionic Setup</i> app are tracked in
           </div>
           <ion-button
             fill="clear"
             size="small"
-            (click)="openChangelog()"
-            (keydown.enter)="openChangelog()"
-            class="changelog-button"
+            (click)="onOpenChangelog()"
+            (keydown.enter)="onOpenChangelog()"
+            class="change-log-button"
             title="Open release notes (changelog) — grouped by category and sorted newest first"
           >
             <ion-icon name="list" slot="start"></ion-icon>
@@ -480,7 +505,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="IS: Get Source Code">
+      <ion-accordion
+        value="IS: Get Source Code"
+        title="{{ getAccordionTooltip('IS: Get Source Code') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

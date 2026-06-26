@@ -7,10 +7,7 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { addIcons } from 'ionicons';
-import { chevronBackOutline, globeOutline } from 'ionicons/icons';
 
-import { APPS } from 'src/app/shared/GitHubConstants';
 import { HeaderComponent } from '../../../ui/components/header/header.component';
 import { FooterComponent } from '../../../ui/components/footer/footer.component';
 import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
@@ -43,10 +40,8 @@ export class PrivacyViewerComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly privacyService: PrivacyService
-  ) {
-    addIcons({ chevronBackOutline, globeOutline });
-  }
+    private readonly privacyService: PrivacyService,
+  ) {}
 
   ngOnInit() {
     // Check for internal navigation first
@@ -67,7 +62,6 @@ export class PrivacyViewerComponent implements OnInit {
         this.showBackButtonAndFooter = true;
       }
     });
-    this.registerIcons();
   }
 
   private detectInternalNavigation() {
@@ -151,12 +145,5 @@ export class PrivacyViewerComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/home']);
-  }
-
-  private registerIcons() {
-    addIcons({
-      'globe-outline': globeOutline,
-      'chevron-back-outline': chevronBackOutline,
-    });
   }
 }

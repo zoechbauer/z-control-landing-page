@@ -11,11 +11,7 @@ import {
   IonIcon,
   ModalController,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { closeOutline } from 'ionicons/icons';
 
-// TODO: this markdown viewer component will also be used in z-control qr code generator app
-//       so extract it to a shared library 
 @Component({
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
@@ -40,9 +36,7 @@ export class MarkdownViewerComponent implements OnInit {
   constructor(
     private readonly http: HttpClient,
     private readonly modalController: ModalController
-  ) {
-    this.registerIcons();
-  }
+  ) {}
 
   ngOnInit() {
     this.loadMarkdownChangelog();
@@ -50,12 +44,6 @@ export class MarkdownViewerComponent implements OnInit {
 
   closeModal() {
     this.modalController.dismiss();
-  }
-
-  private registerIcons() {
-    addIcons({
-      'close-outline': closeOutline,
-    });
   }
 
   private loadMarkdownChangelog() {

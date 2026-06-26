@@ -2,6 +2,28 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [3.0] – 2026-06-26
+
+### 🚀 Improvements
+
+- Improved sub-accordion state handling on the Landing Page so the correct accordion state and tooltip information are shown consistently.
+- Added unit tests for the header, footer, app, and markdown viewer components to improve coverage and verify behavior across screen sizes and user interactions.
+- Added unit tests for UI components to verify that the correct methods are called when users interact with buttons and links.
+- Increased test coverage to 212 unit tests and 98.4% coverage for the Landing Page app, improving confidence in stability and reliability.
+
+### 🔧 Internal
+
+- Refactored the header component to use a dedicated resize handler for window resize events, improving performance and maintainability.
+- Refactored markdown document dialog handling to use a shared utility function, reducing duplication.
+- Moved icon registration from individual components into main.ts to centralize icon management and avoid repeated calls.
+- Refactored getVersionInfos to use a dedicated getVersionString helper, improving testability.
+- Renamed enableAnalytics to isAnalyticsEnabled for clearer naming and consistency.
+- Removed unused imports and dependencies to reduce clutter and improve maintainability.
+
+### 🐛 Fixes
+
+- Updated the footer cursor so it changes to a pointer only on clickable footer sections, making interactive areas clearer to users.
+
 ## [2.21] – 2026-06-21
 
 ### 🚀 Improvements

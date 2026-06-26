@@ -2,8 +2,8 @@
   value="MLT: Translator"
   title="{{
     parameters?.appSectionParameters?.currentMainAccordion === 'MLT'
-      ? 'Collapse Translator section'
-      : 'Expand Translator section'
+      ? 'Collapse z-control Translator section'
+      : 'Expand z-control Translator section'
   }}"
 >
   <ion-item slot="header" color="light">
@@ -13,8 +13,13 @@
       alt="z-control Translator Logo"
     />
     <ion-label>z-control Translator App</ion-label>
-    <ion-label *ngIf="showBackendFunctionsInfo">uses z-control Backend Functions</ion-label>
-    <ion-icon name="cloudy-outline" title="Uses z-control Backend Functions"></ion-icon>
+    <ion-label *ngIf="showBackendFunctionsInfo"
+      >uses z-control Backend Functions</ion-label
+    >
+    <ion-icon
+      name="cloudy-outline"
+      title="Uses z-control Backend Functions"
+    ></ion-icon>
   </ion-item>
   <div slot="content" title="">
     <ion-card color="dark">
@@ -66,15 +71,11 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-accordion-group
-      (ionChange)="subAccordionChange('MLT')"
-      title="{{
-        parameters?.appSectionParameters?.subAccordionOpened
-          ? 'Collapse details'
-          : 'Expand details'
-      }}"
-    >
-      <ion-accordion value="MLT: Limitations and Monthly Quotas">
+    <ion-accordion-group (ionChange)="subAccordionChange($event)">
+      <ion-accordion
+        value="MLT: Limitations and Monthly Quotas"
+        title="{{ getAccordionTooltip('MLT: Limitations and Monthly Quotas') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What are the limitations and monthly quotas?</ion-label>
         </ion-item>
@@ -146,7 +147,12 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Differences between Web and Mobile App">
+      <ion-accordion
+        value="MLT: Differences between Web and Mobile App"
+        title="{{
+          getAccordionTooltip('MLT: Differences between Web and Mobile App')
+        }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Differences between Web and Mobile App</ion-label>
         </ion-item>
@@ -184,12 +190,17 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Start Web App">
+      <ion-accordion
+        value="MLT: Start Web App"
+        title="{{ getAccordionTooltip('MLT: Start Web App') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Try the Web App (No Installation Required)</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <div>Explore the z-control Translator app directly in your browser.</div>
+          <div>
+            Explore the z-control Translator app directly in your browser.
+          </div>
 
           <p>
             Select your target languages, enter text, and experience translation
@@ -246,7 +257,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Get Mobile App">
+      <ion-accordion
+        value="MLT: Get Mobile App"
+        title="{{ getAccordionTooltip('MLT: Get Mobile App') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Mobile App</ion-label>
         </ion-item>
@@ -317,7 +331,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Inline Help">
+      <ion-accordion
+        value="MLT: Inline Help"
+        title="{{ getAccordionTooltip('MLT: Inline Help') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Inline Help</ion-label>
         </ion-item>
@@ -394,7 +411,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Feedback">
+      <ion-accordion
+        value="MLT: Feedback"
+        title="{{ getAccordionTooltip('MLT: Feedback') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -415,7 +435,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Privacy Policy">
+      <ion-accordion
+        value="MLT: Privacy Policy"
+        title="{{ getAccordionTooltip('MLT: Privacy Policy') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Privacy Policy</ion-label>
         </ion-item>
@@ -440,21 +463,25 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Release Notes">
+      <ion-accordion
+        value="MLT: Release Notes"
+        title="{{ getAccordionTooltip('MLT: Release Notes') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Release Notes)</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
           <div>
             <ion-icon name="checkmark"></ion-icon>
-            All new features, improvements and bug fixes of the <i>z-control Translator</i> app are tracked in
+            All new features, improvements and bug fixes of the
+            <i>z-control Translator</i> app are tracked in
           </div>
           <ion-button
             fill="clear"
             size="small"
-            (click)="openChangelog()"
-            (keydown.enter)="openChangelog()"
-            class="changelog-button"
+            (click)="onOpenChangelog()"
+            (keydown.enter)="onOpenChangelog()"
+            class="change-log-button"
             title="Open release notes (changelog) — grouped by category and sorted newest first"
           >
             <ion-icon name="list" slot="start"></ion-icon>
@@ -463,7 +490,10 @@
         </div>
       </ion-accordion>
 
-      <ion-accordion value="MLT: Get Source Code">
+      <ion-accordion
+        value="MLT: Get Source Code"
+        title="{{ getAccordionTooltip('MLT: Get Source Code') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

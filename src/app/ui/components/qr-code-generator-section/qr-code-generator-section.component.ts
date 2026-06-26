@@ -12,9 +12,7 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  ModalController,
 } from '@ionic/angular/standalone';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'src/app/shared/GitHubConstants';
 import { QrCodeGeneratorSectionParameters } from 'src/app/shared/app-interfaces';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -42,7 +40,6 @@ export class QrCodeGeneratorSectionComponent {
   @Input() parameters?: QrCodeGeneratorSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() subAccordionChangeEvent = new EventEmitter<string>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
     params: any;
@@ -52,11 +49,9 @@ export class QrCodeGeneratorSectionComponent {
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp';
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
   webAppUrl = 'https://z-control-qr-code.web.app';
+  selectedSubAccordion: string = '';
 
-  constructor(
-    private readonly modalController: ModalController,
-    private readonly utilsService: UtilsService,
-  ) {}
+  constructor(private readonly utilsService: UtilsService) {}
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');
@@ -92,14 +87,20 @@ export class QrCodeGeneratorSectionComponent {
     });
   }
 
-  async openChangelog() {
+  async onOpenChangelog() {
     const selectedAccordion = this.parameters?.appSectionParameters
       .selectedAccordion as keyof typeof APPS;
     this.utilsService.openChangelog(selectedAccordion);
   }
 
-  subAccordionChange(parentGroup: string) {
-    this.subAccordionChangeEvent.emit(parentGroup);
+  subAccordionChange(event?: CustomEvent) {
+    this.selectedSubAccordion = event?.detail?.value || '';
+  }
+
+  getAccordionTooltip(value: string): string {
+    return this.selectedSubAccordion == value
+      ? `Collapse ${value}`
+      : `Expand ${value}`;
   }
 
   getMailToLinkForFeedback(): string {

@@ -1,38 +1,5 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { addIcons } from 'ionicons';
-import {
-  book,
-  checkmark,
-  cloud,
-  construct,
-  contrastOutline,
-  documentTextOutline,
-  download,
-  eyeOutline,
-  globe,
-  help,
-  home,
-  information,
-  library,
-  list,
-  lockClosed,
-  logoFirebase,
-  logoGithub,
-  logoGooglePlaystore,
-  mail,
-  person,
-  phonePortrait,
-  rocket,
-  searchOutline,
-  sunny,
-  trashOutline,
-  warning,
-  cloudyOutline,
-  cloudCircleOutline,
-  informationCircle,
-  closeOutline
-} from 'ionicons/icons';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
 
 import { HeaderComponent, FooterComponent } from '../ui';
@@ -72,12 +39,11 @@ import { BackendFunctionsSectionComponent } from '../ui/components/backend-funct
     BackendFunctionsSectionComponent,
   ],
 })
-export class HomePage implements AfterViewInit {
+export class HomePage {
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
 
   selectedAccordion: string = APPS.LANDING_PAGE;
   currentMainAccordion: string = '';
-  subAccordionOpened: boolean = false;
   qrCodeGeneratorSectionParams?: QrCodeGeneratorSectionParameters;
   backupScriptsSectionParams?: BackupScriptsSectionParameters;
   multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
@@ -87,49 +53,10 @@ export class HomePage implements AfterViewInit {
   constructor(
     private readonly fa: FirebaseAnalyticsService,
     private readonly localStorageService: LocalStorageService,
-  ) {
-    this.registerIcons();
-  }
+  ) {}
 
-  private registerIcons() {
-    addIcons({
-      book: book,
-      checkmark: checkmark,
-      'cloud-download': cloud,
-      'cloud-upload-outline': cloud,
-      'search-outline': searchOutline,
-      'trash-outline': trashOutline,
-      construct: construct,
-      download: download,
-      globe: globe,
-      help: help,
-      home: home,
-      information: information,
-      library: library,
-      list: list,
-      'lock-closed': lockClosed,
-      'logo-firebase': logoFirebase,
-      'logo-github': logoGithub,
-      'logo-google-playstore': logoGooglePlaystore,
-      mail: mail,
-      person: person,
-      'phone-portrait': phonePortrait,
-      rocket: rocket,
-      sunny: sunny,
-      warning: warning,
-      'eye-outline': eyeOutline,
-      'contrast-outline': contrastOutline,
-      'document-text': documentTextOutline,
-      'cloudy-outline': cloudyOutline,
-      'cloud-circle-outline': cloudCircleOutline,
-      'information-circle': informationCircle,
-      'close-outline': closeOutline,
-    });
-  }
-
-  ngAfterViewInit() {
-    // do not open accordion automatically as we have now 2 accordions
-    // this.openQRCodeGeneratorAccordion();
+  get isAnalyticsAllowed(): boolean {
+    return this.localStorageService.getAnalyticsConsent() === true;
   }
 
   handleAnalyticsEvent(event: { eventName: string; params: any }) {
@@ -147,50 +74,35 @@ export class HomePage implements AfterViewInit {
     if (value?.startsWith('QR')) {
       this.currentMainAccordion = 'QR'; // qr code generator
       this.setSelectedAccordion('QR');
-      this.subAccordionOpened = false;
     } else if (value?.startsWith('BS')) {
       // backup scripts
       this.currentMainAccordion = 'BS';
       this.setSelectedAccordion('BS');
-      this.subAccordionOpened = false;
     } else if (value?.startsWith('MLT')) {
       // multi-language translator
       this.currentMainAccordion = 'MLT';
       this.setSelectedAccordion('MLT');
-      this.subAccordionOpened = false;
     } else if (value?.startsWith('IS')) {
       // ionic setup
       this.currentMainAccordion = 'IS';
       this.setSelectedAccordion('IS');
-      this.subAccordionOpened = false;
     } else if (value?.startsWith('BF')) {
       // backup functions
       this.currentMainAccordion = 'BF';
       this.setSelectedAccordion('BF');
-      this.subAccordionOpened = false;
     } else if (value === undefined || value === '' || value === null) {
       // it could be main accordion closing or sub-accordion activity
       // only clear if main accordion is closed
       this.handlePotentialMainAccordionClose();
     }
-    // For all other values (sub-accordion values like '1a', '1b', '1c', '1e', etc.)
+    // For all other values (sub-accordion values like '*QR', '*MLT', etc.)
     // we do nothing - keep the current header text
   }
 
   private handlePotentialMainAccordionClose() {
-    if (this.subAccordionOpened) {
-      // This was triggered by sub-accordion activity - keep header
-      // Reset the flag for next time
-      this.subAccordionOpened = false;
-    } else {
-      // Main accordion is actually closing
-      this.currentMainAccordion = '';
-      this.selectedAccordion = APPS.LANDING_PAGE;
-    }
-  }
-
-  subAccordionChange(parentGroup?: string) {
-    this.subAccordionOpened = true;
+    // Main accordion is actually closing
+    this.currentMainAccordion = '';
+    this.setSelectedAccordion('');
   }
 
   setSelectedAccordion(group: string) {
@@ -215,23 +127,9 @@ export class HomePage implements AfterViewInit {
         this.selectedAccordion = APPS.BACKEND_FUNCTIONS;
         this.setBackendFunctionsParameters();
         break;
-      case undefined:
-      case '':
-        this.selectedAccordion = APPS.LANDING_PAGE;
-        break;
       default:
         this.selectedAccordion = APPS.LANDING_PAGE;
     }
-  }
-
-  get isAnalyticsAllowed(): boolean {
-    return this.localStorageService.getAnalyticsConsent() === true;
-  }
-
-  private openQRCodeGeneratorAccordion() {
-    (this.accordionGroup as any).value = 'QR: QR Code Generator';
-    this.currentMainAccordion = 'QR';
-    this.setSelectedAccordion('QR');
   }
 
   private setBackupScriptsParameters() {
@@ -279,7 +177,6 @@ export class HomePage implements AfterViewInit {
     return {
       selectedAccordion: this.selectedAccordion,
       currentMainAccordion: this.currentMainAccordion,
-      subAccordionOpened: this.subAccordionOpened,
       isAnalyticsAllowed: this.isAnalyticsAllowed,
     };
   }

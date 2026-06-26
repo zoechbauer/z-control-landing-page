@@ -12,10 +12,8 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  ModalController,
 } from '@ionic/angular/standalone';
 import { APPS } from 'src/app/shared/GitHubConstants';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { IonicSetupSectionParameters } from 'src/app/shared/app-interfaces';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -41,7 +39,6 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class IonicSetupSectionComponent {
   @Input() parameters?: IonicSetupSectionParameters;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() subAccordionChangeEvent = new EventEmitter<string>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
     params: any;
@@ -51,11 +48,9 @@ export class IonicSetupSectionComponent {
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup';
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-ionic-setup';
   webAppUrl = 'https://z-control-ionic-setup.web.app';
+  selectedSubAccordion: string = '';
 
-  constructor(
-    private readonly modalController: ModalController,
-    private readonly utilsService: UtilsService,
-  ) {}
+  constructor(private readonly utilsService: UtilsService) {}
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
@@ -95,13 +90,20 @@ export class IonicSetupSectionComponent {
     });
   }
 
-  async openChangelog() {
-    const selectedAccordion = this.parameters?.appSectionParameters.selectedAccordion as keyof typeof APPS;
+  async onOpenChangelog() {
+    const selectedAccordion = this.parameters?.appSectionParameters
+      .selectedAccordion as keyof typeof APPS;
     this.utilsService.openChangelog(selectedAccordion);
   }
 
-  subAccordionChange(parentGroup: string) {
-    this.subAccordionChangeEvent.emit(parentGroup);
+  subAccordionChange(event?: CustomEvent) {
+    this.selectedSubAccordion = event?.detail?.value || '';
+  }
+
+  getAccordionTooltip(value: string): string {
+    return this.selectedSubAccordion == value
+      ? `Collapse ${value}`
+      : `Expand ${value}`;
   }
 
   getMailToLinkForFeedback(): string {

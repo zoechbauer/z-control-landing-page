@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { FirebaseAnalyticsAdapterService } from './firebase-analytics-adapter.service';
 import { WindowRefService } from './window-ref.service';
+
 @Injectable({ providedIn: 'root' })
 export class FirebaseAnalyticsService {
   private analytics: Analytics | null = null;

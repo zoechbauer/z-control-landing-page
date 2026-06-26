@@ -7,14 +7,14 @@
 </div>
 
 <ion-content class="ion-padding">
-  <div class="general info">
+  <div class="welcome-info">
     <h2>Welcome to our Applications & Tools</h2>
     @if (isAnalyticsAllowed) {
-    <p>
+    <div class="feature">
       Discover and access our suite of open-source apps and developer tools.<br />
       Browse features, platform-specific guides, and documentation to get
       started or find support.
-    </p>
+    </div>
     } @if (!isAnalyticsAllowed) {
     <div class="analytics-not-allowed">
       <p class="ion-text-left">
@@ -38,27 +38,25 @@
   >
     <app-qr-code-generator-section
       [parameters]="qrCodeGeneratorSectionParams"
-      (subAccordionChangeEvent)="subAccordionChange($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
     <app-backup-scripts-section
       [parameters]="backupScriptsSectionParams"
-      (subAccordionChangeEvent)="subAccordionChange($event)"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
     <app-multi-language-translator-section
       [parameters]="multiLanguageTranslatorSectionParams"
-      (subAccordionChangeEvent)="subAccordionChange($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
     <app-ionic-setup-section
       [parameters]="ionicSetupSectionParams"
-      (subAccordionChangeEvent)="subAccordionChange($event)"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
     <app-backend-functions-section
       [parameters]="backendFunctionsSectionParams"
-      (subAccordionChangeEvent)="subAccordionChange($event)"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
   </ion-accordion-group>

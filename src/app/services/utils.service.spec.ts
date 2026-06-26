@@ -13,8 +13,16 @@ describe('UtilsService', () => {
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
 
   const setViewport = (width: number, height: number, portrait: boolean) => {
-    spyOnProperty(window, 'innerWidth', 'get').and.returnValue(width);
-    spyOnProperty(window, 'innerHeight', 'get').and.returnValue(height);
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: width,
+    });
+
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: height,
+    });
+    
     spyOn(globalThis, 'matchMedia').and.returnValue({
       matches: portrait,
       media: '(orientation: portrait)',
@@ -29,12 +37,18 @@ describe('UtilsService', () => {
 
   beforeEach(() => {
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
-    firebaseAnalyticsServiceSpy = jasmine.createSpyObj('FirebaseAnalyticsService', ['logEvent']);
+    firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
+      'FirebaseAnalyticsService',
+      ['logEvent'],
+    );
 
     TestBed.configureTestingModule({
       providers: [
         { provide: ModalController, useValue: modalControllerSpy },
-        { provide: FirebaseAnalyticsService, useValue: firebaseAnalyticsServiceSpy },
+        {
+          provide: FirebaseAnalyticsService,
+          useValue: firebaseAnalyticsServiceSpy,
+        },
       ],
     });
 
@@ -88,10 +102,16 @@ describe('UtilsService', () => {
 
   describe('openGitHubAnalytics', () => {
     it('should log analytics and open the GitHub Analytics modal', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
-      await service.openGitHubAnalytics(APPS.BACKEND_FUNCTIONS as keyof typeof APPS);
+      await service.openGitHubAnalytics(
+        APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
+      );
 
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'view_github_analytics',
@@ -110,8 +130,12 @@ describe('UtilsService', () => {
 
   describe('openChangelog', () => {
     it('should log analytics and open changelog for landing page', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
       await service.openChangelog(APPS.LANDING_PAGE as keyof typeof APPS);
 
@@ -125,7 +149,8 @@ describe('UtilsService', () => {
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
-          fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
+          fullChangeLogPath:
+            'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
           title: `Changelog for ${APPS.LANDING_PAGE}`,
         },
         cssClass: 'change-log-modal',
@@ -134,15 +159,20 @@ describe('UtilsService', () => {
     });
 
     it('should open backend functions changelog with correct path', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
       await service.openChangelog(APPS.BACKEND_FUNCTIONS as keyof typeof APPS);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
-          fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
+          fullChangeLogPath:
+            'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
           title: `Changelog for ${APPS.BACKEND_FUNCTIONS}`,
         },
         cssClass: 'change-log-modal',
@@ -158,8 +188,12 @@ describe('UtilsService', () => {
     });
 
     it('should open ionic setup changelog with correct path', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
       await service.openChangelog(APPS.IONIC_SETUP as keyof typeof APPS);
 
@@ -175,8 +209,12 @@ describe('UtilsService', () => {
     });
 
     it('should open qr code generator changelog with correct path', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
       await service.openChangelog(APPS.QR_CODE_GENERATOR as keyof typeof APPS);
 
@@ -192,15 +230,22 @@ describe('UtilsService', () => {
     });
 
     it('should open multi-language translator changelog with correct path', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
-      await service.openChangelog(APPS.MULTI_LANGUAGE_TRANSLATOR as keyof typeof APPS);
+      await service.openChangelog(
+        APPS.MULTI_LANGUAGE_TRANSLATOR as keyof typeof APPS,
+      );
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
-          fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
+          fullChangeLogPath:
+            'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
           title: `Changelog for ${APPS.MULTI_LANGUAGE_TRANSLATOR}`,
         },
         cssClass: 'change-log-modal',
@@ -209,8 +254,12 @@ describe('UtilsService', () => {
     });
 
     it('should return empty path for unknown accordion and still open modal', async () => {
-      const presentSpy = jasmine.createSpy('present').and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(Promise.resolve({ present: presentSpy } as any));
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
 
       await service.openChangelog('UNKNOWN' as keyof typeof APPS);
 
@@ -222,6 +271,39 @@ describe('UtilsService', () => {
         },
         cssClass: 'change-log-modal',
       });
+      expect(presentSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('openMarkdownDoc', () => {
+    it('should log analytics and open the markdown document in a modal', async () => {
+      const docPath = 'assets/app-docs/test-doc.md';
+      const docFile = 'test-doc.md';
+
+      const presentSpy = jasmine
+        .createSpy('present')
+        .and.returnValue(Promise.resolve());
+      modalControllerSpy.create.and.returnValue(
+        Promise.resolve({ present: presentSpy } as any),
+      );
+
+      await service.openMarkdownDoc(docPath);
+
+      expect(modalControllerSpy.create).toHaveBeenCalledWith({
+        component: MarkdownViewerComponent,
+        componentProps: {
+          fullChangeLogPath: docPath,
+          title: `GitHub Documentation:<br>${docFile}`,
+        },
+        cssClass: 'documentation-modal',
+      });
+      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
+        'open_markdown_document',
+        {
+          document: docFile,
+          app: APPS.LANDING_PAGE,
+        },
+      );
       expect(presentSpy).toHaveBeenCalled();
     });
   });

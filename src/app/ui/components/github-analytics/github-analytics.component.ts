@@ -15,8 +15,6 @@ import {
   IonAccordion,
   IonSpinner,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { closeOutline, logoGithub, alertCircleOutline } from 'ionicons/icons';
 import {
   COLLECTION,
   REPO,
@@ -27,6 +25,7 @@ import {
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.service';
 import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-github-analytics',
@@ -61,9 +60,8 @@ export class GithubAnalyticsComponent implements OnInit {
     private readonly fa: FirebaseAnalyticsService,
     private readonly firestoreService: FirebaseFirestoreService,
     private readonly modalController: ModalController,
-  ) {
-    addIcons({ closeOutline, alertCircleOutline, logoGithub });
-  }
+    private readonly utilsService: UtilsService,
+  ) {}
 
   ngOnInit() {
     this.init();
@@ -71,7 +69,6 @@ export class GithubAnalyticsComponent implements OnInit {
 
   async init() {
     this.isLoading = true;
-    this.registerIcons();
     this.analyticsData = await this.getAnalyticsData(
       COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY,
     );
@@ -188,22 +185,11 @@ export class GithubAnalyticsComponent implements OnInit {
    * Sets isMobilePortrait to true if so.
    */
   private checkOrientation(): void {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    // Consider mobile if width <= 600px and portrait
-    this.isMobilePortrait = width <= 600 && height > width;
+    this.isMobilePortrait = this.utilsService.isSmallScreen && this.utilsService.isPortrait;
   }
 
   private getSourceCodeUrl(repo: (typeof REPO)[keyof typeof REPO]): string {
     return `https://github.com/zoechbauer/${repo}`;
-  }
-
-  private registerIcons() {
-    addIcons({
-      'close-outline': closeOutline,
-      'logo-github': logoGithub,
-      'alert-circle-outline': alertCircleOutline,
-    });
   }
 
   /**

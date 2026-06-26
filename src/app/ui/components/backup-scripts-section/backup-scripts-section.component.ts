@@ -11,11 +11,10 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  ModalController,
 } from '@ionic/angular/standalone';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'src/app/shared/GitHubConstants';
 import { BackupScriptsSectionParameters } from 'src/app/shared/app-interfaces';
+import { UtilsService } from 'src/app/services/utils.service';
 @Component({
   selector: 'app-backup-scripts-section',
   templateUrl: './backup-scripts-section.component.html',
@@ -38,15 +37,17 @@ export class BackupScriptsSectionComponent {
   @Input() parameters?: BackupScriptsSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() subAccordionChangeEvent = new EventEmitter<string>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
     params: any;
   }>();
 
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backup-scripts';
+  selectedSubAccordion: string = '';
 
-  constructor(private readonly modalController: ModalController) {}
+  constructor(
+    private readonly utilsService: UtilsService,
+  ) {}
 
   onGetSourceCode() {
     globalThis.window.open(this.sourceCodeUrl, '_blank');
@@ -59,29 +60,18 @@ export class BackupScriptsSectionComponent {
     });
   }
 
-  async openMarkdownDoc(docPath: string) {
-    const docFileName = docPath.split('/').pop();
-    this.analyticsEvent.emit({
-      eventName: 'open_markdown_document',
-      params: {
-        document: docFileName,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: docPath,
-        title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
-      },
-      cssClass: 'documentation-modal',
-    });
-    await modal.present();
+  async onOpenMarkdownDoc(docPath: string) {
+    await this.utilsService.openMarkdownDoc(docPath);
   }
 
-  subAccordionChange(parentGroup: string) {
-    this.subAccordionChangeEvent.emit(parentGroup);
+  subAccordionChange(event?: CustomEvent) {
+    this.selectedSubAccordion = event?.detail?.value || '';
+  }
+
+  getAccordionTooltip(value: string): string {
+    return this.selectedSubAccordion == value
+      ? `Collapse ${value}`
+      : `Expand ${value}`;
   }
 
   getMailToLinkForFeedback(): string {

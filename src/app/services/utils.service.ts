@@ -52,6 +52,31 @@ export class UtilsService {
   }
 
   /**
+   * Opens a markdown document in a modal.
+   * @param docPath The path to the markdown document.
+   */
+  async openMarkdownDoc(docPath: string) {
+    const docFileName = docPath.split('/').pop();
+    this.handleAnalyticsEvent({
+      eventName: 'open_markdown_document',
+      params: {
+        document: docFileName,
+        app: APPS.LANDING_PAGE,
+      },
+    });
+
+    const modal = await this.modalController.create({
+      component: MarkdownViewerComponent,
+      componentProps: {
+        fullChangeLogPath: docPath,
+        title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
+      },
+      cssClass: 'documentation-modal',
+    });
+    await modal.present();
+  }
+
+  /**
    * Opens a modal displaying the GitHub Analytics Dashboard for the selected accordion section.
    * @param selectedAccordion The selected accordion section for which to display the GitHub Analytics Dashboard.
    */

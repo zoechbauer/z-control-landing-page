@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { Subscription } from 'rxjs';
 
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
 import { FirebaseAnalyticsAdapterService } from './firebase-analytics-adapter.service';

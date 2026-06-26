@@ -1,5 +1,5 @@
 <ion-accordion
-  value="BF: z-control Backend Functions"
+  value="BF: Backend Functions"
   title="{{
     parameters?.appSectionParameters?.currentMainAccordion === 'BF'
       ? 'Collapse z-control Backend Functions section'
@@ -62,12 +62,12 @@
             color="primary"
             expand="block"
             (click)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
               )
             "
             (keydown.enter)="
-              openMarkdownDoc(
+              onOpenMarkdownDoc(
                 'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
               )
             "
@@ -84,14 +84,10 @@
       </ion-card-content>
     </ion-card>
     <ion-accordion-group
-      (ionChange)="subAccordionChange('BS')"
-      title="{{
-        parameters?.appSectionParameters?.subAccordionOpened
-          ? 'Collapse details'
-          : 'Expand details'
-      }}"
+      (ionChange)="subAccordionChange($event)"
     >
-      <ion-accordion value="BF: Features">
+      <ion-accordion value="BF: Features"
+      title="{{ getAccordionTooltip('BF: Features') }}">
         <ion-item slot="header" color="light">
           <ion-label>Key Features</ion-label>
         </ion-item>
@@ -118,7 +114,7 @@
           </ul>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: How to Use">
+      <ion-accordion value="BF: How to Use" title="{{ getAccordionTooltip('BF: How to Use') }}">
         <ion-item slot="header" color="light">
           <ion-label>How to Use</ion-label>
         </ion-item>
@@ -137,7 +133,7 @@
           </ol>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Github Analytics">
+      <ion-accordion value="BF: Github Analytics" title="{{ getAccordionTooltip('BF: Github Analytics') }}">
         <ion-item slot="header" color="light">
           <ion-label>GitHub Analytics for z-control Repositories</ion-label>
         </ion-item>
@@ -184,7 +180,7 @@
           </div>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Feedback">
+      <ion-accordion value="BF: Feedback" title="{{ getAccordionTooltip('BF: Feedback') }}">
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -204,7 +200,7 @@
           </p>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Changelog">
+      <ion-accordion value="BF: Changelog" title="{{ getAccordionTooltip('BF: Changelog') }}">
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Changelog)</ion-label>
         </ion-item>
@@ -219,7 +215,7 @@
             size="small"
             (click)="onOpenChangelog()"
             (keydown.enter)="onOpenChangelog()"
-            class="changelog-button"
+            class="change-log-button"
             title="Open change log — grouped by category and sorted newest first"
           >
             <ion-icon name="list" slot="start"></ion-icon>
@@ -227,7 +223,7 @@
           </ion-button>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Get Source Code">
+      <ion-accordion value="BF: Get Source Code" title="{{ getAccordionTooltip('BF: Get Source Code') }}">
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

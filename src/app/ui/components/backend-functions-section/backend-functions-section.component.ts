@@ -11,9 +11,7 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  ModalController,
 } from '@ionic/angular/standalone';
-import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { APPS } from 'src/app/shared/GitHubConstants';
 import { BackendFunctionsSectionParameters } from 'src/app/shared/app-interfaces';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -40,18 +38,15 @@ export class BackendFunctionsSectionComponent {
   @Input() parameters?: BackendFunctionsSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() subAccordionChangeEvent = new EventEmitter<string>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
     params: any;
   }>();
 
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backend-functions';
+  selectedSubAccordion: string = '';
 
-  constructor(
-    private readonly modalController: ModalController,
-    private readonly util: UtilsService,
-  ) {}
+  constructor(private readonly utilsService: UtilsService) {}
 
   onGetSourceCode() {
     globalThis.window.open(this.sourceCodeUrl, '_blank');
@@ -67,38 +62,27 @@ export class BackendFunctionsSectionComponent {
   async onOpenGitHubAnalytics() {
     const selectedAccordion = this.parameters?.appSectionParameters
       .selectedAccordion as keyof typeof APPS;
-    await this.util.openGitHubAnalytics(selectedAccordion);
+    await this.utilsService.openGitHubAnalytics(selectedAccordion);
   }
 
   async onOpenChangelog() {
     const selectedAccordion = this.parameters?.appSectionParameters
       .selectedAccordion as keyof typeof APPS;
-    await this.util.openChangelog(selectedAccordion);
+    await this.utilsService.openChangelog(selectedAccordion);
   }
 
-  async openMarkdownDoc(docPath: string) {
-    const docFileName = docPath.split('/').pop();
-    this.analyticsEvent.emit({
-      eventName: 'open_markdown_document',
-      params: {
-        document: docFileName,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-
-    const modal = await this.modalController.create({
-      component: MarkdownViewerComponent,
-      componentProps: {
-        fullChangeLogPath: docPath,
-        title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
-      },
-      cssClass: 'documentation-modal',
-    });
-    await modal.present();
+  async onOpenMarkdownDoc(docPath: string) {
+    await this.utilsService.openMarkdownDoc(docPath);
   }
 
-  subAccordionChange(parentGroup: string) {
-    this.subAccordionChangeEvent.emit(parentGroup);
+  subAccordionChange(event?: CustomEvent) {
+    this.selectedSubAccordion = event?.detail?.value || '';
+  }
+
+  getAccordionTooltip(value: string): string {
+    return this.selectedSubAccordion == value
+      ? `Collapse ${value}`
+      : `Expand ${value}`;
   }
 
   getMailToLinkForFeedback(): string {
