@@ -89,6 +89,7 @@ describe('GithubAnalyticsComponent', () => {
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'isSmallScreen',
       'isPortrait',
+      'openMarkdownDoc',
     ]);
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), GithubAnalyticsComponent],
@@ -181,7 +182,7 @@ describe('GithubAnalyticsComponent', () => {
       windowOpenSpy = spyOn(globalThis.window, 'open');
     });
 
-    it('should call logEvent on FirebaseAnalyticsService with correct parameters', () => {
+    it('should open source and call logEvent on FirebaseAnalyticsService with correct parameters', () => {
       REPOS.forEach((repoObj) => {
         const url = `https://github.com/zoechbauer/${repoObj.repo}`;
         component.onGetSourceCode(repoObj.repo);
@@ -190,7 +191,7 @@ describe('GithubAnalyticsComponent', () => {
           .withContext('window.open for repo: ' + repoObj.repo)
           .toHaveBeenCalledWith(url, '_blank');
 
-        expect((component as any).fa.logEvent)
+        expect(firebaseAnalyticsService.logEvent)
           .withContext('logEvent for repo: ' + repoObj.repo)
           .toHaveBeenCalledWith('get_source_code', {
             repo: repoObj.repo,
@@ -207,6 +208,44 @@ describe('GithubAnalyticsComponent', () => {
 
       expect(console.error).toHaveBeenCalledWith(
         'Error opening source code URL:',
+        jasmine.any(Error),
+      );
+    });
+  });
+
+  describe('onOpenGithubAnalyticsHelp', () => {
+    beforeEach(() => {
+      spyOn(firebaseAnalyticsService, 'logEvent');
+      utilsServiceSpy.openMarkdownDoc.and.returnValue(Promise.resolve());
+    });
+
+    it('should open markdown and call logEvent on FirebaseAnalyticsService with correct parameters', async () => {
+      for (const repoObj of REPOS) {
+        await component.onOpenGithubAnalyticsHelp(repoObj.repo);
+
+        expect(utilsServiceSpy.openMarkdownDoc)
+          .withContext('openMarkdownDoc for repo: ' + repoObj.repo)
+          .toHaveBeenCalledWith(
+            'assets/app-docs/backend-functions-app/github-analytics-help.md',
+          );
+
+        expect(firebaseAnalyticsService.logEvent)
+          .withContext('logEvent for repo: ' + repoObj.repo)
+          .toHaveBeenCalledWith('get_github_analytics_help', {
+            repo: repoObj.repo,
+            app: REPO.Z_CONTROL_LANDING_PAGE,
+          });
+      }
+    });
+
+    it('should log error when open markdown fails', async () => {
+      utilsServiceSpy.openMarkdownDoc.and.rejectWith(new Error('Test error'));
+      spyOn(console, 'error');
+
+      await component.onOpenGithubAnalyticsHelp(REPOS[0].repo);
+
+      expect(console.error).toHaveBeenCalledWith(
+        'Error opening GitHub Analytics help document:',
         jasmine.any(Error),
       );
     });

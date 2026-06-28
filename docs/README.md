@@ -19,6 +19,15 @@ This folder contains technical documentation and guides for the Landing Page app
 - **[FIRESTORE_BACKUP_RESTORE_GUIDE.md](./FIRESTORE_BACKUP_RESTORE_GUIDE.md)** - Complete guide for Firestore backups and restores with Firebase Console and gcloud CLI methods, including multiple restore strategies and best practices
 - **[FIRESTORE_EXPORT_IMPORT_TROUBLESHOOTING.md](./FIRESTORE_EXPORT_IMPORT_TROUBLESHOOTING.md)** - Troubleshooting guide for collection filtering issues, subcollection exports, empty data problems, and cross-project import scenarios
 
+### z-control GitHub Analytics
+
+- **[GITHUB_ANALYTICS_ARCHITECTURE.md](./GITHUB_ANALYTICS_ARCHITECTURE.md)**  
+  Detailed architecture document for the GitHub Analytics feature, covering data fetching, Firestore storage structure, shared constants, and local testing instructions.
+- **[GITHUB_ANALYTICS_TEST_LOCALLY.md](./GITHUB_ANALYTICS_TEST_LOCALLY.md)**  
+  Instructions for testing the GitHub Analytics Cloud Function locally using the Firebase Emulator Suite, including environment variable setup and curl examples.
+- **[GITHUB_ANALYTICS_EXPLANATION.md](./GITHUB_ANALYTICS_EXPLANATION.md)**  
+  Explanation of GitHub Analytics metrics, including clones, unique clones, visitors, and unique visitors. Provides examples and clarifies how GitHub counts these metrics
+
 ## Main Project Files
 
 The following important files remain in the project root:

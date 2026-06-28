@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular/standalone';
 import { NavigationEnd, provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -12,7 +12,7 @@ describe('AppComponent', () => {
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
 
-  beforeEach(() => {
+  beforeEach(waitForAsync(() => {
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
       'FirebaseAnalyticsService',
@@ -34,7 +34,7 @@ describe('AppComponent', () => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create the app', async () => {
     expect(component).toBeTruthy();

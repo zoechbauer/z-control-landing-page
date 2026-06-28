@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -15,7 +15,7 @@ describe('HomePage', () => {
   let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
-  beforeEach(async () => {
+  beforeEach(waitForAsync(() => {
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
       'FirebaseAnalyticsService',
       ['logEvent', 'enableCollection', 'init'],
@@ -38,7 +38,7 @@ describe('HomePage', () => {
     ]);
     utilsServiceSpy.logoClicked$ = of(false);
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [HomePage],
       providers: [
         {
@@ -54,7 +54,7 @@ describe('HomePage', () => {
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   describe('Class logic', () => {
     it('should create', () => {

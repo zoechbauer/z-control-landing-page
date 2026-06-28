@@ -84,6 +84,7 @@ landing-page/
 │  ├─ FIREBASE_SECURITY.md
 │  ├─ GITHUB_ANALYTICS_ARCHITECTURE.md
 │  ├─ GITHUB_ANALYTICS_TEST_LOCALLY.md
+│  ├─ GITHUB_ANALYTICS_EXPLANATION.md
 │  ├─ PRIVACY_POLICY_ARCHITECTURE.md
 │  ├─ unit-tests/
 │  │  ├─ FIREBASE_ANALYTICS_SERVICE_TESTS.md
@@ -119,6 +120,12 @@ landing-page/
    │  └─ environment.prod.ts
    ├─ assets/
    │  ├─ icon/
+   │  ├─ app-docs/
+   │  │  ├─ backup-scripts-app/
+   │  │  │   └─ example folders and files
+   │  │  └─ backend-functions-app/
+   │  │     ├─ github-analytics-help.md
+   │  │     └─ firebase-functions-multi-app-deploy-playbook.md
    │  ├─ logs/
    │  │  └─ change-logs/
    │  │        ├─ CHANGELOG_LANDING-PAGE.md

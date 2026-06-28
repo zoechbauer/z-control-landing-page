@@ -2,6 +2,19 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [3.1] – 2026-06-28
+
+### 🚀 Improvements
+
+- Added `GITHUB_ANALYTICS_EXPLANATION.md` to the documentation folder. The document explains GitHub Analytics metrics such as clones, unique clones, visitors, and unique visitors in a clearer and more user-friendly way.
+- Added `github-analytics-help.md` and linked it from the GitHub Analytics component in the Landing Page app. Users can now open the explanation directly from the UI.
+- Updated `README.md` and `Docs/README.md`, and added the `app-docs` folder for the new documentation structure.
+
+### 🔧 Internal
+
+- Added a unit test for opening the new `github-analytics-help.md` document.
+- Standardized unit test setup by using `waitForAsync` in component `beforeEach()` blocks where async TestBed compilation is required.
+
 ## [3.0] – 2026-06-26
 
 ### 🚀 Improvements

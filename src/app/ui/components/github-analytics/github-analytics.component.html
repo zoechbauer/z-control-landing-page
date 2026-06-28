@@ -30,7 +30,10 @@
       The data is fetched using the GitHub REST API and stored in Firestore for
       historical tracking.
     </p>
-    <section [hidden]="!(isMobilePortrait && isRepoOpened)" class="orientation-info">
+    <section
+      [hidden]="!(isMobilePortrait && isRepoOpened)"
+      class="orientation-info"
+    >
       <ion-item color="warning">
         <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
         <ion-label>
@@ -99,6 +102,23 @@
                                   slot="start"
                                 ></ion-icon>
                                 Get Source Code
+                              </ion-button>
+                            </div>
+                            <div class="button-wrapper">
+                              <ion-button
+                                color="primary"
+                                expand="block"
+                                (click)="onOpenGithubAnalyticsHelp(item.repo)"
+                                (keydown.enter)="
+                                  onOpenGithubAnalyticsHelp(item.repo)
+                                "
+                                title="Explanation of GitHub Analytics metrics, including clones, unique clones, visitors, and unique visitors"
+                              >
+                                <ion-icon
+                                  name="information-circle"
+                                  slot="start"
+                                ></ion-icon>
+                                Help / Explanation
                               </ion-button>
                             </div>
                           </td>

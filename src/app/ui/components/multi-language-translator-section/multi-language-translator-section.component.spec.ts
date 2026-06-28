@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { UtilsService } from 'src/app/services/utils.service';
 import { APPS } from 'src/app/shared/GitHubConstants';
 import { MultiLanguageTranslatorSectionComponent } from './multi-language-translator-section.component';
-import { logEvent } from 'firebase/analytics';
 
 describe('MultiLanguageTranslatorSectionComponent', () => {
   const nativeDownloadUrl =

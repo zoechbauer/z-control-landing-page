@@ -165,6 +165,24 @@ export class GithubAnalyticsComponent implements OnInit {
   }
 
   /**
+   * Opens the GitHub Analytics help document for the given repository as markdown.
+   * @param repo - The repository name.
+   */
+  async onOpenGithubAnalyticsHelp(repo: (typeof REPO)[keyof typeof REPO]) {
+    try {
+      const docPath =
+        'assets/app-docs/backend-functions-app/github-analytics-help.md';
+      await this.utilsService.openMarkdownDoc(docPath);
+      this.fa.logEvent('get_github_analytics_help', {
+        repo: repo,
+        app: REPO.Z_CONTROL_LANDING_PAGE,
+      });
+    } catch (error) {
+      console.error('Error opening GitHub Analytics help document:', error);
+    }
+  }
+
+  /**
    * Opens the GitHub source code page for the given repository in a new tab and logs the event.
    * @param repo - The repository name.
    */
@@ -185,7 +203,8 @@ export class GithubAnalyticsComponent implements OnInit {
    * Sets isMobilePortrait to true if so.
    */
   private checkOrientation(): void {
-    this.isMobilePortrait = this.utilsService.isSmallScreen && this.utilsService.isPortrait;
+    this.isMobilePortrait =
+      this.utilsService.isSmallScreen && this.utilsService.isPortrait;
   }
 
   private getSourceCodeUrl(repo: (typeof REPO)[keyof typeof REPO]): string {

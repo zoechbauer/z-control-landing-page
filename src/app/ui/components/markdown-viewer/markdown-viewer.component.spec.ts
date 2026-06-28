@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   provideHttpClientTesting,
   HttpTestingController,
@@ -16,10 +16,10 @@ describe('MarkdownViewerComponent', () => {
   let httpMock: HttpTestingController;
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
 
-  beforeEach(async () => {
+  beforeEach(waitForAsync(() => {
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         MarkdownViewerComponent,
         IonicModule.forRoot(),
@@ -38,7 +38,7 @@ describe('MarkdownViewerComponent', () => {
 
     // Manually replace the modalController
     (component as any).modalController = modalControllerSpy;
-  });
+  }));
 
   afterEach(() => {
     httpMock.verify();

@@ -12,23 +12,30 @@ describe('FirebaseAnalyticsService', () => {
 
   const analyticsMock = {} as any;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     adapterSpy = jasmine.createSpyObj<FirebaseAnalyticsAdapterService>(
       'FirebaseAnalyticsAdapterService',
       ['initialize', 'setCollectionEnabled', 'logEvent'],
     );
     windowRefMock = { isAvailable: true, hostname: 'z-control.at' };
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       providers: [
         FirebaseAnalyticsService,
         { provide: FirebaseAnalyticsAdapterService, useValue: adapterSpy },
         { provide: WindowRefService, useValue: windowRefMock },
       ],
-    }).compileComponents();
+    });
 
     service = TestBed.inject(FirebaseAnalyticsService);
     consoleWarnSpy = spyOn(console, 'warn');
+  });
+
+  afterEach(() => {
+    adapterSpy.initialize.calls.reset();
+    adapterSpy.setCollectionEnabled.calls.reset();
+    adapterSpy.logEvent.calls.reset();
+    consoleWarnSpy.calls.reset();
   });
 
   it('should be created', () => {
@@ -40,6 +47,7 @@ describe('FirebaseAnalyticsService', () => {
       adapterSpy.initialize.and.returnValue(analyticsMock);
 
       service.init();
+
       expect(adapterSpy.initialize).toHaveBeenCalled();
       expect(adapterSpy.setCollectionEnabled).toHaveBeenCalledWith(
         analyticsMock,
@@ -51,17 +59,19 @@ describe('FirebaseAnalyticsService', () => {
       adapterSpy.initialize.and.throwError('Initialization failed');
 
       service.init();
+
       expect(consoleWarnSpy).toHaveBeenCalledWith(
         'Firebase init error',
         jasmine.any(Error),
       );
     });
 
-    it('should warn when setCollectionEnabled fails - test init', () => {
+    it('should warn when setCollectionEnabled fails', () => {
       adapterSpy.initialize.and.returnValue(analyticsMock);
       adapterSpy.setCollectionEnabled.and.throwError('Set collection failed');
 
       service.init();
+
       expect(consoleWarnSpy).toHaveBeenCalledWith(
         'setAnalyticsCollectionEnabled failed',
         jasmine.any(Error),
@@ -94,6 +104,7 @@ describe('FirebaseAnalyticsService', () => {
       service.enableCollection(true);
 
       service.logEvent('test_event', { param: 'some value' });
+
       expect(adapterSpy.logEvent).toHaveBeenCalledWith(
         analyticsMock,
         'test_event',
@@ -109,6 +120,7 @@ describe('FirebaseAnalyticsService', () => {
       service.enableCollection(true);
 
       service.logEvent('test_event', { param: 'some value' });
+
       expect(consoleWarnSpy).toHaveBeenCalledWith(
         'Analytics logEvent failed',
         jasmine.any(Error),
@@ -147,11 +159,12 @@ describe('FirebaseAnalyticsService', () => {
   });
 
   describe('enableCollection', () => {
-    it('should warn when setCollectionEnabled fails - test enableCollection', () => {
+    it('should warn when setCollectionEnabled fails', () => {
       adapterSpy.setCollectionEnabled.and.throwError('Set collection failed');
-      (service as any).analytics = analyticsMock; // Manually set analytics to simulate initialized state
+      (service as any).analytics = analyticsMock;
 
       service.enableCollection(true);
+
       expect(consoleWarnSpy).toHaveBeenCalledWith(
         'setAnalyticsCollectionEnabled failed',
         jasmine.any(Error),
