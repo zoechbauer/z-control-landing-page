@@ -10,6 +10,13 @@ This project uses a simplified major.minor versioning scheme:
 - Minor versions indicate new features, improvements, and bug fixes.
 - Patch numbers are intentionally omitted; all changes are released as major or minor versions.
 
+## [2.3] - 2026-06-30
+
+### 🔧 Internal
+
+- Removed the 3-second fallback from `waitForAuthReady()` in the Firestore service and now rely on Firebase Auth state restoration to complete before continuing.
+- Normalize line endings in git to LF to ensure consistent formatting across different operating systems and development environments.
+
 ## [2.2] - 2026-06-11
 
 ### 🔧 Internal
