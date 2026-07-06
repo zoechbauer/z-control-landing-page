@@ -2,8 +2,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "composite": true,
+    "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "strict": true,
@@ -12,16 +13,20 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
     "importHelpers": true,
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "target": "es2022",
-    "module": "es2020",
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "useDefineForClassFields": false,
-    "types": ["jasmine"]
+    "paths": {
+      "*": ["./*"],
+      "@app/*": ["./src/app/*"],
+      "@env/*": ["./src/environments/*"],
+      "@testing/*": ["./src/app/testing/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

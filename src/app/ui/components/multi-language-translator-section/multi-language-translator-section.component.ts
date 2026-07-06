@@ -13,9 +13,9 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { APPS } from 'src/app/shared/GitHubConstants';
-import { MultipleLanguageTranslatorSectionParameters } from 'src/app/shared/app-interfaces';
-import { UtilsService } from 'src/app/services/utils.service';
+import { APPS } from '@app/shared/GitHubConstants';
+import { MultipleLanguageTranslatorSectionParameters } from '@app/shared/app-interfaces';
+import { UtilsService } from '@app/services/utils.service';
 
 @Component({
   selector: 'app-multi-language-translator-section',

@@ -8,7 +8,7 @@ import { BackupScriptsSectionComponent } from '../ui/components/backup-scripts-s
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { CommonModule } from '@angular/common';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { APPS } from '@app/shared/GitHubConstants';
 import { MultiLanguageTranslatorSectionComponent } from '../ui/components/multi-language-translator-section/multi-language-translator-section.component';
 import {
   AppSectionParameters,
@@ -17,8 +17,8 @@ import {
   QrCodeGeneratorSectionParameters,
   IonicSetupSectionParameters,
   BackendFunctionsSectionParameters,
-} from 'src/app/shared/app-interfaces';
-import { environment } from 'src/environments/environment';
+} from '@app/shared/app-interfaces';
+import { environment } from '@env/environment';
 import { IonicSetupSectionComponent } from '../ui/components/ionic-setup-section/ionic-setup-section.component';
 import { BackendFunctionsSectionComponent } from '../ui/components/backend-functions-section/backend-functions-section.component';
 @Component({

@@ -8,7 +8,7 @@ import {
   IonButton,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { UtilsService } from 'src/app/services/utils.service';
+import { UtilsService } from '@app/services/utils.service';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly utilsService: UtilsService
+    private readonly utilsService: UtilsService,
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.resizeHandler = () => {
       this.isMobile = globalThis.window.innerWidth <= 600;
-    }
+    };
     globalThis.window.addEventListener('resize', this.resizeHandler);
   }
 

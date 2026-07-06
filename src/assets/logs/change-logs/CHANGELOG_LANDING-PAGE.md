@@ -2,6 +2,16 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [3.2] - 2026-07-06
+
+### 🔧 Internal
+
+- Updated TypeScript configuration (tsconfig.json and tsconfig.spec.json) to remove the deprecated baseUrl option and use paths instead, improving compatibility with newer TypeScript and Angular versions while keeping existing relative import paths unchanged.
+- Updated the import path of the environment file in all TypeScript files to use the new `@env` alias, ensuring consistent and maintainable imports across the project.
+- Updated the import path `src/app/...` to `@app` in all TypeScript files, standardizing import paths and improving code readability and maintainability.
+- Removed firebase configurations because they are no longer needed in the Landing Page app, as Firebase is now only used in the backend functions project.
+- Updated capacitor.config.ts to set the appId to `at.zcontrol.zoe.landingpage` for proper identification of the Landing Page app in the Capacitor ecosystem.
+
 ## [3.1] – 2026-06-28
 
 ### 🚀 Improvements

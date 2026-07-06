@@ -10,13 +10,13 @@ import { RouterModule } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { environment } from 'src/environments/environment';
-import { UtilsService } from 'src/app/services/utils.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
-import { ToastService } from 'src/app/services/toast-EN.service';
-import { ToastAnchor } from 'src/app/shared/enums';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { environment } from '@env/environment';
+import { UtilsService } from '@app/services/utils.service';
+import { LocalStorageService } from '@app/services/local-storage.service';
+import { APPS } from '@app/shared/GitHubConstants';
+import { ToastService } from '@app/services/toast-EN.service';
+import { ToastAnchor } from '@app/shared/enums';
 
 @Component({
   selector: 'app-footer',

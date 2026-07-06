@@ -1,7 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Firestore,
-} from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 import {
   ALL_REPOS,
@@ -11,7 +9,7 @@ import {
   REPO,
   REPOS,
   TrafficType,
-} from 'src/app/shared/GitHubConstants';
+} from '@app/shared/GitHubConstants';
 import { FirestoreAdapterService } from './firestore-adapter.service';
 
 @Injectable({
@@ -25,9 +23,7 @@ export class FirebaseFirestoreService {
     COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
   private useFirebaseEmulator = false;
 
-  constructor(
-    private readonly firestoreAdapter: FirestoreAdapterService,
-  ) {}
+  constructor(private readonly firestoreAdapter: FirestoreAdapterService) {}
 
   /**
    * Retrieves analytics data for a specified collection and repository from Firestore.
@@ -63,7 +59,7 @@ export class FirebaseFirestoreService {
     return analyticsDataArr;
   }
 
-   /**
+  /**
    * Fetches analytics data for a specific GitHub repository from Firestore.
    *
    * If the Firebase emulator is enabled, connects to the local Firestore emulator.
@@ -85,7 +81,10 @@ export class FirebaseFirestoreService {
       this.firestoreAdapter.connectEmulator('localhost', 8080);
     }
 
-    const docSnap = await this.firestoreAdapter.getDocSnapshot(this.collection, this.repo);
+    const docSnap = await this.firestoreAdapter.getDocSnapshot(
+      this.collection,
+      this.repo,
+    );
 
     if (docSnap.exists()) {
       const data = docSnap.data();
@@ -106,7 +105,7 @@ export class FirebaseFirestoreService {
     return this.createRepoWithEmptyStatistics(this.repo);
   }
 
-   /**
+  /**
    * Processes analytics data and logs results.
    * @param data - Raw analytics data from Firestore.
    * @private
@@ -117,8 +116,16 @@ export class FirebaseFirestoreService {
       const clonesArr = data?.clones ?? [];
       const timestamp = data?.timestamp ?? '';
 
-      const viewsDoc = this.processStatistics(TrafficType.VIEWS, viewsArr, timestamp);
-      const clonesDoc = this.processStatistics(TrafficType.CLONES, clonesArr, timestamp);
+      const viewsDoc = this.processStatistics(
+        TrafficType.VIEWS,
+        viewsArr,
+        timestamp,
+      );
+      const clonesDoc = this.processStatistics(
+        TrafficType.CLONES,
+        clonesArr,
+        timestamp,
+      );
 
       return this.mergeDocuments(viewsDoc, clonesDoc);
     } catch (error) {
@@ -171,7 +178,7 @@ export class FirebaseFirestoreService {
     };
   }
 
-    /**
+  /**
    * Merges two analytics documents into one.
    * @param doc1 - First analytics document.
    * @param doc2 - Second analytics document.

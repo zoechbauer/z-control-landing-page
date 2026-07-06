@@ -12,9 +12,9 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { APPS } from 'src/app/shared/GitHubConstants';
-import { BackupScriptsSectionParameters } from 'src/app/shared/app-interfaces';
-import { UtilsService } from 'src/app/services/utils.service';
+import { APPS } from '@app/shared/GitHubConstants';
+import { BackupScriptsSectionParameters } from '@app/shared/app-interfaces';
+import { UtilsService } from '@app/services/utils.service';
 @Component({
   selector: 'app-backup-scripts-section',
   templateUrl: './backup-scripts-section.component.html',
@@ -45,9 +45,7 @@ export class BackupScriptsSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backup-scripts';
   selectedSubAccordion: string = '';
 
-  constructor(
-    private readonly utilsService: UtilsService,
-  ) {}
+  constructor(private readonly utilsService: UtilsService) {}
 
   onGetSourceCode() {
     globalThis.window.open(this.sourceCodeUrl, '_blank');

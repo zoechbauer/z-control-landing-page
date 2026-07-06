@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { HeaderComponent } from './header.component';
-import { UtilsService } from 'src/app/services/utils.service';
+import { UtilsService } from '@app/services/utils.service';
 import { Router } from '@angular/router';
 
 describe('HeaderComponent', () => {
@@ -45,9 +45,9 @@ describe('HeaderComponent', () => {
 
     it('should update isMobile on window resize', () => {
       Object.defineProperty(window, 'innerWidth', {
-      configurable: true,
-      value: 500,
-    });
+        configurable: true,
+        value: 500,
+      });
       globalThis.window.dispatchEvent(new Event('resize'));
       expect(component.isMobile).toBeTrue();
 
@@ -129,7 +129,8 @@ describe('HeaderComponent', () => {
     });
 
     it('should display logo text and title', async () => {
-      const logoTextElement = fixture.nativeElement.querySelector('.logo-title');
+      const logoTextElement =
+        fixture.nativeElement.querySelector('.logo-title');
       const titleElement = fixture.nativeElement.querySelector('.app-title');
 
       expect(logoTextElement).toBeTruthy();

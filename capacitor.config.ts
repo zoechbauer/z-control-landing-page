@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'landing-page',
+  appId: 'at.zcontrol.zoe.landingpage',
+  appName: 'z-control Landing Page',
   webDir: 'www'
 };
 

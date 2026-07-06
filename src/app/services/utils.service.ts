@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { APPS } from '@app/shared/GitHubConstants';
 import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
 import { GithubAnalyticsComponent } from '../ui/components/github-analytics/github-analytics.component';

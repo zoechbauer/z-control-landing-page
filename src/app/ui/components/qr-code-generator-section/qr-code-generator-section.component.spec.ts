@@ -2,14 +2,15 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
-import { UtilsService } from 'src/app/services/utils.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
+import { APPS } from '@app/shared/GitHubConstants';
 import { QrCodeGeneratorSectionComponent } from '../..';
 
 describe('QrCodeGeneratorSectionComponent', () => {
   const nativeDownloadUrl =
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodegenerator';
-  const sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
+  const sourceCodeUrl =
+    'https://github.com/zoechbauer/z-control-qr-code-generator';
   const webAppUrl = 'https://z-control-qr-code-generator.web.app';
 
   let component: QrCodeGeneratorSectionComponent;
@@ -127,11 +128,7 @@ describe('QrCodeGeneratorSectionComponent', () => {
 
   it('should return the correct privacy policy link', () => {
     const privacyPolicyLink = component.privacyPolicyLink;
-    expect(privacyPolicyLink).toEqual([
-      '/privacy',
-      'qr-code-generator',
-      'en',
-    ]);
+    expect(privacyPolicyLink).toEqual(['/privacy', 'qr-code-generator', 'en']);
   });
 
   it('should return correct tooltip for subaccordion', () => {

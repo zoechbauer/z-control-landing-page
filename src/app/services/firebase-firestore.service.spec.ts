@@ -9,7 +9,7 @@ import {
   REPO,
   REPOS,
   TrafficType,
-} from 'src/app/shared/GitHubConstants';
+} from '@app/shared/GitHubConstants';
 import { FirestoreAdapterService } from './firestore-adapter.service';
 
 describe('FirebaseFirestoreService', () => {

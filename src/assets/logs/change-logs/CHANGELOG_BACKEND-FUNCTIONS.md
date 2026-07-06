@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project uses [Semantic Versioning](https://semver.org/).
 
+## [2.2] - 2026-07-02
+
+### Added
+
+- Reorganized the functions folder structure to separate function types and related files for easier navigation, better maintainability, and improved scalability.
+- Added loadEnv.ts to load environment variables from .env.local for local development.
+- Added rimraf as a dev dependency to provide a cross-platform way to remove files and directories.
+- Added JSDoc comments to all backend functions to improve documentation and maintainability.
+- Removed extra spaces between function names and parentheses to match standard JavaScript formatting and improve readability.
+
+### Changed
+
+- Updated package.json scripts to add a prebuild step that uses rimraf to clean the lib directory before building.
+- Moved environment loading out of bootstrap.ts; it is now handled by loadEnv.ts in the project root.
+- Updated unit test import paths to match the refactored folder structure. 220 tests cover 99.65% of the code, ensuring that all functions are thoroughly tested and validated.
+
 ## [2.1] - 2026-06-29
 
 ### Added

@@ -20,12 +20,12 @@ import {
   REPO,
   GithubAnalyticsTrafficDocument,
   ALL_REPOS,
-} from 'src/app/shared/GitHubConstants';
+} from '@app/shared/GitHubConstants';
 
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.service';
-import { environment } from 'src/environments/environment';
-import { UtilsService } from 'src/app/services/utils.service';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
+import { environment } from '@env/environment';
+import { UtilsService } from '@app/services/utils.service';
 
 @Component({
   selector: 'app-github-analytics',

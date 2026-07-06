@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular/standalone';
 
 import { UtilsService } from './utils.service';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { APPS } from '@app/shared/GitHubConstants';
 import { GithubAnalyticsComponent } from '../ui/components/github-analytics/github-analytics.component';
 import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
 
@@ -22,7 +22,7 @@ describe('UtilsService', () => {
       configurable: true,
       value: height,
     });
-    
+
     spyOn(globalThis, 'matchMedia').and.returnValue({
       matches: portrait,
       media: '(orientation: portrait)',

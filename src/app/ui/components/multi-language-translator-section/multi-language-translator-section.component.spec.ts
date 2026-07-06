@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
-import { UtilsService } from 'src/app/services/utils.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
+import { APPS } from '@app/shared/GitHubConstants';
 import { MultiLanguageTranslatorSectionComponent } from './multi-language-translator-section.component';
 
 describe('MultiLanguageTranslatorSectionComponent', () => {

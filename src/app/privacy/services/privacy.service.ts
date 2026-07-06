@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { APPS } from '@app/shared/GitHubConstants';
 
 export interface PrivacyPolicy {
   type: (typeof APPS)[keyof typeof APPS];

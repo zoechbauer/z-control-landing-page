@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { BackendFunctionsSectionComponent } from './backend-functions-section.component';
-import { UtilsService } from 'src/app/services/utils.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
+import { APPS } from '@app/shared/GitHubConstants';
 
 describe('BackendFunctionsSectionComponent', () => {
   let component: BackendFunctionsSectionComponent;
@@ -19,9 +19,7 @@ describe('BackendFunctionsSectionComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), BackendFunctionsSectionComponent],
-      providers: [
-        { provide: UtilsService, useValue: utilsServiceSpy },
-      ],
+      providers: [{ provide: UtilsService, useValue: utilsServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BackendFunctionsSectionComponent);
@@ -85,8 +83,7 @@ describe('BackendFunctionsSectionComponent', () => {
   });
 
   it('should return correct mailto link for feedback', () => {
-    const expectedMailToLink =
-      `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKEND_FUNCTIONS}%20Feedback`;
+    const expectedMailToLink = `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKEND_FUNCTIONS}%20Feedback`;
     expect(component.getMailToLinkForFeedback()).toBe(expectedMailToLink);
   });
 

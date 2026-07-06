@@ -3,15 +3,15 @@ import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 
 import { GithubAnalyticsComponent } from './github-analytics.component';
-import { FirebaseFirestoreService } from 'src/app/services/firebase-firestore.service';
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
+import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import {
   COLLECTION,
   GithubAnalyticsTrafficDocument,
   REPO,
   REPOS,
-} from 'src/app/shared/GitHubConstants';
-import { UtilsService } from 'src/app/services/utils.service';
+} from '@app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
 
 // Mock FirebaseFirestoreService to avoid real Firebase calls
 class MockFirebaseFirestoreService {

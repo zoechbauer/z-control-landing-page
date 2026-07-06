@@ -26,7 +26,7 @@ import {
 import { provideMarkdown } from 'ngx-markdown';
 
 import { routes } from './app.routes';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 function getEmulatorHost(): string | undefined {
   if (!environment.useFirebaseEmulator) {

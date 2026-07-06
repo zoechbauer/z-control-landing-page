@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { UtilsService } from 'src/app/services/utils.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
+import { APPS } from '@app/shared/GitHubConstants';
 import { BackupScriptsSectionComponent } from './backup-scripts-section.component';
 
 describe('BackupScriptsSectionComponent', () => {
@@ -19,9 +19,7 @@ describe('BackupScriptsSectionComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), BackupScriptsSectionComponent],
-      providers: [
-        { provide: UtilsService, useValue: utilsServiceSpy },
-      ],
+      providers: [{ provide: UtilsService, useValue: utilsServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BackupScriptsSectionComponent);
@@ -32,7 +30,6 @@ describe('BackupScriptsSectionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should open source code URL in a new tab and emit analytics event when onGetSourceCode is called', () => {
     spyOn(globalThis.window, 'open');
@@ -59,8 +56,7 @@ describe('BackupScriptsSectionComponent', () => {
   });
 
   it('should return correct mailto link for feedback', () => {
-    const expectedMailToLink =
-      `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKUP_SCRIPTS}%20Feedback`;
+    const expectedMailToLink = `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKUP_SCRIPTS}%20Feedback`;
     expect(component.getMailToLinkForFeedback()).toBe(expectedMailToLink);
   });
 

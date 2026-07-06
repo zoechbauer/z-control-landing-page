@@ -11,12 +11,12 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
 import { FooterComponent } from './footer.component';
-import { UtilsService } from 'src/app/services/utils.service';
-import { ToastService } from 'src/app/services/toast-EN.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
-import { ToastAnchor } from 'src/app/shared/enums';
+import { UtilsService } from '@app/services/utils.service';
+import { ToastService } from '@app/services/toast-EN.service';
+import { LocalStorageService } from '@app/services/local-storage.service';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { APPS } from '@app/shared/GitHubConstants';
+import { ToastAnchor } from '@app/shared/enums';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -442,7 +442,9 @@ describe('FooterComponent', () => {
         it('should render the privacy policy routerLink correctly', () => {
           fixture.detectChanges();
 
-          const linkDebugEl = fixture.debugElement.query(By.css('.footer-link'));
+          const linkDebugEl = fixture.debugElement.query(
+            By.css('.footer-link'),
+          );
           expect(linkDebugEl).toBeTruthy();
 
           const anchor = linkDebugEl.nativeElement as HTMLAnchorElement;
