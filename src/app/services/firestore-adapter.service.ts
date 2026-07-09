@@ -16,11 +16,11 @@ export const FIRESTORE_DOC = new InjectionToken('FIRESTORE_DOC', {
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreAdapterService {
+  private readonly firestore = inject(Firestore);
+
   private readonly connectEmulatorFn = inject(FIRESTORE_CONNECT_EMULATOR);
   private readonly getDocFn = inject(FIRESTORE_GET_DOC);
   private readonly docFn = inject(FIRESTORE_DOC);
-
-  constructor(private readonly firestore: Firestore) {}
 
   async getDocSnapshot(collectionName: string, repo: string) {
     const docRef = this.docFn(this.firestore, collectionName, repo);

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -24,6 +24,9 @@ export interface PrivacyPolicyMeta {
   providedIn: 'root',
 })
 export class PrivacyService {
+  private readonly fa = inject(FirebaseAnalyticsService);
+  private readonly http = inject(HttpClient);
+
   // NOTE: When adding a new privacy policy:
   // 1. Add a new entry here to availablePolicies.
   // 2. Add a corresponding entry in getTitle below.
@@ -51,11 +54,6 @@ export class PrivacyService {
       description: 'Privacy policy for premium features (future)',
     },
   ];
-
-  constructor(
-    private readonly fa: FirebaseAnalyticsService,
-    private readonly http: HttpClient,
-  ) {}
 
   /**
    * Get list of available privacy policy types

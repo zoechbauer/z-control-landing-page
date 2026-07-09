@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   IonButton,
@@ -37,6 +37,8 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class IonicSetupSectionComponent {
+  private readonly utilsService = inject(UtilsService);
+
   @Input() parameters?: IonicSetupSectionParameters;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
@@ -49,8 +51,6 @@ export class IonicSetupSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-ionic-setup';
   webAppUrl = 'https://z-control-ionic-setup.web.app';
   selectedSubAccordion: string = '';
-
-  constructor(private readonly utilsService: UtilsService) {}
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;

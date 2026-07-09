@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 
@@ -11,13 +11,11 @@ import { GithubAnalyticsComponent } from '../ui/components/github-analytics/gith
   providedIn: 'root',
 })
 export class UtilsService {
+  private readonly modalController = inject(ModalController);
+  private readonly firebaseAnalyticsService = inject(FirebaseAnalyticsService);
+
   private readonly logoClickedSub = new Subject<boolean>();
   logoClicked$ = this.logoClickedSub.asObservable();
-
-  constructor(
-    private readonly modalController: ModalController,
-    private readonly firebaseAnalyticsService: FirebaseAnalyticsService,
-  ) {}
 
   /**
    * Emits an event when the logo is clicked,

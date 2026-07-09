@@ -16,14 +16,14 @@ import { FirestoreAdapterService } from './firestore-adapter.service';
   providedIn: 'root',
 })
 export class FirebaseFirestoreService {
+  private readonly firestoreAdapter = inject(FirestoreAdapterService);
+
   private readonly firestore = inject(Firestore);
 
   private repo: (typeof REPO)[keyof typeof REPO] = REPOS[0].repo;
   private collection: (typeof COLLECTION)[keyof typeof COLLECTION] =
     COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
   private useFirebaseEmulator = false;
-
-  constructor(private readonly firestoreAdapter: FirestoreAdapterService) {}
 
   /**
    * Retrieves analytics data for a specified collection and repository from Firestore.

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import {
   IonContent,
@@ -50,18 +50,16 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class GithubAnalyticsComponent implements OnInit {
+  private readonly fa = inject(FirebaseAnalyticsService);
+  private readonly firestoreService = inject(FirebaseFirestoreService);
+  private readonly modalController = inject(ModalController);
+  private readonly utilsService = inject(UtilsService);
+
   analyticsData: GithubAnalyticsTrafficDocument[] = [];
   githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
   isMobilePortrait = false;
   isRepoOpened = false;
   isLoading = true;
-
-  constructor(
-    private readonly fa: FirebaseAnalyticsService,
-    private readonly firestoreService: FirebaseFirestoreService,
-    private readonly modalController: ModalController,
-    private readonly utilsService: UtilsService,
-  ) {}
 
   ngOnInit() {
     this.init();

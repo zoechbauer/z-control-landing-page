@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -37,6 +37,8 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class QrCodeGeneratorSectionComponent {
+  private readonly utilsService = inject(UtilsService);
+
   @Input() parameters?: QrCodeGeneratorSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
@@ -50,8 +52,6 @@ export class QrCodeGeneratorSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
   webAppUrl = 'https://z-control-qr-code.web.app';
   selectedSubAccordion: string = '';
-
-  constructor(private readonly utilsService: UtilsService) {}
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');

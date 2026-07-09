@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PrivacyService } from '../../services/privacy.service';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
@@ -24,9 +24,9 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
   imports: [CommonModule, IonContent, IonButton],
 })
 export class PrivacyDebugComponent implements OnInit {
-  testResults: any[] = [];
+  private privacyService = inject(PrivacyService);
 
-  constructor(private privacyService: PrivacyService) {}
+  testResults: any[] = [];
 
   ngOnInit() {
     this.runTests();

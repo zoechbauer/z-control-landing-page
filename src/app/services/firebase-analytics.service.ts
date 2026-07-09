@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Analytics } from 'firebase/analytics';
 import { BehaviorSubject } from 'rxjs';
 
@@ -8,15 +8,13 @@ import { WindowRefService } from './window-ref.service';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAnalyticsService {
+  private readonly analyticsAdapter = inject(FirebaseAnalyticsAdapterService);
+  private readonly windowRef = inject(WindowRefService);
+
   private analytics: Analytics | null = null;
   private enabled = false;
   private readonly enabledSub = new BehaviorSubject<boolean>(this.enabled);
   public enabled$ = this.enabledSub.asObservable();
-
-  constructor(
-    private readonly analyticsAdapter: FirebaseAnalyticsAdapterService,
-    private readonly windowRef: WindowRefService
-  ) {}
 
   /**
    * Initializes Firebase Analytics.

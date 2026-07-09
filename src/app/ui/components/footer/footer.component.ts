@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   IonFooter,
   IonToolbar,
@@ -34,16 +34,14 @@ import { ToastAnchor } from '@app/shared/enums';
   ],
 })
 export class FooterComponent implements OnInit, OnDestroy {
+  readonly fa = inject(FirebaseAnalyticsService);
+  private readonly utilsService = inject(UtilsService);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly toastService = inject(ToastService);
+
   showDetails = false;
   isAnalyticsEnabled = false;
   private readonly sub = new Subscription();
-
-  constructor(
-    public readonly fa: FirebaseAnalyticsService,
-    private readonly utilsService: UtilsService,
-    private readonly localStorageService: LocalStorageService,
-    private readonly toastService: ToastService,
-  ) {}
 
   ngOnInit(): void {
     this.sub.add(

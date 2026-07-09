@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
 
@@ -40,6 +40,9 @@ import { BackendFunctionsSectionComponent } from '../ui/components/backend-funct
   ],
 })
 export class HomePage {
+  private readonly fa = inject(FirebaseAnalyticsService);
+  private readonly localStorageService = inject(LocalStorageService);
+
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
 
   selectedAccordion: string = APPS.LANDING_PAGE;
@@ -49,11 +52,6 @@ export class HomePage {
   multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
   ionicSetupSectionParams?: IonicSetupSectionParameters;
   backendFunctionsSectionParams?: BackendFunctionsSectionParameters;
-
-  constructor(
-    private readonly fa: FirebaseAnalyticsService,
-    private readonly localStorageService: LocalStorageService,
-  ) {}
 
   get isAnalyticsAllowed(): boolean {
     return this.localStorageService.getAnalyticsConsent() === true;

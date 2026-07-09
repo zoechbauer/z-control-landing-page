@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import {
@@ -26,16 +26,14 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  private readonly router = inject(Router);
+  private readonly utilsService = inject(UtilsService);
+
   public isMobile = false;
   private resizeHandler?: () => void;
 
   @Input() selectedAccordion: string = '';
   @Input() showBackButton: boolean = false;
-
-  constructor(
-    private readonly router: Router,
-    private readonly utilsService: UtilsService,
-  ) {}
 
   ngOnInit(): void {
     this.isMobile = globalThis.window.innerWidth <= 600;

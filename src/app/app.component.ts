@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular';
@@ -15,15 +15,13 @@ import { UtilsService } from './services/utils.service';
   imports: [IonApp, IonRouterOutlet, CommonModule],
 })
 export class AppComponent implements OnInit {
-  showConsentBanner = false;
+  private readonly router = inject(Router);
+  private readonly fa = inject(FirebaseAnalyticsService);
+  private readonly platform = inject(Platform);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly utilsService = inject(UtilsService);
 
-  constructor(
-    private readonly router: Router,
-    private readonly fa: FirebaseAnalyticsService,
-    private readonly platform: Platform,
-    private readonly localStorageService: LocalStorageService,
-    private readonly utilsService: UtilsService
-  ) {}
+  showConsentBanner = false;
 
   ngOnInit(): void {
     try {

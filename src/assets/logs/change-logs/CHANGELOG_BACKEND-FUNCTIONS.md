@@ -5,21 +5,51 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project uses [Semantic Versioning](https://semver.org/).
 
-## [2.2] - 2026-07-02
+## [2.4] - 2026-07-08
+
+### Added
+
+- Added `run-firebase-emulators.cmd` to set Java 25 and run Firebase emulators for local development. Firebase emulators will drop support for Java versions below 21 in firebase-tools@15, so this script ensures a compatible runtime is used.
+
+### Changed
+
+- Updated package.json scripts to use the new `run-firebase-emulators.cmd` script for running Firebase emulators, ensuring that Java 25 is set before starting the emulators.
+- Updated the README with instructions for running Firebase emulators using the new script.
+- Added `used-java-versions.md` to document the Java versions used in this repository and linked it from the docs index.
+- Marked the TODO list as complete after resolving all listed items.
+
+## [2.3] - 2026-07-07
+
+### Changed
+
+- Enabled ESLint's `no-unused-vars` rule and removed unused variables across the codebase to improve maintainability.
+- Enabled ESLint's `no-invalid-this` for production code. No errors were found in the production code, but tests were exempted from this rule.
+- All ESLint errors have been fixed, and the linting configuration has been updated to enforce stricter rules for production code while allowing flexibility in test files.
+- Removed the `userId` parameter from helper functions in `firebase-firestore.service.ts`; the current user context is used instead, simplifying function signatures.
+- Renamed helper suffix `forUser` to `forCurrentUser` (e.g. `getCharCountForUser` → `getCharCountForCurrentUser`) to reflect use of the current user context.
+- Expanded and refined unit tests for `firebase-firestore.service.ts` and `firebase-firestore-utils.service.ts` to increase coverage and reliability.
+
+## [2.2] - 2026-07-04
 
 ### Added
 
 - Reorganized the functions folder structure to separate function types and related files for easier navigation, better maintainability, and improved scalability.
-- Added loadEnv.ts to load environment variables from .env.local for local development.
-- Added rimraf as a dev dependency to provide a cross-platform way to remove files and directories.
+- Added `loadEnv.ts` to load environment variables from `.env.local` for local development.
+- Added `rimraf` as a dev dependency to provide a cross-platform way to remove files and directories.
 - Added JSDoc comments to all backend functions to improve documentation and maintainability.
-- Removed extra spaces between function names and parentheses to match standard JavaScript formatting and improve readability.
 
 ### Changed
 
-- Updated package.json scripts to add a prebuild step that uses rimraf to clean the lib directory before building.
-- Moved environment loading out of bootstrap.ts; it is now handled by loadEnv.ts in the project root.
+- Updated `package.json` scripts to add a prebuild step that uses `rimraf` to clean the `lib` directory before building.
+- Moved environment loading out of `bootstrap.ts`; it is now handled by `loadEnv.ts` in the project root.
 - Updated unit test import paths to match the refactored folder structure. 220 tests cover 99.65% of the code, ensuring that all functions are thoroughly tested and validated.
+- Reduced the line length limit in the ESLint configuration to 100 characters, and updated function descriptions to improve readability and maintainability.
+
+### Fixed
+
+- Enabled no-explicit-any for production code and resolved all related lint errors, improving type safety and maintainability. The rule remains disabled for test files to preserve flexibility in test setups.
+- Enabled linting for empty functions and fixed all reported issues to enforce clearer, more intentional code.
+- Enabled no-non-null-assertion and removed non-null assertions from the codebase to improve type safety and reduce potential runtime errors.
 
 ## [2.1] - 2026-06-29
 

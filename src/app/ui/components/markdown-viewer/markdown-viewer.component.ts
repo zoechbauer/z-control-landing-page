@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MarkdownComponent } from 'ngx-markdown';
 import {
   IonContent,
@@ -29,14 +29,12 @@ import {
   ],
 })
 export class MarkdownViewerComponent implements OnInit {
+  private readonly http = inject(HttpClient);
+  private readonly modalController = inject(ModalController);
+
   @Input() fullChangeLogPath!: string;
   @Input() title: string = 'Release Notes';
   markdown: string = '';
-
-  constructor(
-    private readonly http: HttpClient,
-    private readonly modalController: ModalController
-  ) {}
 
   ngOnInit() {
     this.loadMarkdownChangelog();

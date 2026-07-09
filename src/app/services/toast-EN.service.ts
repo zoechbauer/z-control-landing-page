@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
 import { UtilsService } from './utils.service';
@@ -8,10 +8,9 @@ import { ToastAnchor } from '../shared/enums';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(
-    private readonly toastController: ToastController,
-    private readonly utilsService: UtilsService
-  ) {}
+  private readonly toastController = inject(ToastController);
+  private readonly utilsService = inject(UtilsService);
+
 
   /**
    * Displays a toast message below the header.

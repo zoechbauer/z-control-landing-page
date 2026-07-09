@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonButton,
@@ -35,6 +35,8 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class BackendFunctionsSectionComponent {
+  private readonly utilsService = inject(UtilsService);
+
   @Input() parameters?: BackendFunctionsSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
@@ -45,8 +47,6 @@ export class BackendFunctionsSectionComponent {
 
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backend-functions';
   selectedSubAccordion: string = '';
-
-  constructor(private readonly utilsService: UtilsService) {}
 
   onGetSourceCode() {
     globalThis.window.open(this.sourceCodeUrl, '_blank');

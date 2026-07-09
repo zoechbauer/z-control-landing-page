@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   IonButton,
@@ -37,6 +37,8 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class MultiLanguageTranslatorSectionComponent {
+  private readonly utilsService = inject(UtilsService);
+
   @Input() parameters?: MultipleLanguageTranslatorSectionParameters;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
@@ -50,8 +52,6 @@ export class MultiLanguageTranslatorSectionComponent {
     'https://github.com/zoechbauer/z-control-multi-language-translator';
   webAppUrl = 'https://z-control-translator.web.app';
   selectedSubAccordion: string = '';
-
-  constructor(private readonly utilsService: UtilsService) {}
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonContent,
@@ -28,6 +28,10 @@ import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
   ],
 })
 export class PrivacyViewerComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly privacyService = inject(PrivacyService);
+
   policy: PrivacyPolicy | null = null;
   loading = true;
   error = false;
@@ -36,12 +40,6 @@ export class PrivacyViewerComponent implements OnInit {
   language = 'en';
   availableLanguages: string[] = [];
   showBackButtonAndFooter = false;
-
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly privacyService: PrivacyService,
-  ) {}
 
   ngOnInit() {
     // Check for internal navigation first

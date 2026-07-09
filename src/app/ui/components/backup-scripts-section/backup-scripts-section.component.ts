@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonButton,
@@ -34,6 +34,8 @@ import { UtilsService } from '@app/services/utils.service';
   ],
 })
 export class BackupScriptsSectionComponent {
+  private readonly utilsService = inject(UtilsService);
+
   @Input() parameters?: BackupScriptsSectionParameters;
 
   @Output() accordionChange = new EventEmitter<CustomEvent>();
@@ -44,8 +46,6 @@ export class BackupScriptsSectionComponent {
 
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backup-scripts';
   selectedSubAccordion: string = '';
-
-  constructor(private readonly utilsService: UtilsService) {}
 
   onGetSourceCode() {
     globalThis.window.open(this.sourceCodeUrl, '_blank');
