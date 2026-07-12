@@ -42,7 +42,7 @@
       <div class="footer-details" [class.expanded]="showDetails">
         <div
           class="footer-section"
-          [class.not-enabled]="!(fa.enabled$ | async)"
+          [class.not-enabled]="(fa.enabled$ | async) === false"
         >
           <p>Innovative Open Source Solutions & Tools<br />Always Free</p>
           <div class="enable-analytics section-margin-top">

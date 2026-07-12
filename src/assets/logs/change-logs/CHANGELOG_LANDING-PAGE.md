@@ -2,7 +2,12 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
-## [3.3] - 2026-07-09
+## [3.3] - 2026-07-12
+
+### 🚀 Improvements
+
+- Improved Typescript configuration by adding an exclude array, preventing unnecessary type checking and improving build performance.
+- Improved Tools/Readme.md documentation for clarity and better guidance on using the backup and environment generation scripts.
 
 ### 🔧 Internal
 

@@ -78,11 +78,11 @@
                               <strong>Last Updated:</strong>
                               {{ item.timestamp | date: "yyyy-MM-dd HH:mm:ss" }}
                             </div>
-                            <div [hidden]="getMostRecentItem(item) == null">
+                            <div [hidden]="getMostRecentItem(item) === null">
                               <strong>Most Recent Record Date:</strong>
                               {{ getMostRecentItem(item) | date: "yyyy-MM-dd" }}
                             </div>
-                            <div [hidden]="getOldestItem(item) == null">
+                            <div [hidden]="getOldestItem(item) === null">
                               <strong>First Record Date:</strong>
                               {{ getOldestItem(item) | date: "yyyy-MM-dd" }}
                             </div>
