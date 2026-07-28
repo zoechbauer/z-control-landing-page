@@ -2,7 +2,20 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
-## [3.3] - 2026-07-12
+## [3.5] - 2026-07-28
+
+### ✨ New Features
+
+- Added the **z-control Image to Text** repository to the REPOS and REPO array in `GitHubConstants.ts` to ensure it is included in the GitHub analytics tracking.
+- Added the **z-control Image to Text** privacy policy to the Landing Page app, providing users with clear information about data handling and privacy practices for this new application.
+- Added the **z-control Image to Text** changelog to the landing page app, ensuring users can view the update history directly within the app.
+
+### 🚀 Improvements
+
+- Changed the order of the GitHub Analytics repositories in the Landing Page app to show the newest repositories first, improving visibility for recently added projects.
+- Replaced z-control with z&#8209;control in all privacy policy HTML files to ensure consistent branding and correct display of the non-breaking hyphen character.
+
+## [3.4] - 2026-07-12
 
 ### 🚀 Improvements
 

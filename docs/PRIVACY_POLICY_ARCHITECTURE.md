@@ -35,6 +35,9 @@
 │  │        ├─ multi-language-translator/
 │  │        │  ├─ multi-language-translator-en.html
 │  │        │  └─ multi-language-translator-de.html
+│  │        ├─ image-to-text/
+│  │        │  ├─ image-to-text-en.html
+│  │        │  └─ image-to-text-de.html
 │  │        └─ qr-code-generator/
 │  │           ├─ qr-code-generator-en.html
 │  │           └─ qr-code-generator-de.html

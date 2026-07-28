@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project uses [Semantic Versioning](https://semver.org/).
 
+## [2.5] - 2026-07-27
+
+### Added
+
+- Added `extractTextFromImage` function to extract text from images using Google Cloud Vision API, enabling text recognition capabilities in the backend.
+
+### Changed
+
+- Improved `createMissingFeatureContingentData` function to handle different values depending on the appId, ensuring that the correct contingent data is created for each app.
+- Improved `APP_TO_COLLECTION` mapping to use the new collection constants for each appId, ensuring that the correct Firestore collection is used for each app's contingent data.
+- Improved Error handling in `extractTextFromImage` as not each error is of type Error.
+
+### Removed
+
+- Removed interfaces from `firebase-firestore.interfaces.ts` that are no longer used in the codebase, reducing clutter and improving maintainability.
+
 ## [2.4] - 2026-07-08
 
 ### Added

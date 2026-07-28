@@ -9,25 +9,28 @@ export const COLLECTION = {
 };
 
 export const REPO = {
-  Z_CONTROL_LANDING_PAGE: 'z-control-landing-page',
+  Z_CONTROL_IMAGE_TO_TEXT: 'z-control-image-to-text',
+  Z_CONTROL_IONIC_SETUP: 'z-control-ionic-setup',
+  Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR: 'z-control-multi-language-translator',
+  Z_CONTROL_BACKEND_FUNCTIONS: 'z-control-backend-functions',
   Z_CONTROL_QR_CODE_GENERATOR: 'z-control-qr-code-generator',
   Z_CONTROL_BACKUP_SCRIPTS: 'z-control-Backup-scripts',
-  Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR: 'z-control-multi-language-translator',
-  Z_CONTROL_IONIC_SETUP: 'z-control-ionic-setup',
-  Z_CONTROL_BACKEND_FUNCTIONS: 'z-control-backend-functions',
-  COPILOT_LEARNING_CALCULATOR: 'copilot-learning-calculator',
+  Z_CONTROL_LANDING_PAGE: 'z-control-landing-page',
   IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup',
+  COPILOT_LEARNING_CALCULATOR: 'copilot-learning-calculator',
 };
 
+// order by creation date descending (newest first) - used for GitHub analytics history
 export const REPOS = [
-  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_LANDING_PAGE },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_IMAGE_TO_TEXT },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_IONIC_SETUP },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_BACKEND_FUNCTIONS },
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_QR_CODE_GENERATOR },
   { owner: 'zoechbauer', repo: REPO.Z_CONTROL_BACKUP_SCRIPTS },
-  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_MULTI_LANGUAGE_TRANSLATOR },
-  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_IONIC_SETUP },
-  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_BACKEND_FUNCTIONS },
-  { owner: 'zoechbauer', repo: REPO.COPILOT_LEARNING_CALCULATOR },
+  { owner: 'zoechbauer', repo: REPO.Z_CONTROL_LANDING_PAGE },
   { owner: 'zoechbauer', repo: REPO.IONIC_ANGULAR21_VITEST_SETUP },
+  { owner: 'zoechbauer', repo: REPO.COPILOT_LEARNING_CALCULATOR },
 ];
 
 // ***********************************************

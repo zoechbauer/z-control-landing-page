@@ -1,8 +1,8 @@
-<!-- z-control Übersetzer App Datenschutzerklärung - Deutsch -->
+<!-- z-control Image to Text App Datenschutzerklärung - Deutsch -->
 <h3>🔒 Datenschutz & Datensicherheit</h3>
 <p>
   Diese Datenschutzerklärung erläutert, wie die
-  <i>z&#8209;control Übersetzer App</i> Ihre Daten erhebt, verwendet und schützt.
+  <i>z&#8209;control Image to Text App</i> Ihre Daten erhebt, verwendet und schützt.
 </p>
 
 <h4>📱 Datenerhebung</h4>
@@ -12,18 +12,26 @@
     Daten, es sei denn, Sie stellen diese ausdrücklich bereit.
   </li>
   <li>
-    <strong>Übersetzung:</strong> Die Übersetzung erfolgt über die
-    <i>Google Translate API</i> in der Cloud. Die übersetzten Texte werden weder
-    gespeichert noch weitergegeben.
+    Die <strong>Texterkennung (OCR)</strong> erfolgt über die
+    <i>Google Cloud Vision API</i>. Bilddaten werden zur Erkennung in die Cloud
+    übertragen. Die erkannten Texte werden nicht dauerhaft in der Cloud
+    gespeichert oder an Dritte weitergegeben; die Weiterverarbeitung erfolgt
+    ausschließlich lokal auf Ihrem Gerät.
+  </li>
+  <li>
+    <strong>Bild-Komprimierung:</strong> Bilder werden vor der Verarbeitung
+    komprimiert, um die Leistung zu verbessern und den Speicherbedarf zu
+    reduzieren. Dies erfolgt ausschließlich lokal auf Ihrem Gerät mittels
+    <i>ImageManipulator</i> für mobile Geräte und <i>pica</i> für die Web-App.
+    Es werden keine Bilder in der Cloud gespeichert.
   </li>
   <li>
     <strong>Anonyme Nutzungsstatistiken:</strong> Wir speichern folgende anonyme
     Daten in <i>Google Firebase/Firestore</i>:
     <ul>
       <li>Geräte-Informationen (Plattformtyp)</li>
-      <li>Anzahl der übersetzten Zeichen</li>
-      <li>Ausgewählte Zielsprachen</li>
-      <li>Datum der letzten Übersetzung</li>
+      <li>Anzahl der Bildverarbeitungen</li>
+      <li>Datum der letzten Bildverarbeitung</li>
       <li>Anonymisierte Benutzer-ID</li>
     </ul>
     Diese Daten dienen ausschließlich der Verwaltung des monatlichen
@@ -58,7 +66,7 @@
 <p>
   Diese App ist Open Source. Sie können den Quellcode auf
   <a
-    href="https://github.com/zoechbauer/z-control-multi-language-translator"
+    href="https://github.com/zoechbauer/z-control-image-to-text"
     target="_blank"
     >GitHub</a
   >
@@ -83,11 +91,11 @@
 <p>
   Bei Fragen oder Anliegen zum Datenschutz kontaktieren Sie bitte:
   <a
-    href="mailto:zcontrol.app.qr@gmail.com?subject=z-control%20Übersetzer%20Datenschutzerklärung%20Feedback"
-    >z-control Übersetzer Support</a
+    href="mailto:zcontrol.app.qr@gmail.com?subject=z-control%20Image%20to%20Text%20Datenschutzerklärung%20Feedback"
+    >z-control Image to Text Support</a
   >
 </p>
 
 <p>
-  <small><strong>Letzte Aktualisierung:</strong> 18. Februar 2026</small>
+  <small><strong>Letzte Aktualisierung:</strong> 27. Juli 2026</small>
 </p>

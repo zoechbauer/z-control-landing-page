@@ -33,6 +33,11 @@ export class PrivacyService {
   // The 'type' should match the folder name in assets/privacy/policies/{new-policy-folder}
   private readonly availablePolicies: PrivacyPolicyMeta[] = [
     {
+      type: 'image-to-text',
+      languages: ['en', 'de'],
+      description: 'Standard privacy policy for z-control Image to Text App',
+    },
+    {
       type: 'multi-language-translator',
       languages: ['en', 'de'],
       description: 'Standard privacy policy for z-control Translator App',
@@ -119,6 +124,10 @@ export class PrivacyService {
     // NOTE: When adding a new privacy policy:
     // 1. Add a new entry here matching the 'type' (folder name in assets/privacy/policies/{new-policy-folder}).
     const titles: Record<string, Record<string, string>> = {
+      'image-to-text': {
+        en: 'Privacy Policy\nz-control Image to Text App',
+        de: 'Datenschutzerklärung\nz-control Image to Text App',
+      },
       'multi-language-translator': {
         en: 'Privacy Policy\nz-control Translator App',
         de: 'Datenschutzerklärung\nz-control Übersetzer App',
