@@ -134,23 +134,6 @@ describe('GithubAnalyticsDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should close modal when closeModal is called', () => {
-  //   component.closeModal();
-  //   expect(modalControllerSpy.dismiss).toHaveBeenCalled();
-  // });
-
-  // it('should toggle isRepoOpened when onAccordionGroupChange is called', () => {
-  //   let event = { detail: { value: 'someValue' } } as CustomEvent;
-  //   component.isRepoOpened = false;
-  //   component.onAccordionGroupChange(event);
-  //   expect(component.isRepoOpened).withContext('open repo').toBeTrue();
-
-  //   event = { detail: { value: undefined } } as CustomEvent;
-  //   component.isRepoOpened = true;
-  //   component.onAccordionGroupChange(event);
-  //   expect(component.isRepoOpened).withContext('close repo').toBeFalse();
-  // });
-
   it('should call checkOrientation on window resize', () => {
     spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
       Promise.resolve(mockAnalyticsData),
@@ -265,18 +248,6 @@ describe('GithubAnalyticsDetailsComponent', () => {
   });
 
   describe('init', () => {
-    // it('should call getAnalyticsData and set analyticsData', async () => {
-    //   spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-    //     Promise.resolve(mockAnalyticsData),
-    //   );
-    //   // component.analyticsData = [];
-    //   // component.githubTrafficData = [];
-
-    //   await (component as any).init();
-    //   expect(component.analyticsData).toEqual(mockAnalyticsData);
-    //   expect(component.githubTrafficData).toEqual(mockAnalyticsData);
-    // });
-
     it('should call checkOrientation', async () => {
       spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
         Promise.resolve(mockAnalyticsData),
