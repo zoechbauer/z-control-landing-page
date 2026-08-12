@@ -10,6 +10,17 @@ This project uses a simplified major.minor versioning scheme:
 - Minor versions indicate new features, improvements, and bug fixes.
 - Patch numbers are intentionally omitted; all changes are released as major or minor versions.
 
+## [2.8] – 2026-07-28
+
+### 🚀 Improvements
+
+- Added the `TODO — Open activities` document to the `docs/` folder, providing a centralized list of open tasks and follow-ups for the z-control Translator project.
+- Updated the `README.md` to include links to the new `TODO — Open activities` document and the `Docs index`, improving navigation and accessibility of project documentation.
+
+### 🔧 Internal
+
+- Updated the `variables.gradle` file to set `compileSdkVersion` and `targetSdkVersion` to 36, ensuring compatibility with the latest Android SDK features and improvements. This update was requested by the Google Play Store to meet the latest requirements for app submissions and updates.
+
 ## [2.7] – 2026-07-24
 
 ### 🔧 Internal

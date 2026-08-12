@@ -307,4 +307,47 @@ describe('UtilsService', () => {
       expect(presentSpy).toHaveBeenCalled();
     });
   });
+
+  describe('addLeadingBlanks', () => {
+    const cases: Array<{
+      name: string;
+      value: string | number;
+      total: number;
+      expected: string;
+    }> = [
+      {
+        name: 'string shorter than total',
+        value: '12',
+        total: 5,
+        expected: '   12',
+      },
+      {
+        name: 'number shorter than total',
+        value: 12,
+        total: 5,
+        expected: '   12',
+      },
+      {
+        name: 'equal length string',
+        value: '12345',
+        total: 5,
+        expected: '12345',
+      },
+      {
+        name: 'longer than total',
+        value: '123456',
+        total: 5,
+        expected: '123456',
+      },
+      { name: 'empty string', value: '', total: 3, expected: '   ' },
+      { name: 'zero number', value: 0, total: 3, expected: '  0' },
+    ];
+
+    cases.forEach(({ name, value, total, expected }) => {
+      it(`should return "${expected}" for ${name}`, () => {
+        const result = service.addLeadingBlanks(value as any, total);
+        expect(result).toEqual(expected);
+      });
+    });
+  });
 });

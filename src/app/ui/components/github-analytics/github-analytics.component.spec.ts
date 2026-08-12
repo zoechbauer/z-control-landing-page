@@ -4,7 +4,6 @@ import { ModalController } from '@ionic/angular/standalone';
 
 import { GithubAnalyticsComponent } from './github-analytics.component';
 import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
-import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import {
   COLLECTION,
   GithubAnalyticsTrafficDocument,
@@ -25,13 +24,6 @@ class MockFirebaseFirestoreService {
   }
 }
 
-class MockFirebaseAnalyticsService {
-  init(): void {}
-  logEvent(name: string, params?: { [key: string]: any }): void {}
-  enableCollection(allow: boolean): void {}
-  enabled$ = { subscribe: () => {} }; // Stub for observable
-}
-
 const collection = COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
 const repo1 = REPOS[0].repo;
 const repo2 = REPOS[1].repo;
@@ -40,7 +32,7 @@ const makeDoc = (
   repo: (typeof REPO)[keyof typeof REPO],
   views: Array<{ timestamp: string; count: number; uniques: number }>,
   clones: Array<{ timestamp: string; count: number; uniques: number }>,
-  timestamp = '2026-06-19T16:00:36.488Z',
+  timestamp = '2026-06-20T16:00:36.488Z',
 ): GithubAnalyticsTrafficDocument => ({
   collection,
   repo,
@@ -72,7 +64,7 @@ const mockAnalyticsData: GithubAnalyticsTrafficDocument[] = [
       { uniques: 20, count: 40, timestamp: '2026-06-18T16:00:36.488Z' },
       { uniques: 30, count: 60, timestamp: '2026-06-19T16:00:36.488Z' },
     ],
-    [{ uniques: 10, count: 20, timestamp: '2026-06-18T16:00:36.488Z' }],
+    [{ uniques: 10, count: 20, timestamp: '2026-06-08T16:00:36.488Z' }],
   ),
 ];
 
@@ -80,7 +72,6 @@ describe('GithubAnalyticsComponent', () => {
   let component: GithubAnalyticsComponent;
   let fixture: ComponentFixture<GithubAnalyticsComponent>;
   let firestoreService: FirebaseFirestoreService;
-  let firebaseAnalyticsService: FirebaseAnalyticsService;
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
   let utilsServiceSpy: jasmine.SpyObj<any>;
 
@@ -98,10 +89,6 @@ describe('GithubAnalyticsComponent', () => {
           provide: FirebaseFirestoreService,
           useClass: MockFirebaseFirestoreService,
         },
-        {
-          provide: FirebaseAnalyticsService,
-          useClass: MockFirebaseAnalyticsService,
-        },
         { provide: ModalController, useValue: modalControllerSpy },
         { provide: UtilsService, useValue: utilsServiceSpy },
       ],
@@ -110,7 +97,6 @@ describe('GithubAnalyticsComponent', () => {
     fixture = TestBed.createComponent(GithubAnalyticsComponent);
     component = fixture.componentInstance;
     firestoreService = TestBed.inject(FirebaseFirestoreService);
-    firebaseAnalyticsService = TestBed.inject(FirebaseAnalyticsService);
     fixture.detectChanges();
   }));
 
@@ -174,83 +160,6 @@ describe('GithubAnalyticsComponent', () => {
     });
   });
 
-  describe('onGetSourceCode', () => {
-    let windowOpenSpy: jasmine.Spy;
-
-    beforeEach(() => {
-      spyOn(firebaseAnalyticsService, 'logEvent');
-      windowOpenSpy = spyOn(globalThis.window, 'open');
-    });
-
-    it('should open source and call logEvent on FirebaseAnalyticsService with correct parameters', () => {
-      REPOS.forEach((repoObj) => {
-        const url = `https://github.com/zoechbauer/${repoObj.repo}`;
-        component.onGetSourceCode(repoObj.repo);
-
-        expect(windowOpenSpy)
-          .withContext('window.open for repo: ' + repoObj.repo)
-          .toHaveBeenCalledWith(url, '_blank');
-
-        expect(firebaseAnalyticsService.logEvent)
-          .withContext('logEvent for repo: ' + repoObj.repo)
-          .toHaveBeenCalledWith('get_source_code', {
-            repo: repoObj.repo,
-            app: REPO.Z_CONTROL_LANDING_PAGE,
-          });
-      });
-    });
-
-    it('should log error when open source fails', () => {
-      windowOpenSpy.and.throwError('Test error');
-      spyOn(console, 'error');
-
-      component.onGetSourceCode(REPOS[0].repo);
-
-      expect(console.error).toHaveBeenCalledWith(
-        'Error opening source code URL:',
-        jasmine.any(Error),
-      );
-    });
-  });
-
-  describe('onOpenGithubAnalyticsHelp', () => {
-    beforeEach(() => {
-      spyOn(firebaseAnalyticsService, 'logEvent');
-      utilsServiceSpy.openMarkdownDoc.and.returnValue(Promise.resolve());
-    });
-
-    it('should open markdown and call logEvent on FirebaseAnalyticsService with correct parameters', async () => {
-      for (const repoObj of REPOS) {
-        await component.onOpenGithubAnalyticsHelp(repoObj.repo);
-
-        expect(utilsServiceSpy.openMarkdownDoc)
-          .withContext('openMarkdownDoc for repo: ' + repoObj.repo)
-          .toHaveBeenCalledWith(
-            'assets/app-docs/backend-functions-app/github-analytics-help.md',
-          );
-
-        expect(firebaseAnalyticsService.logEvent)
-          .withContext('logEvent for repo: ' + repoObj.repo)
-          .toHaveBeenCalledWith('get_github_analytics_help', {
-            repo: repoObj.repo,
-            app: REPO.Z_CONTROL_LANDING_PAGE,
-          });
-      }
-    });
-
-    it('should log error when open markdown fails', async () => {
-      utilsServiceSpy.openMarkdownDoc.and.rejectWith(new Error('Test error'));
-      spyOn(console, 'error');
-
-      await component.onOpenGithubAnalyticsHelp(REPOS[0].repo);
-
-      expect(console.error).toHaveBeenCalledWith(
-        'Error opening GitHub Analytics help document:',
-        jasmine.any(Error),
-      );
-    });
-  });
-
   describe('init', () => {
     it('should call getAnalyticsData and set analyticsData', async () => {
       spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
@@ -304,61 +213,63 @@ describe('GithubAnalyticsComponent', () => {
     });
   });
 
-  describe('calculate statistics values', () => {
-    it('should calculate total views count correctly', () => {
-      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
-      const totalViewsCount = component.getViewsTotalCount(item);
-      expect(totalViewsCount).toBe(50); // 20 + 30
+  describe('getMostRecentItem', () => {
+    it('should return the most recent item based on timestamp', () => {
+      const mostRecentItem = component.getMostRecentItem(mockAnalyticsData[0]);
+      expect(mostRecentItem).toEqual(new Date('2026-06-19T16:00:36.488Z'));
     });
 
-    it('should calculate total unique views correctly', () => {
-      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
-      const totalUniqueViews = component.getViewsTotalUniques(item);
-      expect(totalUniqueViews).toBe(25); // 10 + 15
-    });
-
-    it('should calculate total clones count correctly', () => {
-      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
-      const totalClonesCount = component.getClonesTotalCount(item);
-      expect(totalClonesCount).toBe(10); // 10
-    });
-
-    it('should calculate total unique clones correctly', () => {
-      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
-      const totalUniqueClones = component.getClonesTotalUniques(item);
-      expect(totalUniqueClones).toBe(5); // 5
-    });
-
-    it('should return the oldest item date correctly', () => {
-      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
-      const oldestDate = component.getOldestItem(item);
-      expect(oldestDate).toEqual(new Date('2026-06-18T16:00:36.488Z'));
-    });
-
-    it('should return the most recent item date correctly', () => {
-      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
-      const mostRecentDate = component.getMostRecentItem(item);
-      expect(mostRecentDate).toEqual(new Date('2026-06-19T16:00:36.488Z'));
-    });
-
-    it('should return null for oldest item if no views or clones', () => {
-      const item: GithubAnalyticsTrafficDocument = makeDoc(
+    it('should return null for an empty array', () => {
+      const emptyItem: GithubAnalyticsTrafficDocument = makeDoc(
         REPOS[0].repo,
         [],
         [],
       );
-      const oldestDate = component.getOldestItem(item);
-      expect(oldestDate).toBeNull();
+      const mostRecentItem = component.getMostRecentItem(emptyItem);
+      expect(mostRecentItem).toBeNull();
+    });
+  });
+
+  describe('getLastAccessDays', () => {
+    it('should return the correct number of days since the last access', () => {
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
+      const lastAccessDays = component.getLastAccessDays(item);
+      expect(lastAccessDays).toBe(1); // 2026-06-19 - 2026-06-18 = 1 day
     });
 
-    it('should return null for most recent item if no views or clones', () => {
-      const item: GithubAnalyticsTrafficDocument = makeDoc(
+    it('should return null if there are no views or clones', () => {
+      const emptyItem: GithubAnalyticsTrafficDocument = makeDoc(
         REPOS[0].repo,
         [],
         [],
       );
-      const mostRecentDate = component.getMostRecentItem(item);
-      expect(mostRecentDate).toBeNull();
+      const lastAccessDays = component.getLastAccessDays(emptyItem);
+      expect(lastAccessDays).toBeNull();
+    });
+  });
+
+  describe('getAnalyticsData', () => {
+    it('should call firestoreService.getAnalyticsData with correct parameters', async () => {
+      const getAnalyticsDataSpy = spyOn(
+        firestoreService,
+        'getAnalyticsData',
+      ).and.returnValue(Promise.resolve(mockAnalyticsData));
+
+      await component['getAnalyticsData'](collection);
+      expect(getAnalyticsDataSpy).toHaveBeenCalledWith(
+        collection,
+        'all',
+        false
+      );
+    });
+
+    it('should set analyticsData and githubTrafficData after fetching data', async () => {
+      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
+        Promise.resolve(mockAnalyticsData),
+      );
+
+      const result = await component['getAnalyticsData'](collection);
+      expect(result).toEqual(mockAnalyticsData);
     });
   });
 });

@@ -10,6 +10,22 @@ This project uses a simplified major.minor versioning scheme:
 - Minor versions indicate new features, improvements, and bug fixes.
 - Patch numbers are intentionally omitted; all changes are released as major or minor versions.
 
+## [2.6] – 2026-07-28
+
+### 🚀 Improvements
+
+- Improved toast reliability in production builds by ensuring ion-toast is registered before ToastController usage and preloading registration during service initialization.
+- Replaced the hyphen in `z-control` with the non-breaking hyphen character in the privacy policy component to ensure that z-control is not broken across lines.
+
+### 🐛 Fixes
+
+- Fixed a production-only issue where toast notifications did not appear on web and mobile builds while working in ionic serve/dev mode.
+
+### 🔧 Internal
+
+- Added and stabilized unit tests for toast service safeguard paths, including component registration flow, controller failure logging, and timeout logging behavior.
+- Verified full test suite passes (539 green tests).
+
 ## [2.5] – 2026-07-24
 
 ### 🔧 Internal

@@ -43,23 +43,27 @@
       </ion-item>
     </section>
     <section>
-      <table class="repo-table">
+      <table class="repos-table">
         <thead>
           <tr>
             <th class="repo">Repository</th>
-            <th class="count">Views Count</th>
-            <th class="count">Clones Count</th>
+            <th class="count">Last<br />Access</th>
+            <th class="count">Views<br />Count</th>
+            <th class="count">Clones<br />Count</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of analyticsData">
-            <td colspan="3" style="padding: 0">
+            <td colspan="4" style="padding: 0">
               <ion-accordion-group (ionChange)="onAccordionGroupChange($event)">
                 <ion-accordion [value]="item.repo">
                   <ion-item slot="header">
                     <table aria-hidden="true" class="repo-table">
                       <tr>
                         <td class="repo">{{ item.repo }}</td>
+                        <td class="count">
+                          {{ getLastAccessDays(item) }} d
+                        </td>
                         <td class="count">
                           {{ item.views.count }}
                         </td>
@@ -69,138 +73,19 @@
                       </tr>
                     </table>
                   </ion-item>
-                  <div slot="content" class="repo-details">
-                    <table aria-hidden="true">
-                      <thead>
-                        <tr>
-                          <td colspan="2" style="padding: 0">
-                            <div>
-                              <strong>Last Updated:</strong>
-                              {{ item.timestamp | date: "yyyy-MM-dd HH:mm:ss" }}
-                            </div>
-                            <div [hidden]="getMostRecentItem(item) === null">
-                              <strong>Most Recent Record Date:</strong>
-                              {{ getMostRecentItem(item) | date: "yyyy-MM-dd" }}
-                            </div>
-                            <div [hidden]="getOldestItem(item) === null">
-                              <strong>First Record Date:</strong>
-                              {{ getOldestItem(item) | date: "yyyy-MM-dd" }}
-                            </div>
-                          </td>
-                          <td>
-                            <div class="button-wrapper">
-                              <ion-button
-                                (click)="onGetSourceCode(item.repo)"
-                                color="primary"
-                                expand="block"
-                                class="download-button"
-                                title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
-                                aria-label="Open GitHub repository (opens in a new tab)"
-                              >
-                                <ion-icon
-                                  name="logo-github"
-                                  slot="start"
-                                ></ion-icon>
-                                Get Source Code
-                              </ion-button>
-                            </div>
-                            <div class="button-wrapper">
-                              <ion-button
-                                color="primary"
-                                expand="block"
-                                (click)="onOpenGithubAnalyticsHelp(item.repo)"
-                                (keydown.enter)="
-                                  onOpenGithubAnalyticsHelp(item.repo)
-                                "
-                                title="Explanation of GitHub Analytics metrics, including clones, unique clones, visitors, and unique visitors"
-                              >
-                                <ion-icon
-                                  name="information-circle"
-                                  slot="start"
-                                ></ion-icon>
-                                Help / Explanation
-                              </ion-button>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="views-clones">
-                            <section class="views">
-                              <h6>Views</h6>
-                              <table style="margin-bottom: 1em">
-                                <thead>
-                                  <tr>
-                                    <th>Date</th>
-                                    <th class="right-aligned">Count</th>
-                                    <th class="right-aligned">Unique</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr *ngFor="let view of item.views.views">
-                                    <td>
-                                      {{ view.timestamp | date: "yyyy-MM-dd" }}
-                                    </td>
-                                    <td class="right-aligned">
-                                      {{ view.count }}
-                                    </td>
-                                    <td class="right-aligned">
-                                      {{ view.uniques }}
-                                    </td>
-                                  </tr>
-                                  <tr style="font-weight: bold">
-                                    <td>Total</td>
-                                    <td class="right-aligned">
-                                      {{ getViewsTotalCount(item) }}
-                                    </td>
-                                    <td class="right-aligned">
-                                      {{ getViewsTotalUniques(item) }}
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </section>
-                          </td>
-                          <td></td>
-                          <td class="views-clones">
-                            <section class="clones">
-                              <h6>Clones</h6>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>Date</th>
-                                    <th class="right-aligned">Count</th>
-                                    <th class="right-aligned">Unique</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr *ngFor="let clone of item.clones.clones">
-                                    <td>
-                                      {{ clone.timestamp | date: "yyyy-MM-dd" }}
-                                    </td>
-                                    <td class="right-aligned">
-                                      {{ clone.count }}
-                                    </td>
-                                    <td class="right-aligned">
-                                      {{ clone.uniques }}
-                                    </td>
-                                  </tr>
-                                  <tr style="font-weight: bold">
-                                    <td>Total</td>
-                                    <td class="right-aligned">
-                                      {{ getClonesTotalCount(item) }}
-                                    </td>
-                                    <td class="right-aligned">
-                                      {{ getClonesTotalUniques(item) }}
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </section>
-                          </td>
-                        </tr>
-                      </thead>
+                  <ion-item slot="content">
+                    <table aria-hidden="true" class="repo-table">
+                      <tr>
+                        <td colspan="4" style="padding: 0">
+                          <app-github-analytics-details
+                            [item]="item"
+                            [analyticsData]="analyticsData"
+                            [githubTrafficData]="githubTrafficData"
+                          ></app-github-analytics-details>
+                        </td>
+                      </tr>
                     </table>
-                  </div>
+                  </ion-item>
                 </ion-accordion>
               </ion-accordion-group>
             </td>

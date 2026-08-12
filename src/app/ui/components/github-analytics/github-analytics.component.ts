@@ -17,15 +17,14 @@ import {
 } from '@ionic/angular/standalone';
 import {
   COLLECTION,
-  REPO,
   GithubAnalyticsTrafficDocument,
   ALL_REPOS,
 } from '@app/shared/GitHubConstants';
 
-import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
 import { environment } from '@env/environment';
 import { UtilsService } from '@app/services/utils.service';
+import { GithubAnalyticsDetailsComponent } from '../github-analytics-details/github-analytics-details.component';
 
 @Component({
   selector: 'app-github-analytics',
@@ -47,10 +46,10 @@ import { UtilsService } from '@app/services/utils.service';
     IonToolbar,
     JsonPipe,
     IonSpinner,
+    GithubAnalyticsDetailsComponent,
   ],
 })
 export class GithubAnalyticsComponent implements OnInit {
-  private readonly fa = inject(FirebaseAnalyticsService);
   private readonly firestoreService = inject(FirebaseFirestoreService);
   private readonly modalController = inject(ModalController);
   private readonly utilsService = inject(UtilsService);
@@ -84,60 +83,6 @@ export class GithubAnalyticsComponent implements OnInit {
   }
 
   /**
-   * Returns the total views count for a repository.
-   * @param item - The analytics document for the repository.
-   * @returns Total views count.
-   */
-  getViewsTotalCount(item: GithubAnalyticsTrafficDocument): number {
-    return item.views.views.reduce((sum, v) => sum + v.count, 0);
-  }
-
-  /**
-   * Returns the total unique views for a repository.
-   * @param item - The analytics document for the repository.
-   * @returns Total unique views count.
-   */
-  getViewsTotalUniques(item: GithubAnalyticsTrafficDocument): number {
-    return item.views.views.reduce((sum, v) => sum + v.uniques, 0);
-  }
-
-  /**
-   * Returns the total clones count for a repository.
-   * @param item - The analytics document for the repository.
-   * @returns Total clones count.
-   */
-  getClonesTotalCount(item: GithubAnalyticsTrafficDocument): number {
-    return item.clones.clones.reduce((sum, c) => sum + c.count, 0);
-  }
-
-  /**
-   * Returns the total unique clones for a repository.
-   * @param item - The analytics document for the repository.
-   * @returns Total unique clones count.
-   */
-  getClonesTotalUniques(item: GithubAnalyticsTrafficDocument): number {
-    return item.clones.clones.reduce((sum, c) => sum + c.uniques, 0);
-  }
-
-  /**
-   * Gets the oldest timestamp from views and clones data.
-   * @param item - The analytics document for the repository.
-   * @returns The oldest Date or null if no data.
-   */
-  getOldestItem(item: GithubAnalyticsTrafficDocument): Date | null {
-    const allTimestamps = [
-      ...item.views.views.map((v) => v.timestamp),
-      ...item.clones.clones.map((c) => c.timestamp),
-    ];
-    if (allTimestamps.length === 0) return null;
-    const oldest = allTimestamps.reduce(
-      (min, ts) => (new Date(ts) < new Date(min) ? ts : min),
-      allTimestamps[0],
-    );
-    return new Date(oldest);
-  }
-
-  /**
    * Gets the most recent timestamp from views and clones data.
    * @param item - The analytics document for the repository.
    * @returns The most recent Date or null if no data.
@@ -156,44 +101,28 @@ export class GithubAnalyticsComponent implements OnInit {
   }
 
   /**
+   * Returns the number of days since the last access for a repository.
+   * Dates are normalized to midnight to avoid partial day differences.
+   * @param item - The analytics document for the repository.
+   * @returns Number of days since the last access, or null if no data is available.
+   */
+  getLastAccessDays(item: GithubAnalyticsTrafficDocument): number | null {
+    const mostRecent = this.getMostRecentItem(item);
+    if (!mostRecent) return null;
+
+    const mostRecentDate = new Date(mostRecent).setHours(0, 0, 0, 0);
+    const lastUpdate = new Date(item.timestamp).setHours(0, 0, 0, 0);
+
+    const diffTime = Math.abs(lastUpdate - mostRecentDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+
+  /**
    * Closes the modal dialog.
    */
   closeModal() {
     this.modalController.dismiss();
-  }
-
-  /**
-   * Opens the GitHub Analytics help document for the given repository as markdown.
-   * @param repo - The repository name.
-   */
-  async onOpenGithubAnalyticsHelp(repo: (typeof REPO)[keyof typeof REPO]) {
-    try {
-      const docPath =
-        'assets/app-docs/backend-functions-app/github-analytics-help.md';
-      await this.utilsService.openMarkdownDoc(docPath);
-      this.fa.logEvent('get_github_analytics_help', {
-        repo: repo,
-        app: REPO.Z_CONTROL_LANDING_PAGE,
-      });
-    } catch (error) {
-      console.error('Error opening GitHub Analytics help document:', error);
-    }
-  }
-
-  /**
-   * Opens the GitHub source code page for the given repository in a new tab and logs the event.
-   * @param repo - The repository name.
-   */
-  onGetSourceCode(repo: (typeof REPO)[keyof typeof REPO]) {
-    try {
-      globalThis.window.open(this.getSourceCodeUrl(repo), '_blank');
-      this.fa.logEvent('get_source_code', {
-        repo: repo,
-        app: REPO.Z_CONTROL_LANDING_PAGE,
-      });
-    } catch (error) {
-      console.error('Error opening source code URL:', error);
-    }
   }
 
   /**
@@ -203,10 +132,6 @@ export class GithubAnalyticsComponent implements OnInit {
   private checkOrientation(): void {
     this.isMobilePortrait =
       this.utilsService.isSmallScreen && this.utilsService.isPortrait;
-  }
-
-  private getSourceCodeUrl(repo: (typeof REPO)[keyof typeof REPO]): string {
-    return `https://github.com/zoechbauer/${repo}`;
   }
 
   /**

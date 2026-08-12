@@ -2,6 +2,26 @@
 
 All recent updates and improvements to our **z-control Landing Page** app.
 
+## [3.6] - 2026-08-12
+
+### ✨ New Features
+
+- Added a "Days since last access" column to the GitHub Analytics table to surface recent repository activity.
+- Added a "Time since first access" field in the GitHub Analytics detail view that shows repository age in days or months, clarifying historical usage.
+
+### 🚀 Improvements
+
+- Redesigned the repository details table for better readability and usability, especially on mobile portrait screens.
+
+### 🐛 Fixes
+
+- Fixed tsconfig.json and tsconfig.spec.json to include all TypeScript files in the project for proper type checking and linting, ensuring consistent code quality and catching potential issues early.
+
+### 🔧 Internal
+
+- Extracted repository details into a dedicated component to improve maintainability and testability of the GitHub Analytics feature.
+- Refactored the unit tests for the GitHub Analytics component to improve coverage and ensure accurate behavior across different scenarios.
+
 ## [3.5] - 2026-07-28
 
 ### ✨ New Features
@@ -13,7 +33,7 @@ All recent updates and improvements to our **z-control Landing Page** app.
 ### 🚀 Improvements
 
 - Changed the order of the GitHub Analytics repositories in the Landing Page app to show the newest repositories first, improving visibility for recently added projects.
-- Replaced z-control with z&#8209;control in all privacy policy HTML files to ensure consistent branding and correct display of the non-breaking hyphen character.
+- Replaced the hyphen in `z-control` with the non-breaking hyphen character in all privacy policy HTML files to ensure that z-control is not broken across lines.
 
 ## [3.4] - 2026-07-12
 

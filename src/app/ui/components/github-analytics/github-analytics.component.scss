@@ -15,49 +15,63 @@ hr {
   border-top: 1px solid #000;
 }
 
-table {
+.repos-table {
   width: 100%;
 
-  .repo {
-    width: 70%;
-    font-weight: bold;
-  }
+  thead tr {
+    th {
+      &.repo {
+        text-align: left;
+        width: 40%;
+      }
 
-  .count {
-    width: 15%;
-    text-align: right;
-    padding-right: 10px;
-  }
-
-  th {
-    text-align: left;
-
-    &.count {
-      padding-right: 35px;
+      &.count {
+        text-align: center;
+        width: 10%;
+      }
     }
   }
 
-  .views-clones {
-    vertical-align: top;
-    width: 42%;
-
-    h6 {
+  td {
+    .repo {
+      width: 40%;
       font-weight: bold;
-      text-align: center;
     }
-  }
 
-  .right-aligned {
-    text-align: right;
+    .count {
+      width: 10%;
+      text-align: right;
+    }
   }
 }
 
-.button-wrapper {
-  text-align: center;
-  margin: 16px 0;
+.repo-table {
+  width: 100%;
 
-  ion-button {
-    margin: 0 auto;
+  tr {
+    th {
+      text-align: left;
+
+      &.repo {
+        width: 40%;
+      }
+
+      &.count {
+        width: 10%;
+      }
+    }
+  }
+
+  td {
+    .repo {
+      width: 40%;
+      font-weight: bold;
+    }
+
+    .count {
+      width: 10%;
+      text-align: right;
+    }
   }
 }
 

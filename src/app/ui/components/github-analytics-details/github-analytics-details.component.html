@@ -1,0 +1,130 @@
+<div slot="content" class="repo-details">
+  <table aria-hidden="true" class="repo-details-table">
+    <thead>
+      <tr [ngClass]="{ 'views-clones-flex': isMobilePortrait }">
+        <td style="padding: 0">
+          <div>
+            <strong>Last Updated:</strong>
+            {{ item.timestamp | date: "yyyy-MM-dd HH:mm:ss" }}
+          </div>
+          <div [hidden]="getLastAccessDays(item) === null">
+            <strong>Last Accessed:</strong>
+            {{ getFormattedLastAccessDays(item) }}
+          </div>
+          <div [hidden]="getMostRecentItem(item) === null">
+            <strong>Last Record Date:</strong>
+            {{ getMostRecentItem(item) | date: "yyyy-MM-dd" }}
+          </div>
+          <div [hidden]="getOldestItem(item) === null">
+            <strong>First Record Date:</strong>
+            {{ getOldestItem(item) | date: "yyyy-MM-dd" }}
+            {{ getFormattedFirstAccessDays(item) }}
+          </div>
+        </td>
+        <td class="spacer"></td>
+        <td>
+          <div class="button-wrapper">
+            <ion-button
+              (click)="onGetSourceCode(item.repo)"
+              color="primary"
+              expand="block"
+              class="download-button"
+              title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
+              aria-label="Open GitHub repository (opens in a new tab)"
+            >
+              <ion-icon name="logo-github" slot="start"></ion-icon>
+              Get Source Code
+            </ion-button>
+          </div>
+          <div class="button-wrapper">
+            <ion-button
+              color="primary"
+              expand="block"
+              (click)="onOpenGithubAnalyticsHelp(item.repo)"
+              (keydown.enter)="onOpenGithubAnalyticsHelp(item.repo)"
+              title="Explanation of GitHub Analytics metrics, including clones, unique clones, visitors, and unique visitors"
+            >
+              <ion-icon name="information-circle" slot="start"></ion-icon>
+              Help / Explanation
+            </ion-button>
+          </div>
+        </td>
+      </tr>
+      <tr [ngClass]="{ 'views-clones-flex': isMobilePortrait }">
+        <td class="views-clones">
+          <section class="views">
+            <h6>Views</h6>
+            <table style="margin-bottom: 1em">
+              <thead>
+                <tr>
+                  <th class="ion-text-end">Date</th>
+                  <th class="ion-text-end">Count</th>
+                  <th class="ion-text-end">Unique</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let view of item.views.views">
+                  <td class="ion-text-end">
+                    {{ view.timestamp | date: "yyyy-MM-dd" }}
+                  </td>
+                  <td class="ion-text-end">
+                    {{ utilsService.addLeadingBlanks(view.count, totalCountLength) }}
+                  </td>
+                  <td class="ion-text-end">
+                    {{ utilsService.addLeadingBlanks(view.uniques, totalCountLength) }}
+                  </td>
+                </tr>
+                <tr style="font-weight: bold">
+                  <td class="ion-text-end">Total</td>
+                  <td class="ion-text-end">
+                    {{ getViewsTotalCount(item) }}
+                  </td>
+                  <td class="ion-text-end">
+                    {{ getViewsTotalUniques(item) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </td>
+        <td class="spacer"></td>
+        <td class="views-clones">
+          <section class="clones">
+            <h6>Clones</h6>
+            <table>
+              <thead>
+                <tr>
+                  <th class="ion-text-end">Date</th>
+                  <th class="ion-text-end">Count</th>
+                  <th class="ion-text-end">Unique</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let clone of item.clones.clones">
+                  <td class="ion-text-end">
+                    {{ clone.timestamp | date: "yyyy-MM-dd" }}
+                  </td>
+                  <td class="ion-text-end">
+                    {{ utilsService.addLeadingBlanks(clone.count, totalCountLength) }}
+                  </td>
+                  <td class="ion-text-end">
+                    {{ utilsService.addLeadingBlanks(clone.uniques, totalCountLength) }}
+                  </td>
+                </tr>
+                <tr style="font-weight: bold">
+                  <td class="ion-text-end">Total</td>
+                  <td class="ion-text-end">
+                    {{ getClonesTotalCount(item) }}
+                  </td>
+                  <td class="ion-text-end">
+                    {{ getClonesTotalUniques(item) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </td>
+      </tr>
+    </thead>
+  </table>
+</div>

@@ -1,0 +1,44 @@
+.repo-details-table {
+  width: 100%;
+
+  .views-clones {
+    vertical-align: top;
+    min-width: 48%;
+
+    h6 {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 8px;
+
+      tr:last-child {
+        td {
+          padding-top: 8px;
+          border-top: 1px solid #000;
+        }
+      }
+    }
+  }
+
+  .spacer {
+    width: 4%;
+  }
+
+  .views-clones-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .button-wrapper {
+    text-align: center;
+    margin: 16px 0;
+
+    ion-button {
+      margin: 0 auto;
+    }
+  }
+}

@@ -12,15 +12,89 @@ This project uses a simplified major.minor versioning scheme:
 
 ## What's Coming Next
 
-- Enter Title and Description of the photo in the PhotoInfoModalComponent before saving the photo to the device.
-- Display only 1 photo in the history list (scrollable) so that the buttons are always visible and not hidden because of long lists of images.
-- Implement confirmDeleteAllPhotos() and confirmDeletePhoto() in PhotoService to confirm deletion of all photos with a modal dialog.
-- Update Online Help with the features of this app
-- Allow editing photo metadata (title and description) from the history list and persist changes to device storage.
-- Add copy-to-clipboard feature for extracted text, compressed photo, and statistics to simplify the workflow and improve usability
-- Fix translation issues in the app, including hardcoded translations, and wrong translation keys of qr code app, because in in z-control Ionic Setup we changed the structure of translation keys and prefixes, so we need to update the translation keys in this app accordingly.
-- Rotate the photo before extracting text and saving it to the device.
-- Add unit tests for new services and components
+- Compress photos before saving to reduce storage usage.
+- Add a search feature to find saved photos by title, description, or extracted text.
+- Add unit tests for the new services and components.
+
+## [1.5] – 2026-08-09
+
+### ✨ New Features
+
+- Introduced `Copy Data`: copies a photo's extracted text, image, and metadata to the clipboard on web, or shares these data on native devices. Users can select which items to include. Web builds currently support PNG images only; native builds support PNG and JPEG. The app displays a notification when a selected image format is not supported.
+- Added a `Go Back` button in `HeaderComponent` to return to the previous workflow step, improving navigation consistency.
+- Removed the redundant "Back to Previous" button from `FeatureComponent` to avoid duplicate navigation controls.
+- Added a `Delete Photo` action after selecting a photo from the camera or gallery, allowing users to discard unwanted photos before processing. The procedure is the same as deleting a photo from the History workflow, including a confirmation dialog to prevent accidental deletion.
+
+### 🚀 Improvements
+
+- Improved `PhotoInfoModalComponent` layout to present title, description, and image more clearly.
+- Improved the user documentation by replacing Ionic setup placeholders with app-specific information and refining the wording, structure, and clarity.
+- Improved the displayed information when no image is selected, providing clearer guidance to the user.
+
+### 🐛 Fixes
+
+- Fixed a history navigation issue where extracted text and statistics did not update when stepping through saved photos.
+
+### 🔧 Internal
+
+- Split long error messages across multiple lines to avoid lint errors and improve readability.
+- Moved workflow functions into the `WorkflowService` to centralize workflow logic and improve maintainability.
+- Updated unit tests with minimal changes to keep the tests running. The tests will be refactored later to better reflect the new workflow logic and improve test coverage.
+- Added maxFreeFeatureCharsPerMonthForUser to AppConstants which is used in translation strings to display the monthly quota for each user. The value is read from the environment variable.
+
+## [1.4] – 2026-08-03
+
+### ✨ New Features
+
+- Saved and displayed creation and last-modified timestamps for each photo and its extracted text, so users can see when an extraction was created and last updated.
+- Added Next and Previous controls to the FeatureComponent for stepping through saved photos and their extracted text.
+
+### 🚀 Improvements
+
+- Show a clear informational message when an image contains no extracted text, explaining that processing completed but no text was detected (or that text recognition was not run).
+- Revised copy in the Get Mobile component (`get-mobile-app`) to remove leftover Ionic Setup phrasing and provide a clearer app description.
+- Refined the layout of the extracted text and statistics in `FeatureResultComponent` for improved readability and visual balance.
+- Disabled the Save button in `PhotoInfoModalComponent` when neither title nor description has changed to prevent unnecessary saves.
+- Improved `PhotoInfoModalComponent` layout to better present title, description, and the image.
+
+## [1.3] – 2026-08-02
+
+### ✨ New Features
+
+- Added ability to delete individual photos and their associated data from the History list.
+- Added confirmation dialogs for deleting a single photo or all photos, including clear warnings that the action is irreversible.
+
+### 🚀 Improvements
+
+- Hid the "Delete all data" button in the History workflow when there are no saved photos.
+- Disabled action buttons while an operation is in progress to prevent duplicate submissions.
+- Showed a notification when the user cancels photo selection or capture to provide immediate feedback.
+- Replaced hardcoded UI strings with translation keys and updated translation prefixes to match the z-control Ionic Setup.
+- Clarified the label for the "back" button in the History workflow and updated translations to match its purpose.
+
+## [1.2] – 2026-07-31
+
+### ✨ New Features
+
+- Added a History workflow step to view, edit, copy, and delete previously extracted text and photos, giving users an organized way to manage past results.
+- Introduced the PhotoInfoModalComponent to capture and edit photo metadata (title and description) before saving, improving organization and searchability.
+- Show the photo's title and description beneath the image for a quick metadata preview without opening the modal.
+
+### 🚀 Improvements
+
+- Redesigned PhotoInfoComponent: the photo now appears below the title and description inputs, and the modal header includes save and cancel icons for clearer navigation.
+- On mobile, hide the photo while editing metadata to maximize space for input fields and reduce visual clutter.
+- Update the app title to "Manage History" when viewing or editing saved extractions to provide clearer context.
+- Removed the Save button from `WorkflowStep.DISPLAY_EXTRACTED_TEXT`; extracted text and the photo are now saved automatically.
+- Added FeatureResultComponent to present extracted text, the photo, and metadata in a clearer, more maintainable layout.
+
+### 🐛 Fixes
+
+- Added the missing translation key for `UserstatisticsComponent` to resolve a localization issue.
+
+### 🔧 Internal
+
+- Added docs/checklist-update-objects.md: guidance for safely updating nested objects in Angular/TypeScript, covering immutability, merging strategies, and unit-testing best practices to avoid data loss or race conditions.
 
 ## [1.1] – 2026-07-28
 
@@ -32,12 +106,11 @@ This project uses a simplified major.minor versioning scheme:
 ### 🐛 Fixes
 
 - Fixed a production-only issue where toast notifications did not appear on web and mobile builds while working in ionic serve/dev mode.
-- Removed custom visual toast fallback rendering and kept error-only logging on presentation failures to preserve consistent Ionic UI behavior.
 
 ### 🔧 Internal
 
 - Added and stabilized unit tests for toast service safeguard paths, including component registration flow, controller failure logging, and timeout logging behavior.
-- Verified full test suite passes (534 green tests).
+- Verified full test suite passes (545 green tests).
 
 ## [1.0] – 2026-07-27
 
