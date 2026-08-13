@@ -91,6 +91,7 @@ describe('HomePage', () => {
         const cases = [
           { value: 'QR Code Generation', code: 'QR' },
           { value: 'MLT Translator', code: 'MLT' },
+          { value: 'I2T Image to Text', code: 'I2T' },
           { value: 'BF Backend Functions', code: 'BF' },
           { value: 'BS Backup Scripts', code: 'BS' },
           { value: 'IS Ionic Setup', code: 'IS' },
@@ -228,6 +229,7 @@ describe('HomePage', () => {
       const appSections: AppSectionTestCase[] = [
         { appSectionName: 'BF: Backend Functions', isAppFirestoreBackendFunction: true },
         { appSectionName: 'MLT: Translator', appUsingFirestoreBackend: true },
+        { appSectionName: 'I2T: Image to Text', appUsingFirestoreBackend: true },
         { appSectionName: 'IS: Ionic Setup', appUsingFirestoreBackend: true },
         { appSectionName: 'QR: QR Code' },
         { appSectionName: 'BS: Backup Scripts' },

@@ -61,6 +61,10 @@ function makeEnv(prod = false) {
         maxFeatureCharsTotalPerMonth: Number(v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH", "500000")),
         maxFeatureCharsUserPerMonth: Number(v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH_FOR_USER", "10000")),
       },
+      I2T: {
+        maxImageProcessingTotalPerMonth: Number(v("appSection.I2T.MAX_IMAGE_PROCESSING_TOTAL_PER_MONTH", "1000")),
+        maxImageProcessingUserPerMonth: Number(v("appSection.I2T.MAX_IMAGE_PROCESSING_USER_PER_MONTH", "50")),
+      },
     },
     firebase: {
       apiKey: v("FIREBASE_API_KEY", ""),

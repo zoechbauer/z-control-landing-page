@@ -1,6 +1,6 @@
 # What's New?
 
-All recent updates and improvements to our **z-control QR Code Generator** app.
+All recent updates and improvements to our **z&#8209;control QR Code Generator** app.
 
 ## [2.5] – 2025-10-31 (Web-only release – Firebase)
 

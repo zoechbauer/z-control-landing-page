@@ -1,6 +1,6 @@
 # What's New?
 
-Welcome to the latest updates for the **z-control Ionic Setup** app.
+Welcome to the latest updates for the **z&#8209;control Ionic Setup** app.
 
 ## Versioning
 

@@ -50,7 +50,7 @@ describe('IonicSetupSectionComponent', () => {
   });
 
   it('should open changelog when onOpenChangelog is called', async () => {
-    const selectedAccordion = APPS.BACKEND_FUNCTIONS;
+    const selectedAccordion = APPS.IONIC_SETUP;
     component.parameters = {
       appSectionParameters: {
         selectedAccordion: selectedAccordion,
@@ -58,7 +58,7 @@ describe('IonicSetupSectionComponent', () => {
     } as any;
     await component.onOpenChangelog();
     expect(utilsServiceSpy.openChangelog).toHaveBeenCalledWith(
-      APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
+      APPS.IONIC_SETUP as keyof typeof APPS,
     );
   });
 
@@ -146,9 +146,9 @@ describe('IonicSetupSectionComponent', () => {
   });
 
   it('should update selectedSubAccordion when subAccordionChange is called', () => {
-    let event = { detail: { value: 'MLT Translator' } } as CustomEvent;
+    let event = { detail: { value: 'IS Ionic Setup' } } as CustomEvent;
     component.subAccordionChange(event);
-    expect(component.selectedSubAccordion).toBe('MLT Translator');
+    expect(component.selectedSubAccordion).toBe('IS Ionic Setup');
 
     event = { detail: { value: undefined } } as CustomEvent;
     component.subAccordionChange(event);

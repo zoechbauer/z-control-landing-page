@@ -15,6 +15,11 @@ export interface MultipleLanguageTranslatorSectionParameters {
   maxTranslateCharsTotalPerMonth: number;
   maxTranslateCharsUserPerMonth: number;
 }
+export interface ImageToTextSectionParameters {
+  appSectionParameters: AppSectionParameters;
+  maxImageProcessingTotalPerMonth: number;
+  maxImageProcessingUserPerMonth: number;
+}
 
 export interface IonicSetupSectionParameters {
   appSectionParameters: AppSectionParameters;

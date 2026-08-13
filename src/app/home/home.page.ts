@@ -14,6 +14,7 @@ import {
   AppSectionParameters,
   BackupScriptsSectionParameters,
   MultipleLanguageTranslatorSectionParameters,
+  ImageToTextSectionParameters,
   QrCodeGeneratorSectionParameters,
   IonicSetupSectionParameters,
   BackendFunctionsSectionParameters,
@@ -21,6 +22,7 @@ import {
 import { environment } from '@env/environment';
 import { IonicSetupSectionComponent } from '../ui/components/ionic-setup-section/ionic-setup-section.component';
 import { BackendFunctionsSectionComponent } from '../ui/components/backend-functions-section/backend-functions-section.component';
+import { ImageToTextSectionComponent } from '../ui/components/image-to-text-section/image-to-text-section.component';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -35,6 +37,7 @@ import { BackendFunctionsSectionComponent } from '../ui/components/backend-funct
     QrCodeGeneratorSectionComponent,
     BackupScriptsSectionComponent,
     MultiLanguageTranslatorSectionComponent,
+    ImageToTextSectionComponent,
     IonicSetupSectionComponent,
     BackendFunctionsSectionComponent,
   ],
@@ -50,6 +53,7 @@ export class HomePage {
   qrCodeGeneratorSectionParams?: QrCodeGeneratorSectionParameters;
   backupScriptsSectionParams?: BackupScriptsSectionParameters;
   multiLanguageTranslatorSectionParams?: MultipleLanguageTranslatorSectionParameters;
+  imageToTextSectionParams?: ImageToTextSectionParameters;
   ionicSetupSectionParams?: IonicSetupSectionParameters;
   backendFunctionsSectionParams?: BackendFunctionsSectionParameters;
 
@@ -80,6 +84,10 @@ export class HomePage {
       // multi-language translator
       this.currentMainAccordion = 'MLT';
       this.setSelectedAccordion('MLT');
+    } else if (value?.startsWith('I2T')) {
+      // image to text
+      this.currentMainAccordion = 'I2T';
+      this.setSelectedAccordion('I2T');
     } else if (value?.startsWith('IS')) {
       // ionic setup
       this.currentMainAccordion = 'IS';
@@ -116,6 +124,10 @@ export class HomePage {
       case 'MLT':
         this.selectedAccordion = APPS.MULTI_LANGUAGE_TRANSLATOR;
         this.setMultiLanguageTranslatorParameters();
+        break;
+      case 'I2T':
+        this.selectedAccordion = APPS.IMAGE_TO_TEXT;
+        this.setImageToTextParameters();
         break;
       case 'IS':
         this.selectedAccordion = APPS.IONIC_SETUP;
@@ -162,6 +174,16 @@ export class HomePage {
         environment.appSection.IS.maxFeatureCharsTotalPerMonth,
       maxFeatureCharsUserPerMonth:
         environment.appSection.IS.maxFeatureCharsUserPerMonth,
+    };
+  }
+
+  private setImageToTextParameters() {
+    this.imageToTextSectionParams = {
+      appSectionParameters: this.getAppParameters(),
+      maxImageProcessingTotalPerMonth:
+        environment.appSection.I2T.maxImageProcessingTotalPerMonth,
+      maxImageProcessingUserPerMonth:
+        environment.appSection.I2T.maxImageProcessingUserPerMonth,
     };
   }
 

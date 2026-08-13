@@ -1,18 +1,18 @@
 <ion-accordion
-  value="MLT: Translator"
+  value="I2T: Image to Text"
   title="{{
-    parameters?.appSectionParameters?.currentMainAccordion === 'MLT'
-      ? 'Collapse z-control Translator section'
-      : 'Expand z-control Translator section'
+    parameters?.appSectionParameters?.currentMainAccordion === 'I2T'
+      ? 'Collapse z-control Image to Text section'
+      : 'Expand z-control Image to Text section'
   }}"
 >
   <ion-item slot="header" color="light">
     <img
-      class="z-control-translator-logo"
-      src="assets/icon/z-control-translator-logo-32px.png"
-      alt="z-control Translator Logo"
+      class="z-control-image-to-text-logo"
+      src="assets/icon/z-control-image-to-text-logo-32px.png"
+      alt="z-control Image to Text Logo"
     />
-    <ion-label>z-control Translator App</ion-label>
+    <ion-label>z-control Image to Text App</ion-label>
     <ion-label *ngIf="showBackendFunctionsInfo"
       >uses z-control Backend Functions</ion-label
     >
@@ -28,43 +28,52 @@
       </ion-card-header>
       <ion-card-content class="summarized-app-content">
         <p>
-          <strong>
-            Enter text up to {{ parameters?.maxInputLength }} characters and
-            translate it into up to
-            {{ parameters?.maxTargetLanguages }} languages using
-            <i>Google Translate</i>, then have it read aloud.
-          </strong>
-          Both the base language (English or German) and target languages can be
-          freely selected in the settings.
+          With <i>z&#8209;control Image to Text</i>, you can take a photo or
+          select an image from your device. The app recognizes the text
+          contained in the image using optical character recognition (OCR) and
+          then displays it with statistics such as the number of words, lines,
+          and characters.
         </p>
+
         <p>
-          The app helps you
-          <strong>learn and refresh foreign languages simultaneously</strong> —
-          perfect for preparing your next holiday! See translations side-by-side
-          in multiple languages and compare how different languages express the
-          same idea. Ideal for travelers, language learners, or anyone who wants
-          to quickly translate texts into different languages. Translate your
-          desired texts into your favorite languages to improve your language
-          skills or to communicate better abroad.
+          You can add a title and a description to the recognized text. The
+          information can then be copied, pasted into other apps, or shared.
         </p>
+
+        <p>
+          The data are automatically stored locally on your device. The data is
+          not stored in the cloud, and you can view, edit, copy, share, or
+          delete saved entries at any time.
+        </p>
+
+        <p>You can choose German or English as the app language.</p>
         <p><b>Highlights:</b></p>
         <ul class="no-list-style-inside">
           <li>
-            <strong>Simultaneous translation</strong> into multiple languages at
-            once, allowing you to practice and use several languages in parallel
-            for maximum flexibility.
+            <strong>Recognize text in images</strong><br />
+            Take a photo or select an existing image. The app recognizes the
+            text contained in the image and displays the result with statistics
+            such as the number of words, lines, and characters.
           </li>
           <li>
-            <strong>Text-to-speech</strong> reads translations aloud, making
-            comprehension easier and supporting pronunciation learning.
+            <strong>Add additional information</strong><br />
+            Optional add a title and a description to describe the photo.
           </li>
           <li>
-            <strong>Smart completion:</strong> Google Translate can
-            automatically complete incomplete sentences in target languages.
+            <strong>Manage history</strong><br />
+            View previously processed images and their associated information.
+            You can edit or delete individual entries or the entire history.
           </li>
           <li>
-            <strong>Privacy-focused:</strong> Translations are processed on
-            Google servers; this app does not store your text.
+            <strong>Copy and share data</strong><br />
+            Choose whether you want to copy / share the image, title,
+            description, recognized text, text statistics, and creation and
+            modification dates.
+          </li>
+          <li>
+            <strong>Status display</strong><br />
+            The status display guides you step by step through the processing
+            procedure.
           </li>
         </ul>
         <p>This web version is hosted on Google Firebase.</p>
@@ -73,8 +82,8 @@
 
     <ion-accordion-group (ionChange)="subAccordionChange($event)">
       <ion-accordion
-        value="MLT: Limitations and Monthly Quotas"
-        title="{{ getAccordionTooltip('MLT: Limitations and Monthly Quotas') }}"
+        value="I2T: Limitations and Monthly Quotas"
+        title="{{ getAccordionTooltip('I2T: Limitations and Monthly Quotas') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>What are the limitations and monthly quotas?</ion-label>
@@ -84,101 +93,99 @@
             <h5>Limitations:</h5>
             <p>
               <strong>
-                Shared free monthly quota:
+                All users can collectively process a maximum of:
                 {{
-                  parameters?.maxTranslateCharsTotalPerMonth
+                  parameters?.maxImageProcessingTotalPerMonth
                     | number: "1.0-0" : "en"
                 }}
-                characters for all users.
+                images per month.
               </strong>
               If this quota is exceeded, costs will be incurred for
-              <i>z-control</i>.
+              <i>z&#8209;control</i>.
             </p>
             <p>
-              To manage this shared quota, each user is limited to
-              {{ parameters?.maxTargetLanguages }} target languages and
-              {{
-                parameters?.maxTranslateCharsUserPerMonth
-                  | number: "1.0-0" : "en"
-              }}
-              characters per month, ensuring fair access for all users.
-            </p>
-            <p>
-              <strong>
-                Since the Google Translate API is a paid service, quotas are
-                necessary. The app will notify you well in advance when
-                approaching the limit and will prevent further translations once
-                the monthly quota is exhausted.
-              </strong>
+              To manage this shared quota,
+              <strong
+                >each user is limited to processing a maximum of
+                {{
+                  parameters?.maxImageProcessingUserPerMonth
+                    | number: "1.0-0" : "en"
+                }}
+                images per month</strong
+              >, ensuring fair access for all users.
             </p>
             <p>
               <strong>
-                Text-to-speech is completely free and unlimited. You can listen
-                to translations as many times as you want without affecting your
-                monthly quota.
+                Since image processing is a paid service, quotas are necessary.
+                The app will notify you well in advance when approaching the
+                limit and will prevent further image processing once the monthly
+                quota is exhausted.
               </strong>
+            </p>
+            <p>
+              Whenever you reach the monthly quota, you can continue to use the
+              app for free, but image processing will be disabled until the
+              quota resets on the 1st of the next month. You can always view,
+              edit, copy, and share previously processed images and their
+              associated information.
             </p>
           </div>
           <div class="monthly-quota-info">
             <h5>How do I check my monthly translation quota?</h5>
-            <p><i>On the translation page</i></p>
+            <p><i>On the image processing page</i></p>
             <p>
-              Your current translation quota is displayed at the bottom of the
-              translation page in an expandable <i>Monthly Quota</i> section.
-            </p>
-            <p>
-              When either your personal quota or the shared quota for all users
-              is reached, translations are simulated. All other features (such
-              as text-to-speech) remain fully functional. Quotas automatically
-              reset on the 1st of each month.
-            </p>
-            <p>
-              <strong>Important:</strong> More target languages and longer texts
-              consume your quota faster. Choose target languages and text length
-              wisely to maximize your monthly usage.
+              Your current image processing quota is displayed at the bottom of
+              the image processing page in an expandable
+              <i>Monthly Quota</i> section.
             </p>
             <p><i>On the Statistics page in Settings</i></p>
             <p>
               View detailed, anonymized statistics showing the overall monthly
-              quota usage, device information, and target language preferences
-              across all users. All data is aggregated to protect your privacy.
+              quota usage and device information across all users. All data is
+              aggregated to protect your privacy.
             </p>
           </div>
         </div>
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Differences between Web and Mobile App"
+        value="I2T: Differences between Web and Mobile App"
         title="{{
-          getAccordionTooltip('MLT: Differences between Web and Mobile App')
+          getAccordionTooltip('I2T: Differences between Web and Mobile App')
         }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>Differences between Web and Mobile App</ion-label>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
-          <h5>Mobile Version Advantages:</h5>
+          <h5>Mobile version / native app</h5>
+
           <p>
-            Layout optimized for small screens, providing a user-friendly
-            experience on mobile devices.
+            The native app is currently available only as a test version for a
+            limited number of users. Access requires an email request to
+            z&#8209;control.
+          </p>
+          <p>JPEG images can currently only be copied in the native app.</p>
+          <p>Taking photos is generally easier with a mobile device.</p>
+          <p>
+            In the native app, the selected data can be sent directly to another
+            app using the sharing function.
+          </p>
+
+          <h5>Web version</h5>
+
+          <p>
+            The web version does not need to be installed and can be used
+            directly in a browser.
           </p>
           <p>
-            Use voice input directly through your device's keyboard for
-            hands-free text entry.
+            When using the web version on a PC or notebook, PNG images taken
+            with the camera can be copied.
           </p>
           <p>
-            Customize speech output speed and pitch in the settings for optimal
-            listening.
-          </p>
-          <h5>Web Version Advantages:</h5>
-          <p>Comfortable typing with a full keyboard in your browser.</p>
-          <p>
-            Voice input is available on some operating systems—Windows 11 users
-            can activate it with <i>Windows key + H</i>.
-          </p>
-          <p>
-            The web version supports text-to-speech for all languages, while the
-            mobile version has limited language availability.
+            When using the web version in a mobile browser, images currently
+            cannot be copied. However, the recognized text, title, description,
+            and creation and modification dates can be copied.
           </p>
           <p><strong>IMPORTANT</strong></p>
           <p>
@@ -191,24 +198,26 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Start Web App"
-        title="{{ getAccordionTooltip('MLT: Start Web App') }}"
+        value="I2T: Start Web App"
+        title="{{ getAccordionTooltip('I2T: Start Web App') }}"
       >
         <ion-item slot="header" color="light">
           <h4>Try the Web App (No Installation Required)</h4>
         </ion-item>
         <div class="ion-padding accordion-content" slot="content" title="">
           <div>
-            Explore the z-control Translator app directly in your browser.
+            Explore the z&#8209;control Image to Text app directly in your
+            browser.
           </div>
 
           <p>
-            Select your target languages, enter text, and experience translation
-            and text-to-speech features in real time.
+            Take a photo or select an image from your device, and experience
+            extracting text from images, adding titles and descriptions, and
+            utilizing copy and share features in real time.
           </p>
 
           <p>
-            The web app allows you to test the translation workflow, quota
+            The web app allows you to test the extraction workflow, quota
             management system, and user interface without installing any
             software.
           </p>
@@ -258,8 +267,8 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Get Mobile App"
-        title="{{ getAccordionTooltip('MLT: Get Mobile App') }}"
+        value="I2T: Get Mobile App"
+        title="{{ getAccordionTooltip('I2T: Get Mobile App') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>Get the Mobile App</ion-label>
@@ -274,17 +283,17 @@
             <b>Limited Availability - Beta Testing Only</b>
           </h5>
           <p>
-            Due to the free tier limit of
+            Due to the free tier limit of processing
             <b
               >{{
-                parameters?.maxTranslateCharsTotalPerMonth
+                parameters?.maxImageProcessingTotalPerMonth
                   | number: "1.0-0" : "en-US"
               }}
-              characters per month</b
+              images per month</b
             >
-            on the <i>Google Translate API</i>, we cannot offer the app
-            publicly. It is currently available only to a limited number of beta
-            testers.
+            on the <i>Google Cloud Vision API for text recognition</i>, we
+            cannot offer the app publicly. It is currently available only to a
+            limited number of beta testers.
           </p>
           <p>
             <strong>Want to join?</strong> Send us your email address via
@@ -319,7 +328,7 @@
             <strong>Using a PC/Desktop?</strong> This is an Android mobile app.
             For computer users, try our
             <a
-              href="https://z-control-translator.web.app"
+              href="https://z-control-image-to-text.web.app"
               target="_blank"
               class="web-app-link"
               title="Open Web App in a new tab"
@@ -332,8 +341,8 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Inline Help"
-        title="{{ getAccordionTooltip('MLT: Inline Help') }}"
+        value="I2T: Inline Help"
+        title="{{ getAccordionTooltip('I2T: Inline Help') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>Inline Help</ion-label>
@@ -366,8 +375,9 @@
             </li>
             <li>
               <strong>How to Use the App:</strong> Detailed instructions on
-              entering text, selecting target languages, starting translations,
-              using speech output, and checking translation quotas.
+              taking photos, selecting images, recognizing text, adding titles
+              and descriptions, copying and sharing data, managing history, and
+              checking image processing quotas.
             </li>
             <li>
               <strong>Web Version versus Mobile Version:</strong> Benefits and
@@ -375,7 +385,7 @@
             </li>
             <li>
               <strong>Technical Information:</strong> Information about Google
-              Translate API and main features.
+              Cloud Vision API for text recognition.
             </li>
             <li>
               <strong>Troubleshooting:</strong> Solutions for common issues and
@@ -391,10 +401,10 @@
           <p>
             Open the
             <a
-              href="https://z-control-translator.web.app"
+              href="https://z-control-image-to-text.web.app"
               target="_blank"
               class="web-app-link"
-              title="Open z-control Translator as Web App in a new tab"
+              title="Open z-control Image to Text as Web App in a new tab"
             >
               <strong>Web App</strong>
             </a>
@@ -412,8 +422,8 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Feedback"
-        title="{{ getAccordionTooltip('MLT: Feedback') }}"
+        value="I2T: Feedback"
+        title="{{ getAccordionTooltip('I2T: Feedback') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
@@ -436,8 +446,8 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Privacy Policy"
-        title="{{ getAccordionTooltip('MLT: Privacy Policy') }}"
+        value="I2T: Privacy Policy"
+        title="{{ getAccordionTooltip('I2T: Privacy Policy') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>Privacy Policy</ion-label>
@@ -464,8 +474,8 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Release Notes"
-        title="{{ getAccordionTooltip('MLT: Release Notes') }}"
+        value="I2T: Release Notes"
+        title="{{ getAccordionTooltip('I2T: Release Notes') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Release Notes)</ion-label>
@@ -474,7 +484,7 @@
           <div>
             <ion-icon name="checkmark"></ion-icon>
             All new features, improvements and bug fixes of the
-            <i>z-control Translator</i> app are tracked in
+            <i>z&#8209;control Image to Text</i> app are tracked in
           </div>
           <ion-button
             fill="clear"
@@ -491,8 +501,8 @@
       </ion-accordion>
 
       <ion-accordion
-        value="MLT: Get Source Code"
-        title="{{ getAccordionTooltip('MLT: Get Source Code') }}"
+        value="I2T: Get Source Code"
+        title="{{ getAccordionTooltip('I2T: Get Source Code') }}"
       >
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>

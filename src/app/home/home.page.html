@@ -24,7 +24,7 @@
       </p>
       <p class="ion-text-left">
         Analytics can be enabled in the footer. If the footer is closed, click
-        the z-control icon to open it.<br />
+        the z&#8209;control icon to open it.<br />
         You can change this setting at any time.
       </p>
     </div>
@@ -36,12 +36,8 @@
     (ionChange)="accordionGroupChange($event)"
     [disabled]="!isAnalyticsAllowed"
   >
-    <app-qr-code-generator-section
-      [parameters]="qrCodeGeneratorSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
-    <app-backup-scripts-section
-      [parameters]="backupScriptsSectionParams"
+    <app-image-to-text-section
+      [parameters]="imageToTextSectionParams"
       (analyticsEvent)="handleAnalyticsEvent($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
@@ -54,8 +50,17 @@
       (analyticsEvent)="handleAnalyticsEvent($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />
+    <app-qr-code-generator-section
+      [parameters]="qrCodeGeneratorSectionParams"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
+    />
     <app-backend-functions-section
       [parameters]="backendFunctionsSectionParams"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
+      (analyticsEvent)="handleAnalyticsEvent($event)"
+    />
+    <app-backup-scripts-section
+      [parameters]="backupScriptsSectionParams"
       (analyticsEvent)="handleAnalyticsEvent($event)"
       (analyticsEvent)="handleAnalyticsEvent($event)"
     />

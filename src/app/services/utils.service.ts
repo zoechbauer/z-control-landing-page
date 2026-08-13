@@ -142,6 +142,8 @@ export class UtilsService {
         return 'assets/logs/change-logs/CHANGELOG_QR-CODE.md';
       case APPS.MULTI_LANGUAGE_TRANSLATOR:
         return 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md';
+      case APPS.IMAGE_TO_TEXT:
+        return 'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md';
       default:
         return '';
     }

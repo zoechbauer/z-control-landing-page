@@ -4,17 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UtilsService } from '@app/services/utils.service';
 import { APPS } from '@app/shared/GitHubConstants';
-import { MultiLanguageTranslatorSectionComponent } from './multi-language-translator-section.component';
+import { ImageToTextSectionComponent } from './image-to-text-section.component';
 
-describe('MultiLanguageTranslatorSectionComponent', () => {
+describe('ImageToTextSectionComponent', () => {
   const nativeDownloadUrl =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.multilanguagetranslator';
+    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.image-to-text';
   const sourceCodeUrl =
-    'https://github.com/zoechbauer/z-control-multi-language-translator';
-  const webAppUrl = 'https://z-control-multi-language-translator.web.app';
+    'https://github.com/zoechbauer/z-control-image-to-text';
+  const webAppUrl = 'https://z-control-image-to-text.web.app';
 
-  let component: MultiLanguageTranslatorSectionComponent;
-  let fixture: ComponentFixture<MultiLanguageTranslatorSectionComponent>;
+  let component: ImageToTextSectionComponent;
+  let fixture: ComponentFixture<ImageToTextSectionComponent>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
   let modalControllerSpy: jasmine.SpyObj<any>;
   let activatedRouteSpy: any;
@@ -33,7 +33,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), MultiLanguageTranslatorSectionComponent],
+      imports: [IonicModule.forRoot(), ImageToTextSectionComponent],
       providers: [
         { provide: UtilsService, useValue: utilsServiceSpy },
         { provide: 'ModalController', useValue: modalControllerSpy },
@@ -41,7 +41,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MultiLanguageTranslatorSectionComponent);
+    fixture = TestBed.createComponent(ImageToTextSectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -51,7 +51,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
   });
 
   it('should open changelog when onOpenChangelog is called', async () => {
-    const selectedAccordion = APPS.MULTI_LANGUAGE_TRANSLATOR;
+    const selectedAccordion = APPS.IMAGE_TO_TEXT;
     component.parameters = {
       appSectionParameters: {
         selectedAccordion: selectedAccordion,
@@ -59,7 +59,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
     } as any;
     await component.onOpenChangelog();
     expect(utilsServiceSpy.openChangelog).toHaveBeenCalledWith(
-      APPS.MULTI_LANGUAGE_TRANSLATOR as keyof typeof APPS,
+      APPS.IMAGE_TO_TEXT as keyof typeof APPS,
     );
   });
 
@@ -76,7 +76,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
     expect(component.analyticsEvent.emit).toHaveBeenCalledWith({
       eventName: 'get_source_code',
       params: {
-        repo: APPS.MULTI_LANGUAGE_TRANSLATOR,
+        repo: APPS.IMAGE_TO_TEXT,
         app: APPS.LANDING_PAGE,
       },
     });
@@ -122,7 +122,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
   });
 
   it('should return correct mailto link for feedback', () => {
-    const expectedMailToLink = `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.MULTI_LANGUAGE_TRANSLATOR}%20Feedback`;
+    const expectedMailToLink = `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.IMAGE_TO_TEXT}%20Feedback`;
     expect(component.getMailToLinkForFeedback()).toBe(expectedMailToLink);
   });
 
@@ -130,16 +130,16 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
     const privacyPolicyLink = component.privacyPolicyLink;
     expect(privacyPolicyLink).toEqual([
       '/privacy',
-      'multi-language-translator',
+      'image-to-text',
       'en',
     ]);
   });
 
   it('should return correct tooltip for subaccordion', () => {
-    component.selectedSubAccordion = 'IS Ionic Setup';
+    component.selectedSubAccordion = 'I2T Image to Text';
 
-    expect(component.getAccordionTooltip('IS Ionic Setup')).toBe(
-      'Collapse IS Ionic Setup',
+    expect(component.getAccordionTooltip('I2T Image to Text')).toBe(
+      'Collapse I2T Image to Text',
     );
     expect(component.getAccordionTooltip('MLT Translator')).toBe(
       'Expand MLT Translator',
@@ -147,9 +147,9 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
   });
 
   it('should update selectedSubAccordion when subAccordionChange is called', () => {
-    let event = { detail: { value: 'MLT Translator' } } as CustomEvent;
+    let event = { detail: { value: 'I2T Image to Text' } } as CustomEvent;
     component.subAccordionChange(event);
-    expect(component.selectedSubAccordion).toBe('MLT Translator');
+    expect(component.selectedSubAccordion).toBe('I2T Image to Text');
 
     event = { detail: { value: undefined } } as CustomEvent;
     component.subAccordionChange(event);

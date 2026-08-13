@@ -1,6 +1,23 @@
 # What's New
 
-All recent updates and improvements to our **z-control Landing Page** app.
+All recent updates and improvements to our **z&#8209;control Landing Page** app.
+
+## [3.7] - 2026-08-13
+
+### ✨ New Features
+
+- Added a home-page accordion for the **z‑control Image to Text** repository, providing an overview and quick links to the changelog, source code, and live demo.
+
+### 🚀 Improvements
+
+- Replaced the hyphen in z-control with a non‑breaking hyphen in all accordion HTML files to prevent the name from breaking across lines.
+- Reordered the apps on the Landing Page so the newest repositories appear first, improving discoverability.
+- Promoted the "Try the Web App" section in the z‑control apps to a prominent heading for better visibility.
+- Promoted the "Get Mobile App" section in the z‑control QR Code Generator to a prominent heading to highlight its availability on Google Play.
+
+### 🔧 Internal
+
+- Added unit tests for the new z‑control Image to Text section to ensure correct behavior and functionality.
 
 ## [3.6] - 2026-08-12
 

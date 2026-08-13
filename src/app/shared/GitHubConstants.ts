@@ -71,6 +71,7 @@ export const APPS = {
   BACKUP_SCRIPTS: 'z-control Backup Scripts',
   MULTI_LANGUAGE_TRANSLATOR: 'z-control Translator App',
   IONIC_SETUP: 'z-control Ionic Setup App',
+  IMAGE_TO_TEXT: 'z-control Image to Text App',
   BACKEND_FUNCTIONS: 'z-control Backend Functions',
   IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup',
 };
