@@ -27,36 +27,35 @@
       </ion-card-header>
       <ion-card-content class="summarized-app-content">
         <p>
-          <strong>z-control Backend Functions</strong> is the shared backend
-          repository for z&#8209;control applications. It contains the canonical
-          backend logic used across multiple apps, including Firebase Cloud
-          Functions, Firestore utilities, and related backend helpers.
+          <strong
+            >z-control Backend Functions is the shared backend repository for
+            z&#8209;control applications.</strong
+          >
+          It contains the canonical backend logic used across multiple apps,
+          including Firebase Cloud Functions, Firestore utilities, and related
+          backend helpers.
         </p>
-        <p>
-          This repository keeps shared backend code consistent across all
-          frontend applications while allowing each app to remain focused on its
-          own frontend-specific features.
-        </p>
-        <p>
-          Frontend-specific changes belong in the individual app repositories.
-          Shared backend code should be implemented and deployed only from this
-          repository.
-        </p>
-        <p>
-          <strong>Why this matters</strong>
-        </p>
+        <h2>✨ Highlights:</h2>
         <ul>
-          <li>Single source of truth for shared backend logic.</li>
-          Consistent behavior across all z&#8209;control apps.
           <li>
+            <b>Single source of truth</b><br />for shared backend code across
+            all z&#8209;control apps
+          </li>
+          <li>
+            <b>Separation of Concerns</b><br />
             Clear separation between frontend and backend responsibilities.
           </li>
-          <li>Safer and more predictable deployments.</li>
-          <li>Centralized z-control Github Analytics functions.</li>
+          <li>
+            <b>Centralized Analytics</b><br />Centralized z-control Github
+            Analytics functions.
+          </li>
         </ul>
-        <p>
-          <strong>Read our documentation:</strong>
-        </p>
+        <h2>✨ Why this matters:</h2>
+        <ul>
+          <li>Consistent behavior across all z&#8209;control apps.</li>
+          <li>Safer and more predictable deployments.</li>
+        </ul>
+        <h2>✨Documentation:</h2>
         <div class="button-wrapper documents-buttons-wrapper">
           <ion-button
             color="primary"
@@ -77,17 +76,14 @@
             Firebase Functions Multi-App Deploy Playbook
           </ion-button>
         </div>
-        <p class="ion-text-center ion-margin-top open-source-note">
-          <ion-icon name="logo-github"></ion-icon>
-          <b>Open source:</b> Source code and documentation available on GitHub.
-        </p>
+        <app-open-source></app-open-source>
       </ion-card-content>
     </ion-card>
-    <ion-accordion-group
-      (ionChange)="subAccordionChange($event)"
-    >
-      <ion-accordion value="BF: Features"
-      title="{{ getAccordionTooltip('BF: Features') }}">
+    <ion-accordion-group (ionChange)="subAccordionChange($event)">
+      <ion-accordion
+        value="BF: Features"
+        title="{{ getAccordionTooltip('BF: Features') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Key Features</ion-label>
         </ion-item>
@@ -114,7 +110,10 @@
           </ul>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: How to Use" title="{{ getAccordionTooltip('BF: How to Use') }}">
+      <ion-accordion
+        value="BF: How to Use"
+        title="{{ getAccordionTooltip('BF: How to Use') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>How to Use</ion-label>
         </ion-item>
@@ -133,9 +132,14 @@
           </ol>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Github Analytics" title="{{ getAccordionTooltip('BF: Github Analytics') }}">
+      <ion-accordion
+        value="BF: Github Analytics"
+        title="{{ getAccordionTooltip('BF: Github Analytics') }}"
+      >
         <ion-item slot="header" color="light">
-          <ion-label>GitHub Analytics for z&#8209;control Repositories</ion-label>
+          <ion-label
+            >GitHub Analytics for z&#8209;control Repositories</ion-label
+          >
         </ion-item>
 
         <div class="ion-padding accordion-content" slot="content" title="">
@@ -180,7 +184,10 @@
           </div>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Feedback" title="{{ getAccordionTooltip('BF: Feedback') }}">
+      <ion-accordion
+        value="BF: Feedback"
+        title="{{ getAccordionTooltip('BF: Feedback') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Send Us Feedback</ion-label>
         </ion-item>
@@ -200,7 +207,10 @@
           </p>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Changelog" title="{{ getAccordionTooltip('BF: Changelog') }}">
+      <ion-accordion
+        value="BF: Changelog"
+        title="{{ getAccordionTooltip('BF: Changelog') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>What's new? (Changelog)</ion-label>
         </ion-item>
@@ -223,7 +233,10 @@
           </ion-button>
         </div>
       </ion-accordion>
-      <ion-accordion value="BF: Get Source Code" title="{{ getAccordionTooltip('BF: Get Source Code') }}">
+      <ion-accordion
+        value="BF: Get Source Code"
+        title="{{ getAccordionTooltip('BF: Get Source Code') }}"
+      >
         <ion-item slot="header" color="light">
           <ion-label>Get the Source Code</ion-label>
         </ion-item>

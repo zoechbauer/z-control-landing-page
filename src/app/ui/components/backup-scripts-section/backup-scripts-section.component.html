@@ -23,43 +23,49 @@
       </ion-card-header>
       <ion-card-content class="summarized-app-content">
         <p>
-          <strong>z-control Backup Scripts</strong> is a collection of
-          open-source PowerShell and batch scripts for Windows, designed to help
-          you:
+          <strong
+            >z-control Backup Scripts is an open-source collection of PowerShell
+            and batch utilities for Windows that automate backups, cleanup, and
+            disk-usage reporting.</strong
+          >
+          Use them to:
         </p>
+        <h2>✨ Highlights</h2>
         <ul>
           <li>
-            <b>Back up development projects</b> (with exclusions for
-            build/dependency folders)
+            <b>Back up development projects</b><br />with exclusions for
+            build/dependency folders
           </li>
           <li>
-            <b>Back up non-committed files</b> (such as <code>.env</code>,
-            <code>.vscode</code>, etc.)
+            <b>Back up non-committed files</b><br />such as <code>.env</code>,
+            <code>.vscode</code>, etc.
           </li>
           <li>
-            <b>Clean up dev folders</b> (remove <code>node_modules</code>,
-            <code>dist</code>, etc. recursively)
+            <b>Clean up dev folders</b><br />remove <code>node_modules</code>,
+            <code>dist</code>, etc. recursively
           </li>
           <li>
-            <b>Log disk/folder usage</b> (CSV reports for auditing and cleanup)
+            <b>Log disk/folder usage</b><br />CSV reports for auditing and
+            cleanup
+          </li>
+          <li>
+            <b>Automate tasks</b><br />schedule scripts via Windows Task
+            Scheduler, or run it interactively
+          </li>
+          <li>
+            <b>Documentation and PowerShell Compatibility</b><br />Each script
+            is documented, and all scripts are compatible with PowerShell 5 and
+            7.
           </li>
         </ul>
-        <p>
-          Each script is documented and can be run interactively or scheduled
-          for automation. All scripts are compatible with PowerShell 5 and 7.
-        </p>
-        <p>
-          <strong>Typical use cases:</strong>
-        </p>
+        <h2>✨ Typical use cases:</h2>
         <ul>
           <li>Automated project backups (with logs)</li>
           <li>Quickly reclaim disk space in dev folders</li>
           <li>Audit disk usage for large folders</li>
           <li>Back up important files before deleting or migrating projects</li>
         </ul>
-        <p>
-          <strong>Read our documentation:</strong>
-        </p>
+        <h2>✨ Documentation:</h2>
         <div class="button-wrapper documents-buttons-wrapper">
           <ion-button
             color="primary"
@@ -127,10 +133,7 @@
             Upgrade PowerShell 5 to 7
           </ion-button>
         </div>
-        <p class="ion-text-center ion-margin-top open-source-note">
-          <ion-icon name="logo-github"></ion-icon>
-          <b>Open source:</b> Scripts and documentation available on GitHub.
-        </p>
+        <app-open-source [showFirebaseInfo]="false"></app-open-source>
       </ion-card-content>
     </ion-card>
     <ion-accordion-group (ionChange)="subAccordionChange($event)">

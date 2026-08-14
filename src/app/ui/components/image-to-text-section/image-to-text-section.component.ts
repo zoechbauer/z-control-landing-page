@@ -13,9 +13,11 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
+
 import { APPS } from '@app/shared/GitHubConstants';
 import { ImageToTextSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
+import { OpenSourceComponent } from '../open-source/open-source.component';
 
 @Component({
   selector: 'app-image-to-text-section',
@@ -34,6 +36,7 @@ import { UtilsService } from '@app/services/utils.service';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
+    OpenSourceComponent,
   ],
 })
 export class ImageToTextSectionComponent {

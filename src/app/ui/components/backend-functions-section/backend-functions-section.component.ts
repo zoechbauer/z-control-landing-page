@@ -15,6 +15,7 @@ import {
 import { APPS } from '@app/shared/GitHubConstants';
 import { BackendFunctionsSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
+import { OpenSourceComponent } from '../open-source/open-source.component';
 
 @Component({
   selector: 'app-backend-functions-section',
@@ -32,6 +33,7 @@ import { UtilsService } from '@app/services/utils.service';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
+    OpenSourceComponent,
   ],
 })
 export class BackendFunctionsSectionComponent {

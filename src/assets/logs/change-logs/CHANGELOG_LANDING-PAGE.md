@@ -2,6 +2,18 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [3.8] - 2026-08-13
+
+### 🚀 Improvements
+
+- Unified "What the app does": Standardized the layout and content of the "What the app does" section across all app accordions to improve consistency and readability.
+- Moved styles from "What the app does" sections to `global.scss` to improve maintainability and keep code DRY.
+- Added Open Source component: Introduced a reusable `app-open-source` component to centralize open-source links and avoid duplicated markup across app sections.
+
+### 🔧 Internal
+
+- Added unit tests for the new Open Source component to ensure correct rendering and behavior across different scenarios.
+
 ## [3.7] - 2026-08-13
 
 ### ✨ New Features

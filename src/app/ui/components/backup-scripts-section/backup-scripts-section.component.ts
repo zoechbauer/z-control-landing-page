@@ -15,6 +15,7 @@ import {
 import { APPS } from '@app/shared/GitHubConstants';
 import { BackupScriptsSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
+import { OpenSourceComponent } from '../open-source/open-source.component';
 @Component({
   selector: 'app-backup-scripts-section',
   templateUrl: './backup-scripts-section.component.html',
@@ -31,6 +32,7 @@ import { UtilsService } from '@app/services/utils.service';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
+    OpenSourceComponent,
   ],
 })
 export class BackupScriptsSectionComponent {
