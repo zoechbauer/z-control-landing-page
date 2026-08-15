@@ -15,6 +15,14 @@
   min-width: 0;
   padding-left: 16px;
   gap: 3px;
+
+  .logo {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin: 10px;
+    border-radius: 8px;
+  }
 }
 
 .center-title {

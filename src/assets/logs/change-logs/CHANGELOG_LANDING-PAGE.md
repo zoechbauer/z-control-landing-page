@@ -2,13 +2,19 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
-## [3.8] - 2026-08-13
+## [3.8] - 2026-08-15
 
 ### 🚀 Improvements
 
-- Unified "What the app does": Standardized the layout and content of the "What the app does" section across all app accordions to improve consistency and readability.
+- **Unified "What the app does"**: Standardized the layout and content of the "What the app does" section across all app accordions to improve consistency and readability.
 - Moved styles from "What the app does" sections to `global.scss` to improve maintainability and keep code DRY.
 - Added Open Source component: Introduced a reusable `app-open-source` component to centralize open-source links and avoid duplicated markup across app sections.
+- **Header background**: Updated the header background to the app’s primary color to match other z-control apps and improve visual consistency.
+- **Header and Footer logo**: Replaced the page header and footer logos with the z-control logo to strengthen brand recognition across the app.
+
+### 🐛 Fixes
+
+- **Dark mode contrast**: Fixed modal button visibility in dark mode by changing background color so buttons remain clearly visible in both light and dark themes.
 
 ### 🔧 Internal
 

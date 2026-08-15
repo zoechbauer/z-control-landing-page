@@ -82,31 +82,18 @@ body {
 
 // Custom header styling for all pages
 ion-header {
+  margin-right: 0;
+  padding-right: 0;
+
   ion-toolbar {
-    --background: var(--app-header-background);
-    --color: var(--app-header-text-color);
+    --background: var(--ion-color-primary) !important;
+    --color: #fff !important;
+    padding-right: 0;
 
-    ion-back-button,
-    ion-title {
-      --color: var(--app-header-text-color);
-    }
-
-    ion-buttons {
-      --color: white;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-
-      .logo {
-        height: 32px;
-        width: 32px;
-      }
-
-      ion-title {
-        margin: 0;
-      }
+    ion-title,
+    ion-button,
+    ion-icon {
+      color: #fff !important;
     }
   }
 }

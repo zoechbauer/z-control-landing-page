@@ -1,5 +1,10 @@
 $disabled-color: #888;
 
+.footer-compact {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
 .footer-content {
   .footer-compact {
     display: flex;
@@ -34,7 +39,6 @@ $disabled-color: #888;
   .footer-details {
     display: none;
     flex-direction: column;
-    border-top: 1px solid #e0e0e0;
     margin-bottom: 10px;
     animation: fadeIn 0.2s;
     text-align: center;
