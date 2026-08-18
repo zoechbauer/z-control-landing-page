@@ -38,6 +38,11 @@ function makeEnv(prod = false) {
       minor: Number(v("VERSION_MINOR", "0")),
       date: v("VERSION_DATE", new Date().toISOString().split("T")[0]),
     },
+    app: {
+      name: v("APP_NAME", "My App"),
+      shortName: v("APP_NAME_SHORT", "My App"),
+      showTabsBar: v("SHOW_TABS_BAR", "false").toLowerCase() === "true",
+    },
     logAnalyticsInDevMode: v("LOG_ANALYTICS_IN_DEV_MODE", "false") === "true",
     useFirebaseEmulator: v("USE_FIREBASE_EMULATOR", "false") === "true",
     appSection: {

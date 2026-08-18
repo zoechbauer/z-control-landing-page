@@ -1,6 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { addIcons } from 'ionicons';
 import {
+    appsOutline,
     arrowBackOutline,
     book,
     checkmark,
@@ -43,6 +44,8 @@ import {
     downloadOutline,
     alertCircleOutline,
     arrowBack,
+    settingsOutline,
+    helpOutline,
 } from 'ionicons/icons';
 
 import { appConfig } from './app/app.config';
@@ -51,6 +54,7 @@ import { AppComponent } from './app/app.component';
 // Register Ionicons used in the application
 addIcons({
   'alert-circle-outline': alertCircleOutline,
+  'apps-outline': appsOutline,
   'arrow-back': arrowBack,
   'arrow-back-outline': arrowBackOutline,
   book: book,
@@ -72,6 +76,7 @@ addIcons({
   'eye-outline': eyeOutline,
   globe: globe,
   'globe-outline': globeOutline,
+  'help-outline': helpOutline,
   help: help,
   home: home,
   information: information,
@@ -91,6 +96,7 @@ addIcons({
   'phone-portrait': phonePortrait,
   rocket: rocket,
   'search-outline': searchOutline,
+  'settings-outline': settingsOutline,
   sunny: sunny,
   'trash-outline': trashOutline,
   warning: warning,

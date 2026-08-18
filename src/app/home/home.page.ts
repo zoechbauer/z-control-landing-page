@@ -1,6 +1,7 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
+import { Subscription } from 'rxjs';
 
 import { HeaderComponent, FooterComponent } from '../ui';
 import { QrCodeGeneratorSectionComponent } from '../ui/components/qr-code-generator-section/qr-code-generator-section.component';
@@ -23,6 +24,9 @@ import { environment } from '@env/environment';
 import { IonicSetupSectionComponent } from '../ui/components/ionic-setup-section/ionic-setup-section.component';
 import { BackendFunctionsSectionComponent } from '../ui/components/backend-functions-section/backend-functions-section.component';
 import { ImageToTextSectionComponent } from '../ui/components/image-to-text-section/image-to-text-section.component';
+import { Tab } from '../shared/enums';
+import { UtilsService } from '../services/utils.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -42,12 +46,14 @@ import { ImageToTextSectionComponent } from '../ui/components/image-to-text-sect
     BackendFunctionsSectionComponent,
   ],
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
   private readonly fa = inject(FirebaseAnalyticsService);
   private readonly localStorageService = inject(LocalStorageService);
+  private readonly utilsService = inject(UtilsService);
 
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
 
+  Tab = Tab;
   selectedAccordion: string = APPS.LANDING_PAGE;
   currentMainAccordion: string = '';
   qrCodeGeneratorSectionParams?: QrCodeGeneratorSectionParameters;
@@ -56,9 +62,24 @@ export class HomePage {
   imageToTextSectionParams?: ImageToTextSectionParameters;
   ionicSetupSectionParams?: IonicSetupSectionParameters;
   backendFunctionsSectionParams?: BackendFunctionsSectionParameters;
+  isAnalyticsEnabled = false;
+  private readonly subscription = new Subscription();
 
-  get isAnalyticsAllowed(): boolean {
-    return this.localStorageService.getAnalyticsConsent() === true;
+  ngOnInit(): void {
+    this.utilsService.showOrHideIonTabBar();
+    this.getIsAnalyticsAllowed();
+
+    this.subscription.add(
+      this.fa.enabled$.subscribe((enabled) => {
+        console.log('Analytics enabled status changed:', enabled);
+        this.isAnalyticsEnabled = enabled;
+      }),
+    );
+  }
+
+  private async getIsAnalyticsAllowed() {
+    this.isAnalyticsEnabled =
+      (await this.localStorageService.getAnalyticsConsent()) === true;
   }
 
   handleAnalyticsEvent(event: { eventName: string; params: any }) {
@@ -197,7 +218,11 @@ export class HomePage {
     return {
       selectedAccordion: this.selectedAccordion,
       currentMainAccordion: this.currentMainAccordion,
-      isAnalyticsAllowed: this.isAnalyticsAllowed,
+      isAnalyticsEnabled: this.isAnalyticsEnabled,
     };
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

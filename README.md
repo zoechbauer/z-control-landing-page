@@ -302,6 +302,10 @@ Update home page content and routing
 
 ## 📚 Documentation & Changelogs
 
+### Open activities
+
+- [TODO List](docs/TODO-list-open-activities.md)
+
 ### Technical Documentation
 
 📖 For a complete overview and documentation index, see **[docs/README.md](./docs/README.md)**
@@ -323,9 +327,11 @@ Update home page content and routing
 
 Changelogs for each app are stored in `src/assets/logs/change-logs/`:
 
-- `CHANGELOG_LANDING-PAGE.md` — for the landing page
-- `CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md` — for the multi-language translator app
-- `CHANGELOG_IONIC-SETUP.md` — for the ionic setup app
+- `CHANGELOG_LANDING-PAGE.md` — for the z-control Landing Page
+- `CHANGELOG_BACKEND-FUNCTIONS.md` — for the z-control Backend Functions (e.g.GitHub Analytics)
+- `CHANGELOG_IMAGE-TO-TEXT.md` — for the z-control Image to Text app
+- `CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md` — for the z-control Translator app
+- `CHANGELOG_IONIC-SETUP.md` — for the z-control Ionic Setup app
 - `CHANGELOG_QR-CODE.md` — for the z-control QR Code Generator app
 
 ## 🧪 Testing

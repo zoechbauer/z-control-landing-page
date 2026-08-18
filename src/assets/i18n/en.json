@@ -1,0 +1,89 @@
+{
+  "------ global": "-------",
+  "APP": {
+    "LOADING_DATA": "Loading data...",
+    "UNDER_CONSTRUCTION": "This feature is under construction."
+  },
+  "------ header page": "-------",
+  "HEADER": {
+    "CURRENT_PAGE": {
+      "MAIN_LONG": "z-control Applications and Tools",
+      "MAIN_SHORT": "Apps & Tools",
+      "SETTINGS": "Settings"
+    },
+    "TOOLTIP": {
+      "OPEN_FEEDBACK": "Open feedback page",
+      "OPEN_HELP": "Open help page",
+      "GOTO_MAIN": "Go to text recognition page",
+      "GOTO_SETTINGS": "Go to settings page",
+      "GO_BACK": "Go Back"
+    }
+  },
+  "------ footer page": "-------",
+  "FOOTER": {
+    "COUNTRY": "Austria",
+    "TOOLTIP": {
+      "CONTACT_SUPPORT": "Contact z-control support via email"
+    }
+  },
+  "------ tabs page": "-------",
+  "TABS": {
+    "MAIN": "Apps & Tools",
+    "SETTINGS": "Settings"
+  },
+
+  "------ main page": "-------",
+  "MAIN": {
+    "CARD": {
+      "TITLE": "z-control Landing Page"
+    }
+  },
+
+  "------ settings page": "-------",
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "INFORMATIONS": "Informations",
+    "BUTTON": {
+      "CLOSE": "Back to Settings"
+    },
+    "TOOLTIPS": {
+      "OPEN_ACCORDION": "Open settings",
+      "CLOSE_ACCORDION": "Close settings"
+    },
+    "LANGUAGE": {
+      "ACCORDION": "Change Language",
+      "LABEL": {
+        "LANG": "Language"
+      },
+      "SELECT": {
+        "EN": "English",
+        "DE": "German"
+      },
+      "TOOLTIPS": {
+        "CHANGE_LANGUAGE": "Change the language"
+      }
+    },
+    "FEEDBACK": {
+      "ACCORDION": "Send feedback to z-control",
+      "SEPARATOR": "Feedback"
+    },
+    "PRIVACY": {
+      "ACCORDION": "Privacy Policy",
+      "TOOLTIPS": {
+        "OPEN_POLICY": "Open privacy policy in a new tab"
+      }
+    },
+    "RELEASE-NOTES": {
+      "ACCORDION": "App Version {{versionInfo}} - Release Notes",
+      "TOOLTIPS": {
+        "OPEN_RELEASE_NOTES": "Open release notes (changelog) — grouped by categories and showing the newest entries first."
+      }
+    },
+    "SOURCE": {
+      "ACCORDION": "Get Source Code",
+      "TOOLTIPS": {
+        "DOWNLOAD": "Open GitHub repository in a new tab — view source code, license, changelog, and documentation."
+      }
+    }
+  }
+}

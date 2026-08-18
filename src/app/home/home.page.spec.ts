@@ -2,18 +2,20 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 import { HomePage } from './home.page';
 import { UtilsService } from '../services/utils.service';
 import { APPS } from '../shared/GitHubConstants';
+import { createTranslateServiceMock } from '../testing/translate-service.mock';
 
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
   let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
-  let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
+  let utilsServiceMock: any;
 
   beforeEach(waitForAsync(() => {
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
@@ -31,29 +33,48 @@ describe('HomePage', () => {
       params: jasmine.createSpyObj('Observable', ['subscribe']),
     });
 
-    utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
-      'openGitHubAnalytics',
-      'openChangelog',
-      'openMarkdownDoc',
-    ]);
-    utilsServiceSpy.logoClicked$ = of(false);
+    const logoClickedSub = new Subject<boolean>();
+    const _isSmallScreen = false;
+    utilsServiceMock = {
+      get isSmallScreen() {
+        return _isSmallScreen;
+      },
+      isShowIonTabBar: false,
+      navigateToTab: jasmine.createSpy('navigateToTab'),
+      showOrHideIonTabBar: jasmine.createSpy('showOrHideIonTabBar'),
+      onLogoClicked: jasmine
+        .createSpy('onLogoClicked')
+        .and.returnValue(logoClickedSub.next(true)),
+      openHelpModal: jasmine
+        .createSpy('openHelpModal')
+        .and.returnValue(Promise.resolve()),
+      navigateToTabWithParams: jasmine.createSpy('navigateToTabWithParams'),
+      logoClickedSub,
+      logoClicked$: logoClickedSub.asObservable(),
+    };
 
     TestBed.configureTestingModule({
       imports: [HomePage],
       providers: [
+        {
+          provide: TranslateService,
+          useValue: createTranslateServiceMock(),
+        },
         {
           provide: FirebaseAnalyticsService,
           useValue: firebaseAnalyticsServiceSpy,
         },
         { provide: LocalStorageService, useValue: localStorageServiceSpy },
         { provide: ActivatedRoute, useValue: activatedRouteSpy },
-        { provide: UtilsService, useValue: utilsServiceSpy },
+        { provide: UtilsService, useValue: utilsServiceMock },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    utilsServiceMock.logoClicked$ = of(false);
   }));
 
   describe('Class logic', () => {
@@ -145,42 +166,44 @@ describe('HomePage', () => {
     });
 
     describe('Enable analytics info', () => {
-      it('should display the analytics-not-allowed info when analytics is not allowed', () => {
-        localStorageServiceSpy.getAnalyticsConsent.and.returnValue(false);
+      it('should display the analytics-not-enabled info when analytics is not allowed', () => {
+        component.isAnalyticsEnabled = false;
         component.selectedAccordion = APPS.LANDING_PAGE;
         fixture.detectChanges();
 
         const analyticsNotAllowedInfo = fixture.nativeElement.querySelector(
-          '.analytics-not-allowed',
+          '.analytics-not-enabled',
         );
         expect(analyticsNotAllowedInfo).toBeTruthy();
       });
 
-      it('should have a solid 3px red border on analytics-not-allowed', () => {
-        localStorageServiceSpy.getAnalyticsConsent.and.returnValue(false);
+      it('should have a solid 3px red border on analytics-not-enabled', () => {
+        component.isAnalyticsEnabled = false;
+        component.selectedAccordion = APPS.LANDING_PAGE;
         const el = fixture.nativeElement.querySelector(
-          '.analytics-not-allowed',
+          '.analytics-not-enabled',
         ) as HTMLElement;
         const styles = getComputedStyle(el);
+        fixture.detectChanges();
 
         expect(styles.borderStyle).toBe('solid');
         expect(styles.borderWidth).toBe('3px');
         // note: color cannot be safely tested because it's an ionic variable
       });
 
-      it('should not display the analytics-not-allowed info when analytics is allowed', () => {
-        localStorageServiceSpy.getAnalyticsConsent.and.returnValue(true);
+      it('should not display the analytics-not-enabled info when analytics is allowed', async () => {
+        component.isAnalyticsEnabled = true;
         component.selectedAccordion = APPS.LANDING_PAGE;
         fixture.detectChanges();
 
         const analyticsNotAllowedInfo = fixture.nativeElement.querySelector(
-          '.analytics-not-allowed',
+          '.analytics-not-enabled',
         );
         expect(analyticsNotAllowedInfo).toBeFalsy();
       });
 
       it('should display the general info when analytics is allowed', () => {
-        localStorageServiceSpy.getAnalyticsConsent.and.returnValue(true);
+        component.isAnalyticsEnabled = true;
         component.selectedAccordion = APPS.LANDING_PAGE;
         fixture.detectChanges();
 
@@ -191,7 +214,7 @@ describe('HomePage', () => {
       });
 
       it('should not display the general info when analytics is not allowed', () => {
-        localStorageServiceSpy.getAnalyticsConsent.and.returnValue(false);
+        component.isAnalyticsEnabled = false;
         component.selectedAccordion = APPS.LANDING_PAGE;
         fixture.detectChanges();
 
@@ -209,7 +232,7 @@ describe('HomePage', () => {
       });
 
       it('should open footer if logo is clicked', () => {
-        (utilsServiceSpy.logoClicked$ as any) = of(true);
+        (utilsServiceMock.logoClickedSub as Subject<boolean>).next(true);
         fixture.detectChanges();
 
         const footerElement = fixture.nativeElement.querySelector(
@@ -227,9 +250,15 @@ describe('HomePage', () => {
       };
 
       const appSections: AppSectionTestCase[] = [
-        { appSectionName: 'BF: Backend Functions', isAppFirestoreBackendFunction: true },
+        {
+          appSectionName: 'BF: Backend Functions',
+          isAppFirestoreBackendFunction: true,
+        },
         { appSectionName: 'MLT: Translator', appUsingFirestoreBackend: true },
-        { appSectionName: 'I2T: Image to Text', appUsingFirestoreBackend: true },
+        {
+          appSectionName: 'I2T: Image to Text',
+          appUsingFirestoreBackend: true,
+        },
         { appSectionName: 'IS: Ionic Setup', appUsingFirestoreBackend: true },
         { appSectionName: 'QR: QR Code' },
         { appSectionName: 'BS: Backup Scripts' },
@@ -237,7 +266,8 @@ describe('HomePage', () => {
 
       const usingBackendFunctionsText = 'uses z-control Backend Functions';
       const usingBackendFunctionsIconTitle = 'Uses z-control Backend Functions';
-      const backendFunctionsAppIconTitle = 'Backend Functions are used by marked Apps with icon';
+      const backendFunctionsAppIconTitle =
+        'Backend Functions are used by marked Apps with icon';
 
       beforeEach(() => {
         component.selectedAccordion = APPS.LANDING_PAGE;
@@ -250,23 +280,22 @@ describe('HomePage', () => {
             `ion-accordion[value="${value}"]`,
           ) as HTMLElement;
 
-          expect(sectionElement)
-            .withContext(`section "${value}"`)
-            .toBeTruthy();
+          expect(sectionElement).withContext(`section "${value}"`).toBeTruthy();
         });
       });
 
       it('should display backend functions text and icon only for apps using Firestore backend function', () => {
         appSections
-          .filter(({ appUsingFirestoreBackend: usingFirestoreBackend }) => usingFirestoreBackend)
+          .filter(
+            ({ appUsingFirestoreBackend: usingFirestoreBackend }) =>
+              usingFirestoreBackend,
+          )
           .forEach(({ appSectionName: value }) => {
             const accordion = fixture.nativeElement.querySelector(
               `ion-accordion[value="${value}"]`,
             ) as HTMLElement;
 
-            expect(accordion)
-              .withContext(`accordion "${value}"`)
-              .toBeTruthy();
+            expect(accordion).withContext(`accordion "${value}"`).toBeTruthy();
 
             expect(accordion.textContent)
               .withContext(`text in "${value}"`)
@@ -284,15 +313,16 @@ describe('HomePage', () => {
 
       it('should not display backend functions text and icon for apps not using Firestore backend function', () => {
         appSections
-          .filter(({ appUsingFirestoreBackend: usingFirestoreBackend }) => !usingFirestoreBackend)
+          .filter(
+            ({ appUsingFirestoreBackend: usingFirestoreBackend }) =>
+              !usingFirestoreBackend,
+          )
           .forEach(({ appSectionName: value }) => {
             const accordion = fixture.nativeElement.querySelector(
               `ion-accordion[value="${value}"]`,
             ) as HTMLElement;
 
-            expect(accordion)
-              .withContext(`accordion "${value}"`)
-              .toBeTruthy();
+            expect(accordion).withContext(`accordion "${value}"`).toBeTruthy();
 
             expect(accordion.textContent)
               .withContext(`text in "${value}"`)
@@ -310,15 +340,16 @@ describe('HomePage', () => {
 
       it('should display not Backend Functions text but display icon for Firestore Backend Functions app', () => {
         appSections
-          .filter(({ isAppFirestoreBackendFunction: isFirestoreBackendFunction }) => isFirestoreBackendFunction)
+          .filter(
+            ({ isAppFirestoreBackendFunction: isFirestoreBackendFunction }) =>
+              isFirestoreBackendFunction,
+          )
           .forEach(({ appSectionName: value }) => {
             const accordion = fixture.nativeElement.querySelector(
               `ion-accordion[value="${value}"]`,
             ) as HTMLElement;
 
-            expect(accordion)
-              .withContext(`accordion "${value}"`)
-              .toBeTruthy();
+            expect(accordion).withContext(`accordion "${value}"`).toBeTruthy();
 
             expect(accordion.textContent)
               .withContext(`text in "${value}"`)

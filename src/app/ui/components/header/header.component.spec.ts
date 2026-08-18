@@ -1,22 +1,46 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 
 import { HeaderComponent } from './header.component';
+import { TranslateService } from '@ngx-translate/core';
 import { UtilsService } from '@app/services/utils.service';
-import { Router } from '@angular/router';
+import { Tab } from '@app/shared/enums';
+import { Subject } from 'rxjs';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
+  const modalControllerSpy = jasmine.createSpyObj('ModalController', [
+    'create',
+  ]);
+  const logoClickedSub = new Subject<boolean>();
+  const _isSmallScreen = false;
   const utilsServiceMock = {
-    onLogoClicked: jasmine.createSpy('onLogoClicked'),
+    get isSmallScreen() {
+      return _isSmallScreen;
+    },
+    isShowIonTabBar: false,
+    navigateToTab: jasmine.createSpy('navigateToTab'),
+    openHelpModal: jasmine
+      .createSpy('openHelpModal')
+      .and.returnValue(Promise.resolve()),
+    navigateToTabWithParams: jasmine.createSpy('navigateToTabWithParams'),
+    logoClickedSub,
+    logoClicked$: logoClickedSub.asObservable(),
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      declarations: [],
       imports: [IonicModule.forRoot(), HeaderComponent],
-      providers: [{ provide: UtilsService, useValue: utilsServiceMock }],
+      providers: [
+        { provide: TranslateService, useValue: createTranslateServiceMock() },
+        { provide: ModalController, useValue: modalControllerSpy },
+        { provide: UtilsService, useValue: utilsServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
@@ -24,119 +48,56 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   }));
 
-  describe('Class logic', () => {
-    it('should create', () => {
-      expect(component).toBeTruthy();
-    });
-
-    it('should call utilsService.onLogoClicked when openFooter is called', async () => {
-      const utilsService = TestBed.inject(UtilsService);
-      component.openFooter();
-      expect(utilsService.onLogoClicked).toHaveBeenCalled();
-    });
-
-    it('should return to home when goBack is called', () => {
-      const router = TestBed.inject(Router);
-      spyOn<any>(router, 'navigate');
-
-      component.goBack();
-      expect((router as any).navigate).toHaveBeenCalledWith(['/home']);
-    });
-
-    it('should update isMobile on window resize', () => {
-      Object.defineProperty(window, 'innerWidth', {
-        configurable: true,
-        value: 500,
-      });
-      globalThis.window.dispatchEvent(new Event('resize'));
-      expect(component.isMobile).toBeTrue();
-
-      Object.defineProperty(window, 'innerWidth', {
-        configurable: true,
-        value: 800,
-      });
-      globalThis.window.dispatchEvent(new Event('resize'));
-      expect(component.isMobile).toBeFalse();
-    });
-
-    it('should remove resize event listener on destroy', () => {
-      const removeEventListenerSpy = spyOn(
-        globalThis.window,
-        'removeEventListener',
-      ).and.callThrough();
-      component.ngOnDestroy();
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'resize',
-        jasmine.any(Function),
-      );
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  describe('Template rendering', () => {
-    it('should render the header component', () => {
-      const headerElement = fixture.nativeElement.querySelector('ion-header');
-      expect(headerElement).toBeTruthy();
-    });
-
-    it('should conditionally render the back button', async () => {
-      component.showBackButton = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const backButton = fixture.nativeElement.querySelector(
-        'ion-buttons.back-button ion-button',
-      );
-      expect(backButton).toBeTruthy();
-    });
-
-    it('should not render the back button when showBackButton is false', async () => {
-      component.showBackButton = false;
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const backButton = fixture.nativeElement.querySelector(
-        'ion-buttons.back-button ion-button',
-      );
-      expect(backButton).toBeFalsy();
-    });
-
-    it('should display the selected accordion name', async () => {
-      component.selectedAccordion = 'Test Accordion';
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const selectedAccordion = fixture.nativeElement.querySelector(
-        '.selected-accordion',
-      );
-      expect(selectedAccordion.textContent).toContain('Test Accordion');
-    });
-
-    it('should not display the selected accordion name when empty', async () => {
-      component.selectedAccordion = '';
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const selectedAccordion = fixture.nativeElement.querySelector(
-        '.selected-accordion',
-      );
-      expect(selectedAccordion).toBeFalsy();
-    });
-
-    it('should display the logo and trigger openFooter on click', async () => {
-      const logoElement = fixture.nativeElement.querySelector('.logo');
-      logoElement.click();
-      expect(utilsServiceMock.onLogoClicked).toHaveBeenCalled();
-    });
-
-    it('should display logo text and title', async () => {
-      const logoTextElement =
-        fixture.nativeElement.querySelector('.logo-title');
-      const titleElement = fixture.nativeElement.querySelector('.app-title');
-
-      expect(logoTextElement).toBeTruthy();
-      expect(logoTextElement.textContent).toContain('z-control');
-      expect(titleElement).toBeTruthy();
-      expect(titleElement.textContent).toContain('Apps & Tools');
-    });
+  it('should call utilsService.openHelpModal', async () => {
+    const utilsService = TestBed.inject(UtilsService);
+    await component.openHelpModal();
+    expect(utilsService.openHelpModal).toHaveBeenCalled();
   });
+
+  it('should call utilsService.navigateToTab with Tab.MainFeature and Tab.Settings', () => {
+    const utilsService = TestBed.inject(UtilsService);
+    component.goToMainFeature();
+    expect(utilsService.navigateToTab).toHaveBeenCalledWith(Tab.MainFeature);
+
+    component.goToSettings();
+    expect(utilsService.navigateToTab).toHaveBeenCalledWith(Tab.Settings);
+  });
+
+  it('should return correct values for onMainFeatureTab and onSettingsTab', () => {
+    component.currentTab = Tab.MainFeature;
+
+    expect(component.onMainFeatureTab).toBeTrue();
+    expect(component.onSettingsTab).toBeFalse();
+  });
+
+  it('should navigate to Tab.Settings with params and emit logoClickedSub after 500ms', (done) => {
+    const utilsService = TestBed.inject(UtilsService);
+    spyOn(utilsService.logoClickedSub, 'next');
+    component.goToSettingsAndOpenFeedback();
+    expect(utilsService.navigateToTabWithParams).toHaveBeenCalledWith(
+      Tab.Settings,
+      { open: 'z-control' },
+    );
+    setTimeout(() => {
+      expect(utilsService.logoClickedSub.next).toHaveBeenCalledWith(true);
+      done();
+    }, 510);
+  });
+
+  it('should return true for isLargeScreen if utilsService.isSmallScreen is false', () => {
+    const utilsService = TestBed.inject(UtilsService);
+    Object.defineProperty(utilsService, 'isSmallScreen', { get: () => false });
+    expect(component.isLargeScreen).toBeTrue();
+  });
+
+  it('should return false for isLargeScreen if utilsService.isSmallScreen is true', () => {
+    const utilsService = TestBed.inject(UtilsService);
+    Object.defineProperty(utilsService, 'isSmallScreen', { get: () => true });
+    expect(component.isLargeScreen).toBeFalse();
+  });
+
 });

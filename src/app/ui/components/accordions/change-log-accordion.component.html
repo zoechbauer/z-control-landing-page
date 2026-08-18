@@ -1,0 +1,63 @@
+<ion-accordion value="change-log" id="change-log">
+  <ion-item slot="header" color="light" class="accordion-margin-top">
+    <ion-label>{{
+      "SETTINGS.RELEASE-NOTES.ACCORDION"
+        | translate: { versionInfo: versionInfo }
+    }}</ion-label>
+  </ion-item>
+  <div class="ion-padding" slot="content" title="">
+    <div class="version-info ion-text-center">
+      <p class="version">{{ versionInfo }}</p>
+      <div class="button-wrapper ion-text-center">
+        <ion-button
+          color="primary"
+          (click)="openChangelog()"
+          (keydown.enter)="openChangelog()"
+          title="{{
+            'SETTINGS.RELEASE-NOTES.TOOLTIPS.OPEN_RELEASE_NOTES' | translate
+          }}"
+        >
+          <ion-icon name="list-outline" slot="start"></ion-icon>
+          Release Notes
+        </ion-button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <div class="notes">
+        <p>Note</p>
+        <p>
+          View all new features, improvements, and bug fixes for
+          <b>{{ appName }} app</b> since the app's beta launch.
+        </p>
+        <p>
+          Click the "Release Notes" button to see the complete version history.
+        </p>
+      </div>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <div class="notes">
+        <p>Hinweis</p>
+        <p>
+          Sehen Sie sich alle neuen Funktionen, Verbesserungen und
+          Fehlerbehebungen der
+          <b>{{ appName }} App</b> seit dem App-Start an.
+        </p>
+        <p>
+          Klicken Sie auf die Schaltfläche "Release Notes", um die vollständige
+          Versionshistorie anzuzeigen. Bitte beachten Sie, dass die Release
+          Notes nur in Englisch verfügbar sind.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</ion-accordion>

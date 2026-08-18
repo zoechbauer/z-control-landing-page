@@ -1,0 +1,113 @@
+<app-logo [type]="LogoType.Copyright"></app-logo>
+
+<ng-container *ngIf="lang === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- E N G L I S H   T E M P L A T E -->
+
+<ng-template #englishTemplate>
+  <div class="additional-margin-right">
+    <i>Note: Adapt this text to your feature.</i>
+    <p>
+      <strong>Optical Character Recognition (OCR):</strong> The text recognition
+      is performed via the <i>Google Cloud Vision API</i>. Image data is
+      transmitted to the cloud for recognition. The recognized texts are not
+      permanently stored in the cloud or shared with third parties; further
+      processing takes place exclusively locally on your device.
+    </p>
+    <p>
+      <strong>Image Compression:</strong> Images are compressed before
+      processing to improve performance and reduce storage requirements. This is
+      done exclusively locally on your device using <i>ImageManipulator</i> for
+      mobile devices and <i>pica</i> for the web app. No images are stored in
+      the cloud.
+    </p>
+    <p>
+      <strong>Anonymous usage statistics:</strong> We store the following
+      anonymous data in <i>Google Firebase/Firestore</i>:
+    </p>
+    <ul>
+      <li>Device information (platform type)</li>
+      <li>Number of image processes</li>
+      <li>Date of last image processing</li>
+      <li>Anonymized user ID</li>
+    </ul>
+    <p>
+      This data is used solely to manage monthly usage quotas and prevent
+      unexpected costs. No personal or sensitive data is stored.
+    </p>
+    <p>
+      You can find the complete privacy policy on the z&#8209;control website
+      <a
+        class="external-link"
+        href="https://z-control-4070.web.app/privacy/image-to-text/en"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="{{ 'SETTINGS.PRIVACY.TOOLTIPS.OPEN_POLICY' | translate }}"
+        >Privacy Policy
+        <ion-icon name="open-outline"></ion-icon>
+      </a>
+    </p>
+    <p class="small-text">
+      <i
+      >Note: The link will open in your browser – afterwards, please return to
+      the z&#8209;control Image to Text app.</i
+      >
+    </p>
+  </div>
+</ng-template>
+
+<!-- G E R M A N   T E M P L A T E -->
+
+<ng-template #germanTemplate>
+  <div class="additional-margin-right">
+    <p>
+      Die Texterkennung (OCR) erfolgt über die <i>Google Cloud Vision API</i>.
+      Bilddaten werden zur Erkennung in die Cloud übertragen. Die erkannten
+      Texte werden nicht dauerhaft in der Cloud gespeichert oder an Dritte
+      weitergegeben; die Weiterverarbeitung erfolgt ausschließlich lokal auf
+      Ihrem Gerät.
+    </p>
+    <p>
+      Bilder werden vor der Verarbeitung komprimiert, um die Leistung zu
+      verbessern und den Speicherbedarf zu reduzieren. Dies erfolgt
+      ausschließlich lokal auf Ihrem Gerät mittels
+      <i>ImageManipulator</i> für mobile Geräte und <i>pica</i> für die Web-App.
+      Es werden keine Bilder in der Cloud gespeichert.
+    </p>
+    <p>
+      Wir speichern folgende anonyme Daten in <i>Google Firebase/Firestore</i>:
+    </p>
+
+    <ul>
+      <li>Geräte-Informationen (Plattformtyp)</li>
+      <li>Anzahl der Bildverarbeitungen</li>
+      <li>Datum der letzten Bildverarbeitung</li>
+      <li>Anonymisierte Benutzer-ID</li>
+    </ul>
+    <p>
+      Diese Daten dienen ausschließlich der Verwaltung des monatlichen
+      Nutzungskontingents und zur Vermeidung unerwarteter Kosten. Es werden
+      keine persönlichen oder sensiblen Daten gespeichert.
+    </p>
+    <p>
+      Die vollständige Datenschutzerklärung finden Sie auf der z&#8209;control Website
+      <a
+        class="external-link"
+        href="https://z-control-4070.web.app/privacy/image-to-text/de"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="{{ 'SETTINGS.PRIVACY.TOOLTIPS.OPEN_POLICY' | translate }}"
+        >Datenschutzerklärung
+        <ion-icon name="open-outline"></ion-icon>
+      </a>
+    </p>
+    <p class="small-text">
+      <i
+        >Hinweis: Der Link öffnet sich in Ihrem Browser – wechseln Sie
+        anschließend zurück zur z&#8209;control Image to Text App.</i
+      >
+    </p>
+  </div>
+</ng-template>

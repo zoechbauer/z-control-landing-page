@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../../ui/components/header/header.component';
 import { FooterComponent } from '../../../ui/components/footer/footer.component';
 import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
+import { Tab } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-privacy-viewer',
@@ -40,6 +41,7 @@ export class PrivacyViewerComponent implements OnInit {
   language = 'en';
   availableLanguages: string[] = [];
   showBackButtonAndFooter = false;
+  Tab = Tab;
 
   ngOnInit() {
     // Check for internal navigation first

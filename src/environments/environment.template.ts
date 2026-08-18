@@ -6,6 +6,11 @@ export const environment = {
     minor: __MINOR__,
     date: '__DATE__',
   },
+  app: {
+    name: '__APP_NAME__',
+    shortName: '__APP_NAME_SHORT__',
+    showTabsBar: __SHOW_TABS_BAR__,
+  },
   logAnalyticsInDevMode: __LOG_ANALYTICS_IN_DEV_MODE__,
   useFirebaseEmulator: __USE_FIREBASE_EMULATOR__,
   appSection: {

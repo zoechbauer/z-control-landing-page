@@ -29,5 +29,5 @@ export interface IonicSetupSectionParameters {
 export interface AppSectionParameters {
   selectedAccordion: string;
   currentMainAccordion: string;
-  isAnalyticsAllowed: boolean;
+  isAnalyticsEnabled: boolean;
 }

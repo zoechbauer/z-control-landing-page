@@ -2,6 +2,19 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [4.0] - 2026-08-18
+
+### ✨ New Features
+
+- Redesigned header to match other z-control apps, improving brand consistency and visual alignment across the z-control family.
+- Added a Settings component to the Landing Page that centralizes user preferences. The component is adapted from the z-control Image To Text app and includes English and German translations. Note: accordion content currently contains copied placeholder values and should be reviewed and updated.
+- Added a Help page (ported from the z-control Ionic Setup app); removed the Quota Management and Mobile App sections that were not applicable.
+- Added translation files for the new Settings and Help pages (English and German).
+
+### 🔧 Internal
+
+- Added follow-up tracking in `TODO-list-open-activities.md`.
+
 ## [3.8] - 2026-08-15
 
 ### 🚀 Improvements

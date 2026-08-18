@@ -6,6 +6,7 @@ import { FirebaseAnalyticsService } from './firebase-analytics.service';
 import { APPS } from '@app/shared/GitHubConstants';
 import { GithubAnalyticsComponent } from '../ui/components/github-analytics/github-analytics.component';
 import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
+import { environment } from 'src/environments/environment';
 
 describe('UtilsService', () => {
   let service: UtilsService;
@@ -348,6 +349,36 @@ describe('UtilsService', () => {
         const result = service.addLeadingBlanks(value as any, total);
         expect(result).toEqual(expected);
       });
+    });
+  });
+
+  describe('Tab bar visibility and manipulation', () => {
+    it('should return false for isShowIonTabBar when tabs are disabled in environment', () => {
+      environment.app.showTabsBar = false;
+      expect(service.isShowIonTabBar).toBeFalse();
+    });
+
+    it('should return true for isShowIonTabBar when tabs are enabled and small screen', () => {
+      environment.app.showTabsBar = true;
+      spyOnProperty(service, 'isSmallScreen', 'get').and.returnValue(true);
+      expect(service.isShowIonTabBar).toBeTrue();
+    });
+
+    it('should show tab bar when enabled', () => {
+      const tabBar = document.createElement('ion-tab-bar');
+      tabBar.classList.add('hide-ion-tab-bar');
+      document.body.appendChild(tabBar);
+      spyOnProperty(service, 'isShowIonTabBar', 'get').and.returnValue(true);
+      service.showOrHideIonTabBar();
+      expect(tabBar.classList.contains('hide-ion-tab-bar')).toBeFalse();
+    });
+
+    it('should hide tab bar when disabled', () => {
+      const tabBar = document.createElement('ion-tab-bar');
+      document.body.appendChild(tabBar);
+      spyOnProperty(service, 'isShowIonTabBar', 'get').and.returnValue(false);
+      service.showOrHideIonTabBar();
+      expect(tabBar.classList.contains('hide-ion-tab-bar')).toBeTrue();
     });
   });
 });

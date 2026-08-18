@@ -36,6 +36,28 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+.web-app-width {
+  ion-router-outlet {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+}
+
+.native-app-height-hide-tabs-bar {
+  ion-router-outlet {
+    height: calc(100vh - 44px);
+  }
+}
+
+ion-tab-bar {
+  padding-bottom: var(--safe-area-bottom-fix, 44px);
+  display: flex;
+
+  &.hide-ion-tab-bar {
+    display: none;
+  }
+}
+
 ion-app {
   width: 100%;
   margin: 0 auto;

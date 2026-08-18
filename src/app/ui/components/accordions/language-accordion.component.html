@@ -1,0 +1,65 @@
+<ion-accordion value="language" id="language">
+  <ion-item slot="header" color="light">
+    <ion-label>{{ "SETTINGS.LANGUAGE.ACCORDION" | translate }} </ion-label>
+  </ion-item>
+  <div class="ion-padding" slot="content" title="">
+    <ion-item>
+      <ion-select
+        label="{{ 'SETTINGS.LANGUAGE.LABEL.LANG' | translate }}"
+        label-placement="stacked"
+        [(ngModel)]="lang"
+        interface="popover"
+        title="{{ 'SETTINGS.LANGUAGE.TOOLTIPS.CHANGE_LANGUAGE' | translate }}"
+      >
+        <ion-select-option value="en">{{
+          "SETTINGS.LANGUAGE.SELECT.EN" | translate
+        }}</ion-select-option>
+        <ion-select-option value="de">{{
+          "SETTINGS.LANGUAGE.SELECT.DE" | translate
+        }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <div class="notes">
+        <p>Note</p>
+        <p>
+          The app language defaults to your device's language setting. If your
+          device uses German, the app displays in German; otherwise, it displays
+          in English.
+        </p>
+        <p>
+          You can change the app language at any time, and the change takes
+          effect immediately. This language is also used as the base language
+          for translations—all translations are performed from this base
+          language into your selected target languages.
+        </p>
+      </div>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <div class="notes">
+        <p>Hinweis</p>
+        <p>
+          Die App-Sprache wird standardmäßig von den Spracheinstellungen Ihres
+          Geräts bestimmt. Bei Deutsch wird die App auf Deutsch angezeigt,
+          ansonsten auf Englisch.
+        </p>
+        <p>
+          Sie können die App-Sprache jederzeit ändern, und die Änderung ist
+          sofort wirksam. Diese Sprache dient auch als Basissprache für
+          Übersetzungen – alle Übersetzungen werden von dieser Basissprache in
+          die von Ihnen ausgewählten Zielsprachen durchgeführt.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</ion-accordion>

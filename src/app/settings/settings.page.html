@@ -1,0 +1,78 @@
+<div id="toast-anchor-settings">
+  <app-header [currentTab]="Tab.Settings"></app-header>
+</div>
+<ion-content
+  #content
+  class="settings-content"
+  [class.landscape]="!utilsService.isPortrait"
+>
+<h6 class="ion-text-center">{{ appName }}</h6>
+  <ion-accordion-group
+    [value]="openAccordion"
+    (ionValueChange)="onAccordionGroupChange($event, content)"
+    title="{{this.showAllAccordions ? ('SETTINGS.TOOLTIPS.OPEN_ACCORDION' | translate) : ('SETTINGS.TOOLTIPS.CLOSE_ACCORDION' | translate) }}"
+  >
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <!-- Show all accordions and section title  -->
+    @if (showAllAccordions && !openAccordion) {
+    <h5 class="ion-text-center settings-section-title" title="">
+      {{'SETTINGS.TITLE' | translate}}
+    </h5>
+    @if (selectedLanguage) {
+    <app-language-accordion [lang]="selectedLanguage"></app-language-accordion>
+    }
+    <h5 class="ion-text-center settings-section-title" title="">
+      {{ "SETTINGS.FEEDBACK.SEPARATOR" | translate }}
+    </h5>
+    <app-feedback-accordion></app-feedback-accordion>
+
+    <h5 class="ion-text-center settings-section-title" title="">
+      {{ "SETTINGS.INFORMATIONS" | translate }}
+    </h5>
+    <app-privacy-policy-accordion></app-privacy-policy-accordion>
+    <app-change-log-accordion
+      [versionInfo]="versionInfo"
+    ></app-change-log-accordion>
+    <app-get-source-accordion></app-get-source-accordion>
+    }
+    <!-- Show only the opened accordion  -->
+    @if (!showAllAccordions && openAccordion) { @switch (openAccordion) { @case
+    ('language') {
+    <app-language-accordion
+      [lang]="selectedLanguage"
+      (ionChange)="onLanguageChange($event)"
+    ></app-language-accordion>
+    } @case ('z-control') {
+    <app-feedback-accordion [lang]="selectedLanguage"></app-feedback-accordion>
+    } @case ('privacy-policy') {
+    <app-privacy-policy-accordion
+      [lang]="selectedLanguage"
+    ></app-privacy-policy-accordion>
+    } @case ('change-log') {
+    <app-change-log-accordion
+      [lang]="selectedLanguage"
+      [versionInfo]="versionInfo"
+      [appName]="appName"
+      (ionChange)="openChangelog()"
+    ></app-change-log-accordion>
+    } @case ('get-source') {
+    <app-get-source-accordion
+      [lang]="selectedLanguage"
+      [appName]="appName"
+    ></app-get-source-accordion>
+    } }
+    <!-- Button to show all accordions -->
+    <div class="ion-padding ion-text-center accordion-close-button">
+      <ion-button
+        (click)="showAll()"
+        (keydown.enter)="showAll()"
+        expand="block"
+        title="{{ 'SETTINGS.TOOLTIPS.CLOSE_ACCORDION' | translate }}"
+      >
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        {{ 'SETTINGS.BUTTON.CLOSE' | translate }}
+      </ion-button>
+    </div>
+    }
+  </ion-accordion-group>
+</ion-content>
