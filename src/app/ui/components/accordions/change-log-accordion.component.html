@@ -1,4 +1,4 @@
-<ion-accordion value="change-log" id="change-log">
+<ion-accordion value="change-log" id="change-log" [disabled]="disableAccordion">
   <ion-item slot="header" color="light" class="accordion-margin-top">
     <ion-label>{{
       "SETTINGS.RELEASE-NOTES.ACCORDION"
@@ -30,8 +30,7 @@
     <!-- E N G L I S H   T E M P L A T E -->
 
     <ng-template #englishTemplate>
-      <div class="notes">
-        <p>Note</p>
+      <div class="ion-padding-top">
         <p>
           View all new features, improvements, and bug fixes for
           <b>{{ appName }} app</b> since the app's beta launch.
@@ -45,8 +44,7 @@
     <!-- G E R M A N   T E M P L A T E -->
 
     <ng-template #germanTemplate>
-      <div class="notes">
-        <p>Hinweis</p>
+      <div class="ion-padding-top">
         <p>
           Sehen Sie sich alle neuen Funktionen, Verbesserungen und
           Fehlerbehebungen der
@@ -54,8 +52,11 @@
         </p>
         <p>
           Klicken Sie auf die Schaltfläche "Release Notes", um die vollständige
-          Versionshistorie anzuzeigen. Bitte beachten Sie, dass die Release
-          Notes nur in Englisch verfügbar sind.
+          Versionshistorie anzuzeigen.
+        </p>
+        <p>
+          Bitte beachten Sie, dass die Release Notes nur in Englisch verfügbar
+          sind.
         </p>
       </div>
     </ng-template>

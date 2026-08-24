@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { GithubAnalyticsComponent } from './github-analytics.component';
 import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
 import {
@@ -83,8 +85,16 @@ describe('GithubAnalyticsComponent', () => {
       'openMarkdownDoc',
     ]);
     TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), GithubAnalyticsComponent],
+      imports: [
+        IonicModule.forRoot(),
+        TranslateModule.forRoot(),
+        GithubAnalyticsComponent,
+      ],
       providers: [
+        {
+          provide: TranslateService,
+          useValue: createTranslateServiceMock(),
+        },
         {
           provide: FirebaseFirestoreService,
           useClass: MockFirebaseFirestoreService,
@@ -259,7 +269,7 @@ describe('GithubAnalyticsComponent', () => {
       expect(getAnalyticsDataSpy).toHaveBeenCalledWith(
         collection,
         'all',
-        false
+        false,
       );
     });
 

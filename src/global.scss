@@ -120,13 +120,12 @@ ion-header {
   }
 }
 
-// Footer styling for all pages
-ion-footer {
-  ion-toolbar {
-    --background: var(--ion-color-light);
-    --color: var(--ion-color-medium);
-    min-height: auto;
-  }
+ion-title {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  font-size: 1.1rem;
 }
 
 // site ready for testing

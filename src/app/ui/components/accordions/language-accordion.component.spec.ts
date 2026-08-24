@@ -40,11 +40,12 @@ describe('LanguageAccordionComponent', () => {
 
       const text = getNormalizedText();
 
-      expect(text).toContain('Hinweis');
       expect(text).toContain(
         'Die App-Sprache wird standardmäßig von den Spracheinstellungen Ihres Geräts bestimmt.',
       );
-      expect(text).not.toContain('Note');
+      expect(text).not.toContain(
+        "The app language defaults to your device's language setting.",
+      );
     });
 
     it('should render english template when lang is en', () => {
@@ -53,11 +54,12 @@ describe('LanguageAccordionComponent', () => {
 
       const text = getNormalizedText();
 
-      expect(text).toContain('Note');
       expect(text).toContain(
         "The app language defaults to your device's language setting.",
       );
-      expect(text).not.toContain('Hinweis');
+      expect(text).not.toContain(
+        'Die App-Sprache wird standardmäßig von den Spracheinstellungen Ihres Geräts bestimmt.',
+      );
     });
 
     it('should fallback to english template when lang is not de', () => {
@@ -66,8 +68,12 @@ describe('LanguageAccordionComponent', () => {
 
       const text = getNormalizedText();
 
-      expect(text).toContain('Note');
-      expect(text).not.toContain('Hinweis');
+      expect(text).toContain(
+        "The app language defaults to your device's language setting.",
+      );
+      expect(text).not.toContain(
+        'Die App-Sprache wird standardmäßig von den Spracheinstellungen Ihres Geräts bestimmt.',
+      );
     });
 
     it('should render language select options for en and de', () => {

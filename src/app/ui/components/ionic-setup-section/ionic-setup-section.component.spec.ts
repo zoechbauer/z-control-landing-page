@@ -24,7 +24,9 @@ describe('IonicSetupSectionComponent', () => {
       'openChangelog',
       'openMarkdownDoc',
     ]);
+
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
+    
     activatedRouteSpy = {
       snapshot: {
         queryParams: {},

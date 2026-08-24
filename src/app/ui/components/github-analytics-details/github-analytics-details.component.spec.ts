@@ -87,12 +87,14 @@ describe('GithubAnalyticsDetailsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
+
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'isSmallScreen',
       'isPortrait',
       'openMarkdownDoc',
       'addLeadingBlanks',
     ]);
+    
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), GithubAnalyticsDetailsComponent],
       providers: [

@@ -129,7 +129,7 @@ export class LocalStorageService {
   async getAnalyticsConsent(): Promise<boolean> {
     try {
       const consent = await this.storage.get(LocalStorage.AnalyticsEnabled);
-      return consent !== undefined ? consent : false;
+      return consent ?? false;
     } catch (error) {
       console.error(
         'Failed to retrieve analytics consent from localStorage:',

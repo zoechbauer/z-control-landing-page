@@ -15,6 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { APPS } from '@app/shared/GitHubConstants';
 import { IonicSetupSectionParameters } from '@app/shared/app-interfaces';
+import { Tab } from '@app/shared/enums';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceComponent } from '../open-source/open-source.component';
 
@@ -42,6 +43,7 @@ export class IonicSetupSectionComponent {
   private readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: IonicSetupSectionParameters;
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
@@ -53,6 +55,7 @@ export class IonicSetupSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-ionic-setup';
   webAppUrl = 'https://z-control-ionic-setup.web.app';
   selectedSubAccordion: string = '';
+  Tab = Tab;
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
@@ -113,6 +116,6 @@ export class IonicSetupSectionComponent {
   }
 
   get privacyPolicyLink() {
-    return ['/privacy', 'multi-language-translator', 'en'];
+    return ['/privacy', 'multi-language-translator', this.parameters?.appSectionParameters?.selectedLanguage || 'en'];
   }
 }

@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { HeaderComponent, FooterComponent } from '../ui';
+import { HeaderComponent } from '../ui';
 import { QrCodeGeneratorSectionComponent } from '../ui/components/qr-code-generator-section/qr-code-generator-section.component';
 import { BackupScriptsSectionComponent } from '../ui/components/backup-scripts-section/backup-scripts-section.component';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
@@ -26,6 +27,7 @@ import { BackendFunctionsSectionComponent } from '../ui/components/backend-funct
 import { ImageToTextSectionComponent } from '../ui/components/image-to-text-section/image-to-text-section.component';
 import { Tab } from '../shared/enums';
 import { UtilsService } from '../services/utils.service';
+import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-home',
@@ -37,16 +39,17 @@ import { UtilsService } from '../services/utils.service';
     RouterModule,
     CommonModule,
     HeaderComponent,
-    FooterComponent,
     QrCodeGeneratorSectionComponent,
     BackupScriptsSectionComponent,
     MultiLanguageTranslatorSectionComponent,
     ImageToTextSectionComponent,
     IonicSetupSectionComponent,
     BackendFunctionsSectionComponent,
+    SpinnerComponent,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
+  translate = inject(TranslateService);
   private readonly fa = inject(FirebaseAnalyticsService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly utilsService = inject(UtilsService);
@@ -63,15 +66,25 @@ export class HomePage implements OnInit, OnDestroy {
   ionicSetupSectionParams?: IonicSetupSectionParameters;
   backendFunctionsSectionParams?: BackendFunctionsSectionParameters;
   isAnalyticsEnabled = false;
-  private readonly subscription = new Subscription();
+  selectedLanguage!: string;
+  isLoading = true;
+  private readonly subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.utilsService.showOrHideIonTabBar();
+    this.setupSubscriptions();
     this.getIsAnalyticsAllowed();
+  }
 
-    this.subscription.add(
+  private setupSubscriptions() {
+    this.subscriptions.push(
+      this.localStorageService.selectedLanguage$.subscribe(async (lang) => {
+        this.translate.use(lang);
+        this.translate.setDefaultLang(lang);
+        this.selectedLanguage = lang;
+        this.isLoading = false;
+      }),
       this.fa.enabled$.subscribe((enabled) => {
-        console.log('Analytics enabled status changed:', enabled);
         this.isAnalyticsEnabled = enabled;
       }),
     );
@@ -218,11 +231,20 @@ export class HomePage implements OnInit, OnDestroy {
     return {
       selectedAccordion: this.selectedAccordion,
       currentMainAccordion: this.currentMainAccordion,
-      isAnalyticsEnabled: this.isAnalyticsEnabled,
+      selectedLanguage: this.selectedLanguage,
     };
   }
 
+  goToSettingsAndOpenFirebaseAnalytics() {
+    this.utilsService.navigateToTabWithParams(Tab.Settings, {
+      open: 'firebase-analytics',
+    });
+    setTimeout(() => {
+      this.utilsService.openFirebaseAnalyticsSub.next(true);
+    }, 500);
+  }
+
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

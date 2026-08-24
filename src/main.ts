@@ -46,6 +46,7 @@ import {
     arrowBack,
     settingsOutline,
     helpOutline,
+    openOutline,
 } from 'ionicons/icons';
 
 import { appConfig } from './app/app.config';
@@ -91,6 +92,7 @@ addIcons({
   'logo-google-playstore': logoGooglePlaystore,
   mail: mail,
   'mail-outline': mailOutline,
+  'open-outline': openOutline,
   person: person,
   'person-outline': personOutline,
   'phone-portrait': phonePortrait,

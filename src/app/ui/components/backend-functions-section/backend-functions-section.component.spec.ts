@@ -42,6 +42,7 @@ describe('BackendFunctionsSectionComponent', () => {
     await component.onOpenGitHubAnalytics();
     expect(utilsServiceSpy.openGitHubAnalytics).toHaveBeenCalledWith(
       APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
+      'en', 
     );
   });
 

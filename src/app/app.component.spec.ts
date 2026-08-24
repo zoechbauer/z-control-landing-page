@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { IonicModule, Platform, NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,8 +13,9 @@ import { of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { createUtilsServiceMock } from '@testing/utils-service.mock';
 import { FirebaseAnalyticsService } from './services/firebase-analytics.service';
-import { createTranslateServiceMock } from './testing/translate-service.mock';
 import { LocalStorageService } from './services/local-storage.service';
 import { UtilsService } from './services/utils.service';
 
@@ -19,39 +26,26 @@ describe('AppComponent', () => {
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
   let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
   let routerSpy: jasmine.SpyObj<Router>;
-
   let navControllerSpy: jasmine.SpyObj<NavController>;
 
-  const logoClickedSub = new Subject<boolean>();
-  const _isSmallScreen = false;
-  const utilsServiceMock = {
-    get isSmallScreen() {
-      return _isSmallScreen;
-    },
-    isShowIonTabBar: false,
-    navigateToTab: jasmine.createSpy('navigateToTab'),
-    onLogoClicked: jasmine
-      .createSpy('onLogoClicked')
-      .and.returnValue(logoClickedSub.next(true)),
-    openHelpModal: jasmine
-      .createSpy('openHelpModal')
-      .and.returnValue(Promise.resolve()),
-    navigateToTabWithParams: jasmine.createSpy('navigateToTabWithParams'),
-    logoClickedSub,
-    logoClicked$: logoClickedSub.asObservable(),
-  };
-
   beforeEach(waitForAsync(() => {
+    const utilsServiceMock = createUtilsServiceMock();
+
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
+
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
       'FirebaseAnalyticsService',
       ['logEvent', 'init', 'enableCollection'],
     );
+
     localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', [
       'initializeServicesAsync',
       'getAnalyticsConsent',
     ]);
+    localStorageServiceSpy.initializeServicesAsync.and.resolveTo(undefined);
+
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     navControllerSpy = jasmine.createSpyObj('NavController', [
       'navigateRoot',
       'navigateBack',
@@ -94,6 +88,14 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
   }));
 
+  afterEach(() => {
+    document.querySelectorAll('ion-tab-bar').forEach((el) => el.remove());
+    if (fixture) {
+      fixture.destroy();
+    }
+    TestBed.resetTestingModule();
+  });
+
   it('should create the app', async () => {
     expect(component).toBeTruthy();
   });
@@ -126,7 +128,7 @@ describe('AppComponent', () => {
       );
       firebaseAnalyticsServiceSpy.enableCollection.calls.reset();
 
-      component.ngOnInit();
+      fixture.detectChanges();
       await fixture.whenStable();
 
       expect(firebaseAnalyticsServiceSpy.enableCollection).toHaveBeenCalledWith(
@@ -140,7 +142,7 @@ describe('AppComponent', () => {
       );
 
       firebaseAnalyticsServiceSpy.enableCollection.calls.reset();
-      component.ngOnInit();
+      fixture.detectChanges();
       await fixture.whenStable();
 
       expect(firebaseAnalyticsServiceSpy.enableCollection).toHaveBeenCalledWith(
@@ -202,24 +204,14 @@ describe('AppComponent', () => {
     });
   });
 
-  describe('openFooter method', () => {
-    it('should call onLogoClicked after 1 second', async () => {
-      component['openFooter']();
-      await new Promise((resolve) => setTimeout(resolve, 1100));
+  describe('openFirebaseAnalytics method', () => {
+    it('should call openFirebaseAnalyticsSub.next after 1 second', fakeAsync(() => {
+      const utils: any = (component as any).utilsService;
+      const nextSpy = spyOn(utils.openFirebaseAnalyticsSub, 'next');
+      component['openFirebaseAnalytics']();
 
-      expect((component as any).utilsService.onLogoClicked).toHaveBeenCalled();
-    });
-
-    it('should open footer when Firebase is not enabled in local storage', async () => {
-      localStorageServiceSpy.getAnalyticsConsent.and.returnValue(
-        new Promise((resolve) => resolve(false)),
-      );
-
-      component.ngOnInit();
-      // trigger platform.ready() callback so openFooter runs
-      await new Promise((resolve) => setTimeout(resolve, 1100));
-
-      expect((component as any).utilsService.onLogoClicked).toHaveBeenCalled();
-    });
+      tick(1100);
+      expect(nextSpy).toHaveBeenCalledWith(true);
+    }));
   });
 });

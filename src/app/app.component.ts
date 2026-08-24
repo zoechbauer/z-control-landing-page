@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const consent = await this.localStorageService.getAnalyticsConsent();
         this.fa.enableCollection(consent ?? false);
         if (consent !== true) {
-          this.openFooter();
+          this.openFirebaseAnalytics();
         }
       });
     })();
@@ -59,10 +59,10 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  private openFooter() {
-    // firebase analytics event handled in footer component
+    private openFirebaseAnalytics() {
+    // firebase analytics event handled in settings component
     setTimeout(() => {
-      this.utilsService.onLogoClicked();
+      this.utilsService.openFirebaseAnalyticsSub.next(true);
     }, 1000);
   }
   

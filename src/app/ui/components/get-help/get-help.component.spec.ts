@@ -38,7 +38,7 @@ describe('HelpModalComponent', () => {
       ['scrollToElement'],
       {
         isPortrait: true,
-        isNative: true,
+        isNativeApp: false,
       },
     );
 
@@ -254,5 +254,9 @@ describe('HelpModalComponent', () => {
       );
     });
 
+    it('should return appName and appShortName from environment', () => {
+      expect(component.appName).toBe('z-control Applications and Tools');
+      expect(component.appShortName).toBe('Apps & Tools');
+    });
   });
 });

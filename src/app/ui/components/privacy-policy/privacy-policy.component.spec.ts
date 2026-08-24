@@ -5,12 +5,20 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { PrivacyPolicyComponent } from './privacy-policy.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { ActivatedRoute } from '@angular/router';
 
 describe('PrivacyPolicyComponent', () => {
   let component: PrivacyPolicyComponent;
   let fixture: ComponentFixture<PrivacyPolicyComponent>;
+  let activatedRouteSpy: any;
 
   beforeEach(waitForAsync(() => {
+    activatedRouteSpy = {
+      snapshot: {
+        queryParams: {},
+      },
+    };
+
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
@@ -23,6 +31,7 @@ describe('PrivacyPolicyComponent', () => {
           provide: TranslateService,
           useValue: createTranslateServiceMock(),
         },
+        { provide: ActivatedRoute, useValue: activatedRouteSpy },
       ],
     }).compileComponents();
 

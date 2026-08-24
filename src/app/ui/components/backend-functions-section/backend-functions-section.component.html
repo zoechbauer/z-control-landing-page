@@ -1,4 +1,5 @@
 <ion-accordion
+  [disabled]="!isAnalyticsEnabled"
   value="BF: Backend Functions"
   title="{{
     parameters?.appSectionParameters?.currentMainAccordion === 'BF'
@@ -173,15 +174,6 @@
               Open GitHub Analytics Dashboard
             </ion-button>
           </div>
-          <div class="dashboard-access">
-            <p>You can also open the dashboard from the footer:</p>
-            <ol>
-              <li>Open the footer.</li>
-              <li>
-                Select <strong>SOURCE CODE &amp; GITHUB ANALYTICS</strong>.
-              </li>
-            </ol>
-          </div>
         </div>
       </ion-accordion>
       <ion-accordion
@@ -201,9 +193,8 @@
               href="{{ getMailToLinkForFeedback() }}"
               title="Open your email client with recipient and subject prefilled."
             >
-              z-control Support & Feedback
-            </a>
-            >.
+              z-control Support
+            </a>.
           </p>
         </div>
       </ion-accordion>

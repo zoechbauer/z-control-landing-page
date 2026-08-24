@@ -1,0 +1,80 @@
+<ion-accordion value="firebase-analytics" id="firebase-analytics">
+  <ion-item slot="header" color="light">
+    <ion-label
+      >{{ "SETTINGS.FIREBASE_ANALYTICS.ACCORDION" | translate }}
+    </ion-label>
+  </ion-item>
+  <div class="ion-padding" slot="content" title="">
+    <div
+      class="ion-text-center"
+      data-testid="enable-analytics"
+      [class.firebase-analytics-not-enabled]="(fa.enabled$ | async) === false"
+    >
+      <ion-toggle
+        [checked]="fa.enabled$ | async"
+        (ionChange)="onChangeEnableAnalytics($event.detail.checked)"
+        title="{{
+          'SETTINGS.FIREBASE_ANALYTICS.TOOLTIPS.ANALYTICS_BUTTON' | translate
+        }}"
+      >
+        {{ enableAnalyticsLabel }}
+      </ion-toggle>
+    </div>
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <div class="ion-padding-top">
+        <p>
+          Enable anonymous analytics to explore our full collection of apps and
+          tools.
+        </p>
+        <p>
+          We collect only non-identifying usage data to improve our services.
+        </p>
+        <p>
+          You can find the complete privacy policy on the z&#8209;control
+          website
+          <a
+            [routerLink]="privacyPolicyLink"
+            [queryParams]="{ internal: 'true' }"
+            title="Read our privacy policy"
+          >
+            Privacy Policy
+            <ion-icon name="open-outline"></ion-icon>
+          </a>
+        </p>
+      </div>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <div class="ion-padding-top">
+        <p>
+          Aktivieren Sie anonyme Analysen, um unsere vollständige Sammlung von
+          Apps und Tools zu erkunden.
+        </p>
+        <p>
+          Wir erfassen nur nicht identifizierende Nutzungsdaten, um unsere
+          Dienste zu verbessern.
+        </p>
+        <p>
+          Sie können die vollständige Datenschutzerklärung auf der
+          z&#8209;control Website einsehen
+          <a
+            [routerLink]="privacyPolicyLink"
+            [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
+            title="Lesen Sie unsere Datenschutzerklärung"
+          >
+            Datenschutzerklärung
+            <ion-icon name="open-outline"></ion-icon>
+          </a>
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</ion-accordion>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   IonButton,
@@ -15,6 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { APPS } from '@app/shared/GitHubConstants';
+import { Tab } from '@app/shared/enums';
 import { ImageToTextSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceComponent } from '../open-source/open-source.component';
@@ -43,6 +44,7 @@ export class ImageToTextSectionComponent {
   private readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: ImageToTextSectionParameters;
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
@@ -55,6 +57,7 @@ export class ImageToTextSectionComponent {
     'https://github.com/zoechbauer/z-control-image-to-text';
   webAppUrl = 'https://z-control-image-to-text.web.app';
   selectedSubAccordion: string = '';
+  Tab = Tab;
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
@@ -115,6 +118,6 @@ export class ImageToTextSectionComponent {
   }
 
   get privacyPolicyLink() {
-    return ['/privacy', 'image-to-text', 'en'];
+    return ['/privacy', 'image-to-text', this.parameters?.appSectionParameters?.selectedLanguage || 'en'];
   }
 }

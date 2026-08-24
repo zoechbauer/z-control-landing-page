@@ -1,7 +1,9 @@
 <!-- Start Page Proposal for Firebase Hosting -->
 <div id="toast-anchor-main">
   <app-header [currentTab]="Tab.MainFeature"></app-header>
-  {{selectedAccordion}}
+  <div class="ion-text-center ion-padding-top ion-padding-bottom">
+    {{selectedAccordion}}
+  </div>
 </div>
 
 <ion-content class="ion-padding">
@@ -17,13 +19,21 @@
     <div class="analytics-not-enabled">
       <p class="ion-text-left">
         <b>Important:</b> Enable anonymous analytics to explore our full
-        collection of apps and tools.<br />
-        We collect only non-identifying usage data to improve our services.
+        collection of apps and tools.
       </p>
-      <p class="ion-text-left">
-        Analytics can be enabled in the footer. If the footer is closed, click
-        the z&#8209;control icon to open it.<br />
-        You can change this setting at any time.
+      <p>We collect only non-identifying usage data to improve our services.</p>
+      <p class="ion-text-left ion-padding-top">
+        Analytics can be enabled in the settings in accordion
+        <a
+          (click)="goToSettingsAndOpenFirebaseAnalytics()"
+          title="Open Firebase Analytics Settings"
+          style="cursor: pointer"
+        >
+          Firebase Analytics Settings
+        </a>
+
+        "Enable or disable Firebase Analytics". You can change this setting at
+        any time.
       </p>
     </div>
     }
@@ -32,37 +42,39 @@
   <ion-accordion-group
     #accordionGroup
     (ionChange)="accordionGroupChange($event)"
-    [disabled]="!isAnalyticsEnabled"
   >
-    <app-image-to-text-section
-      [parameters]="imageToTextSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
-    <app-multi-language-translator-section
-      [parameters]="multiLanguageTranslatorSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
-    <app-ionic-setup-section
-      [parameters]="ionicSetupSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
-    <app-qr-code-generator-section
-      [parameters]="qrCodeGeneratorSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
-    <app-backend-functions-section
-      [parameters]="backendFunctionsSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
-    <app-backup-scripts-section
-      [parameters]="backupScriptsSectionParams"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-      (analyticsEvent)="handleAnalyticsEvent($event)"
-    />
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <div *ngIf="!isLoading && selectedLanguage">
+      <app-image-to-text-section
+        [parameters]="imageToTextSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        (analyticsEvent)="handleAnalyticsEvent($event)"
+      />
+      <app-multi-language-translator-section
+        [parameters]="multiLanguageTranslatorSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        (analyticsEvent)="handleAnalyticsEvent($event)"
+      />
+      <app-ionic-setup-section
+        [parameters]="ionicSetupSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        (analyticsEvent)="handleAnalyticsEvent($event)"
+      />
+      <app-qr-code-generator-section
+        [parameters]="qrCodeGeneratorSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        (analyticsEvent)="handleAnalyticsEvent($event)"
+      />
+      <app-backend-functions-section
+        [parameters]="backendFunctionsSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        (analyticsEvent)="handleAnalyticsEvent($event)"
+      />
+      <app-backup-scripts-section
+        [parameters]="backupScriptsSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        (analyticsEvent)="handleAnalyticsEvent($event)"
+      />
+    </div>
   </ion-accordion-group>
 </ion-content>
-
-<app-footer></app-footer>

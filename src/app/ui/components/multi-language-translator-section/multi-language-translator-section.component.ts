@@ -13,10 +13,12 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
+
 import { APPS } from '@app/shared/GitHubConstants';
 import { MultipleLanguageTranslatorSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceComponent } from '../open-source/open-source.component';
+import { Tab } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-multi-language-translator-section',
@@ -42,6 +44,7 @@ export class MultiLanguageTranslatorSectionComponent {
   private readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: MultipleLanguageTranslatorSectionParameters;
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
@@ -54,6 +57,7 @@ export class MultiLanguageTranslatorSectionComponent {
     'https://github.com/zoechbauer/z-control-multi-language-translator';
   webAppUrl = 'https://z-control-translator.web.app';
   selectedSubAccordion: string = '';
+  Tab = Tab;
 
   get showBackendFunctionsInfo(): boolean {
     return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
@@ -114,6 +118,6 @@ export class MultiLanguageTranslatorSectionComponent {
   }
 
   get privacyPolicyLink() {
-    return ['/privacy', 'multi-language-translator', 'en'];
+    return ['/privacy', 'multi-language-translator', this.parameters?.appSectionParameters?.selectedLanguage || 'en'];
   }
 }

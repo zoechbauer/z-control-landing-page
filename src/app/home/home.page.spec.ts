@@ -1,14 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
-import { of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HomePage } from './home.page';
 import { UtilsService } from '../services/utils.service';
 import { APPS } from '../shared/GitHubConstants';
-import { createTranslateServiceMock } from '../testing/translate-service.mock';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { createUtilsServiceMock } from '@testing/utils-service.mock';
+import { Tab } from '../shared/enums';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -24,34 +32,26 @@ describe('HomePage', () => {
     );
     firebaseAnalyticsServiceSpy.enabled$ = of(false);
 
-    localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', [
-      'getAnalyticsConsent',
-    ]);
+    localStorageServiceSpy = jasmine.createSpyObj(
+      'LocalStorageService',
+      [
+        'saveSelectedLanguage',
+        'loadSelectedOrDefaultLanguage',
+        'getAnalyticsConsent',
+      ],
+      {
+        selectedLanguage$: of('de'),
+      },
+    );
 
     const activatedRouteSpy = jasmine.createSpyObj('ActivatedRoute', [], {
       snapshot: { params: {} },
       params: jasmine.createSpyObj('Observable', ['subscribe']),
     });
 
-    const logoClickedSub = new Subject<boolean>();
-    const _isSmallScreen = false;
-    utilsServiceMock = {
-      get isSmallScreen() {
-        return _isSmallScreen;
-      },
-      isShowIonTabBar: false,
-      navigateToTab: jasmine.createSpy('navigateToTab'),
-      showOrHideIonTabBar: jasmine.createSpy('showOrHideIonTabBar'),
-      onLogoClicked: jasmine
-        .createSpy('onLogoClicked')
-        .and.returnValue(logoClickedSub.next(true)),
-      openHelpModal: jasmine
-        .createSpy('openHelpModal')
-        .and.returnValue(Promise.resolve()),
+    utilsServiceMock = createUtilsServiceMock({
       navigateToTabWithParams: jasmine.createSpy('navigateToTabWithParams'),
-      logoClickedSub,
-      logoClicked$: logoClickedSub.asObservable(),
-    };
+    });
 
     TestBed.configureTestingModule({
       imports: [HomePage],
@@ -73,9 +73,15 @@ describe('HomePage', () => {
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    utilsServiceMock.logoClicked$ = of(false);
   }));
+
+  afterEach(() => {
+    document.querySelectorAll('ion-tab-bar').forEach((el) => el.remove());
+    if (fixture) {
+      fixture.destroy();
+    }
+    TestBed.resetTestingModule();
+  });
 
   describe('Class logic', () => {
     it('should create', () => {
@@ -89,11 +95,29 @@ describe('HomePage', () => {
 
         component.handleAnalyticsEvent({ eventName, params });
 
-        expect((component as any).fa.logEvent).toHaveBeenCalledWith(
+        expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
           eventName,
           params,
         );
       });
+    });
+
+    describe('goToSettingsAndOpenFirebaseAnalytics', () => {
+      it('should call navigateToTabWithParams and emit logoClickedSub', fakeAsync(() => {
+        const nextSpy = spyOn(
+          utilsServiceMock.openFirebaseAnalyticsSub,
+          'next',
+        );
+        component.goToSettingsAndOpenFirebaseAnalytics();
+        tick(500);
+
+        expect(utilsServiceMock.navigateToTabWithParams).toHaveBeenCalledWith(
+          Tab.Settings,
+          { open: 'firebase-analytics' },
+        );
+
+        expect(nextSpy).toHaveBeenCalledWith(true);
+      }));
     });
 
     describe('accordionGroupChange', () => {
@@ -222,23 +246,6 @@ describe('HomePage', () => {
           '.welcome-info .feature',
         );
         expect(welcomeInfo).toBeFalsy();
-      });
-    });
-
-    describe('Open footer', () => {
-      it('should render the footer component', () => {
-        const footerElement = fixture.nativeElement.querySelector('app-footer');
-        expect(footerElement).toBeTruthy();
-      });
-
-      it('should open footer if logo is clicked', () => {
-        (utilsServiceMock.logoClickedSub as Subject<boolean>).next(true);
-        fixture.detectChanges();
-
-        const footerElement = fixture.nativeElement.querySelector(
-          '.footer-details.expanded',
-        );
-        expect(footerElement).toBeTruthy();
       });
     });
 

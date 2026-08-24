@@ -3,12 +3,20 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PrivacyPolicyAccordionComponent } from './privacy-policy-accordion.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { ActivatedRoute } from '@angular/router';
 
 describe('PrivacyPolicyAccordionComponent', () => {
   let component: PrivacyPolicyAccordionComponent;
   let fixture: ComponentFixture<PrivacyPolicyAccordionComponent>;
+  let activatedRouteSpy: any;
 
   beforeEach(async () => {
+    activatedRouteSpy = {
+      snapshot: {
+        queryParams: {},
+      },
+    };
+
     await TestBed.configureTestingModule({
       imports: [PrivacyPolicyAccordionComponent],
       providers: [
@@ -16,6 +24,7 @@ describe('PrivacyPolicyAccordionComponent', () => {
           provide: TranslateService,
           useValue: createTranslateServiceMock(),
         },
+        { provide: ActivatedRoute, useValue: activatedRouteSpy },
       ],
     }).compileComponents();
 

@@ -36,9 +36,10 @@ export class HeaderComponent {
   readonly utilsService = inject(UtilsService);
 
   @Input() currentTab!: Tab;
+  @Input() showBackButton: boolean = false;
+
   LogoType = LogoType;
   Tab = Tab;
-  showBackButton: boolean = false;
 
   get isLargeScreen(): boolean {
     return !this.utilsService.isSmallScreen;
@@ -78,6 +79,8 @@ export class HeaderComponent {
   }
 
   goBack(event: Event) {
-    this.utilsService.backButtonClickedSub.next(true);
+    event.preventDefault();
+    event.stopPropagation();
+    this.utilsService.navigateToTab(this.currentTab);
   }
 }

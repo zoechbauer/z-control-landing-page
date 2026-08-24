@@ -53,11 +53,6 @@ export class PrivacyService {
       languages: ['en', 'de'],
       description: 'Standard privacy policy for z-control Landing Page App',
     },
-    {
-      type: 'premium',
-      languages: ['en', 'de'],
-      description: 'Privacy policy for premium features (future)',
-    },
   ];
 
   /**
@@ -91,13 +86,6 @@ export class PrivacyService {
       })),
       catchError(() => of(null)),
     );
-  }
-
-  /**
-   * Get default policy (qr-code-generator/en) for landing page
-   */
-  getDefaultPolicy(): Observable<PrivacyPolicy | null> {
-    return this.getPolicy('qr-code-generator', 'en');
   }
 
   /**
@@ -142,6 +130,6 @@ export class PrivacyService {
       },
     };
 
-    return titles[type]?.[language] || 'Privacy Policy';
+    return titles[type]?.[language] || 'Unknown Privacy Policy';
   }
 }

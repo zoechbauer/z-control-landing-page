@@ -25,7 +25,9 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
       'openChangelog',
       'openMarkdownDoc',
     ]);
+
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
+    
     activatedRouteSpy = {
       snapshot: {
         queryParams: {},

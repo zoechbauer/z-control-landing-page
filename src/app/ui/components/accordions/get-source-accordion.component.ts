@@ -25,5 +25,6 @@ export class GetSourceAccordionComponent {
 
   @Input() lang!: string;
   @Input() appName!: string;
+  @Input() disableAccordion = true;
 
 }

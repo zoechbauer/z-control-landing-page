@@ -13,11 +13,12 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
+
 import { APPS } from '@app/shared/GitHubConstants';
 import { QrCodeGeneratorSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceComponent } from '../open-source/open-source.component';
-
+import { Tab } from 'src/app/shared/enums';
 @Component({
   selector: 'app-qr-code-generator-section',
   templateUrl: './qr-code-generator-section.component.html',
@@ -42,7 +43,7 @@ export class QrCodeGeneratorSectionComponent {
   private readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: QrCodeGeneratorSectionParameters;
-
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
@@ -54,6 +55,7 @@ export class QrCodeGeneratorSectionComponent {
   sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
   webAppUrl = 'https://z-control-qr-code.web.app';
   selectedSubAccordion: string = '';
+  Tab = Tab;
 
   onDownloadNative() {
     globalThis.window.open(this.nativeDownloadUrl, '_blank');
@@ -110,6 +112,10 @@ export class QrCodeGeneratorSectionComponent {
   }
 
   get privacyPolicyLink() {
-    return ['/privacy', 'qr-code-generator', 'en'];
+    return [
+      '/privacy',
+      'qr-code-generator',
+      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+    ];
   }
 }

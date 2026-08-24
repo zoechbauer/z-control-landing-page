@@ -17,6 +17,8 @@ import { PrivacyPolicyAccordionComponent } from '../ui/components/accordions/pri
 import { FeedbackAccordionComponent } from '../ui/components/accordions/feedback-accordion.component';
 import { LanguageAccordionComponent } from '../ui/components/accordions/language-accordion.component';
 import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
+import { GetGithubAnalyticsAccordionComponent } from '../ui/components/accordions/get-github-analytics-accordion.component';
+import { FirebaseAnalyticsAccordionComponent } from '../ui/components/accordions/firebase-analytics-accordion.component';
 
 @Component({
   selector: 'app-language-accordion',
@@ -74,6 +76,20 @@ class MockGetSourceAccordionComponent {
 })
 class MockSpinnerComponent {}
 
+@Component({
+  selector: 'app-get-github-analytics-accordion',
+  template: '',
+  standalone: true,
+})
+class MockGetGithubAnalyticsAccordionComponent {}
+
+@Component({
+  selector: 'app-firebase-analytics-accordion',
+  template: '',
+  standalone: true,
+})
+class MockFirebaseAnalyticsAccordionComponent {}
+
 describe('SettingsPage', () => {
   let component: SettingsPage;
   let fixture: ComponentFixture<SettingsPage>;
@@ -92,6 +108,7 @@ describe('SettingsPage', () => {
       {
         isNative: false,
         logoClicked$: EMPTY,
+        openFirebaseAnalytics$: EMPTY,
       },
     );
 
@@ -152,6 +169,8 @@ describe('SettingsPage', () => {
             ChangeLogAccordionComponent,
             GetSourceAccordionComponent,
             SpinnerComponent,
+            GetGithubAnalyticsAccordionComponent,
+            FirebaseAnalyticsAccordionComponent,
           ],
         },
         add: {
@@ -162,6 +181,8 @@ describe('SettingsPage', () => {
             MockChangeLogAccordionComponent,
             MockGetSourceAccordionComponent,
             MockSpinnerComponent,
+            MockGetGithubAnalyticsAccordionComponent,
+            MockFirebaseAnalyticsAccordionComponent,
           ],
         },
       })
@@ -176,25 +197,68 @@ describe('SettingsPage', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should show version info', () => {
-      (environment as any).version = {
-        major: 1,
-        minor: 0,
-        date: '2026-04-01',
-      };
-
-      const versionInfo = component.versionInfo;
-
-      expect(versionInfo).toBeDefined();
-      expect(typeof versionInfo).toBe('string');
-      expect(versionInfo).toContain('1.0 (2026-04-01)');
-    });
-
     it('should open changelog', () => {
       const openChangelogSpy = utilsServiceSpy.openChangelog;
       component.openChangelog();
       expect(openChangelogSpy).toHaveBeenCalled();
     });
+
+    describe('versionInfo', () => {
+        it('should format versionInfo correctly when values exist', () => {
+          const versionInfo = component.versionInfo;
+
+          expect(versionInfo).toMatch(
+            /^Version \d+\.\d+ \(\d{4}-\d{2}-\d{2}\)$/,
+          );
+        });
+
+        it('should return version unknown when major is missing', () => {
+          const versionString = (component as any).getVersionString({
+            minor: 1,
+            date: '2024-01-01',
+          });
+          expect(versionString).toBe(
+            'Version unknown (missing version information)',
+          );
+        });
+        it('should not return version unknown when major or minor is 0', () => {
+          let versionString = (component as any).getVersionString({
+            major: 0,
+            minor: 1,
+            date: '2024-01-01',
+          });
+          expect(versionString)
+            .withContext('major version 0')
+            .toBe('Version 0.1 (2024-01-01)');
+
+          versionString = (component as any).getVersionString({
+            major: 1,
+            minor: 0,
+            date: '2024-01-01',
+          });
+          expect(versionString)
+            .withContext('minor version 0')
+            .toBe('Version 1.0 (2024-01-01)');
+        });
+
+        it('should return version unknown when date is invalid', () => {
+          const versionString = (component as any).getVersionString({
+            major: 1,
+            minor: 1,
+            date: 'YYYY-MM-DD',
+          });
+          expect(versionString).toBe(
+            'Version unknown (missing version information)',
+          );
+        });
+
+        it('should return version unknown when no environment version is provided', () => {
+          const versionString = (component as any).getVersionString({});
+          expect(versionString).toBe(
+            'Version unknown (missing version information)',
+          );
+        });
+      });
 
     describe('accordion behavior', () => {
       it('should set openAccordion to null and showAllAccordions to true when showAll is called', () => {
@@ -266,6 +330,11 @@ describe('SettingsPage', () => {
       it('should open feedback accordion when logo is clicked', () => {
         (component as any).openFeedbackAccordion();
         expect(component.openAccordion).toBe('z-control');
+      });
+
+      it('should open Firebase analytics accordion when firebase analytics button is clicked', () => {
+        (component as any).openFirebaseAnalyticsAccordion();
+        expect(component.openAccordion).toBe('firebase-analytics');
       });
     });
 
@@ -373,6 +442,24 @@ describe('SettingsPage', () => {
         expect(component.selectedLanguage).toBe('en');
       });
 
+      it('should subscribe to openFirebaseAnalytics$ and open firebase analytics accordion', () => {
+        const openFirebaseAnalytics$ = new EventEmitter<void>();
+        Object.defineProperty(utilsServiceSpy, 'openFirebaseAnalytics$', {
+          get: () => openFirebaseAnalytics$.asObservable(),
+        });
+
+        const openFirebaseAnalyticsAccordionSpy = spyOn(
+          component as any,
+          'openFirebaseAnalyticsAccordion',
+        );
+
+        (component as any).setupSubscriptions();
+
+        openFirebaseAnalytics$.emit();
+
+        expect(openFirebaseAnalyticsAccordionSpy).toHaveBeenCalled();
+      });
+
       it('should subscribe to logoClicked$ and open feedback accordion', () => {
         const logoClicked$ = new EventEmitter<void>();
         Object.defineProperty(utilsServiceSpy, 'logoClicked$', {
@@ -408,24 +495,16 @@ describe('SettingsPage', () => {
       const feedback = fixture.nativeElement.querySelector(
         'app-feedback-accordion',
       ) as HTMLElement;
-      const stats = fixture.nativeElement.querySelector(
-        'app-get-statistics-accordion',
-      ) as HTMLElement;
 
       expect(language).toBeTruthy();
       expect(feedback).toBeTruthy();
-      expect(stats).toBeTruthy();
 
       // Mock components have empty templates.
       expect(language.innerHTML.trim()).toBe('');
       expect(feedback.innerHTML.trim()).toBe('');
-      expect(stats.innerHTML.trim()).toBe('');
 
       // Real child templates would render these markers.
       expect(fixture.nativeElement.querySelector('.notes')).toBeNull();
-      expect(
-        fixture.nativeElement.querySelector('.user-statistics-overview'),
-      ).toBeNull();
     });
 
     describe('loading spinner', () => {

@@ -19,13 +19,6 @@
       "GO_BACK": "Zurück"
     }
   },
-  "------ footer page": "-------",
-  "FOOTER": {
-    "COUNTRY": "Österreich",
-    "TOOLTIP": {
-      "CONTACT_SUPPORT": "Kontaktieren Sie den Support von z-control per Mail"
-    }
-  },
   "------ tabs page": "-------",
   "TABS": {
     "MAIN": "Apps & Tools",
@@ -35,7 +28,11 @@
   "------ main page": "-------",
   "MAIN": {
     "CARD": {
-      "TITLE": "z-control Landing Page"
+      "TITLE": "z-control Apps & Tools"
+    },
+    "WELCOME": {
+      "TITLE": "Willkommen bei z-control",
+      "DESCRIPTION": "z-control bietet innovative Open Source Lösungen & Tools für Entwickler, Unternehmen und Privatpersonen. Alle Apps & Tools sind kostenlos und können ohne Registrierung genutzt werden."
     }
   },
 
@@ -65,7 +62,27 @@
     },
     "FEEDBACK": {
       "ACCORDION": "Feedback an z-control senden",
-      "SEPARATOR": "Feedback"
+      "SEPARATOR": "Feedback",
+      "Z-CONTROL-DESCRIPTION": "Innovative Open Source Lösungen & Tools",
+      "ALWAYS_FREE": "Immer kostenlos",
+      "COUNTRY": "Österreich",
+      "TOOLTIP": {
+        "CONTACT_SUPPORT": "Kontaktieren Sie den Support von z-control per Mail"
+      }
+    },
+    "FIREBASE_ANALYTICS": {
+      "ACCORDION": "Firebase Analytics aktivieren oder deaktivieren",
+      "ENABLE_ANALYTICS": "Firebase Analytics aktivieren",
+      "DISABLE_ANALYTICS": "Firebase Analytics deaktivieren",
+      "TOOLTIPS": {
+        "ANALYTICS_BUTTON": "Firebase Analytics aktivieren oder deaktivieren"
+      }
+    },
+    "GITHUB_ANALYTICS": {
+      "ACCORDION": "GitHub Statistiken der z-control Apps & Tools",
+      "TOOLTIPS": {
+        "OPEN_DASHBOARD": "z-control GitHub Statistik Dashboard öffnen"
+      }
     },
     "PRIVACY": {
       "ACCORDION": "Datenschutz-Bestimmungen",

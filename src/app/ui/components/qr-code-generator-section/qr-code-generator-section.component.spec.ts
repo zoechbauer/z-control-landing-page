@@ -25,7 +25,9 @@ describe('QrCodeGeneratorSectionComponent', () => {
       'openChangelog',
       'openMarkdownDoc',
     ]);
+
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
+    
     activatedRouteSpy = {
       snapshot: {
         queryParams: {},

@@ -5,7 +5,7 @@ import { IonContent, IonicModule } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 
 import { environment } from '@env/environment';
-import { LogoType, Tab, ToastAnchor } from '../shared/enums';
+import { LogoType, Tab } from '../shared/enums';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UtilsService } from '../services/utils.service';
 import { HeaderComponent } from '../ui/components/header/header.component';
@@ -16,12 +16,18 @@ import { GetSourceAccordionComponent } from '../ui/components/accordions/get-sou
 import { PrivacyPolicyAccordionComponent } from '../ui/components/accordions/privacy-policy-accordion.component';
 import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
 import { APPS } from '../shared/GitHubConstants';
+import { GetGithubAnalyticsAccordionComponent } from '../ui/components/accordions/get-github-analytics-accordion.component';
+import { FirebaseAnalyticsAccordionComponent } from '../ui/components/accordions/firebase-analytics-accordion.component';
+import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
+import { ToastService } from '../services/toast-EN.service';
 
 // Single source of truth for settings accordion IDs.
 // Add new accordion IDs here when extending the settings page.
 const ACCORDION_VALUES = [
   'language',
   'z-control',
+  'firebase-analytics',
+  'github-analytics',
   'privacy-policy',
   'change-log',
   'get-source',
@@ -43,12 +49,16 @@ type AccordionValue = (typeof ACCORDION_VALUES)[number];
     GetSourceAccordionComponent,
     PrivacyPolicyAccordionComponent,
     SpinnerComponent,
+    GetGithubAnalyticsAccordionComponent,
+    FirebaseAnalyticsAccordionComponent,
   ],
 })
 export class SettingsPage implements OnInit, OnDestroy {
   translate = inject(TranslateService);
-  readonly localStorage = inject(LocalStorageService);
+  readonly localStorageService = inject(LocalStorageService);
   readonly utilsService = inject(UtilsService);
+  private readonly fa = inject(FirebaseAnalyticsService);
+  private readonly toastService = inject(ToastService);
 
   private readonly validAccordionValues = new Set<AccordionValue>(
     ACCORDION_VALUES,
@@ -60,19 +70,40 @@ export class SettingsPage implements OnInit, OnDestroy {
   LogoType = LogoType;
   Tab = Tab;
   isLoading = true;
+  isAnalyticsEnabled = false;
   private readonly subscriptions: Subscription[] = [];
 
   get appName(): string {
     return environment.app.name;
   }
 
+  /**
+   * The version information is retrieved from the environment configuration.
+   * It constructs a string in the format "Version X.Y (Date)" where X is the major version, Y is the minor version,
+   * and Date is the release date.
+   * If any of the version information is missing, it returns "Version unknown (missing version information)".
+   */
   get versionInfo() {
-    const { major, minor, date } = {
-      major: environment.version.major,
-      minor: environment.version.minor,
-      date: environment.version.date,
-    };
-    return `${major}.${minor} (${date})`;
+    return this.getVersionString(environment.version);
+  }
+
+  private getVersionString(version: {
+    major?: number;
+    minor?: number;
+    date?: string;
+  }): string {
+    const { major, minor, date } = version;
+    if (
+      major === undefined ||
+      major < 0 ||
+      minor === undefined ||
+      minor < 0 ||
+      !date ||
+      Number.isNaN(Date.parse(date))
+    ) {
+      return 'Version unknown (missing version information)';
+    }
+    return `Version ${major}.${minor} (${date})`;
   }
 
   ngOnInit() {
@@ -81,11 +112,12 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.setupSubscriptions();
     this.utilsService.showOrHideIonTabBar();
     this.setupEventListeners();
+    this.getIsAnalyticsAllowed();
   }
 
   private setupSubscriptions() {
     this.subscriptions.push(
-      this.localStorage.selectedLanguage$.subscribe(async (lang) => {
+      this.localStorageService.selectedLanguage$.subscribe(async (lang) => {
         this.translate.use(lang);
         this.translate.setDefaultLang(lang);
         this.selectedLanguage = lang;
@@ -93,6 +125,12 @@ export class SettingsPage implements OnInit, OnDestroy {
       }),
       this.utilsService.logoClicked$.subscribe(() => {
         this.openFeedbackAccordion();
+      }),
+      this.utilsService.openFirebaseAnalytics$.subscribe(() => {
+        this.openFirebaseAnalyticsAccordion();
+      }),
+      this.fa.enabled$.subscribe((enabled) => {
+        this.isAnalyticsEnabled = enabled;
       }),
     );
   }
@@ -102,10 +140,20 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.openAccordion = 'z-control';
   }
 
+  private openFirebaseAnalyticsAccordion() {
+    this.openAccordion = null;
+    this.openAccordion = 'firebase-analytics';
+  }
+
   private setupEventListeners(): void {
     window.addEventListener('resize', () => {
       this.utilsService.showOrHideIonTabBar();
     });
+  }
+
+  private async getIsAnalyticsAllowed() {
+    this.isAnalyticsEnabled =
+      (await this.localStorageService.getAnalyticsConsent()) === true;
   }
 
   onAccordionGroupChange(event: CustomEvent, content: IonContent) {
@@ -117,7 +165,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     }
 
     this.openAccordion = value;
-    this.showAllAccordions = this.openAccordion == null;
+    this.showAllAccordions = this.openAccordion === null;
   }
 
   private normalizeAccordionValue(
@@ -141,7 +189,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   onLanguageChange(event: any) {
     const lang = event.detail?.value;
     if (lang) {
-      this.localStorage.saveSelectedLanguage(lang);
+      this.localStorageService.saveSelectedLanguage(lang);
       this.translate.use(lang);
       this.translate.setDefaultLang(lang);
     }
@@ -153,14 +201,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   async openChangelog() {
-    // TODO add this code from footer
-    // if (!this.isAnalyticsEnabled) {
-    //   this.toastService.showToast(
-    //     'Analytics is disabled. Please enable it to view the Release Notes.',
-    //     ToastAnchor.MainPage,
-    //   );
-    //   return;
-    // }
     const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
     this.utilsService.openChangelog(selectedAccordion);
   }

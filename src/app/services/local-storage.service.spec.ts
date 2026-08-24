@@ -10,15 +10,21 @@ describe('LocalStorageService', () => {
   let service: LocalStorageService;
   let storageSpy: jasmine.SpyObj<Storage>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
-
-  const createTranslateServiceSpy = () =>
-    jasmine.createSpyObj('TranslateService', ['get', 'setDefaultLang', 'use']);
-  const modalControllerSpy = jasmine.createSpyObj('ModalController', [
-    'dismiss',
-    'create',
-  ]);
+  let createTranslateServiceSpy: any;
 
   beforeEach(() => {
+    createTranslateServiceSpy = () =>
+      jasmine.createSpyObj('TranslateService', [
+        'get',
+        'setDefaultLang',
+        'use',
+      ]);
+
+    const modalControllerSpy = jasmine.createSpyObj('ModalController', [
+      'dismiss',
+      'create',
+    ]);
+
     storageSpy = jasmine.createSpyObj('Storage', [
       'create',
       'get',
@@ -109,10 +115,6 @@ describe('LocalStorageService', () => {
     });
   });
 
-
-
-
-
   describe('initialize services', () => {
     it('should initialize the storage', async () => {
       const translateServiceSpy = createTranslateServiceSpy();
@@ -155,6 +157,53 @@ describe('LocalStorageService', () => {
       expect(translateServiceSpy.setDefaultLang).not.toHaveBeenCalled();
       expect(translateServiceSpy.use).not.toHaveBeenCalled();
     });
+  });
 
+  describe('Analytics Consent', () => {
+    it('should set analytics consent to true', async () => {
+      await service.setAnalyticsConsent(true);
+      expect(storageSpy.set).toHaveBeenCalledWith('analytics_enabled', true);
+    });
+
+    it('should set analytics consent to false', async () => {
+      await service.setAnalyticsConsent(false);
+      expect(storageSpy.set).toHaveBeenCalledWith('analytics_enabled', false);
+    });
+
+    it('should log error if setting analytics consent fails', async () => {
+      spyOn(console, 'error');
+      const error = new Error('some error');
+      storageSpy.set.and.returnValue(Promise.reject(error));
+      await service.setAnalyticsConsent(true);
+
+      expect(console.error).toHaveBeenCalledWith(
+        'Failed to save analytics consent to localStorage:',
+        error,
+      );
+    });
+
+    it('should return stored analytics consent value', async () => {
+      storageSpy.get.and.returnValue(Promise.resolve(true));
+      const consent = await service.getAnalyticsConsent();
+      expect(consent).toBe(true);
+    });
+
+    it('should return false if no stored analytics consent value', async () => {
+      storageSpy.get.and.returnValue(Promise.resolve(null));
+      const consent = await service.getAnalyticsConsent();
+      expect(consent).toBe(false);
+    });
+
+    it('should return false and log error if stored analytics consent value fails', async () => {
+      spyOn(console, 'error');
+      storageSpy.get.and.returnValue(Promise.reject(new Error('some error')));
+      const consent = await service.getAnalyticsConsent();
+
+      expect(consent).toBe(false);
+      expect(console.error).toHaveBeenCalledWith(
+        'Failed to retrieve analytics consent from localStorage:',
+        new Error('some error'),
+      );
+    });
   });
 });

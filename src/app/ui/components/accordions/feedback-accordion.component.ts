@@ -1,12 +1,15 @@
 import { Component, Input, inject } from '@angular/core';
-import { IonAccordion, IonItem, IonLabel } from '@ionic/angular/standalone';
+import {
+  IonAccordion,
+  IonItem,
+  IonLabel,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 import { LogoType } from '@app/shared/enums';
 import { LogoComponent } from '../logo/logo.component';
-import { FooterComponent } from '../footer/footer.component';
-
 @Component({
   selector: 'app-feedback-accordion',
   templateUrl: './feedback-accordion.component.html',
@@ -15,9 +18,9 @@ import { FooterComponent } from '../footer/footer.component';
     IonAccordion,
     IonItem,
     IonLabel,
+    IonIcon,
     TranslateModule,
     LogoComponent,
-    FooterComponent,
     CommonModule,
   ],
 })
@@ -25,5 +28,11 @@ export class FeedbackAccordionComponent {
   translate = inject(TranslateService);
 
   @Input() lang!: string;
+  @Input() disableAccordion = true;
+
   LogoType = LogoType;
+
+  get mailtoLink() {
+    return 'mailto:zcontrol.app.qr@gmail.com?subject=z-control%20Landing%20Page%20Feedback';
+  }
 }

@@ -2,18 +2,30 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
-## [4.0] - 2026-08-18
+## [4.0] - 2026-08-24
 
 ### ✨ New Features
 
 - Redesigned header to match other z-control apps, improving brand consistency and visual alignment across the z-control family.
-- Added a Settings component to the Landing Page that centralizes user preferences. The component is adapted from the z-control Image To Text app and includes English and German translations. Note: accordion content currently contains copied placeholder values and should be reviewed and updated.
+- Added a Settings component to the Landing Page that centralizes user preferences. The component is adapted from the z-control Image To Text app and includes English and German translations.
 - Added a Help page (ported from the z-control Ionic Setup app); removed the Quota Management and Mobile App sections that were not applicable.
 - Added translation files for the new Settings and Help pages (English and German).
+- Moved the Github Analytics caller from the footer to a new accordion with explaining text, improving discoverability and user understanding of the feature.
+
+### 🚀 Improvements
+
+- Moved footer content into a dedicated "Feedback" accordion and removed the redundant footer component.
+- Accordions on the home page and settings are visually disabled when analytics are turned off, clarifying feature availability.
+- Removed the "switch language" button from the privacy policy page; language selection is now available via the Language accordion dropdown.
+- Analytics toggle now displays "Enable Firebase analytics" when disabled and "Disable Firebase analytics" when enabled. The toggle uses the standard color scheme and is placed in its own accordion for clearer context.
 
 ### 🔧 Internal
 
-- Added follow-up tracking in `TODO-list-open-activities.md`.
+- Added follow-up tracking entries to `TODO-list-open-activities.md`.
+- Refactored the Landing Page app to improve code quality and maintainability.
+- Added unit tests for `privacy-viewer.component.ts` and `privacy.service.ts`; removed `privacy-debug.component.ts`.
+- Fixed timer handling and adjusted spy configurations in test beforeEach blocks to prevent side effects.
+- Updated unit tests for the new Settings and Help pages (355 specs, 99.34% statement coverage) to validate behavior and functionality.
 
 ## [3.8] - 2026-08-15
 
@@ -198,7 +210,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 - Added a loading indicator to the GitHub Analytics section so users get feedback while data is loading.
 - Standardized the app name across all `What's New` accordions for better consistency and clarity.
 - Added the app name to the changelog dialog title when opening `What's New` for better context.
-  
+
 ### 🐛 Fixes
 
 - Fixed an issue where app parameters were not updated correctly when switching accordions, ensuring the correct changelog is shown for each app.

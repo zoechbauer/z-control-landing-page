@@ -40,7 +40,7 @@ export class BackendFunctionsSectionComponent {
   private readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: BackendFunctionsSectionParameters;
-
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
@@ -62,9 +62,10 @@ export class BackendFunctionsSectionComponent {
   }
 
   async onOpenGitHubAnalytics() {
+    const lang = this.parameters?.appSectionParameters.selectedLanguage || 'en';
     const selectedAccordion = this.parameters?.appSectionParameters
       .selectedAccordion as keyof typeof APPS;
-    await this.utilsService.openGitHubAnalytics(selectedAccordion);
+    await this.utilsService.openGitHubAnalytics(selectedAccordion, lang);
   }
 
   async onOpenChangelog() {

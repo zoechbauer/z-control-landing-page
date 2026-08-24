@@ -1,0 +1,97 @@
+<ion-accordion value="github-analytics" id="github-analytics" [disabled]="disableAccordion">
+  <ion-item slot="header" color="light" class="accordion-margin-top">
+    <ion-label>{{
+      "SETTINGS.GITHUB_ANALYTICS.ACCORDION" | translate
+    }}</ion-label>
+  </ion-item>
+  <div class="ion-padding" slot="content" title="">
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <div>
+        <div>
+          We track GitHub repository activity and contributions to better
+          understand engagement and development trends across z&#8209;control
+          projects.
+        </div>
+        <p>
+          GitHub's <strong>Insights &gt; Traffic</strong> section provides
+          useful metrics, but only for the last 14 days. To keep a longer-term
+          record, Firebase Functions periodically collect these metrics and
+          store them in Firestore. This lets us analyze GitHub activity over
+          time instead of being limited to GitHub's built-in reporting window.
+        </p>
+        <p>
+          From the dashboard, you can quickly open the GitHub source code for
+          each repository.
+        </p>
+        <div class="ion-text-center">
+          <ion-button
+            class="github-dashboard-button check-analytics-button"
+            data-test="github-analytics"
+            (click)="onOpenGitHubAnalytics(lang)"
+            (keydown.enter)="onOpenGitHubAnalytics(lang)"
+            title="{{
+              isAnalyticsEnabled
+                ? ('SETTINGS.GITHUB_ANALYTICS.TOOLTIPS.OPEN_DASHBOARD'
+                  | translate)
+                : ''
+            }}"
+            size="small"
+          >
+            <ion-icon name="logo-github" slot="start"></ion-icon>
+            z-control<br />
+            GitHub Analytics Dashboard
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <div>
+        <div>
+          Wir erfassen die Aktivität und Beiträge von GitHub-Repositories, um
+          das Engagement und Entwicklungstrends in den z&#8209;control-Projekten
+          besser zu verstehen.
+        </div>
+        <p>
+          Der Bereich <strong>Insights &gt; Traffic</strong> von GitHub liefert
+          nützliche Kennzahlen, allerdings nur für die letzten 14 Tage. Um einen
+          längerfristigen Verlauf zu erhalten, sammeln Firebase Functions diese
+          Kennzahlen periodisch und speichern sie in Firestore. So können wir
+          GitHub-Aktivitäten über längere Zeiträume analysieren, statt auf das
+          von GitHub vorgegebene Berichtsfenster beschränkt zu sein.
+        </p>
+        <p>
+          Über das Dashboard können Sie den Quellcode jedes Repositories schnell
+          in GitHub öffnen.
+        </p>
+        <div class="ion-text-center">
+          <ion-button
+            class="github-dashboard-button check-analytics-button"
+            data-test="github-analytics"
+            (click)="onOpenGitHubAnalytics(lang)"
+            (keydown.enter)="onOpenGitHubAnalytics(lang)"
+            title="{{
+              isAnalyticsEnabled
+                ? ('SETTINGS.GITHUB_ANALYTICS.TOOLTIPS.OPEN_DASHBOARD'
+                  | translate)
+                : ''
+            }}"
+            size="small"
+          >
+            <ion-icon name="logo-github" slot="start"></ion-icon>
+            z-control<br />
+            GitHub Analytics Dashboard
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ion-accordion>

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Source Code & GitHub Analytics</ion-title>
+    <ion-title>GitHub Analytics & Source Code</ion-title>
     <ion-buttons slot="end">
       <ion-button
         fill="clear"
@@ -16,20 +16,49 @@
 <ion-content class="ion-padding">
   <div *ngIf="isLoading" class="loading-container">
     <ion-spinner name="circular"></ion-spinner>
-    <p>Loading GitHub analytics data...</p>
+    <p>{{ "APP.LOADING_DATA" | translate }}</p>
   </div>
   <main>
-    <h4>GitHub Analytics Data</h4>
-    <p>
-      These analytics offer insights into the views and clones of my GitHub
-      repositories over time. Since GitHub only supplies data for the past 14
-      days, the <strong>statistics are updated daily at 18:00</strong> to
-      preserve a historical record.
-    </p>
-    <p>
-      The data is fetched using the GitHub REST API and stored in Firestore for
-      historical tracking.
-    </p>
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <p>
+        These analytics provide
+        <strong
+          >views and clones for z-control GitHub repositories over time</strong
+        >. Because GitHub only exposes traffic data for the last 14 days, the
+        statistics are saved daily at <strong>18:00</strong> to maintain a
+        historical record.
+      </p>
+      <p>
+        Click any row to open the repository and view detailed statistics and a
+        link to its GitHub source code.
+      </p>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <p></p>
+      <p>
+        Diese Analysen zeigen die
+        <strong
+          >"Views" und "Clones" für z-control GitHub-Repositories im
+          Zeitverlauf</strong
+        >. Da GitHub Verkehrsdaten nur für die letzten 14 Tage bereitstellt,
+        werden die Statistiken täglich um <strong>18:00</strong> gespeichert, um
+        eine historische Aufzeichnung zu führen.
+      </p>
+      <p>
+        Klicken Sie auf eine Zeile, um das Repository zu öffnen und detaillierte
+        Statistiken sowie einen Link zum GitHub-Quellcode anzuzeigen.
+      </p>
+    </ng-template>
+
     <section
       [hidden]="!(isMobilePortrait && isRepoOpened)"
       class="orientation-info"
@@ -61,9 +90,7 @@
                     <table aria-hidden="true" class="repo-table">
                       <tr>
                         <td class="repo">{{ item.repo }}</td>
-                        <td class="count">
-                          {{ getLastAccessDays(item) }} d
-                        </td>
+                        <td class="count">{{ getLastAccessDays(item) }} d</td>
                         <td class="count">
                           {{ item.views.count }}
                         </td>

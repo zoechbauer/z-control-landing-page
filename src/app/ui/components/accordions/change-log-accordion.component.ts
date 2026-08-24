@@ -5,7 +5,7 @@ import {
   IonItem,
   IonLabel,
   IonIcon,
-  IonButton
+  IonButton,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -20,7 +20,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     IonIcon,
     IonButton,
     TranslateModule,
-    CommonModule
+    CommonModule,
   ],
 })
 export class ChangeLogAccordionComponent {
@@ -29,6 +29,7 @@ export class ChangeLogAccordionComponent {
   @Input() versionInfo!: string;
   @Input() lang!: string;
   @Input() appName!: string;
+  @Input() disableAccordion = true;
   @Output() ionChange = new EventEmitter<void>();
 
   openChangelog() {

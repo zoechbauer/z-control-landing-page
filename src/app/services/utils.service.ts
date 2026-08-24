@@ -37,12 +37,18 @@ export class UtilsService {
    */
   backButtonClicked$ = this.backButtonClickedSub.asObservable();
   /**
-   * Emits when the workflow step changes (used for navigation triggers).
+   * Emits when the Firebase Analytics link is clicked (used for navigation triggers).
    */
+  openFirebaseAnalyticsSub = new Subject<boolean>();
+  /**
+   * Observable for open Firebase Analytics events.
+   */
+  openFirebaseAnalytics$ = this.openFirebaseAnalyticsSub.asObservable();
 
   /**
    * Emits an event when the logo is clicked,
-   * which is used to trigger actions such as opening the footer.
+   * which is used to trigger actions such as 
+   * opening the feedback accordion in settings page.
    */
   onLogoClicked() {
     this.logoClickedSub.next(true);
@@ -159,8 +165,9 @@ export class UtilsService {
   /**
    * Opens a modal displaying the GitHub Analytics Dashboard for the selected accordion section.
    * @param selectedAccordion The selected accordion section for which to display the GitHub Analytics Dashboard.
+   * @param lang The language to use in the GitHub Analytics modal.
    */
-  async openGitHubAnalytics(selectedAccordion: keyof typeof APPS) {
+  async openGitHubAnalytics(selectedAccordion: keyof typeof APPS, lang: string) {
     this.handleAnalyticsEvent({
       eventName: 'view_github_analytics',
       params: {
@@ -170,6 +177,9 @@ export class UtilsService {
     });
     const modal = await this.modalController.create({
       component: GithubAnalyticsComponent,
+      componentProps: {
+        lang: lang,
+      },
       cssClass: 'github-analytics-modal',
     });
 

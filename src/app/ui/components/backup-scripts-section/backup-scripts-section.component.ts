@@ -39,7 +39,7 @@ export class BackupScriptsSectionComponent {
   private readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: BackupScriptsSectionParameters;
-
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
   @Output() analyticsEvent = new EventEmitter<{
     eventName: string;
