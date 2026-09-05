@@ -1,0 +1,56 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div class="feedback-info">
+    <div>We value your feedback!</div>
+    <p>
+      <ion-icon name="mail"></ion-icon>
+      If you would like to send us feedback, questions, or suggestions to the
+      <i>{{ appName }}</i
+      >, simply click on the
+      <a
+        href="{{ getMailToLinkForFeedback() }}"
+        title="Opens your email program with the recipient and subject pre-filled."
+      >
+        z-control Support
+      </a>
+      link.
+    </p>
+    <p>
+      Your email program will open automatically, allowing you to contact us
+      directly.
+    </p>
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div class="feedback-info">
+    <div>Wir schätzen Ihr Feedback!</div>
+    <p>
+      <ion-icon name="mail"></ion-icon>
+      Wenn Sie uns Feedback, Fragen oder Vorschläge zu der
+      <i>{{ appName }}</i> senden möchten, klicken Sie einfach auf diesen
+      Link:<br />
+      <a
+        href="{{ getMailToLinkForFeedback() }}"
+        title="Öffnet Ihr E-Mail-Programm mit vorausgefülltem Empfänger und Betreff."
+      >
+        z-control Support
+      </a>
+    </p>
+    <p>
+      Ihr E-Mail-Programm öffnet sich automatisch, sodass Sie uns direkt
+      kontaktieren können.
+    </p>
+  </div>
+</ng-template>

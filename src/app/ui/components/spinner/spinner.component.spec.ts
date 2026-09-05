@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SpinnerComponent } from './spinner.component';
+import { SpinnerComponent } from '@ui/components/spinner/spinner.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 describe('SpinnerComponent', () => {

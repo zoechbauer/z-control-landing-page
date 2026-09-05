@@ -30,9 +30,21 @@
     "CARD": {
       "TITLE": "z-control Apps & Tools"
     },
-    "WELCOME": {
-      "TITLE": "Willkommen bei z-control",
-      "DESCRIPTION": "z-control bietet innovative Open Source Lösungen & Tools für Entwickler, Unternehmen und Privatpersonen. Alle Apps & Tools sind kostenlos und können ohne Registrierung genutzt werden."
+    "ACCORDION": {
+      "USES_BACKEND": "verwendet z-control Backend Functions",
+      "IS_BACKEND": "Backend Functions werden von markierten Apps mit Symbol verwendet",
+      "WHAT_DOES_APP_DO": "Was macht die App",
+      "FEEDBACK_APPS": "Feedback an z-control senden",
+      "PRIVACY_POLICY_APPS": "Datenschutzerklärung anzeigen",
+      "CHANGE_LOG_APPS": "Änderungsprotokoll anzeigen",
+      "DOWNLOAD_MOBILE_APP": "Android App installieren",
+      "SHOW_SOURCE_CODE": "Quellcode in GitHub ansehen",
+      "INLINE_HELP": "Inline-Hilfe anzeigen",
+      "LIMITATIONS_AND_QUOTAS": "Welche Einschränkungen und Kontingente gibt es?",
+      "DIFFERENCES_WEB_MOBILE": "Unterschiede zwischen der Web- und der Mobile-App",
+      "START_WEB_APP": "Probieren Sie die Web‑App aus (keine Installation erforderlich)",
+      "KEY_FEATURES": "Hauptmerkmale",
+      "HOW_TO_USE": "Wie man die App benutzt"
     }
   },
 
@@ -76,6 +88,10 @@
       "DISABLE_ANALYTICS": "Firebase Analytics deaktivieren",
       "TOOLTIPS": {
         "ANALYTICS_BUTTON": "Firebase Analytics aktivieren oder deaktivieren"
+      },
+      "TOAST": {
+        "ANALYTICS_ENABLED": "Firebase Analytics wurde aktiviert.",
+        "ANALYTICS_DISABLED": "Firebase Analytics wurde deaktiviert."
       }
     },
     "GITHUB_ANALYTICS": {

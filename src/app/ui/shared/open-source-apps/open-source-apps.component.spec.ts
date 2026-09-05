@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { OpenSourceComponent } from './open-source.component';
+import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
 
-describe('OpenSourceComponent', () => {
-  let component: OpenSourceComponent;
-  let fixture: ComponentFixture<OpenSourceComponent>;
+describe('OpenSourceAppsComponent', () => {
+  let component: OpenSourceAppsComponent;
+  let fixture: ComponentFixture<OpenSourceAppsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [IonicModule.forRoot(), OpenSourceComponent],
+      imports: [IonicModule.forRoot(), OpenSourceAppsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OpenSourceComponent);
+    fixture = TestBed.createComponent(OpenSourceAppsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

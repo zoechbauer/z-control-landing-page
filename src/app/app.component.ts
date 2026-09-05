@@ -9,7 +9,7 @@ import { filter, Subscription } from 'rxjs';
 import { FirebaseAnalyticsService } from './services/firebase-analytics.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { UtilsService } from './services/utils.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',

@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 
 import { UtilsService } from './utils.service';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
-import { APPS } from '@app/shared/GitHubConstants';
-import { GithubAnalyticsComponent } from '../ui/components/github-analytics/github-analytics.component';
-import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
-import { Tab } from '../shared/enums';
-import { environment } from 'src/environments/environment';
-import { HelpModalComponent } from '../ui/components/get-help/get-help.component';
-import { Capacitor } from '@capacitor/core';
+import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
+import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
+import { HelpModalComponent } from '@ui/components/get-help/get-help.component';
+import { Tab } from '@app/shared/enums';
+import { environment } from '@env/environment';
 
 describe('UtilsService', () => {
   let service: UtilsService;
@@ -47,7 +47,7 @@ describe('UtilsService', () => {
     };
 
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
-    
+
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
       'FirebaseAnalyticsService',
       ['logEvent'],
@@ -165,14 +165,14 @@ describe('UtilsService', () => {
         );
 
         await service.openGitHubAnalytics(
-          APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
+          APP_KEYS.BACKEND_FUNCTIONS as AppKey,
           lang,
         );
 
         expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
           'view_github_analytics',
           {
-            called_from: APPS.BACKEND_FUNCTIONS,
+            called_from: APP_KEYS.BACKEND_FUNCTIONS,
             app: APPS.LANDING_PAGE,
           },
         );
@@ -210,14 +210,15 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog(APPS.LANDING_PAGE as keyof typeof APPS);
+      await service.openChangelog(APP_KEYS.LANDING_PAGE as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath:
             'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
-          title: `Changelog for ${APPS.LANDING_PAGE}`,
+          title1line: `Changelog for ${APPS.LANDING_PAGE}`,
+          title2lines: `Changelog for<br />${APPS.LANDING_PAGE}`,
         },
         cssClass: 'change-log-modal',
       });
@@ -225,7 +226,7 @@ describe('UtilsService', () => {
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'open_changelog',
         {
-          changelog_for: APPS.LANDING_PAGE,
+          changelog_for: APP_KEYS.LANDING_PAGE,
           app: APPS.LANDING_PAGE,
         },
       );
@@ -239,14 +240,15 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog(APPS.IMAGE_TO_TEXT as keyof typeof APPS);
+      await service.openChangelog(APP_KEYS.IMAGE_TO_TEXT as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath:
             'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md',
-          title: `Changelog for ${APPS.IMAGE_TO_TEXT}`,
+          title1line: `Changelog for ${APPS.IMAGE_TO_TEXT}`,
+          title2lines: `Changelog for<br />${APPS.IMAGE_TO_TEXT}`,
         },
         cssClass: 'change-log-modal',
       });
@@ -254,7 +256,7 @@ describe('UtilsService', () => {
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'open_changelog',
         {
-          changelog_for: APPS.IMAGE_TO_TEXT,
+          changelog_for: APP_KEYS.IMAGE_TO_TEXT,
           app: APPS.LANDING_PAGE,
         },
       );
@@ -269,21 +271,22 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog(APPS.BACKEND_FUNCTIONS as keyof typeof APPS);
+      await service.openChangelog(APP_KEYS.BACKEND_FUNCTIONS as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath:
             'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
-          title: `Changelog for ${APPS.BACKEND_FUNCTIONS}`,
+          title1line: `Changelog for ${APPS.BACKEND_FUNCTIONS}`,
+          title2lines: `Changelog for<br />${APPS.BACKEND_FUNCTIONS}`,
         },
         cssClass: 'change-log-modal',
       });
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'open_changelog',
         {
-          changelog_for: APPS.BACKEND_FUNCTIONS,
+          changelog_for: APP_KEYS.BACKEND_FUNCTIONS,
           app: APPS.LANDING_PAGE,
         },
       );
@@ -298,13 +301,14 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog(APPS.IONIC_SETUP as keyof typeof APPS);
+      await service.openChangelog(APP_KEYS.IONIC_SETUP as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md',
-          title: `Changelog for ${APPS.IONIC_SETUP}`,
+          title1line: `Changelog for ${APPS.IONIC_SETUP}`,
+          title2lines: `Changelog for<br />${APPS.IONIC_SETUP}`,
         },
         cssClass: 'change-log-modal',
       });
@@ -312,7 +316,7 @@ describe('UtilsService', () => {
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'open_changelog',
         {
-          changelog_for: APPS.IONIC_SETUP,
+          changelog_for: APP_KEYS.IONIC_SETUP,
           app: APPS.LANDING_PAGE,
         },
       );
@@ -327,13 +331,14 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog(APPS.QR_CODE_GENERATOR as keyof typeof APPS);
+      await service.openChangelog(APP_KEYS.QR_CODE_GENERATOR as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_QR-CODE.md',
-          title: `Changelog for ${APPS.QR_CODE_GENERATOR}`,
+          title1line: `Changelog for ${APPS.QR_CODE_GENERATOR}`,
+          title2lines: `Changelog for<br />${APPS.QR_CODE_GENERATOR}`,
         },
         cssClass: 'change-log-modal',
       });
@@ -341,7 +346,7 @@ describe('UtilsService', () => {
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'open_changelog',
         {
-          changelog_for: APPS.QR_CODE_GENERATOR,
+          changelog_for: APP_KEYS.QR_CODE_GENERATOR,
           app: APPS.LANDING_PAGE,
         },
       );
@@ -356,16 +361,15 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog(
-        APPS.MULTI_LANGUAGE_TRANSLATOR as keyof typeof APPS,
-      );
+      await service.openChangelog(APP_KEYS.MULTI_LANGUAGE_TRANSLATOR as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath:
             'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
-          title: `Changelog for ${APPS.MULTI_LANGUAGE_TRANSLATOR}`,
+          title1line: `Changelog for ${APPS.MULTI_LANGUAGE_TRANSLATOR}`,
+          title2lines: `Changelog for<br />${APPS.MULTI_LANGUAGE_TRANSLATOR}`,
         },
         cssClass: 'change-log-modal',
       });
@@ -373,7 +377,7 @@ describe('UtilsService', () => {
       expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
         'open_changelog',
         {
-          changelog_for: APPS.MULTI_LANGUAGE_TRANSLATOR,
+          changelog_for: APP_KEYS.MULTI_LANGUAGE_TRANSLATOR,
           app: APPS.LANDING_PAGE,
         },
       );
@@ -388,13 +392,14 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openChangelog('UNKNOWN' as keyof typeof APPS);
+      await service.openChangelog('UNKNOWN' as AppKey);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
           fullChangeLogPath: '',
-          title: 'Changelog for UNKNOWN',
+          title1line: 'Changelog for undefined',
+          title2lines: 'Changelog for<br />undefined',
         },
         cssClass: 'change-log-modal',
       });

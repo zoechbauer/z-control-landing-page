@@ -10,9 +10,9 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { UtilsService } from 'src/app/services/utils.service';
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 
 @Component({
   selector: 'app-get-github-analytics-accordion',
@@ -54,7 +54,7 @@ export class GetGithubAnalyticsAccordionComponent implements OnInit, OnDestroy {
   }
 
   async onOpenGitHubAnalytics(lang: string): Promise<void> {
-    const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
+    const selectedAccordion = APP_KEYS.LANDING_PAGE as AppKey;
     await this.utilsService.openGitHubAnalytics(selectedAccordion, lang);
   }
 }

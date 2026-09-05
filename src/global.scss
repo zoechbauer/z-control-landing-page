@@ -301,7 +301,13 @@ ion-card-content {
     }
   }
 
-  // Button wrapper for guaranteed centering
+  .firebase-note {
+    display: flex ;
+    justify-content: center;
+    margin-top: -8px;
+    font-size: .75rem;
+  }
+
   .button-wrapper {
     text-align: center;
     margin: 16px 0;

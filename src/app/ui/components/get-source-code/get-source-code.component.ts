@@ -1,20 +1,30 @@
-import { Component, Input } from '@angular/core';
-import { IonIcon } from '@ionic/angular/standalone';
+import { Component, Input, inject } from '@angular/core';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { LogoComponent } from '../logo/logo.component';
 import { LogoType } from '@app/shared/enums';
+import { AppKey } from '@app/shared/GitHubConstants';
+import { LogoComponent } from '@ui/components/logo/logo.component';
+import { UtilsService } from '@app/services/utils.service';
+import { SourceCodeAppsComponent } from '@ui/shared/source-code-apps/source-code-apps.component';
 @Component({
   selector: 'app-get-source-code',
   templateUrl: './get-source-code.component.html',
   styleUrls: ['./get-source-code.component.scss'],
   standalone: true,
-  imports: [IonIcon, LogoComponent, NgIf, NgTemplateOutlet, TranslateModule],
+  imports: [
+    LogoComponent,
+    NgIf,
+    NgTemplateOutlet,
+    TranslateModule,
+    SourceCodeAppsComponent,
+  ],
 })
 export class GetSourceCodeComponent {
+  readonly utilsService = inject(UtilsService);
+
   @Input() lang!: string;
-  @Input() appName!: string;
+  @Input() appNameKey!: AppKey;
   LogoType = LogoType;
 
 }

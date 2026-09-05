@@ -4,10 +4,10 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { PrivacyService } from './privacy.service';
 import { of, throwError } from 'rxjs';
+
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { PrivacyService } from './privacy.service';
 
 describe('PrivacyService', () => {
   let service: PrivacyService;
@@ -101,13 +101,6 @@ describe('PrivacyService', () => {
             app: jasmine.any(String),
           }),
         );
-        done();
-      });
-    });
-
-    it('should return null for an unknown policy type', (done) => {
-      service.getPolicy('unknown-policy', 'en').subscribe((policy) => {
-        expect(policy).toBeNull();
         done();
       });
     });

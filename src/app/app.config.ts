@@ -27,7 +27,7 @@ import {
 } from '@angular/fire/functions';
 import { provideMarkdown } from 'ngx-markdown';
 
-import { routes } from './app.routes';
+import { routes } from '@app/app.routes';
 import { ServicesModule } from './services.module';
 import { environment } from '@env/environment';
 

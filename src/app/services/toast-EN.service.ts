@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
 import { UtilsService } from './utils.service';
-import { ToastAnchor } from '../shared/enums';
+import { ToastAnchor } from '@app/shared/enums';
 
 @Injectable({
   providedIn: 'root',

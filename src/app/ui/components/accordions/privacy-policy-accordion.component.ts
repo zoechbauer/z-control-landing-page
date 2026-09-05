@@ -3,7 +3,7 @@ import { IonAccordion, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { LogoType } from '@app/shared/enums';
-import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
+import { PrivacyPolicyComponent } from '@ui/components/privacy-policy/privacy-policy.component';
 
 @Component({
   selector: 'app-privacy-policy-accordion',

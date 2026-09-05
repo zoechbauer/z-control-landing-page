@@ -43,6 +43,12 @@ hr {
       text-align: right;
     }
   }
+
+  ion-accordion-group {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    border-top: gray 1px solid;
+  }
 }
 
 .repo-table {

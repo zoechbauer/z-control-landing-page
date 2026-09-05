@@ -9,6 +9,8 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import type { AppKey } from '@app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
 @Component({
   selector: 'app-change-log-accordion',
   templateUrl: './change-log-accordion.component.html',
@@ -24,11 +26,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   ],
 })
 export class ChangeLogAccordionComponent {
-  translate = inject(TranslateService);
+  readonly translate = inject(TranslateService);
+  readonly utilsService = inject(UtilsService);
 
   @Input() versionInfo!: string;
   @Input() lang!: string;
-  @Input() appName!: string;
+  @Input() appNameKey!: AppKey;
   @Input() disableAccordion = true;
   @Output() ionChange = new EventEmitter<void>();
 

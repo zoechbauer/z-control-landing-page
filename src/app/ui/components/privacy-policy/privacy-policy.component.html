@@ -8,28 +8,24 @@
 
 <ng-template #englishTemplate>
   <div class="additional-margin-right">
-    <h5>Collected Data & Purpose</h5>
-    <ul>
-      <li>
-        <strong>Anonymous usage statistics:</strong> We collect anonymous,
-        non‑identifying usage data (e.g. page views, opened sections, button
-        clicks) solely to improve the user experience and for error analysis.
-      </li>
-      <li>
-        <strong>Purpose:</strong> Product improvement, content optimization and
-        debugging.
-      </li>
-    </ul>
     <p>
-      You can find the complete privacy policy on the z&#8209;control website
+      We store anonymous, i.e. non-personal usage data in Google Firebase
+      Analytics.
+    </p>
+    <p>
+      This data is used solely for analyzing usage, improving content, and troubleshooting.
+    </p>
+    <p>
+      The full privacy policy will be displayed when clicking on the
       <a
         [routerLink]="privacyPolicyLink"
-        [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
+        [queryParams]="{ internal: 'true' }"
         title="Read our privacy policy"
       >
         Privacy Policy
         <ion-icon name="open-outline"></ion-icon>
       </a>
+      link.
     </p>
   </div>
 </ng-template>
@@ -38,22 +34,16 @@
 
 <ng-template #germanTemplate>
   <div class="additional-margin-right">
-    <h5>Erhobene Daten & Zweck</h5>
-    <ul>
-      <li>
-        <strong>Anonyme Nutzungsstatistiken:</strong> Wir erfassen anonyme,
-        nicht‑personenbezogene Nutzungsdaten (z. B. Seitenaufrufe, geöffnete
-        Abschnitte, Button‑Klicks), ausschließlich zur Verbesserung der
-        Nutzererfahrung und zur Fehleranalyse.
-      </li>
-      <li>
-        <strong>Zweck:</strong> Analyse der Nutzung, Verbesserung von Inhalten
-        und Fehlerbehebung.
-      </li>
-    </ul>
     <p>
-      Die vollständige Datenschutzerklärung finden Sie auf der z&#8209;control
-      Website
+      Wir speichern anonyme, d.h. keine personenbezogenen Nutzungsdaten in
+      Google Firebase Analytics.
+    </p>
+    <p>
+      Diese Daten werden ausschließlich zur Analyse der Nutzung, Verbesserung von Inhalten und zur
+      Fehlerbehebung verwendet.
+    </p>
+    <p>
+      Die vollständige Datenschutzerklärung sehen Sie, wenn Sie auf den Link
       <a
         [routerLink]="privacyPolicyLink"
         [queryParams]="{ internal: 'true' }"
@@ -62,6 +52,7 @@
         Datenschutzerklärung
         <ion-icon name="open-outline"></ion-icon>
       </a>
+      klicken.
     </p>
   </div>
 </ng-template>

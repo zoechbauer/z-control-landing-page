@@ -9,7 +9,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { TranslateService } from '@ngx-translate/core';
 
-import { HeaderComponent } from './header.component';
+import { HeaderComponent } from '@ui/components/header/header.component';
 import { UtilsService } from '@app/services/utils.service';
 import { Tab } from '@app/shared/enums';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';

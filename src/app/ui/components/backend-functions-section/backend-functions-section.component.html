@@ -1,257 +1,541 @@
-<ion-accordion
-  [disabled]="!isAnalyticsEnabled"
-  value="BF: Backend Functions"
-  title="{{
-    parameters?.appSectionParameters?.currentMainAccordion === 'BF'
-      ? 'Collapse z-control Backend Functions section'
-      : 'Expand z-control Backend Functions section'
-  }}"
+<ng-container
+  *ngIf="
+    this.parameters?.appSectionParameters?.selectedLanguage === 'de';
+    else englishTemplate
+  "
 >
-  <ion-item slot="header" color="light">
-    <img
-      class="z-control-logo"
-      src="assets/icon/z-control-logo-32px.png"
-      alt="z-control Logo"
-    />
-    <ion-label>z-control Backend Functions</ion-label>
-    <ion-icon
-      name="cloud-circle-outline"
-      title="Backend Functions are used by marked Apps with icon"
-    ></ion-icon>
-  </ion-item>
-  <div class="ion-padding" slot="content" title="">
-    <ion-card color="dark">
-      <ion-card-header>
-        <ion-card-title
-          >Shared backend code across z-control apps</ion-card-title
-        >
-      </ion-card-header>
-      <ion-card-content class="summarized-app-content">
-        <p>
-          <strong
-            >z-control Backend Functions is the shared backend repository for
-            z&#8209;control applications.</strong
-          >
-          It contains the canonical backend logic used across multiple apps,
-          including Firebase Cloud Functions, Firestore utilities, and related
-          backend helpers.
-        </p>
-        <h2>✨ Highlights:</h2>
-        <ul>
-          <li>
-            <b>Single source of truth</b><br />for shared backend code across
-            all z&#8209;control apps
-          </li>
-          <li>
-            <b>Separation of Concerns</b><br />
-            Clear separation between frontend and backend responsibilities.
-          </li>
-          <li>
-            <b>Centralized Analytics</b><br />Centralized z-control Github
-            Analytics functions.
-          </li>
-        </ul>
-        <h2>✨ Why this matters:</h2>
-        <ul>
-          <li>Consistent behavior across all z&#8209;control apps.</li>
-          <li>Safer and more predictable deployments.</li>
-        </ul>
-        <h2>✨Documentation:</h2>
-        <div class="button-wrapper documents-buttons-wrapper">
-          <ion-button
-            color="primary"
-            expand="block"
-            (click)="
-              onOpenMarkdownDoc(
-                'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
-              )
-            "
-            (keydown.enter)="
-              onOpenMarkdownDoc(
-                'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
-              )
-            "
-            title="View: Firebase Functions Multi-App Deploy Playbook"
-          >
-            <ion-icon name="document-text" slot="start"></ion-icon>
-            Firebase Functions Multi-App Deploy Playbook
-          </ion-button>
-        </div>
-        <app-open-source></app-open-source>
-      </ion-card-content>
-    </ion-card>
-    <ion-accordion-group (ionChange)="subAccordionChange($event)">
-      <ion-accordion
-        value="BF: Features"
-        title="{{ getAccordionTooltip('BF: Features') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Key Features</ion-label>
-        </ion-item>
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
 
-        <div class="ion-padding accordion-content" slot="content">
-          <ul class="ul-li-disc">
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <ion-accordion
+    [disabled]="!isAnalyticsEnabled"
+    value="BF: Backend Functions"
+    title="{{ getAccordionTooltip('BF', false) }}"
+  >
+    <ion-item slot="header" color="light">
+      <img
+        class="z-control-logo"
+        src="assets/icon/z-control-logo-32px.png"
+        alt="z-control Logo"
+      />
+      <ion-label>z-control Backend Functions</ion-label>
+      <ion-icon
+        name="cloud-circle-outline"
+        title="{{ 'MAIN.ACCORDION.IS_BACKEND' | translate }}"
+      ></ion-icon>
+    </ion-item>
+    <div class="ion-padding" slot="content" title="">
+      <ion-card color="dark">
+        <ion-card-header>
+          <ion-card-title
+            >Shared backend code across z-control apps</ion-card-title
+          >
+        </ion-card-header>
+        <ion-card-content class="summarized-app-content">
+          <p>
+            <strong
+              >z-control Backend Functions is the shared backend repository for
+              z&#8209;control applications.</strong
+            >
+          </p>
+          <p>
+            It contains the canonical backend logic used across multiple apps,
+            including Firebase Cloud Functions, Firestore utilities, and related
+            backend helpers.
+          </p>
+          <h2>✨ Highlights:</h2>
+          <ul>
             <li>
-              Single source of truth for shared backend code across all
-              z-control apps.
+              <b>Single source code, no duplicates</b><br />for shared backend
+              code across all z&#8209;control apps.
             </li>
             <li>
-              Firebase Cloud Functions for API handling, data processing, and
-              Firebase integration.
+              <b>Separation of concerns</b><br />
+              Clear separation between frontend and backend responsibilities.
             </li>
             <li>
-              Quota management to control API usage and help avoid unexpected
-              costs.
-            </li>
-            <li>Unit tests with Vitest and coverage reporting.</li>
-            <li>
-              Documentation for setup, usage, deployment, and development
-              workflows.
+              <b>Centralized analytics</b><br />
+              Centralized z&#8209;control GitHub analytics functions.
             </li>
           </ul>
-        </div>
-      </ion-accordion>
-      <ion-accordion
-        value="BF: How to Use"
-        title="{{ getAccordionTooltip('BF: How to Use') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>How to Use</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <h5>Development workflow</h5>
-          When you need backend changes for a frontend app:
-          <ol>
-            <li>Implement the shared backend change in this repository.</li>
-            <li>Run and verify the backend locally with Firebase emulators.</li>
-            <li>Connect the target frontend app to the emulator backend.</li>
-            <li>Test the frontend/backend integration.</li>
-            <li>Deploy Firebase Functions from this repository only.</li>
-            <li>
-              Deploy the frontend app separately after backend validation.
-            </li>
-          </ol>
-        </div>
-      </ion-accordion>
-      <ion-accordion
-        value="BF: Github Analytics"
-        title="{{ getAccordionTooltip('BF: Github Analytics') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label
-            >GitHub Analytics for z&#8209;control Repositories</ion-label
-          >
-        </ion-item>
+          <h2>✨ Why this matters:</h2>
+          <ul>
+            <li>Consistent behavior across all z&#8209;control apps.</li>
+            <li>Safer and more predictable deployments.</li>
+          </ul>
+          <h2>✨ Documentation:</h2>
+          <div class="button-wrapper documents-buttons-wrapper">
+            <ion-button
+              color="primary"
+              expand="block"
+              (click)="
+                onOpenMarkdownDoc(
+                  'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
+                )
+              "
+              (keydown.enter)="
+                onOpenMarkdownDoc(
+                  'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
+                )
+              "
+              title="View document: Multi-App Firebase Functions Playbook"
+            >
+              <ion-icon name="document-text" slot="start"></ion-icon>
+              Multi-App Firebase Functions Playbook
+            </ion-button>
+          </div>
+          <app-open-source-apps
+            [selectedLanguage]="
+              parameters!.appSectionParameters.selectedLanguage
+            "
+          ></app-open-source-apps>
+        </ion-card-content>
+      </ion-card>
+      <ion-accordion-group (ionChange)="subAccordionChange($event)">
+        <ion-accordion
+          value="BF: Features"
+          title="{{ getAccordionTooltip('BF: Features') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.KEY_FEATURES" | translate
+            }}</ion-label>
+          </ion-item>
 
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>
-            We track GitHub repository activity and contributions to better
-            understand engagement and development trends across z&#8209;control
-            projects.
-          </div>
-          <p>
-            GitHub's <strong>Insights &gt; Traffic</strong> section provides
-            useful metrics, but only for the last 14 days. To keep a longer-term
-            record, Firebase Functions periodically collect these metrics and
-            store them in Firestore. This lets us analyze GitHub activity over
-            time instead of being limited to GitHub's built-in reporting window.
-          </p>
-          <p>
-            From the dashboard, you can quickly open the GitHub source code for
-            each repository.
-          </p>
-          <div class="button-wrapper">
-            <ion-button
-              (click)="onOpenGitHubAnalytics()"
-              (keydown.enter)="onOpenGitHubAnalytics()"
-              color="primary"
-              expand="block"
-              class="download-button"
-              title="Open z-control GitHub Analytics Dashboard"
-              aria-label="Open z-control GitHub Analytics Dashboard"
-            >
-              <ion-icon name="logo-github" slot="start"></ion-icon>
-              Open GitHub Analytics Dashboard
-            </ion-button>
-          </div>
-        </div>
-      </ion-accordion>
-      <ion-accordion
-        value="BF: Feedback"
-        title="{{ getAccordionTooltip('BF: Feedback') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Send Us Feedback</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>We value your feedback!</div>
-          <p>
-            <ion-icon name="mail"></ion-icon>
-            If you have questions, suggestions, or comments, please contact us
-            at
-            <a
-              href="{{ getMailToLinkForFeedback() }}"
-              title="Open your email client with recipient and subject prefilled."
-            >
-              z-control Support
-            </a>.
-          </p>
-        </div>
-      </ion-accordion>
-      <ion-accordion
-        value="BF: Changelog"
-        title="{{ getAccordionTooltip('BF: Changelog') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>What's new? (Changelog)</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>
-            <ion-icon name="checkmark"></ion-icon>
-            All new and updated functions, improvements, and bug fixes for the
-            <i>z-control Backend Functions</i> repository are tracked in the
-          </div>
-          <ion-button
-            fill="clear"
-            size="small"
-            (click)="onOpenChangelog()"
-            (keydown.enter)="onOpenChangelog()"
-            class="change-log-button"
-            title="Open change log — grouped by category and sorted newest first"
+          <div
+            class="ion-padding accordion-content feature-list"
+            slot="content"
           >
-            <ion-icon name="list" slot="start"></ion-icon>
-            Change Log
-          </ion-button>
-        </div>
-      </ion-accordion>
-      <ion-accordion
-        value="BF: Get Source Code"
-        title="{{ getAccordionTooltip('BF: Get Source Code') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Get the Source Code</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>
-            The z-control Backend Functions are open source and available on
-            <i>GitHub</i>. Review, contribute, or adapt them for your own use.
+            <ul [ngClass]="{ 'ul-li-disc': !this.utilsService.isSmallScreen }">
+              <li>
+                Single source code, no duplicates for shared backend code across
+                all z&#8209;control apps.
+              </li>
+              <li>
+                Firebase Cloud Functions for API handling, data processing, and
+                Firebase integration.
+              </li>
+              <li>
+                Quota management to control API usage and help avoid unexpected
+                costs.
+              </li>
+              <li>Unit tests with Vitest and coverage reporting.</li>
+              <li>
+                Documentation for setup, usage, deployment, and development
+                workflows.
+              </li>
+            </ul>
           </div>
-          <div class="button-wrapper">
+        </ion-accordion>
+        <ion-accordion
+          value="BF: How to Use"
+          title="{{ getAccordionTooltip('BF: How to Use') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{ "MAIN.ACCORDION.HOW_TO_USE" | translate }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <h5>Development workflow</h5>
+            <p>When you need backend changes for a frontend app:</p>
+            <ol class="how-to-use-list">
+              <li>Implement the shared backend change in this repository.</li>
+              <li>
+                Run and verify the backend locally with the Firebase emulators.
+              </li>
+              <li>Connect the target frontend app to the emulator backend.</li>
+              <li>Test the frontend/backend integration.</li>
+              <li>Deploy Firebase Functions from this repository only.</li>
+              <li>
+                Deploy the frontend app separately after backend validation.
+              </li>
+            </ol>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Github Analytics"
+          title="{{ getAccordionTooltip('BF: Github Analytics') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label
+              >GitHub Analytics for z&#8209;control repositories</ion-label
+            >
+          </ion-item>
+
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <p>
+              We track GitHub repository activity and contributions to better
+              understand engagement and development trends across
+              z&#8209;control projects.
+            </p>
+            <p>
+              GitHub's <strong>Insights &gt; Traffic</strong> section provides
+              useful metrics, but only for the last 14 days. To keep a
+              longer-term record, Firebase Functions periodically collect these
+              metrics and store them in Firestore. This lets us analyze GitHub
+              activity over time instead of being limited to GitHub's built-in
+              reporting window.
+            </p>
+            <p>
+              From the dashboard, you can quickly open the GitHub source code
+              for each repository.
+            </p>
+            <div class="button-wrapper">
+              <ion-button
+                (click)="onOpenGitHubAnalytics()"
+                (keydown.enter)="onOpenGitHubAnalytics()"
+                color="primary"
+                expand="block"
+                class="download-button"
+                title="Open the z-control GitHub Analytics Dashboard"
+                aria-label="Open the z-control GitHub Analytics Dashboard"
+              >
+                <ion-icon name="logo-github" slot="start"></ion-icon>
+                Open GitHub Analytics Dashboard
+              </ion-button>
+            </div>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Feedback"
+          title="{{ getAccordionTooltip('BF: Feedback') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.FEEDBACK_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-feedback-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-feedback-apps>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Changelog"
+          title="{{ getAccordionTooltip('BF: Changelog') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.CHANGE_LOG_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-change-log-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-change-log-apps>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Get Source Code"
+          title="{{ getAccordionTooltip('BF: Get Source Code') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.SHOW_SOURCE_CODE" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-source-code-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-source-code-apps>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </div>
+  </ion-accordion>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+<ng-template #germanTemplate>
+  <ion-accordion
+    [disabled]="!isAnalyticsEnabled"
+    value="BF: Backend Functions"
+    title="{{ getAccordionTooltip('BF', false) }}"
+  >
+    <ion-item slot="header" color="light">
+      <img
+        class="z-control-logo"
+        src="assets/icon/z-control-logo-32px.png"
+        alt="z-control Logo"
+      />
+      <ion-label>z-control Backend Functions</ion-label>
+      <ion-icon
+        name="cloud-circle-outline"
+        title="{{ 'MAIN.ACCORDION.IS_BACKEND' | translate }}"
+      ></ion-icon>
+    </ion-item>
+    <div class="ion-padding" slot="content" title="">
+      <ion-card color="dark">
+        <ion-card-header>
+          <ion-card-title
+            >Gemeinsamer Backend-Code für z-control-Apps</ion-card-title
+          >
+        </ion-card-header>
+        <ion-card-content class="summarized-app-content">
+          <p>
+            <strong
+              >z-control Backend Functions ist das gemeinsame Backend-Repository
+              für z&#8209;control-Anwendungen.</strong
+            >
+          </p>
+          <p>
+            Es enthält die Backend-Logik, die als verbindliche Standardversion
+            für mehrere Apps dient, darunter Firebase Cloud Functions,
+            Firestore-Hilfsfunktionen und verwandte Backend-Werkzeuge.
+          </p>
+          <h2>✨ Highlights:</h2>
+          <ul>
+            <li>
+              <b>Einziger Source Code, keine Dubletten</b><br />für geteilten
+              Backend-Code über alle z&#8209;control-Apps hinweg.
+            </li>
+            <li>
+              <b>Trennung der Zuständigkeiten</b><br />
+              Klare Trennung zwischen Frontend- und
+              Backend-Verantwortlichkeiten.
+            </li>
+            <li>
+              <b>Zentralisierte Analysen</b><br />
+              Zentralisierte z&#8209;control GitHub-Analysefunktionen.
+            </li>
+          </ul>
+          <h2>✨ Warum das wichtig ist:</h2>
+          <ul>
+            <li>
+              Konsistentes Verhalten über alle z&#8209;control-Apps hinweg.
+            </li>
+            <li>Sicherere und besser planbare Deployments.</li>
+          </ul>
+          <h2>✨ Dokumentation (englisch):</h2>
+          <p class="documentation-note">
+            <ion-icon name="language-outline"></ion-icon>
+            Die Dokumentation ist nur auf Englisch verfügbar.
+          </p>
+          <div class="button-wrapper documents-buttons-wrapper">
             <ion-button
-              (click)="onGetSourceCode()"
-              (keydown.enter)="onGetSourceCode()"
               color="primary"
               expand="block"
-              class="download-button"
-              title="Open z-control Backend Functions GitHub repository in a new tab"
-              aria-label="Open Backend Functions GitHub repository (opens in a new tab)"
+              (click)="
+                onOpenMarkdownDoc(
+                  'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
+                )
+              "
+              (keydown.enter)="
+                onOpenMarkdownDoc(
+                  'assets/app-docs/backend-functions-app/firebase-functions-multi-app-deploy-playbook.md'
+                )
+              "
+              title="Dokument anzeigen: Multi-App Firebase Functions Playbook"
             >
-              <ion-icon name="logo-github" slot="start"></ion-icon>
-              Get Backend Functions Source
+              <ion-icon name="document-text" slot="start"></ion-icon>
+              Multi-App Firebase Functions Playbook
             </ion-button>
           </div>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-  </div>
-</ion-accordion>
+          <app-open-source-apps
+            [selectedLanguage]="
+              parameters!.appSectionParameters.selectedLanguage
+            "
+          ></app-open-source-apps>
+        </ion-card-content>
+      </ion-card>
+      <ion-accordion-group (ionChange)="subAccordionChange($event)">
+        <ion-accordion
+          value="BF: Features"
+          title="{{ getAccordionTooltip('BF: Features') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.KEY_FEATURES" | translate
+            }}</ion-label>
+          </ion-item>
+
+          <div
+            class="ion-padding accordion-content feature-list"
+            slot="content"
+          >
+            <ul [ngClass]="{ 'ul-li-disc': !this.utilsService.isSmallScreen }">
+              <li>
+                Einziger Source Code, keine Dubletten für geteilten Backend-Code
+                über alle z&#8209;control-Apps hinweg.
+              </li>
+              <li>
+                Firebase Cloud Functions für API-Verarbeitung, Datenverarbeitung
+                und Firebase-Integration.
+              </li>
+              <li>
+                Kontingent-Verwaltung zur Kontrolle der API-Nutzung und zur
+                Vermeidung unerwarteter Kosten.
+              </li>
+              <li>Unit-Tests mit Vitest und "coverage" Berichten.</li>
+              <li>
+                Dokumentation für Einrichtung, Verwendung, Deployment und
+                Entwicklungsworkflows.
+              </li>
+            </ul>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: How to Use"
+          title="{{ getAccordionTooltip('BF: How to Use') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{ "MAIN.ACCORDION.HOW_TO_USE" | translate }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <h5>Entwicklungs-Workflow</h5>
+            <p>Wenn Sie Backend-Änderungen für eine Frontend-App benötigen:</p>
+            <ol class="how-to-use-list">
+              <li>
+                Implementieren Sie die geteilte Backend-Änderung in diesem
+                Repository.
+              </li>
+              <li>
+                Führen Sie das Backend lokal mit den Firebase-Emulatoren aus und
+                verifizieren Sie es.
+              </li>
+              <li>
+                Verbinden Sie die Ziel-Frontend-App mit dem Emulator-Backend.
+              </li>
+              <li>Testen Sie die Frontend-/Backend-Integration.</li>
+              <li>
+                Deployen Sie Firebase Functions ausschließlich aus diesem
+                Repository.
+              </li>
+              <li>
+                Deployen Sie die Frontend-App erst nach der Backend-Validierung
+                separat.
+              </li>
+            </ol>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Github Analytics"
+          title="{{ getAccordionTooltip('BF: Github Analytics') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label
+              >GitHub-Analysen für z&#8209;control-Repositories</ion-label
+            >
+          </ion-item>
+
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <p>
+              Wir erfassen die Aktivität und Beiträge in GitHub-Repositories, um
+              das Engagement und die Entwicklungstrends in
+              z&#8209;control-Projekten besser zu verstehen.
+            </p>
+            <p>
+              Der Bereich <strong>Insights &gt; Traffic</strong> von GitHub
+              liefert nützliche Kennzahlen, jedoch nur für die letzten 14 Tage.
+              Um einen längerfristigen Verlauf zu speichern, sammeln Firebase
+              Functions diese Kennzahlen regelmäßig und speichern sie in
+              Firestore. So lässt sich die GitHub-Aktivität über die Zeit
+              analysieren, anstatt auf das integrierte GitHub-Berichtsfenster
+              beschränkt zu sein.
+            </p>
+            <p>
+              Über das Dashboard können Sie den GitHub-Quellcode für jedes
+              Repository schnell öffnen.
+            </p>
+            <div class="button-wrapper">
+              <ion-button
+                (click)="onOpenGitHubAnalytics()"
+                (keydown.enter)="onOpenGitHubAnalytics()"
+                color="primary"
+                expand="block"
+                class="download-button"
+                title="z-control GitHub-Analyse-Dashboard öffnen"
+                aria-label="z-control GitHub-Analyse-Dashboard öffnen"
+              >
+                <ion-icon name="logo-github" slot="start"></ion-icon>
+                GitHub-Analyse-Dashboard öffnen
+              </ion-button>
+            </div>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Feedback"
+          title="{{ getAccordionTooltip('BF: Feedback') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.FEEDBACK_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-feedback-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-feedback-apps>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Changelog"
+          title="{{ getAccordionTooltip('BF: Changelog') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.CHANGE_LOG_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-change-log-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-change-log-apps>
+          </div>
+        </ion-accordion>
+        <ion-accordion
+          value="BF: Get Source Code"
+          title="{{ getAccordionTooltip('BF: Get Source Code') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.SHOW_SOURCE_CODE" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-source-code-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-source-code-apps>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </div>
+  </ion-accordion>
+</ng-template>

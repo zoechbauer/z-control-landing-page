@@ -4,7 +4,7 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { LogoComponent } from '../logo/logo.component';
+import { LogoComponent } from '@ui/components/logo/logo.component';
 import { LogoType, Tab } from '@app/shared/enums';
 
 @Component({

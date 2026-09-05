@@ -8,8 +8,10 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
+import type { AppKey } from '@app/shared/GitHubConstants';
 import { LogoType } from '@app/shared/enums';
-import { LogoComponent } from '../logo/logo.component';
+import { LogoComponent } from '@ui/components/logo/logo.component';
+import { UtilsService } from '@app/services/utils.service';
 @Component({
   selector: 'app-feedback-accordion',
   templateUrl: './feedback-accordion.component.html',
@@ -25,10 +27,12 @@ import { LogoComponent } from '../logo/logo.component';
   ],
 })
 export class FeedbackAccordionComponent {
-  translate = inject(TranslateService);
+  readonly translate = inject(TranslateService);
+  readonly utilsService = inject(UtilsService);
 
   @Input() lang!: string;
   @Input() disableAccordion = true;
+  @Input() appNameKey!: AppKey;
 
   LogoType = LogoType;
 

@@ -1,0 +1,90 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div class="welcome-info">
+    <h2>Welcome to our Applications & Tools</h2>
+    @if (isAnalyticsEnabled) {
+      <div class="feature">
+        <p>Discover our open-source solutions & tools.</p>
+        <p>
+          All apps & tools are free to use and available without registration.
+        </p>
+      </div>
+    }
+    @if (!isAnalyticsEnabled) {
+      <div class="analytics-not-enabled">
+        <p class="ion-text-left">
+          <b>Important:</b> Enable anonymous analytics to explore our apps and
+          tools.
+        </p>
+        <p class="ion-text-left ion-padding-top">
+          We collect only non-identifying usage data to improve our services.
+        </p>
+        <p class="ion-text-left ion-padding-top">
+          You can enable Analytics by clicking the link
+          <a
+            (click)="onAnalyticsEnabledClick()"
+            title="Open Firebase Analytics Settings"
+            style="cursor: pointer"
+          >
+            Firebase Analytics Settings
+          </a>
+
+          You can change this setting at any time in Settings under "Enable or
+          disable Firebase Analytics."
+        </p>
+      </div>
+    }
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div class="welcome-info">
+    <h2>Willkommen bei z-control</h2>
+    @if (isAnalyticsEnabled) {
+      <div class="feature">
+        <p>Entdecken Sie unsere Open Source Lösungen & Tools.</p>
+        <p>
+          Alle Apps & Tools sind kostenlos und können ohne Registrierung genutzt
+          werden.
+        </p>
+      </div>
+    }
+    @if (!isAnalyticsEnabled) {
+      <div class="analytics-not-enabled">
+        <p class="ion-text-left">
+          <b>Wichtig:</b> Aktivieren Sie anonyme Analysen. Sie können dann
+          unsere Apps und Werkzeugen erkunden.
+        </p>
+        <p class="ion-text-left ion-padding-top">
+          Wir erheben keine personenbezogenen oder identifizierenden
+          Nutzungsdaten, wir sammeln nur anonyme Daten um unsere Dienste zu
+          verbessern.
+        </p>
+        <p class="ion-text-left ion-padding-top">
+          Analytics können Sie über den Link
+          <a
+            (click)="onAnalyticsEnabledClick()"
+            title="Firebase Analytics-Einstellungen öffnen"
+            style="cursor: pointer"
+          >
+            Firebase Analytics-Einstellungen
+          </a>
+
+          aktivieren. Sie können diese Einstellung jederzeit in den
+          Einstellungen ändern.
+        </p>
+      </div>
+    }
+  </div>
+</ng-template>

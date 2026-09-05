@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
-import { APPS } from '@app/shared/GitHubConstants';
-import { BackupScriptsSectionComponent } from './backup-scripts-section.component';
+import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { BackupScriptsSectionComponent } from '@ui/components/backup-scripts-section/backup-scripts-section.component';
+import { createTranslateServiceMock } from 'src/app/testing/translate-service.mock';
 
 describe('BackupScriptsSectionComponent', () => {
   let component: BackupScriptsSectionComponent;
@@ -11,19 +13,47 @@ describe('BackupScriptsSectionComponent', () => {
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
   beforeEach(waitForAsync(() => {
-    utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
-      'openGitHubAnalytics',
+utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'openChangelog',
       'openMarkdownDoc',
+      'getAccordionTooltip',
+      'getSubAccordionTooltip',
+      'getWebLinkPathForAccordion',
+      'getDisplayNameForAccordion'
     ]);
+    utilsServiceSpy.getSubAccordionTooltip.and.callFake(
+  (_lang: string, selectedSubAccordion: string, value: string) => {
+    if (selectedSubAccordion === value) {
+      return `Collapse ${value}`;
+    }
+    return `Expand ${value}`;
+  },
+);
 
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), BackupScriptsSectionComponent],
-      providers: [{ provide: UtilsService, useValue: utilsServiceSpy }],
+      providers: [
+        {
+          provide: TranslateService,
+          useValue: createTranslateServiceMock(),
+        },
+        { provide: UtilsService, useValue: utilsServiceSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BackupScriptsSectionComponent);
     component = fixture.componentInstance;
+    
+    const selectedAccordion = APP_KEYS.BACKUP_SCRIPTS as AppKey;
+    component.parameters = {
+      appSectionParameters: {
+        selectedAccordion: selectedAccordion,
+        currentMainAccordion: selectedAccordion,
+        selectedLanguage: 'en',
+      },
+    } as any;
+    component.selectedSubAccordion = selectedAccordion;
+
     fixture.detectChanges();
   }));
 
@@ -31,33 +61,10 @@ describe('BackupScriptsSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should open source code URL in a new tab and emit analytics event when onGetSourceCode is called', () => {
-    spyOn(globalThis.window, 'open');
-    spyOn(component.analyticsEvent, 'emit');
-    component.onGetSourceCode();
-
-    expect(globalThis.window.open).toHaveBeenCalledWith(
-      component.sourceCodeUrl,
-      '_blank',
-    );
-    expect(component.analyticsEvent.emit).toHaveBeenCalledWith({
-      eventName: 'get_source_code',
-      params: {
-        repo: APPS.BACKUP_SCRIPTS,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  });
-
   it('should call utilsService.openMarkdownDoc when onOpenMarkdownDoc is called', async () => {
     const docPath = 'assets/some-folder/test-doc.md';
     await component.onOpenMarkdownDoc(docPath);
     expect(utilsServiceSpy.openMarkdownDoc).toHaveBeenCalledWith(docPath);
-  });
-
-  it('should return correct mailto link for feedback', () => {
-    const expectedMailToLink = `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKUP_SCRIPTS}%20Feedback`;
-    expect(component.getMailToLinkForFeedback()).toBe(expectedMailToLink);
   });
 
   it('should return correct tooltip for subaccordion', () => {

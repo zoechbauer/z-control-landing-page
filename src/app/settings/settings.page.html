@@ -6,7 +6,7 @@
   class="settings-content"
   [class.landscape]="!utilsService.isPortrait"
 >
-  <h6 class="ion-text-center">{{ appName }}</h6>
+  <h6 class="ion-text-center">{{ displayLandingPageAppName }}</h6>
   <ion-accordion-group
     [value]="openAccordion"
     (ionValueChange)="onAccordionGroupChange($event, content)"
@@ -58,6 +58,7 @@
       <app-feedback-accordion
         [lang]="selectedLanguage"
         [disableAccordion]="!isAnalyticsEnabled"
+        [appNameKey]="LANDING_PAGE_APP_KEY"
       ></app-feedback-accordion>
       } @case ('github-analytics') {
       <app-get-github-analytics-accordion
@@ -72,14 +73,14 @@
       <app-change-log-accordion
         [lang]="selectedLanguage"
         [versionInfo]="versionInfo"
-        [appName]="appName"
+        [appNameKey]="LANDING_PAGE_APP_KEY"
         [disableAccordion]="!isAnalyticsEnabled"
         (ionChange)="openChangelog()"
       ></app-change-log-accordion>
       } @case ('get-source') {
       <app-get-source-accordion
         [lang]="selectedLanguage"
-        [appName]="appName"
+        [appNameKey]="LANDING_PAGE_APP_KEY"
         [disableAccordion]="!isAnalyticsEnabled"
       ></app-get-source-accordion>
       } }
@@ -88,8 +89,9 @@
         <ion-button
           (click)="showAll()"
           (keydown.enter)="showAll()"
-          expand="block"
           title="{{ 'SETTINGS.TOOLTIPS.CLOSE_ACCORDION' | translate }}"
+          size="small"
+          fill="clear"
         >
           <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
           {{ 'SETTINGS.BUTTON.CLOSE' | translate }}

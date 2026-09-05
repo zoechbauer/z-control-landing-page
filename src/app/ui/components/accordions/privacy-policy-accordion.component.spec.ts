@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
-
-import { PrivacyPolicyAccordionComponent } from './privacy-policy-accordion.component';
-import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { ActivatedRoute } from '@angular/router';
+
+import { PrivacyPolicyAccordionComponent } from '@ui/components/accordions/privacy-policy-accordion.component';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 describe('PrivacyPolicyAccordionComponent', () => {
   let component: PrivacyPolicyAccordionComponent;

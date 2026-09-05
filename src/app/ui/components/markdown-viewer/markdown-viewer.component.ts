@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ViewChild,
+} from '@angular/core';
+import { UtilsService } from 'src/app/services/utils.service';
 import { MarkdownComponent } from 'ngx-markdown';
 import {
   IonContent,
@@ -11,6 +18,7 @@ import {
   IonIcon,
   ModalController,
 } from '@ionic/angular/standalone';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-markdown-viewer',
@@ -25,16 +33,21 @@ import {
     IonButtons,
     IonButton,
     IonIcon,
+    NgIf,
     MarkdownComponent,
   ],
 })
 export class MarkdownViewerComponent implements OnInit {
+  readonly utilsService = inject(UtilsService);
   private readonly http = inject(HttpClient);
   private readonly modalController = inject(ModalController);
 
   @Input() fullChangeLogPath!: string;
-  @Input() title: string = 'Release Notes';
+  @Input() title1line: string = 'z-control Release Notes';
+  @Input() title2lines: string = 'z-control <br />Release Notes';
+  @ViewChild('content', { static: false }) content!: IonContent;
   markdown: string = '';
+  isPortrait = this.utilsService.isPortrait;
 
   ngOnInit() {
     this.loadMarkdownChangelog();
@@ -42,6 +55,10 @@ export class MarkdownViewerComponent implements OnInit {
 
   closeModal() {
     this.modalController.dismiss();
+  }
+
+  scrollToTop() {
+    this.content.scrollToTop(300);
   }
 
   private loadMarkdownChangelog() {

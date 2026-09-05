@@ -3,14 +3,15 @@ import { ModalController } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 
-import { APPS } from '@app/shared/GitHubConstants';
-import { MarkdownViewerComponent } from '../ui/components/markdown-viewer/markdown-viewer.component';
+import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
+import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
+import { HelpModalComponent } from '@ui/components/get-help/get-help.component';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
-import { GithubAnalyticsComponent } from '../ui/components/github-analytics/github-analytics.component';
+import { AppMetadataService } from './app-metadata.service';
 import { Router } from '@angular/router';
-import { Tab } from '../shared/enums';
-import { HelpModalComponent } from '../ui/components/get-help/get-help.component';
-import { environment } from 'src/environments/environment';
+import { Tab } from '@app/shared/enums';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,37 +19,36 @@ import { environment } from 'src/environments/environment';
 export class UtilsService {
   private readonly modalController = inject(ModalController);
   private readonly firebaseAnalyticsService = inject(FirebaseAnalyticsService);
+  private readonly appMetadata = inject(AppMetadataService);
   private readonly router = inject(Router);
 
   /**
-   * Emits when the logo is clicked (used for feedback or navigation triggers).
+   * Subject that emits when the logo is clicked (for feedback or navigation).
    */
   logoClickedSub = new Subject<boolean>();
   /**
-   * Observable for logo click events.
+   * Observable of logo click events.
    */
   logoClicked$ = this.logoClickedSub.asObservable();
   /**
-   * Emits when the back button is clicked (used for navigation triggers).
+   * Subject that emits when the back button is clicked (for navigation).
    */
   backButtonClickedSub = new Subject<boolean>();
   /**
-   * Observable for back button click events.
+   * Observable of back button click events.
    */
   backButtonClicked$ = this.backButtonClickedSub.asObservable();
   /**
-   * Emits when the Firebase Analytics link is clicked (used for navigation triggers).
+   * Subject that emits when the Firebase Analytics link is opened.
    */
   openFirebaseAnalyticsSub = new Subject<boolean>();
   /**
-   * Observable for open Firebase Analytics events.
+   * Observable of Firebase Analytics open events.
    */
   openFirebaseAnalytics$ = this.openFirebaseAnalyticsSub.asObservable();
 
   /**
-   * Emits an event when the logo is clicked,
-   * which is used to trigger actions such as 
-   * opening the feedback accordion in settings page.
+   * Emit a logo-click event (for example, to open the feedback accordion).
    */
   onLogoClicked() {
     this.logoClickedSub.next(true);
@@ -56,13 +56,15 @@ export class UtilsService {
 
   /**
    * Returns true if the device is in portrait orientation.
+   * Note: matchMedia updates when the orientation changes.
    */
   get isPortrait(): boolean {
     return globalThis.matchMedia('(orientation: portrait)').matches;
   }
 
   /**
-   * Returns true if the device is a small screen (mobile, portrait).
+   * Returns true if the device is a small screen (mobile in portrait).
+   * Note: isPortrait updates when the orientation changes.
    */
   get isSmallScreen(): boolean {
     const isMobileWidth = window.innerWidth <= 768;
@@ -143,12 +145,9 @@ export class UtilsService {
    */
   async openMarkdownDoc(docPath: string) {
     const docFileName = docPath.split('/').pop();
-    this.handleAnalyticsEvent({
-      eventName: 'open_markdown_document',
-      params: {
-        document: docFileName,
-        app: APPS.LANDING_PAGE,
-      },
+    this.firebaseAnalyticsService.logEvent('open_markdown_document', {
+      document: docFileName,
+      app: APPS.LANDING_PAGE,
     });
 
     const modal = await this.modalController.create({
@@ -167,14 +166,12 @@ export class UtilsService {
    * @param selectedAccordion The selected accordion section for which to display the GitHub Analytics Dashboard.
    * @param lang The language to use in the GitHub Analytics modal.
    */
-  async openGitHubAnalytics(selectedAccordion: keyof typeof APPS, lang: string) {
-    this.handleAnalyticsEvent({
-      eventName: 'view_github_analytics',
-      params: {
-        called_from: selectedAccordion,
-        app: APPS.LANDING_PAGE,
-      },
+  async openGitHubAnalytics(selectedAccordion: AppKey, lang: string) {
+    this.firebaseAnalyticsService.logEvent('view_github_analytics', {
+      called_from: selectedAccordion,
+      app: APPS.LANDING_PAGE,
     });
+
     const modal = await this.modalController.create({
       component: GithubAnalyticsComponent,
       componentProps: {
@@ -190,21 +187,21 @@ export class UtilsService {
    * Opens a modal displaying the changelog for the selected accordion section.
    * @param selectedAccordion The selected accordion section for which to display the changelog.
    */
-  async openChangelog(selectedAccordion: keyof typeof APPS) {
-    const changeLogPath = this.getChangelogPathForAccordion(selectedAccordion);
-    this.handleAnalyticsEvent({
-      eventName: 'open_changelog',
-      params: {
-        changelog_for: selectedAccordion,
-        app: APPS.LANDING_PAGE,
-      },
+  async openChangelog(selectedAccordion: AppKey) {
+    this.firebaseAnalyticsService.logEvent('open_changelog', {
+      changelog_for: selectedAccordion,
+      app: APPS.LANDING_PAGE,
     });
+
+    const changeLogPath = this.getChangelogPathForAccordion(selectedAccordion);
+    const appName = APPS[selectedAccordion];
 
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
       componentProps: {
         fullChangeLogPath: changeLogPath,
-        title: `Changelog for ${selectedAccordion}`,
+        title1line: `Changelog for ${appName}`,
+        title2lines: `Changelog for<br />${appName}`,
       },
       cssClass: 'change-log-modal',
     });
@@ -217,11 +214,8 @@ export class UtilsService {
    * @returns {Promise<void>} A promise that resolves when the modal is presented.
    */
   async openHelpModal(): Promise<void> {
-    this.handleAnalyticsEvent({
-      eventName: 'open_help_modal',
-      params: {
-        app: APPS.LANDING_PAGE,
-      },
+    this.firebaseAnalyticsService.logEvent('open_help_modal', {
+      app: APPS.LANDING_PAGE,
     });
 
     const modal = await this.modalController.create({
@@ -232,32 +226,16 @@ export class UtilsService {
   }
 
   /**
-   * Handles analytics events by logging them to Firebase Analytics.
-   * @param event The analytics event to log.
+   * Opens the web app in a new browser tab and emits an analytics event.
    */
-  private handleAnalyticsEvent(event: { eventName: string; params: any }) {
-    this.firebaseAnalyticsService.logEvent(event.eventName, event.params);
-  }
+  onOpenWebApp(selectedAccordion: AppKey) {
+    const url = this.getWebLinkPathForAccordion(selectedAccordion);
+    globalThis.window.open(url, '_blank');
 
-  private getChangelogPathForAccordion(
-    selectedAccordion: keyof typeof APPS,
-  ): string {
-    switch (selectedAccordion) {
-      case APPS.LANDING_PAGE:
-        return 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md';
-      case APPS.BACKEND_FUNCTIONS:
-        return 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md';
-      case APPS.IONIC_SETUP:
-        return 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md';
-      case APPS.QR_CODE_GENERATOR:
-        return 'assets/logs/change-logs/CHANGELOG_QR-CODE.md';
-      case APPS.MULTI_LANGUAGE_TRANSLATOR:
-        return 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md';
-      case APPS.IMAGE_TO_TEXT:
-        return 'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md';
-      default:
-        return '';
-    }
+    this.firebaseAnalyticsService.logEvent('open_web_app', {
+      url: url,
+      app: APPS.LANDING_PAGE,
+    });
   }
 
   /**
@@ -318,5 +296,109 @@ export class UtilsService {
       return ' '.repeat(leadingBlanksCount) + valueStr;
     }
     return valueStr;
+  }
+
+  /**
+   * Returns the tooltip text for a main accordion section based on the language and whether it is currently selected.
+   * @param lang The language code ('en' for English, 'de' for German)
+   * @param accordionName The name of the accordion section
+   * @param selectedMainAccordion The currently selected main accordion
+   * @param toolTipMainAccordion The main accordion for which the tooltip is being generated
+   * @returns The tooltip text for the accordion section based on the language and selection state
+   */
+  getAccordionTooltip(
+    lang: string,
+    accordionName: string,
+    selectedMainAccordion: string,
+    toolTipMainAccordion: string,
+  ): string {
+    if (lang === 'en') {
+      return selectedMainAccordion === toolTipMainAccordion
+        ? `Collapse ${accordionName} section`
+        : `Expand ${accordionName} section`;
+    }
+    return selectedMainAccordion === toolTipMainAccordion
+      ? `Abschnitt ${accordionName} schließen`
+      : `Abschnitt ${accordionName} öffnen`;
+  }
+
+  /**
+   * Returns the tooltip text for a sub-accordion section based on the language and whether it is currently selected.
+   * @param lang The language code ('en' for English, 'de' for German)
+   * @param selectedSubAccordion The currently selected sub-accordion
+   * @param toolTipSubAccordion The sub-accordion for which the tooltip is being generated
+   * @returns The tooltip text for the accordion section based on the language and selection state
+   */
+  getSubAccordionTooltip(
+    lang: string,
+    selectedSubAccordion: string,
+    toolTipSubAccordion: string,
+  ): string {
+    if (lang === 'en') {
+      return selectedSubAccordion == toolTipSubAccordion
+        ? 'Collapse this part-section'
+        : 'Expand this part-section';
+    }
+    return selectedSubAccordion == toolTipSubAccordion
+      ? 'Diesen Teil-Abschnitt schließen'
+      : 'Diesen Teil-Abschnitt öffnen';
+  }
+
+  /**
+   * Replaces occurrences of 'z-control' with a non-breaking variant 'z\u2011control'.
+   * @param value The string in which to replace 'z-control' with a non-breaking variant.
+   * @returns The modified string with 'z-control' replaced by 'z\u2011control'.
+   */
+  changeZControlToNonBreaking(value: string): string {
+    return value.replaceAll('z-control', 'z\u2011control');
+  }
+
+  /**
+   * Returns the display name of the app with 'z-control' replaced by a non-breaking variant.
+   * @param selectedAccordion The key of the selected accordion
+   * @returns The changed App name
+   */
+  getDisplayNameForAccordion(selectedAccordion: AppKey): string {
+    const s = APPS[selectedAccordion] ?? '';
+    return this.changeZControlToNonBreaking(s);
+  }
+
+  /**
+   * Returns the changelog path for the specified accordion.
+   * @param selectedAccordion The key of the selected accordion
+   * @returns The changelog path for the specified accordion
+   */
+  private getChangelogPathForAccordion(selectedAccordion: AppKey): string {
+    return this.appMetadata.getChangeLogPath(selectedAccordion);
+  }
+
+  /**
+   * Returns the web link path for the specified accordion.
+   * @param selectedAccordion The key of the selected accordion
+   * @returns The web link path for the specified accordion
+   */
+  getWebLinkPathForAccordion(selectedAccordion: AppKey): string {
+    const link = this.appMetadata.getWebLink(selectedAccordion);
+    return link;
+  }
+
+  /**
+   * Returns the source link path for the specified accordion.
+   * @param selectedAccordion The key of the selected accordion
+   * @returns The source link path for the specified accordion
+   */
+  getSourceLinkPathForAccordion(selectedAccordion: AppKey): string {
+    const link = this.appMetadata.getSourceLink(selectedAccordion);
+    return link;
+  }
+
+  /**
+   * Returns the Play Store link path for the specified accordion.
+   * @param selectedAccordion The key of the selected accordion
+   * @returns The Play Store link path for the specified accordion
+   */
+  getPlayStoreLinkPathForAccordion(selectedAccordion: AppKey): string {
+    const link = this.appMetadata.getPlayStoreLink(selectedAccordion);
+    return link;
   }
 }

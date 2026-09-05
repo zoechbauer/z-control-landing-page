@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import {
@@ -16,7 +16,7 @@ import { UtilsService } from '@app/services/utils.service';
   standalone: true,
   imports: [CommonModule, IonButton, IonIcon],
 })
-export class GithubAnalyticsDetailsComponent implements OnInit {
+export class GithubAnalyticsDetailsComponent {
   @Input() item!: GithubAnalyticsTrafficDocument;
   @Input() analyticsData!: GithubAnalyticsTrafficDocument[];
   @Input() githubTrafficData!: GithubAnalyticsTrafficDocument[];
@@ -24,17 +24,7 @@ export class GithubAnalyticsDetailsComponent implements OnInit {
   readonly utilsService = inject(UtilsService);
   private readonly fa = inject(FirebaseAnalyticsService);
 
-  isMobilePortrait = false;
   totalCountLength = 5; // Total length for count display, including leading blanks
-
-  ngOnInit() {
-    this.init();
-  }
-
-  async init() {
-    this.checkOrientation();
-    window.addEventListener('resize', () => this.checkOrientation());
-  }
 
   /**
    * Returns the total views count for a repository.
@@ -200,14 +190,10 @@ export class GithubAnalyticsDetailsComponent implements OnInit {
   }
 
   /**
-   * Checks if the device is in portrait mode and has a small screen width.
-   * Sets isMobilePortrait to true if so.
+   * Gets the URL of the GitHub source code page for the given repository.
+   * @param repo - The repository name.
+   * @returns The URL of the GitHub source code page.
    */
-  private checkOrientation(): void {
-    this.isMobilePortrait =
-      this.utilsService.isSmallScreen && this.utilsService.isPortrait;
-  }
-
   private getSourceCodeUrl(repo: (typeof REPO)[keyof typeof REPO]): string {
     return `https://github.com/zoechbauer/${repo}`;
   }

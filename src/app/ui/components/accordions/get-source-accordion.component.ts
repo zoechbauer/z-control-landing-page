@@ -5,7 +5,9 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { GetSourceCodeComponent } from '../get-source-code/get-source-code.component';
+
+import { GetSourceCodeComponent } from '@ui/components/get-source-code/get-source-code.component';
+import { AppKey } from '@app/shared/GitHubConstants';
 
 
 @Component({
@@ -24,7 +26,7 @@ export class GetSourceAccordionComponent {
   translate = inject(TranslateService);
 
   @Input() lang!: string;
-  @Input() appName!: string;
+  @Input() appNameKey!: AppKey;
   @Input() disableAccordion = true;
 
 }

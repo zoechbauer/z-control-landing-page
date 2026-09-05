@@ -9,16 +9,17 @@ import { SettingsPage } from './settings.page';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UtilsService } from '../services/utils.service';
 import { FirebaseFirestoreService } from '../services/firebase-firestore.service';
-import { createTranslateServiceMock } from '../testing/translate-service.mock';
-import { environment } from '@env/environment';
-import { GetSourceAccordionComponent } from '../ui/components/accordions/get-source-accordion.component';
-import { ChangeLogAccordionComponent } from '../ui/components/accordions/change-log-accordion.component';
-import { PrivacyPolicyAccordionComponent } from '../ui/components/accordions/privacy-policy-accordion.component';
-import { FeedbackAccordionComponent } from '../ui/components/accordions/feedback-accordion.component';
-import { LanguageAccordionComponent } from '../ui/components/accordions/language-accordion.component';
-import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
-import { GetGithubAnalyticsAccordionComponent } from '../ui/components/accordions/get-github-analytics-accordion.component';
-import { FirebaseAnalyticsAccordionComponent } from '../ui/components/accordions/firebase-analytics-accordion.component';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import {
+  GetSourceAccordionComponent,
+  ChangeLogAccordionComponent,
+  PrivacyPolicyAccordionComponent,
+  FeedbackAccordionComponent,
+  LanguageAccordionComponent,
+  SpinnerComponent,
+  GetGithubAnalyticsAccordionComponent,
+  FirebaseAnalyticsAccordionComponent,
+} from '@ui';
 
 @Component({
   selector: 'app-language-accordion',
@@ -365,48 +366,19 @@ describe('SettingsPage', () => {
     });
 
     describe('ngOnInit', () => {
-      it('should call setupSubscriptions, showOrHideIonTabBar, and setupEventListeners', () => {
+      it('should call setupSubscriptions, and showOrHideIonTabBar', () => {
         const setupSubscriptionsSpy = spyOn(
           component as any,
           'setupSubscriptions',
         ).and.callThrough();
         const showOrHideIonTabBarSpy = utilsServiceSpy.showOrHideIonTabBar;
-        const setupEventListenersSpy = spyOn(
-          component as any,
-          'setupEventListeners',
-        ).and.callThrough();
         (component as any).showAllAccordions = false;
 
         component.ngOnInit();
 
         expect(setupSubscriptionsSpy).toHaveBeenCalled();
         expect(showOrHideIonTabBarSpy).toHaveBeenCalled();
-        expect(setupEventListenersSpy).toHaveBeenCalled();
         (component as any).showAllAccordions = true;
-      });
-    });
-
-    describe('setupEventListeners', () => {
-      it('should add resize event listeners', () => {
-        spyOn(window, 'addEventListener');
-
-        (component as any).setupEventListeners();
-
-        expect(window.addEventListener).toHaveBeenCalledWith(
-          'resize',
-          jasmine.any(Function),
-        );
-      });
-
-      it('should call showOrHideIonTabBar when window is resized', () => {
-        const showOrHideIonTabBarSpy = utilsServiceSpy.showOrHideIonTabBar;
-        (component as any).setupEventListeners();
-        // Reset the spy call count to ignore the initial call during setup
-        showOrHideIonTabBarSpy.calls.reset();
-
-        window.dispatchEvent(new Event('resize'));
-
-        expect(showOrHideIonTabBarSpy).toHaveBeenCalled();
       });
     });
 

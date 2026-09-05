@@ -5,12 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, of, throwError } from 'rxjs';
 
-import { UtilsService } from '@app/services/utils.service';
 import { Tab } from '@app/shared/enums';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { createUtilsServiceMock } from '@testing/utils-service.mock';
 import { PrivacyViewerComponent } from './privacy-viewer.component';
-import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
+import { PrivacyService, PrivacyPolicy } from '@privacy/services/privacy.service';
+import { UtilsService } from '@app/services/utils.service';
 
 describe('PrivacyViewerComponent', () => {
   let component: PrivacyViewerComponent;
@@ -193,18 +193,6 @@ describe('PrivacyViewerComponent', () => {
         'qr-code-generator',
         'en',
       );
-    });
-
-    it('should fallback to basic policy if type is not available', async () => {
-      privacyServiceMock.isPolicyAvailable.and.returnValue(false);
-
-      component.policyType = 'non-existent-type';
-      component.language = 'en';
-
-      await component['loadPolicy']();
-
-      expect(component.policyType).toBe('qr-code-generator');
-      expect(component.language).toBe('en');
     });
   });
 

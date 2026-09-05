@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonButton,
@@ -12,10 +18,15 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { APPS } from '@app/shared/GitHubConstants';
 import { BackupScriptsSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
-import { OpenSourceComponent } from '../open-source/open-source.component';
+import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
+import { FeedbackAppsComponent } from '@ui/shared/feedback-apps/feedback-apps.component';
+import { SourceCodeAppsComponent } from '@ui/shared/source-code-apps/source-code-apps.component';
+
 @Component({
   selector: 'app-backup-scripts-section',
   templateUrl: './backup-scripts-section.component.html',
@@ -32,49 +43,56 @@ import { OpenSourceComponent } from '../open-source/open-source.component';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    OpenSourceComponent,
+    TranslatePipe,
+    OpenSourceAppsComponent,
+    FeedbackAppsComponent,
+    SourceCodeAppsComponent
   ],
 })
 export class BackupScriptsSectionComponent {
-  private readonly utilsService = inject(UtilsService);
+  readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: BackupScriptsSectionParameters;
   @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() analyticsEvent = new EventEmitter<{
-    eventName: string;
-    params: any;
-  }>();
 
-  sourceCodeUrl = 'https://github.com/zoechbauer/z-control-backup-scripts';
   selectedSubAccordion: string = '';
 
-  onGetSourceCode() {
-    globalThis.window.open(this.sourceCodeUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'get_source_code',
-      params: {
-        repo: APPS.BACKUP_SCRIPTS,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  }
-
+  /**
+   * Opens a Markdown documentation file in a new tab.
+   * @param docPath The path to the Markdown documentation file.
+   */
   async onOpenMarkdownDoc(docPath: string) {
     await this.utilsService.openMarkdownDoc(docPath);
   }
 
+  /**
+   * Handles the change event for a sub-accordion.
+   * @param event The custom event emitted when a sub-accordion changes.
+   */
   subAccordionChange(event?: CustomEvent) {
     this.selectedSubAccordion = event?.detail?.value || '';
   }
 
-  getAccordionTooltip(value: string): string {
-    return this.selectedSubAccordion == value
-      ? `Collapse ${value}`
-      : `Expand ${value}`;
-  }
-
-  getMailToLinkForFeedback(): string {
-    return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.BACKUP_SCRIPTS}%20Feedback`;
+  /**
+   * Gets the tooltip text for an accordion or sub-accordion.
+   * @param value The value of the accordion or sub-accordion.
+   * @param isSubAccordion Indicates whether the tooltip is for a sub-accordion (default: true).
+   * @returns The tooltip text for the specified accordion or sub-accordion.
+   */
+  getAccordionTooltip(value: string, isSubAccordion: boolean = true): string {
+    if (!isSubAccordion) {
+      return this.utilsService.getAccordionTooltip(
+        this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+        APPS.BACKUP_SCRIPTS,
+        this.parameters?.appSectionParameters?.currentMainAccordion || '',
+        value,
+      );
+    }
+    return this.utilsService.getSubAccordionTooltip(
+      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+      this.selectedSubAccordion,
+      value,
+    );
   }
 }

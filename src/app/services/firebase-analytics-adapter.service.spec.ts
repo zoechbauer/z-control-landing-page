@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import {
   FIREBASE_APP_INIT,
   FIREBASE_GET_ANALYTICS,
@@ -6,7 +7,7 @@ import {
   FIREBASE_SET_COLLECTION_ENABLED,
   FirebaseAnalyticsAdapterService,
 } from './firebase-analytics-adapter.service';
-import { environment } from '../../environments/environment';
+import { environment } from '@env/environment';
 
 describe('FirebaseAnalyticsAdapterService', () => {
   let service: FirebaseAnalyticsAdapterService;

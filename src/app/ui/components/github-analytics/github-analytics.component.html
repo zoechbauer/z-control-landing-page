@@ -57,10 +57,13 @@
         Klicken Sie auf eine Zeile, um das Repository zu öffnen und detaillierte
         Statistiken sowie einen Link zum GitHub-Quellcode anzuzeigen.
       </p>
+      <p>
+        Bitte beachten Sie, dass die Statistik nur in Englisch verfügbar ist.
+      </p>
     </ng-template>
 
     <section
-      [hidden]="!(isMobilePortrait && isRepoOpened)"
+      [hidden]="!(this.utilsService.isSmallScreen && isRepoOpened)"
       class="orientation-info"
     >
       <ion-item color="warning">

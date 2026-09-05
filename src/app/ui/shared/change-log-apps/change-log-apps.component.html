@@ -1,0 +1,52 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div>
+    All new features, improvements and bug fixes of the
+    <i>{{ appName }}</i> are tracked in
+  </div>
+  <ion-button
+    fill="clear"
+    size="small"
+    (click)="onOpenChangelog()"
+    (keydown.enter)="onOpenChangelog()"
+    class="change-log-button"
+    title="Open release notes (changelog) — grouped by category and sorted newest first"
+  >
+    <ion-icon name="list" slot="start"></ion-icon>
+    Release Notes
+  </ion-button>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div>
+    Alle neuen Funktionen, Verbesserungen und Fehlerbehebungen der
+    <i>{{  appName }}</i> werden in den Release Notes dokumentiert.
+  </div>
+  <ion-button
+    fill="clear"
+    size="small"
+    (click)="onOpenChangelog()"
+    (keydown.enter)="onOpenChangelog()"
+    class="change-log-button"
+    title="Release notes (Änderungen) in Englisch öffnen — gruppiert nach Kategorie und sortiert nach Datum"
+  >
+    <ion-icon name="list" slot="start"></ion-icon>
+    Release Notes
+  </ion-button>
+  <p>
+    Klicken Sie auf die Schaltfläche "Release Notes", um die vollständige
+    Versionshistorie anzuzeigen. Bitte beachten Sie, dass die Release Notes nur
+    in Englisch verfügbar sind.
+  </p>
+</ng-template>

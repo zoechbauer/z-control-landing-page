@@ -1,0 +1,191 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <h5>
+    <ion-icon name="book"></ion-icon>
+    Comprehensive Help & Tutorials
+  </h5>
+  <p>
+    Both the <i>Web App</i> and <i>Android App</i> include detailed inline help
+    accessible by clicking the <strong>?</strong> icon in the top right corner.
+  </p>
+  <p>
+    <ion-icon name="checkmark"></ion-icon>
+    <strong>Note:</strong> The tutorial is specific to the version you are
+    using. Information relevant to mobile apps is omitted in the web-app help,
+    and web-app specific guidance is omitted in the mobile-app help.
+  </p>
+  <h6>
+    <ion-icon name="library"></ion-icon>
+    Help Topics Covered:
+  </h6>
+  <ul>
+    <li>
+      <strong>What Can the App Do:</strong> Overview of the app's main features,
+      use cases, limitations, and monthly translation quotas.
+    </li>
+    <li *ngIf="selectedAccordion === 'IMAGE_TO_TEXT'">
+      <strong>How to Use the App:</strong> Detailed instructions on taking
+      photos, selecting images, recognizing text, adding titles and
+      descriptions, copying and sharing data, managing history, and checking
+      image processing quotas.
+    </li>
+    <li *ngIf="selectedAccordion === 'MULTI_LANGUAGE_TRANSLATOR'">
+      <strong>How to Use the App:</strong> Detailed instructions on entering
+      text, selecting target languages, starting translations, using speech
+      output, and checking translation quotas.
+    </li>
+    <li *ngIf="selectedAccordion === 'QR_CODE_GENERATOR'">
+      <strong>How to Use the App:</strong> Clear, step‑by‑step instructions for
+      generating QR codes and configuring the app.
+      <br />
+      A progress indicator shows the next action — e.g. enter text or an email
+      address, generate the QR code, send it by email, resend, or modify/clear
+      data — so you always know what to do next. This makes the app intuitive
+      for new users.
+      <br />
+      The help also explains how to choose print sizes and the differences
+      between PNG and PDF exports.
+    </li>
+    <li>
+      <strong>Web Version versus Mobile Version:</strong> Benefits and
+      limitations of using the browser-based app versus the mobile app.
+    </li>
+    <li *ngIf="selectedAccordion === 'IMAGE_TO_TEXT'">
+      <strong>Technical Information:</strong> Information about Google Cloud
+      Vision API for text recognition.
+    </li>
+    <li>
+      <strong>Troubleshooting:</strong> Solutions for common issues and tips for
+      reliable operation (only available on the mobile version).
+    </li>
+  </ul>
+
+  <h6>
+    <ion-icon name="globe"></ion-icon>
+    Try the Interactive Help:
+  </h6>
+  <p>
+    Open the
+    <a
+      href="{{ utilsService.getWebLinkPathForAccordion(selectedAccordion) }}"
+      target="_blank"
+      class="web-app-link"
+      title="Open {{ selectedAccordion }} as Web App in a new tab"
+    >
+      <strong>Web App</strong>
+    </a>
+    and click the <strong>?</strong> icon to explore the full help system. You
+    can switch between <strong>English</strong> and <strong>German</strong> by
+    changing the language in the settings.
+  </p>
+
+  <div class="comparison-note">
+    <ion-icon name="sunny"></ion-icon>
+    <strong>Pro Tip:</strong> The help includes a table of contents with
+    jump-to-section navigation for quick access to specific topics.
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <h5>
+    <ion-icon name="book"></ion-icon>
+    Umfassende Hilfe &amp; Tutorials
+  </h5>
+  <p>
+    Sowohl die <i>Web-App</i> als auch die <i>Android-App</i> enthalten eine
+    ausführliche kontextbezogene Hilfe, die durch Klicken auf das
+    <strong>?</strong>-Symbol oben rechts aufgerufen werden kann.
+  </p>
+  <p>
+    <ion-icon name="checkmark"></ion-icon>
+    <strong>Hinweis:</strong> Das Tutorial ist versionsspezifisch.
+    Informationen, die für mobile Apps relevant sind, werden in der
+    Web-App-Hilfe ausgelassen, und webapp-spezifische Hinweise fehlen in der
+    Hilfe der mobilen App.
+  </p>
+  <h6>
+    <ion-icon name="library"></ion-icon>
+    Behandelte Hilfethemen:
+  </h6>
+  <ul>
+    <li>
+      <strong>Was kann die App:</strong> Überblick über die Hauptfunktionen der
+      App, Anwendungsfälle, Einschränkungen und monatliche
+      Übersetzungskontingente.
+    </li>
+    <li *ngIf="selectedAccordion === 'IMAGE_TO_TEXT'">
+      <strong>Wie benutze ich die App:</strong> Detaillierte Anweisungen zum
+      Erstellen von Fotos, Auswählen von Bildern, Erkennen von Text, Hinzufügen
+      von Titeln und Beschreibungen, Kopieren und Teilen von Daten, Verwalten
+      der Historie und Überprüfen der Bildverarbeitungs-Kontingente.
+    </li>
+    <li *ngIf="selectedAccordion === 'MULTI_LANGUAGE_TRANSLATOR'">
+      <strong>Wie benutze ich die App:</strong> Detaillierte Anweisungen zum
+      Eingeben von Text, Auswählen der Zielsprachen, Durchführen von
+      Übersetzungen, Verwenden der Sprachausgabe und Überprüfen der
+      Übersetzungskontingente.
+    </li>
+    <li *ngIf="selectedAccordion === 'QR_CODE_GENERATOR'">
+      <strong>Wie benutze ich die App:</strong> Klare
+      Schritt‑für‑Schritt‑Anleitungen zum Erstellen von QR‑Codes und zur
+      Konfiguration der App.
+      <br />
+      Eine Fortschrittsanzeige zeigt die nächste Aktion an — z. B. Text oder
+      E‑Mail-Adresse eingeben, QR‑Code erzeugen, per E‑Mail versenden, erneut
+      senden oder Daten ändern/löschen — sodass Sie jederzeit wissen, was als
+      Nächstes zu tun ist. Das macht die App besonders für neue Nutzer intuitiv.
+      <br />
+      Die Hilfe erläutert außerdem, wie Sie Druckgrößen auswählen und welche
+      Unterschiede zwischen PNG‑ und PDF‑Export bestehen.
+    </li>
+    <li>
+      <strong>Web-Version vs. Mobile-Version:</strong> Vor- und Nachteile der
+      Nutzung der browserbasierten App gegenüber der mobilen App.
+    </li>
+    <li *ngIf="selectedAccordion === 'IMAGE_TO_TEXT'">
+      <strong>Technische Informationen:</strong> Informationen zur Google Cloud
+      Vision API für Texterkennung.
+    </li>
+    <li>
+      <strong>Fehlerbehebung:</strong> Lösungen für häufige Probleme und Tipps
+      für einen zuverlässigen Betrieb (nur in der mobilen Version verfügbar).
+    </li>
+  </ul>
+
+  <h6>
+    <ion-icon name="globe"></ion-icon>
+    Probieren Sie die interaktive Hilfe aus:
+  </h6>
+  <p>
+    Öffnen Sie die
+    <a
+      href="{{ utilsService.getWebLinkPathForAccordion(selectedAccordion) }}"
+      target="_blank"
+      class="web-app-link"
+      title="{{ selectedAccordion }} als Web-App in einem neuen Tab öffnen"
+    >
+      <strong>Web-App</strong>
+    </a>
+    und klicken Sie auf das <strong>?</strong>-Symbol, um das vollständige
+    Hilfesystem zu erkunden. Sie können zwischen <strong>Englisch</strong> und
+    <strong>Deutsch</strong> wechseln, indem Sie die Sprache in den
+    Einstellungen ändern.
+  </p>
+
+  <div class="comparison-note">
+    <ion-icon name="sunny"></ion-icon>
+    <strong>Profi-Tipp:</strong> Die Hilfe enthält ein Inhaltsverzeichnis mit
+    Sprungmarken zur schnellen Navigation zu bestimmten Themen.
+  </div>
+</ng-template>

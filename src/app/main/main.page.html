@@ -1,0 +1,48 @@
+<!-- Start Page Proposal for Firebase Hosting -->
+<div id="toast-anchor-main">
+  <app-header [currentTab]="Tab.MainFeature"></app-header>
+  <div class="ion-text-center ion-padding-top ion-padding-bottom">
+    {{ currentAppName }}
+  </div>
+</div>
+
+<ion-content class="ion-padding">
+  <app-welcome
+    [selectedLanguage]="selectedLanguage"
+    [isAnalyticsEnabled]="isAnalyticsEnabled"
+    (isAnalyticsEnabledClicked)="goToSettingsAndOpenFirebaseAnalytics()"
+  ></app-welcome>
+
+  <ion-accordion-group
+    #accordionGroup
+    (ionChange)="accordionGroupChange($event)"
+  >
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <div *ngIf="!isLoading && selectedLanguage">
+      <app-image-to-text-section
+        [parameters]="imageToTextSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+      />
+      <app-multi-language-translator-section
+        [parameters]="multiLanguageTranslatorSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+      />
+      <app-ionic-setup-section
+        [parameters]="ionicSetupSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+      />
+      <app-qr-code-generator-section
+        [parameters]="qrCodeGeneratorSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+      />
+      <app-backend-functions-section
+        [parameters]="backendFunctionsSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+      />
+      <app-backup-scripts-section
+        [parameters]="backupScriptsSectionParams"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+      />
+    </div>
+  </ion-accordion-group>
+</ion-content>

@@ -1,17 +1,22 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IonContent, IonAccordionGroup } from '@ionic/angular/standalone';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { HeaderComponent } from '../ui';
-import { QrCodeGeneratorSectionComponent } from '../ui/components/qr-code-generator-section/qr-code-generator-section.component';
-import { BackupScriptsSectionComponent } from '../ui/components/backup-scripts-section/backup-scripts-section.component';
-import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { CommonModule } from '@angular/common';
-import { APPS } from '@app/shared/GitHubConstants';
-import { MultiLanguageTranslatorSectionComponent } from '../ui/components/multi-language-translator-section/multi-language-translator-section.component';
+import {
+  QrCodeGeneratorSectionComponent,
+  BackupScriptsSectionComponent,
+  MultiLanguageTranslatorSectionComponent,
+  IonicSetupSectionComponent,
+  BackendFunctionsSectionComponent,
+  ImageToTextSectionComponent,
+  SpinnerComponent,
+  HeaderComponent,
+  WelcomeComponent,
+} from '@ui';
+import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 import {
   AppSectionParameters,
   BackupScriptsSectionParameters,
@@ -22,17 +27,15 @@ import {
   BackendFunctionsSectionParameters,
 } from '@app/shared/app-interfaces';
 import { environment } from '@env/environment';
-import { IonicSetupSectionComponent } from '../ui/components/ionic-setup-section/ionic-setup-section.component';
-import { BackendFunctionsSectionComponent } from '../ui/components/backend-functions-section/backend-functions-section.component';
-import { ImageToTextSectionComponent } from '../ui/components/image-to-text-section/image-to-text-section.component';
-import { Tab } from '../shared/enums';
+import { Tab } from '@app/shared/enums';
 import { UtilsService } from '../services/utils.service';
-import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
+import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-main',
+  templateUrl: 'main.page.html',
+  styleUrls: ['main.page.scss'],
   imports: [
     IonContent,
     IonAccordionGroup,
@@ -46,9 +49,10 @@ import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
     IonicSetupSectionComponent,
     BackendFunctionsSectionComponent,
     SpinnerComponent,
+    WelcomeComponent,
   ],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class MainPage implements OnInit, OnDestroy {
   translate = inject(TranslateService);
   private readonly fa = inject(FirebaseAnalyticsService);
   private readonly localStorageService = inject(LocalStorageService);
@@ -57,7 +61,7 @@ export class HomePage implements OnInit, OnDestroy {
   @ViewChild('accordionGroup') accordionGroup!: IonAccordionGroup;
 
   Tab = Tab;
-  selectedAccordion: string = APPS.LANDING_PAGE;
+  selectedAccordion: AppKey = APP_KEYS.LANDING_PAGE as AppKey;
   currentMainAccordion: string = '';
   qrCodeGeneratorSectionParams?: QrCodeGeneratorSectionParameters;
   backupScriptsSectionParams?: BackupScriptsSectionParameters;
@@ -74,6 +78,11 @@ export class HomePage implements OnInit, OnDestroy {
     this.utilsService.showOrHideIonTabBar();
     this.setupSubscriptions();
     this.getIsAnalyticsAllowed();
+    this.initializeAllSectionParameters();
+  }
+
+  get currentAppName(): string {
+    return APPS[this.selectedAccordion];
   }
 
   private setupSubscriptions() {
@@ -83,6 +92,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.translate.setDefaultLang(lang);
         this.selectedLanguage = lang;
         this.isLoading = false;
+        this.initializeAllSectionParameters();
       }),
       this.fa.enabled$.subscribe((enabled) => {
         this.isAnalyticsEnabled = enabled;
@@ -93,10 +103,6 @@ export class HomePage implements OnInit, OnDestroy {
   private async getIsAnalyticsAllowed() {
     this.isAnalyticsEnabled =
       (await this.localStorageService.getAnalyticsConsent()) === true;
-  }
-
-  handleAnalyticsEvent(event: { eventName: string; params: any }) {
-    this.fa.logEvent(event.eventName, event.params);
   }
 
   accordionGroupChange(event: CustomEvent) {
@@ -139,40 +145,54 @@ export class HomePage implements OnInit, OnDestroy {
     // we do nothing - keep the current header text
   }
 
+  /**
+   * Handles the potential closing of the main accordion.
+   * Resets the current main accordion and all related section parameters.
+   */
   private handlePotentialMainAccordionClose() {
     // Main accordion is actually closing
     this.currentMainAccordion = '';
     this.setSelectedAccordion('');
+    this.initializeAllSectionParameters();
+  }
+
+  private initializeAllSectionParameters() {
+    this.setQrCodeGeneratorParameters();
+    this.setBackupScriptsParameters();
+    this.setMultiLanguageTranslatorParameters();
+    this.setImageToTextParameters();
+    this.setIonicSetupParameters();
+    this.setBackendFunctionsParameters();
   }
 
   setSelectedAccordion(group: string) {
     switch (group) {
       case 'QR':
-        this.selectedAccordion = APPS.QR_CODE_GENERATOR;
+        this.selectedAccordion = APP_KEYS.QR_CODE_GENERATOR as AppKey;
         this.setQrCodeGeneratorParameters();
         break;
       case 'BS':
-        this.selectedAccordion = APPS.BACKUP_SCRIPTS;
+        this.selectedAccordion = APP_KEYS.BACKUP_SCRIPTS as AppKey;
         this.setBackupScriptsParameters();
         break;
       case 'MLT':
-        this.selectedAccordion = APPS.MULTI_LANGUAGE_TRANSLATOR;
+        this.selectedAccordion = APP_KEYS.MULTI_LANGUAGE_TRANSLATOR as AppKey;
         this.setMultiLanguageTranslatorParameters();
         break;
       case 'I2T':
-        this.selectedAccordion = APPS.IMAGE_TO_TEXT;
+        this.selectedAccordion = APP_KEYS.IMAGE_TO_TEXT as AppKey;
         this.setImageToTextParameters();
         break;
       case 'IS':
-        this.selectedAccordion = APPS.IONIC_SETUP;
+        this.selectedAccordion = APP_KEYS.IONIC_SETUP as AppKey;
         this.setIonicSetupParameters();
         break;
       case 'BF':
-        this.selectedAccordion = APPS.BACKEND_FUNCTIONS;
+        this.selectedAccordion = APP_KEYS.BACKEND_FUNCTIONS as AppKey;
         this.setBackendFunctionsParameters();
         break;
       default:
-        this.selectedAccordion = APPS.LANDING_PAGE;
+        this.selectedAccordion = APP_KEYS.LANDING_PAGE as AppKey;
     }
   }
 

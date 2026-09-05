@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import type { PolicyType, Language } from '@privacy/services/privacy.service';
 import {
   IonContent,
   IonButton,
@@ -8,10 +9,10 @@ import {
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 
-import { HeaderComponent } from '../../../ui/components/header/header.component';
-import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
-import { Tab } from 'src/app/shared/enums';
-import { UtilsService } from 'src/app/services/utils.service';
+import { HeaderComponent } from '@ui';
+import { PrivacyService, PrivacyPolicy } from '@privacy/services/privacy.service';
+import { Tab } from '@app/shared/enums';
+import { UtilsService } from '@app/services/utils.service';
 
 @Component({
   selector: 'app-privacy-viewer',
@@ -37,8 +38,8 @@ export class PrivacyViewerComponent implements OnInit {
   loading = true;
   error = false;
   selectedAccordion = '';
-  policyType = '';
-  language = 'en';
+  policyType: PolicyType = 'qr-code-generator';
+  language: Language = 'en';
   availableLanguages: string[] = [];
   showBackButton = false;
   currentTab = Tab.Settings;

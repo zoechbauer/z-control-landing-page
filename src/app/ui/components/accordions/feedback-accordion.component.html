@@ -36,10 +36,11 @@
     <!-- E N G L I S H   T E M P L A T E -->
 
     <ng-template #englishTemplate>
-      <div class="ion-padding-top">
+      <div class="ion-padding-top ion-text-left">
         <p>
-          If you would like to send us feedback, questions, or suggestions,
-          simply click on the "z-control Support" link.
+          If you would like to send us feedback, questions, or suggestions to
+          <i>{{ utilsService.getDisplayNameForAccordion(appNameKey) }}</i
+          >, simply click on the "z-control Support" link.
         </p>
         <p>
           Your email program will open automatically, allowing you to contact us
@@ -53,8 +54,9 @@
     <ng-template #germanTemplate>
       <div class="ion-padding-top ion-text-left">
         <p>
-          Wenn Sie uns Feedback, Fragen oder Vorschläge senden möchten, klicken
-          Sie einfach auf den Link „z-control Support“.
+          Wenn Sie uns Feedback, Fragen oder Vorschläge zur
+          <i>{{ utilsService.getDisplayNameForAccordion(appNameKey) }}</i>
+          senden möchten, klicken Sie einfach auf den Link „z-control Support“.
         </p>
         <p>
           Ihr E-Mail-Programm öffnet sich automatisch, sodass Sie uns direkt

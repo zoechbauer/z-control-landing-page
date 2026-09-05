@@ -24,7 +24,10 @@
     "paths": {
       "*": ["./*"],
       "@app/*": ["./src/app/*"],
+      "@privacy/*": ["./src/app/privacy/*"],
       "@env/*": ["./src/environments/*"],
+      "@ui/*": ["./src/app/ui/*"],
+      "@ui": ["./src/app/ui/index.ts"],
       "@testing/*": ["./src/app/testing/*"]
     }
   },

@@ -36,16 +36,21 @@
           We collect only non-identifying usage data to improve our services.
         </p>
         <p>
-          You can find the complete privacy policy on the z&#8209;control
-          website
+          To view our complete privacy policy, click on this link:
           <a
             [routerLink]="privacyPolicyLink"
-            [queryParams]="{ internal: 'true' }"
+            [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
             title="Read our privacy policy"
           >
             Privacy Policy
             <ion-icon name="open-outline"></ion-icon>
           </a>
+          You will then have access to all information regarding the processing of your data.
+        </p>
+        <p>
+          By clicking on
+          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon> in
+          the displayed privacy policy at the top left, you will return to this view.
         </p>
       </div>
     </ng-template>
@@ -59,12 +64,11 @@
           Apps und Tools zu erkunden.
         </p>
         <p>
-          Wir erfassen nur nicht identifizierende Nutzungsdaten, um unsere
-          Dienste zu verbessern.
+          Wir erfassen nur anonyme Nutzungsdaten, d.h. keine personenbezogenen
+          Daten, damit wir unsere Dienste verbessern können.
         </p>
         <p>
-          Sie können die vollständige Datenschutzerklärung auf der
-          z&#8209;control Website einsehen
+          Wenn Sie auf diesen Link
           <a
             [routerLink]="privacyPolicyLink"
             [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
@@ -73,6 +77,14 @@
             Datenschutzerklärung
             <ion-icon name="open-outline"></ion-icon>
           </a>
+          klicken, wird die vollständige Datenschutzerklärung angezeigt und Sie
+          erhalten alle Informationen zur Verarbeitung Ihrer Daten.
+        </p>
+        <p>
+          Durch Klick auf
+          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon> in
+          der angezeigten Datenschutzerklärung oben links kehren Sie dann wieder
+          zu dieser Ansicht zurück.
         </p>
       </div>
     </ng-template>

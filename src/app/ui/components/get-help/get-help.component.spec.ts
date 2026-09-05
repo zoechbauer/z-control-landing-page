@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-import { HelpModalComponent } from './get-help.component';
+import { HelpModalComponent } from '@ui/components/get-help/get-help.component';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { UtilsService } from '@app/services/utils.service';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';

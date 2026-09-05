@@ -12,10 +12,11 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { Tab } from 'src/app/shared/enums';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
+import { LocalStorageService } from '@app/services/local-storage.service';
+import { ToastService } from '@app/services/toast-EN.service';
+import { Tab } from '@app/shared/enums';
+import { APPS } from '@app/shared/GitHubConstants';
 
 @Component({
   selector: 'app-firebase-analytics-accordion',
@@ -37,6 +38,7 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
   translate = inject(TranslateService);
   readonly fa = inject(FirebaseAnalyticsService);
   private readonly localStorageService = inject(LocalStorageService);
+  private readonly toastService = inject(ToastService);
 
   @Input() lang?: string;
 
@@ -72,7 +74,6 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
         app: APPS.LANDING_PAGE,
         analytics: eventValue,
       });
-
       setTimeout(() => {
         this.localStorageService.setAnalyticsConsent(enabled);
         this.fa.enableCollection(enabled);
@@ -81,13 +82,20 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
       // analytics being enabled
       this.localStorageService.setAnalyticsConsent(enabled);
       this.fa.enableCollection(enabled);
-
       // log event after enabling
       this.fa.logEvent(eventName, {
         app: APPS.LANDING_PAGE,
         analytics: eventValue,
       });
     }
+
+    this.toastService.showToast(
+      this.translate.instant(
+        enabled
+          ? 'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_ENABLED'
+          : 'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_DISABLED',
+      ), 
+    );
   }
 
   ngOnDestroy(): void {

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { TabsPage } from './tabs.page';
-import { createTranslateServiceMock } from '../testing/translate-service.mock';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 describe('TabsPage', () => {
   let component: TabsPage;

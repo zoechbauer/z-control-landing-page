@@ -1,0 +1,59 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div>
+    The app is <strong>Open Source</strong>.
+    <p>
+      The source code of the
+      <i>{{ appName }}</i> app is available on <i>GitHub</i> so you can review
+      how the app works and how your data is handled at any time.
+    </p>
+  </div>
+  <div class="button-wrapper ion-text-center">
+    <ion-button
+      (click)="onGetSourceCode()"
+      (keydown.enter)="onGetSourceCode()"
+      color="primary"
+      class="download-button"
+      title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
+      aria-label="Open GitHub repository (opens in a new tab)"
+    >
+      <ion-icon name="logo-github" slot="start"></ion-icon>
+      {{ "MAIN.ACCORDION.SHOW_SOURCE_CODE" | translate }}
+    </ion-button>
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div>
+    Die App ist <strong>Open Source</strong>.
+    <p>
+      Der Quellcode für die <i>{{ appName }}</i> ist auf
+      <i>GitHub</i> verfügbar, sodass Sie jederzeit nachlesen können, wie die
+      App funktioniert und wie wir mit Ihren Daten umgehen.
+    </p>
+  </div>
+  <div class="button-wrapper ion-text-center">
+    <ion-button
+      (click)="onGetSourceCode()"
+      (keydown.enter)="onGetSourceCode()"
+      color="primary"
+      class="download-button"
+      title="GitHub Repository in einem neuen Tab öffnen — Quellcode, Lizenz, Änderungsprotokoll und Dokumentation anzeigen"
+      aria-label="GitHub Repository öffnen (öffnet in einem neuen Tab)"
+    >
+      <ion-icon name="logo-github" slot="start"></ion-icon>
+      {{ "MAIN.ACCORDION.SHOW_SOURCE_CODE" | translate }}
+    </ion-button>
+  </div>
+</ng-template>

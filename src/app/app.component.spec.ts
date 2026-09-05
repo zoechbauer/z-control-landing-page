@@ -8,8 +8,8 @@ import {
 import { IonicModule, Platform, NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';

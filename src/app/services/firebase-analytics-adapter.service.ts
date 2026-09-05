@@ -6,7 +6,7 @@ import {
   logEvent,
   setAnalyticsCollectionEnabled,
 } from 'firebase/analytics';
-import { environment } from '../../environments/environment';
+import { environment } from '@env/environment';
 
 export const FIREBASE_APP_INIT = new InjectionToken('FIREBASE_APP_INIT', {
   factory: () => initializeApp,

@@ -5,21 +5,22 @@ import { IonContent, IonicModule } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 
 import { environment } from '@env/environment';
-import { LogoType, Tab } from '../shared/enums';
+import { LogoType, Tab } from '@app/shared/enums';
+import { APP_KEYS, AppKey, APPS } from '@app/shared/GitHubConstants';
+import {
+  HeaderComponent,
+  LanguageAccordionComponent,
+  FeedbackAccordionComponent,
+  ChangeLogAccordionComponent,
+  GetSourceAccordionComponent,
+  PrivacyPolicyAccordionComponent,
+  SpinnerComponent,
+  GetGithubAnalyticsAccordionComponent,
+  FirebaseAnalyticsAccordionComponent,
+} from '@ui';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UtilsService } from '../services/utils.service';
-import { HeaderComponent } from '../ui/components/header/header.component';
-import { LanguageAccordionComponent } from '../ui/components/accordions/language-accordion.component';
-import { FeedbackAccordionComponent } from '../ui/components/accordions/feedback-accordion.component';
-import { ChangeLogAccordionComponent } from '../ui/components/accordions/change-log-accordion.component';
-import { GetSourceAccordionComponent } from '../ui/components/accordions/get-source-accordion.component';
-import { PrivacyPolicyAccordionComponent } from '../ui/components/accordions/privacy-policy-accordion.component';
-import { SpinnerComponent } from '../ui/components/spinner/spinner.component';
-import { APPS } from '../shared/GitHubConstants';
-import { GetGithubAnalyticsAccordionComponent } from '../ui/components/accordions/get-github-analytics-accordion.component';
-import { FirebaseAnalyticsAccordionComponent } from '../ui/components/accordions/firebase-analytics-accordion.component';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
-import { ToastService } from '../services/toast-EN.service';
 
 // Single source of truth for settings accordion IDs.
 // Add new accordion IDs here when extending the settings page.
@@ -58,11 +59,11 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly localStorageService = inject(LocalStorageService);
   readonly utilsService = inject(UtilsService);
   private readonly fa = inject(FirebaseAnalyticsService);
-  private readonly toastService = inject(ToastService);
 
   private readonly validAccordionValues = new Set<AccordionValue>(
     ACCORDION_VALUES,
   );
+  readonly LANDING_PAGE_APP_KEY = APP_KEYS.LANDING_PAGE;
   openAccordion: AccordionValue | null = null;
   showAllAccordions = true;
   selectedLanguage!: string;
@@ -73,8 +74,11 @@ export class SettingsPage implements OnInit, OnDestroy {
   isAnalyticsEnabled = false;
   private readonly subscriptions: Subscription[] = [];
 
-  get appName(): string {
-    return environment.app.name;
+  /**
+   * Returns the app name for the landing page.
+   */
+  get displayLandingPageAppName(): string {
+    return APPS[APP_KEYS.LANDING_PAGE];
   }
 
   /**
@@ -111,7 +115,6 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.showAllAccordions = true;
     this.setupSubscriptions();
     this.utilsService.showOrHideIonTabBar();
-    this.setupEventListeners();
     this.getIsAnalyticsAllowed();
   }
 
@@ -143,12 +146,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   private openFirebaseAnalyticsAccordion() {
     this.openAccordion = null;
     this.openAccordion = 'firebase-analytics';
-  }
-
-  private setupEventListeners(): void {
-    window.addEventListener('resize', () => {
-      this.utilsService.showOrHideIonTabBar();
-    });
   }
 
   private async getIsAnalyticsAllowed() {
@@ -201,7 +198,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   async openChangelog() {
-    const selectedAccordion = APPS.LANDING_PAGE as keyof typeof APPS;
+    const selectedAccordion = APP_KEYS.LANDING_PAGE as AppKey;
     this.utilsService.openChangelog(selectedAccordion);
   }
 

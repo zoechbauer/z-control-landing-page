@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 import { LocalStorageService } from './local-storage.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ModalController } from '@ionic/angular';
 import { UtilsService } from './utils.service';
 
 describe('LocalStorageService', () => {

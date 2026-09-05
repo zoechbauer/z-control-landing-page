@@ -7,16 +7,15 @@ import {
 } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
 import { ToastService } from '@app/services/toast-EN.service';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { APPS } from '@app/shared/GitHubConstants';
-import { ToastAnchor } from '@app/shared/enums';
-import { FirebaseAnalyticsAccordionComponent } from './firebase-analytics-accordion.component';
-import { TranslateService } from '@ngx-translate/core';
+import { FirebaseAnalyticsAccordionComponent } from '@ui/components/accordions/firebase-analytics-accordion.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 describe('FirebaseAnalyticsAccordionComponent', () => {
@@ -27,14 +26,17 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
   let activatedRouteSpy: any;
+  let enabledSubject: Subject<boolean>;
 
   beforeEach(waitForAsync(() => {
     toastServiceSpy = jasmine.createSpyObj('ToastService', ['showToast']);
+
     localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', [
       'getItem',
       'setItem',
       'setAnalyticsConsent',
     ]);
+
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'onLogoClicked',
       'logoClicked$',
@@ -42,11 +44,15 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
       'openChangelog',
     ]);
     utilsServiceSpy.logoClicked$ = of(false);
+
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
       'FirebaseAnalyticsService',
       ['logEvent', 'enableCollection'],
     );
-    firebaseAnalyticsServiceSpy.enabled$ = of(false);
+    enabledSubject = new Subject<boolean>();
+    firebaseAnalyticsServiceSpy.enabled$ = enabledSubject.asObservable();
+    enabledSubject.next(false);
+
     activatedRouteSpy = {
       snapshot: {
         queryParams: {},
@@ -115,6 +121,22 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
           firebaseAnalyticsServiceSpy.enableCollection,
         ).toHaveBeenCalledWith(false);
       }));
+
+      it('should show a toast analytics enabled when toggling analytics', () => {
+        component.isAnalyticsEnabled = false;
+        component.onChangeEnableAnalytics(true);
+        expect(toastServiceSpy.showToast).toHaveBeenCalledWith(
+          'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_ENABLED'
+        );
+      });
+
+      it('should show a toast analytics disabled when toggling analytics', () => {
+        component.isAnalyticsEnabled = true;
+        component.onChangeEnableAnalytics(false);
+        expect(toastServiceSpy.showToast).toHaveBeenCalledWith(
+          'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_DISABLED'
+        );
+      });
     });
 
     describe('enabled subscription', () => {
@@ -176,30 +198,41 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
 
     describe('firebase analytics', () => {
       it('should show the enable analytics toggle text when firebase analytics is disabled', async () => {
-        component.isAnalyticsEnabled = false;
+        const toggle = fixture.nativeElement.querySelector(
+          '[data-testid="enable-analytics"] ion-toggle',
+        ) as HTMLButtonElement;
+        toggle.dispatchEvent(
+          new CustomEvent('ionChange', { detail: { checked: false } }),
+        );
+        enabledSubject.next(false);
         fixture.detectChanges();
         await fixture.whenStable();
         const analyticsToggleText = fixture.nativeElement.querySelector(
           '[data-testid="enable-analytics"]',
         );
 
-        expect(analyticsToggleText.textContent).toContain('SETTINGS.FIREBASE_ANALYTICS.ENABLE_ANALYTICS');
+        expect(analyticsToggleText.textContent).toContain(
+          'SETTINGS.FIREBASE_ANALYTICS.ENABLE_ANALYTICS',
+        );
       });
 
       it('should show the disable analytics toggle text when firebase analytics is enabled', async () => {
-        firebaseAnalyticsServiceSpy.enabled$ = of(true);
+        const toggle = fixture.nativeElement.querySelector(
+          '[data-testid="enable-analytics"] ion-toggle',
+        ) as HTMLButtonElement;
+        toggle.dispatchEvent(
+          new CustomEvent('ionChange', { detail: { checked: true } }),
+        );
+        enabledSubject.next(true);
         fixture.detectChanges();
         await fixture.whenStable();
         const analyticsToggleText = fixture.nativeElement.querySelector(
           '[data-testid="enable-analytics"]',
         );
 
-        expect(analyticsToggleText.textContent).toContain('SETTINGS.FIREBASE_ANALYTICS.ENABLE_ANALYTICS');
-
-        const analyticsToggleButton = fixture.nativeElement.querySelector(
-          '[data-testid="enable-analytics"] ion-toggle',
+        expect(analyticsToggleText.textContent).toContain(
+          'SETTINGS.FIREBASE_ANALYTICS.DISABLE_ANALYTICS',
         );
-        expect(analyticsToggleButton).toBeTruthy();
       });
     });
   });

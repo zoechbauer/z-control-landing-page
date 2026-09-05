@@ -1,541 +1,790 @@
-<ion-accordion
-  [disabled]="!isAnalyticsEnabled"
-  value="I2T: Image to Text"
-  title="{{
-    parameters?.appSectionParameters?.currentMainAccordion === 'I2T'
-      ? 'Collapse z-control Image to Text section'
-      : 'Expand z-control Image to Text section'
-  }}"
+<ng-container
+  *ngIf="
+    this.parameters?.appSectionParameters?.selectedLanguage === 'de';
+    else englishTemplate
+  "
 >
-  <ion-item slot="header" color="light">
-    <img
-      class="z-control-image-to-text-logo"
-      src="assets/icon/z-control-image-to-text-logo-32px.png"
-      alt="z-control Image to Text Logo"
-    />
-    <ion-label>z-control Image to Text App</ion-label>
-    <ion-label *ngIf="showBackendFunctionsInfo"
-      >uses z-control Backend Functions</ion-label
-    >
-    <ion-icon
-      name="cloudy-outline"
-      title="Uses z-control Backend Functions"
-    ></ion-icon>
-  </ion-item>
-  <div slot="content" title="">
-    <ion-card color="dark">
-      <ion-card-header>
-        <ion-card-title>What the app does</ion-card-title>
-      </ion-card-header>
-      <ion-card-content class="summarized-app-content">
-        <p>
-          <strong
-            >The <i>z&#8209;control Image to Text</i> app allows you to extract
-            text from images.</strong
-          >
-        </p>
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
 
-        <p>
-          You can take a photo or select an image from your device. The app
-          recognizes the text contained in the image using optical character
-          recognition (OCR) and then displays it with statistics such as the
-          number of words, lines, and characters.
-        </p>
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
 
-        <p>
-          The data are automatically stored locally on your device. The data is
-          not stored in the cloud, and you can view, edit, copy, share, or
-          delete saved entries at any time.
-        </p>
-
-        <h2>✨ Highlights:</h2>
-        <ul>
-          <li>
-            <strong>Recognize text in images</strong><br />
-            The app recognizes the text contained in the image and displays the
-            result with statistics such as the number of words, lines, and
-            characters.
-          </li>
-          <li>
-            <strong>Add additional information</strong><br />
-            Optional add a title and a description to describe the photo.
-          </li>
-          <li>
-            <strong>Manage history</strong><br />
-            View previously processed images and their associated information.
-            You can edit or delete individual entries or the entire history.
-          </li>
-          <li>
-            <strong>Copy and share data</strong><br />
-            Choose whether you want to copy / share the image, title,
-            description, recognized text, text statistics, and creation and
-            modification dates.
-          </li>
-          <li>
-            <strong>Status display</strong><br />
-            The status display guides you step by step through the processing
-            procedure.
-          </li>
-          <li>
-            <strong>App language</strong><br />
-            You can choose German or English as the app language.
-          </li>
-        </ul>
-        <app-open-source></app-open-source>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-accordion-group (ionChange)="subAccordionChange($event)">
-      <ion-accordion
-        value="I2T: Limitations and Monthly Quotas"
-        title="{{ getAccordionTooltip('I2T: Limitations and Monthly Quotas') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>What are the limitations and monthly quotas?</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div class="limitations-info">
-            <h5>Limitations:</h5>
-            <p>
-              <strong>
-                All users can collectively process a maximum of:
-                {{
-                  parameters?.maxImageProcessingTotalPerMonth
-                    | number: "1.0-0" : "en"
-                }}
-                images per month.
-              </strong>
-              If this quota is exceeded, costs will be incurred for
-              <i>z&#8209;control</i>.
-            </p>
-            <p>
-              To manage this shared quota,
-              <strong
-                >each user is limited to processing a maximum of
-                {{
-                  parameters?.maxImageProcessingUserPerMonth
-                    | number: "1.0-0" : "en"
-                }}
-                images per month</strong
-              >, ensuring fair access for all users.
-            </p>
-            <p>
-              <strong>
-                Since image processing is a paid service, quotas are necessary.
-                The app will notify you well in advance when approaching the
-                limit and will prevent further image processing once the monthly
-                quota is exhausted.
-              </strong>
-            </p>
-            <p>
-              Whenever you reach the monthly quota, you can continue to use the
-              app for free, but image processing will be disabled until the
-              quota resets on the 1st of the next month. You can always view,
-              edit, copy, and share previously processed images and their
-              associated information.
-            </p>
-          </div>
-          <div>
-            <h5>How do I check my monthly translation quota?</h5>
-            <p><i>On the image processing page</i></p>
-            <p>
-              Your current image processing quota is displayed at the bottom of
-              the image processing page in an expandable
-              <i>Monthly Quota</i> section.
-            </p>
-            <p><i>On the Statistics page in Settings</i></p>
-            <p>
-              View detailed, anonymized statistics showing the overall monthly
-              quota usage and device information across all users. All data is
-              aggregated to protect your privacy.
-            </p>
-          </div>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Differences between Web and Mobile App"
-        title="{{
-          getAccordionTooltip('I2T: Differences between Web and Mobile App')
-        }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Differences between Web and Mobile App</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <h5>Mobile version / native app</h5>
-
+<ng-template #englishTemplate>
+  <ion-accordion
+    [disabled]="!isAnalyticsEnabled"
+    value="I2T: Image to Text"
+    title="{{ getAccordionTooltip('I2T', false) }}"
+  >
+    <ion-item slot="header" color="light">
+      <img
+        class="z-control-image-to-text-logo"
+        src="assets/icon/z-control-image-to-text-logo-32px.png"
+        alt="z-control App Logo"
+      />
+      <ion-label>{{ APPS.IMAGE_TO_TEXT }}</ion-label>
+      <ion-label *ngIf="!this.utilsService.isSmallScreen">{{
+        "MAIN.ACCORDION.USES_BACKEND" | translate
+      }}</ion-label>
+      <ion-icon
+        name="cloudy-outline"
+        title="{{ 'MAIN.ACCORDION.USES_BACKEND' | translate }}"
+      ></ion-icon>
+    </ion-item>
+    <div slot="content" title="">
+      <ion-card color="dark">
+        <ion-card-header>
+          <ion-card-title>{{
+            "MAIN.ACCORDION.WHAT_DOES_APP_DO" | translate
+          }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="summarized-app-content">
           <p>
-            The native app is currently available only as a test version for a
-            limited number of users. Access requires an email request to
-            z&#8209;control.
-          </p>
-          <p>JPEG images can currently only be copied in the native app.</p>
-          <p>Taking photos is generally easier with a mobile device.</p>
-          <p>
-            In the native app, the selected data can be sent directly to another
-            app using the sharing function.
-          </p>
-
-          <h5>Web version</h5>
-
-          <p>
-            The web version does not need to be installed and can be used
-            directly in a browser.
-          </p>
-          <p>
-            When using the web version on a PC or notebook, PNG images taken
-            with the camera can be copied.
-          </p>
-          <p>
-            When using the web version in a mobile browser, images currently
-            cannot be copied. However, the recognized text, title, description,
-            and creation and modification dates can be copied.
-          </p>
-          <p><strong>IMPORTANT</strong></p>
-          <p>
-            When accessing the <strong>web version on your phone</strong>,
-            ensure it displays in <strong>mobile mode</strong> (not desktop
-            mode) for optimal experience. Mobile mode provides a native app-like
-            interface and enables voice input through your keyboard.
-          </p>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Start Web App"
-        title="{{ getAccordionTooltip('I2T: Start Web App') }}"
-      >
-        <ion-item slot="header" color="light">
-          <h4>Try the Web App (No Installation Required)</h4>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>
-            Explore the z&#8209;control Image to Text app directly in your
-            browser.
-          </div>
-
-          <p>
-            Take a photo or select an image from your device, and experience
-            extracting text from images, adding titles and descriptions, and
-            utilizing copy and share features in real time.
-          </p>
-
-          <p>
-            The web app allows you to test the extraction workflow, quota
-            management system, and user interface without installing any
-            software.
-          </p>
-
-          <p>
-            <strong>Open the app on desktop, tablet, or mobile devices</strong>
-            to explore its features and functionality.
-          </p>
-
-          <div class="button-wrapper">
-            <ion-button
-              (click)="onOpenWebApp()"
-              color="secondary"
-              expand="block"
-              class="web-app-button"
-              title="Open Web App in a new tab"
+            <strong
+              >The <i>z&#8209;control Image to Text</i> app allows you to
+              extract text from an image.</strong
             >
-              <ion-icon name="logo-firebase" slot="start"></ion-icon>
-              Open Web App
-            </ion-button>
-          </div>
-          <div class="firebase-note">
-            <ion-icon name="logo-firebase"></ion-icon>
-            Hosted on Google Firebase
-          </div>
-
-          <div class="help-tip">
-            <p>
-              <strong>Need Help?</strong> Click the <strong>?</strong> icon
-              within the app to access online help and feature documentation.
-            </p>
-
-            <h6>Using Voice Input</h6>
-
-            <p>
-              <strong>Windows:</strong> Activate voice input using Windows
-              Dictation (<i>Windows + H</i>).
-            </p>
-
-            <p>
-              <strong>Mobile Devices:</strong> Use your keyboard's built-in
-              voice input. For the best experience, ensure the website is
-              displayed in mobile mode rather than desktop mode.
-            </p>
-          </div>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Get Mobile App"
-        title="{{ getAccordionTooltip('I2T: Get Mobile App') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Get the Mobile App</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <h5>
-            <ion-icon name="cloud-download"></ion-icon>
-            Download the Native Android App
-          </h5>
-          <h5>
-            <ion-icon name="mail-outline" class="margin-right"></ion-icon>
-            <b>Limited Availability - Beta Testing Only</b>
-          </h5>
-          <p>
-            Due to the free tier limit of processing
-            <b
-              >{{
-                parameters?.maxImageProcessingTotalPerMonth
-                  | number: "1.0-0" : "en-US"
-              }}
-              images per month</b
-            >
-            on the <i>Google Cloud Vision API for text recognition</i>, we
-            cannot offer the app publicly. It is currently available only to a
-            limited number of beta testers.
-          </p>
-          <p>
-            <strong>Want to join?</strong> Send us your email address via
-            <b>Send Us Feedback</b> to be added to the beta testing group.
-            You'll then receive access to install the test version from Google
-            Play Store.
           </p>
 
           <p>
-            <ion-icon name="checkmark"></ion-icon>
-            <strong>100% Free</strong> •
-            <ion-icon name="lock-closed"></ion-icon>
-            <strong>No Registration Required</strong> •
-            <ion-icon name="phone-portrait"></ion-icon>
-            <strong>Optimized for Mobile</strong>
+            You can take a photo or select an image from your device. The app
+            recognizes the text contained in the image using optical character
+            recognition (OCR) and then displays it with statistics such as the
+            number of words, lines, and characters.
           </p>
 
-          <div class="button-wrapper">
-            <ion-button
-              (click)="onDownloadNative()"
-              color="primary"
-              expand="block"
-              class="download-button"
-              title="Download the native Android app from the Google Play Store"
-            >
-              <ion-icon name="logo-google-playstore" slot="start"></ion-icon>
-              Download Native App
-            </ion-button>
-          </div>
-
-          <div class="platform-note">
-            <strong>Using a PC/Desktop?</strong> This is an Android mobile app.
-            For computer users, try our
-            <a
-              href="https://z-control-image-to-text.web.app"
-              target="_blank"
-              class="web-app-link"
-              title="Open Web App in a new tab"
-            >
-              <strong>Web App</strong>
-            </a>
-            instead - it works in any browser!
-          </div>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Inline Help"
-        title="{{ getAccordionTooltip('I2T: Inline Help') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Inline Help</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <h5>
-            <ion-icon name="book"></ion-icon>
-            Comprehensive Help & Tutorials
-          </h5>
           <p>
-            Both the <i>Web App</i> and <i>Android App</i> include detailed
-            inline help accessible by clicking the <strong>?</strong> icon in
-            the top right corner.
+            The data are automatically stored locally on your device. The data
+            is not stored in the cloud, and you can view, edit, copy, share, or
+            delete saved entries at any time.
           </p>
-          <p>
-            <ion-icon name="checkmark"></ion-icon>
-            <strong>Note:</strong> The tutorial is specific to the version you
-            are using. Information relevant to mobile apps is omitted in the
-            web-app help, and web-app specific guidance is omitted in the
-            mobile-app help.
-          </p>
-          <h6>
-            <ion-icon name="library"></ion-icon>
-            Help Topics Covered:
-          </h6>
+
+          <h2>✨ Highlights:</h2>
           <ul>
             <li>
-              <strong>What Can the App Do:</strong> Overview of the app's main
-              features, use cases, limitations, and monthly translation quotas.
+              <strong>Recognize text in images</strong><br />
+              The app recognizes the text contained in the image and displays
+              the result with statistics such as the number of words, lines, and
+              characters.
             </li>
             <li>
-              <strong>How to Use the App:</strong> Detailed instructions on
-              taking photos, selecting images, recognizing text, adding titles
-              and descriptions, copying and sharing data, managing history, and
-              checking image processing quotas.
+              <strong>Add additional information</strong><br />
+              Optional add a title and a description to describe the photo.
             </li>
             <li>
-              <strong>Web Version versus Mobile Version:</strong> Benefits and
-              limitations of using the browser-based app versus the mobile app.
+              <strong>Manage history</strong><br />
+              View previously processed images and their associated information.
+              You can edit or delete individual entries or the entire history.
             </li>
             <li>
-              <strong>Technical Information:</strong> Information about Google
-              Cloud Vision API for text recognition.
+              <strong>Copy and share data</strong><br />
+              Choose whether you want to copy / share the image, title,
+              description, recognized text, text statistics, and creation and
+              modification dates.
             </li>
             <li>
-              <strong>Troubleshooting:</strong> Solutions for common issues and
-              tips for reliable operation (only available on the mobile
-              version).
+              <strong>Status display</strong><br />
+              The status display guides you step by step through the processing
+              procedure.
+            </li>
+            <li>
+              <strong>App language</strong><br />
+              You can choose German or English as the app language.
             </li>
           </ul>
+          <app-open-source-apps
+            [selectedLanguage]="
+              parameters!.appSectionParameters.selectedLanguage
+            "
+          ></app-open-source-apps>
+        </ion-card-content>
+      </ion-card>
 
-          <h6>
-            <ion-icon name="globe"></ion-icon>
-            Try the Interactive Help:
-          </h6>
+      <ion-accordion-group (ionChange)="subAccordionChange($event)">
+        <ion-accordion
+          value="I2T: Limitations and Monthly Quotas"
+          title="{{
+            getAccordionTooltip('I2T: Limitations and Monthly Quotas')
+          }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.LIMITATIONS_AND_QUOTAS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <div class="limitations-info">
+              <h5>Limitations:</h5>
+              <p>
+                <strong>
+                  All users can collectively process a maximum of:
+                  {{
+                    parameters?.maxImageProcessingTotalPerMonth
+                      | number: "1.0-0" : "en"
+                  }}
+                  images per month.
+                </strong>
+                If this quota is exceeded, costs will be incurred for
+                <i>z&#8209;control</i>.
+              </p>
+              <p>
+                To manage this shared quota,
+                <strong
+                  >each user is limited to processing a maximum of
+                  {{
+                    parameters?.maxImageProcessingUserPerMonth
+                      | number: "1.0-0" : "en"
+                  }}
+                  images per month</strong
+                >, ensuring fair access for all users.
+              </p>
+              <p>
+                <strong>
+                  Since image processing is a paid service, quotas are
+                  necessary. The app will notify you well in advance when
+                  approaching the limit and will prevent further image
+                  processing once the monthly quota is exhausted.
+                </strong>
+              </p>
+              <p>
+                Whenever you reach the monthly quota, you can continue to use
+                the app for free, but image processing will be disabled until
+                the quota resets on the 1st of the next month. You can always
+                view, edit, copy, and share previously processed images and
+                their associated information.
+              </p>
+            </div>
+            <div>
+              <h5>How do I check my monthly translation quota?</h5>
+              <p><i>On the image processing page</i></p>
+              <p>
+                Your current image processing quota is displayed at the bottom
+                of the image processing page in an expandable
+                <i>Monthly Quota</i> section.
+              </p>
+              <p><i>On the Statistics page in Settings</i></p>
+              <p>
+                View detailed, anonymized statistics showing the overall monthly
+                quota usage and device information across all users. All data is
+                aggregated to protect your privacy.
+              </p>
+            </div>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Differences between Web and Mobile App"
+          title="{{
+            getAccordionTooltip('I2T: Differences between Web and Mobile App')
+          }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.DIFFERENCES_WEB_MOBILE" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <h5>Mobile version / native app</h5>
+
+            <p>
+              The native app is currently available only as a test version for a
+              limited number of users. Access requires an email request to
+              z&#8209;control.
+            </p>
+            <p>JPEG images can currently only be copied in the native app.</p>
+            <p>Taking photos is generally easier with a mobile device.</p>
+            <p>
+              In the native app, the selected data can be sent directly to
+              another app using the sharing function.
+            </p>
+
+            <h5>Web version</h5>
+
+            <p>
+              The web version does not need to be installed and can be used
+              directly in a browser.
+            </p>
+            <p>
+              When using the web version on a PC or notebook, PNG images taken
+              with the camera can be copied.
+            </p>
+            <p>
+              When using the web version in a mobile browser, images currently
+              cannot be copied. However, the recognized text, title,
+              description, and creation and modification dates can be copied.
+            </p>
+            <p><strong>IMPORTANT</strong></p>
+            <p>
+              When accessing the <strong>web version on your phone</strong>,
+              ensure it displays in <strong>mobile mode</strong> (not desktop
+              mode) for optimal experience. Mobile mode provides a native
+              app-like interface and enables voice input through your keyboard.
+            </p>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Start Web App"
+          title="{{ getAccordionTooltip('I2T: Start Web App') }}"
+        >
+          <ion-item slot="header" color="light">
+            <h4>{{ "MAIN.ACCORDION.START_WEB_APP" | translate }}</h4>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <div>
+              Explore the z&#8209;control Image to Text app directly in your
+              browser.
+            </div>
+
+            <p>
+              Take a photo or select an image from your device, and experience
+              extracting text from images, adding titles and descriptions, and
+              utilizing copy and share features in real time.
+            </p>
+
+            <p>
+              The web app allows you to test the extraction workflow, quota
+              management system, and user interface without installing any
+              software.
+            </p>
+
+            <app-web-app-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-web-app-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Get Mobile App"
+          title="{{ getAccordionTooltip('I2T: Get Mobile App') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.DOWNLOAD_MOBILE_APP" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-mobile-app-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+              [maxImageProcessingTotalPerMonth]="
+                parameters!.maxImageProcessingTotalPerMonth
+              "
+            ></app-mobile-app-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Inline Help"
+          title="{{ getAccordionTooltip('I2T: Inline Help') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.INLINE_HELP" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-help-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-help-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Feedback"
+          title="{{ getAccordionTooltip('I2T: Feedback') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.FEEDBACK_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-feedback-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-feedback-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Privacy Policy"
+          title="{{ getAccordionTooltip('I2T: Privacy Policy') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.PRIVACY_POLICY_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-privacy-policy-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-privacy-policy-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Release Notes"
+          title="{{ getAccordionTooltip('I2T: Release Notes') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.CHANGE_LOG_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-change-log-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-change-log-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Get Source Code"
+          title="{{ getAccordionTooltip('I2T: Get Source Code') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.SHOW_SOURCE_CODE" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-source-code-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-source-code-apps>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </div>
+  </ion-accordion>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+<ng-template #germanTemplate>
+  <ion-accordion
+    [disabled]="!isAnalyticsEnabled"
+    value="I2T: Image to Text"
+    title="{{ getAccordionTooltip('I2T', false) }}"
+  >
+    <ion-item slot="header" color="light">
+      <img
+        class="z-control-image-to-text-logo"
+        src="assets/icon/z-control-image-to-text-logo-32px.png"
+        alt="z-control App Logo"
+      />
+      <ion-label>{{ APPS.IMAGE_TO_TEXT }}</ion-label>
+      <ion-label *ngIf="this.utilsService.isSmallScreen">{{
+        "MAIN.ACCORDION.USES_BACKEND" | translate
+      }}</ion-label>
+      <ion-icon
+        name="cloudy-outline"
+        title="{{ 'MAIN.ACCORDION.USES_BACKEND' | translate }}"
+      ></ion-icon>
+    </ion-item>
+    <div slot="content" title="">
+      <ion-card color="dark">
+        <ion-card-header>
+          <ion-card-title>{{
+            "MAIN.ACCORDION.WHAT_DOES_APP_DO" | translate
+          }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="summarized-app-content">
           <p>
-            Open the
-            <a
-              href="https://z-control-image-to-text.web.app"
-              target="_blank"
-              class="web-app-link"
-              title="Open z-control Image to Text as Web App in a new tab"
+            <strong
+              >Die <i>z‑control Image to Text</i> App ermöglicht es, Texte aus
+              einem Bild zu extrahieren.</strong
             >
-              <strong>Web App</strong>
-            </a>
-            and click the <strong>?</strong> icon to explore the full help
-            system. You can switch between <strong>English</strong> and
-            <strong>German</strong> by changing the language in the settings.
           </p>
 
-          <div class="comparison-note">
-            <ion-icon name="sunny"></ion-icon>
-            <strong>Pro Tip:</strong> The help includes a table of contents with
-            jump-to-section navigation for quick access to specific topics.
-          </div>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Feedback"
-        title="{{ getAccordionTooltip('I2T: Feedback') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Send Us Feedback</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>We value your feedback!</div>
           <p>
-            <ion-icon name="mail"></ion-icon>
-            If you have questions, suggestions, or comments, please contact us
-            at
-            <a
-              href="{{ getMailToLinkForFeedback() }}"
-              title="Open your email client with recipient and subject prefilled."
+            Sie können ein Foto aufnehmen oder ein Bild von Ihrem Gerät
+            auswählen. Die App erkennt mittels optischer Zeichenerkennung (OCR)
+            den im Bild enthaltenen Text und zeigt ihn zusammen mit Statistiken
+            wie Anzahl der Wörter, Zeilen und Zeichen an.
+          </p>
+
+          <p>
+            Die Daten werden automatisch lokal auf Ihrem Gerät gespeichert. Die
+            Daten werden nicht in die Cloud übernommen; Sie können gespeicherte
+            Einträge jederzeit ansehen, bearbeiten, kopieren, teilen oder
+            löschen.
+          </p>
+
+          <h2>✨ Highlights:</h2>
+          <ul>
+            <li>
+              <strong>Text in Bildern erkennen</strong><br />
+              Die App erkennt den im Bild enthaltenen Text und zeigt das
+              Ergebnis mit Statistiken wie Wortanzahl, Zeilen und Zeichen an.
+            </li>
+            <li>
+              <strong>Zusätzliche Informationen hinzufügen</strong><br />
+              Optional können Sie dem Foto einen Titel und eine Beschreibung
+              hinzufügen.
+            </li>
+            <li>
+              <strong>Verlauf verwalten</strong><br />
+              Betrachten Sie zuvor verarbeitete Bilder und die zugehörigen
+              Informationen. Einzelne Einträge oder der gesamte Verlauf können
+              bearbeitet oder gelöscht werden.
+            </li>
+            <li>
+              <strong>Daten kopieren und teilen</strong><br />
+              Wählen Sie aus, ob Sie das Bild, den Titel, die Beschreibung, den
+              erkannten Text, die Textstatistiken sowie Erstellungs‑ und
+              Änderungsdaten kopieren/teilen möchten.
+            </li>
+            <li>
+              <strong>Statusanzeige</strong><br />
+              Die Statusanzeige führt Sie Schritt für Schritt durch den
+              Verarbeitungsablauf.
+            </li>
+            <li>
+              <strong>App‑Sprache</strong><br />
+              Sie können Deutsch oder Englisch als App‑Sprache wählen.
+            </li>
+          </ul>
+          <app-open-source-apps
+            [selectedLanguage]="
+              parameters!.appSectionParameters.selectedLanguage
+            "
+          ></app-open-source-apps>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-accordion-group (ionChange)="subAccordionChange($event)">
+        <ion-accordion
+          value="I2T: Limitations and Monthly Quotas"
+          title="{{
+            getAccordionTooltip('I2T: Limitations and Monthly Quotas')
+          }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label
+              >Welche Einschränkungen und Monatskontingente gibt es?</ion-label
             >
-              z-control Support
-            </a>.
-          </p>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Privacy Policy"
-        title="{{ getAccordionTooltip('I2T: Privacy Policy') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Privacy Policy</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <p>
-            <ion-icon name="checkmark"></ion-icon>
-            Your privacy is important to us.
-          </p>
-          <p>
-            Please review our
-            <a
-              [routerLink]="privacyPolicyLink"
-              [queryParams]="{
-                from: parameters?.appSectionParameters?.selectedAccordion,
-                internal: 'true',
-                currentTab: Tab.MainFeature,
-              }"
-              title="Open Privacy Policy (English). Use the EN/DE language selector to view the German version. This link preserves your current section (returns you to the same place)."
-              >Privacy Policy
-              <ion-icon name="open-outline"></ion-icon>
-            </a>
-            to learn how we handle your data.
-          </p>
-        </div>
-      </ion-accordion>
-
-      <ion-accordion
-        value="I2T: Release Notes"
-        title="{{ getAccordionTooltip('I2T: Release Notes') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>What's new? (Release Notes)</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>
-            <ion-icon name="checkmark"></ion-icon>
-            All new features, improvements and bug fixes of the
-            <i>z&#8209;control Image to Text</i> app are tracked in
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <div class="limitations-info">
+              <h5>Einschränkungen:</h5>
+              <p>
+                <strong>
+                  Alle Nutzer gemeinsam können pro Monat maximal
+                  {{
+                    parameters?.maxImageProcessingTotalPerMonth
+                      | number: "1.0-0" : "en"
+                  }}
+                  Bilder verarbeiten.
+                </strong>
+                Wird dieses Kontingent überschritten, entstehen Kosten für
+                <i>z‑control</i>.
+              </p>
+              <p>
+                Zur Verwaltung dieses gemeinsamen Kontingents ist jeder Nutzer
+                auf maximal
+                <strong>
+                  {{
+                    parameters?.maxImageProcessingUserPerMonth
+                      | number: "1.0-0" : "en"
+                  }}
+                  Bilder pro Monat
+                </strong>
+                begrenzt, um einen fairen Zugriff für alle zu gewährleisten.
+              </p>
+              <p>
+                <strong>
+                  Da die Bildverarbeitung ein kostenpflichtiger Dienst ist, sind
+                  Kontingente erforderlich. Die App benachrichtigt Sie recht
+                  zeitig vor Erreichen des Limits und verhindert weitere
+                  Bildverarbeitungen, sobald das Monatskontingent erschöpft ist.
+                </strong>
+              </p>
+              <p>
+                Sobald Sie das Monatskontingent erreicht haben, können Sie die
+                App weiterhin kostenlos nutzen; die Bildverarbeitung wird jedoch
+                bis zum Reset des Kontingents am 1. des nächsten Monats
+                deaktiviert. Sie können stets zuvor verarbeitete Bilder und
+                deren Informationen anzeigen, bearbeiten, kopieren und teilen.
+              </p>
+            </div>
+            <div>
+              <h5>Wie überprüfe ich mein monatliches Kontingent?</h5>
+              <p><i>Auf der Bildverarbeitungsseite</i></p>
+              <p>
+                Ihr aktuelles Bildverarbeitungs‑Kontingent wird unten auf der
+                Bildverarbeitungsseite in einem aufklappbaren Abschnitt
+                <i>Monatliches Kontingent</i> angezeigt.
+              </p>
+              <p><i>Auf der Statistikseite in den Einstellungen</i></p>
+              <p>
+                Dort sehen Sie detaillierte, anonymisierte Statistiken zur
+                monatlichen Kontingentnutzung und Geräteinformationen. Alle
+                Daten werden aggregiert, um Ihre Privatsphäre zu schützen.
+              </p>
+            </div>
           </div>
-          <ion-button
-            fill="clear"
-            size="small"
-            (click)="onOpenChangelog()"
-            (keydown.enter)="onOpenChangelog()"
-            class="change-log-button"
-            title="Open release notes (changelog) — grouped by category and sorted newest first"
-          >
-            <ion-icon name="list" slot="start"></ion-icon>
-            Release Notes
-          </ion-button>
-        </div>
-      </ion-accordion>
+        </ion-accordion>
 
-      <ion-accordion
-        value="I2T: Get Source Code"
-        title="{{ getAccordionTooltip('I2T: Get Source Code') }}"
-      >
-        <ion-item slot="header" color="light">
-          <ion-label>Get the Source Code</ion-label>
-        </ion-item>
-        <div class="ion-padding accordion-content" slot="content" title="">
-          <div>
-            The app is open source, and the source code is available on
-            <i>GitHub</i>
-            so you can review how the app works and how your data is handled at
-            any time.
+        <ion-accordion
+          value="I2T: Differences between Web and Mobile App"
+          title="{{
+            getAccordionTooltip('I2T: Differences between Web and Mobile App')
+          }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.DIFFERENCES_WEB_MOBILE" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <h5>Mobile Version / native App</h5>
+
+            <p>
+              Die native App ist derzeit nur als Testversion für eine begrenzte
+              Anzahl von Benutzern verfügbar. Der Zugang erfordert eine
+              E‑Mail‑Anfrage an z‑control.
+            </p>
+            <p>
+              JPEG‑Bilder können momentan nur in der nativen App kopiert werden.
+            </p>
+            <p>
+              Das Aufnehmen von Fotos ist auf mobilen Geräten in der Regel
+              einfacher.
+            </p>
+            <p>
+              In der nativen App können ausgewählte Daten direkt an andere Apps
+              über die Freigabefunktion gesendet werden.
+            </p>
+
+            <h5>Web‑Version</h5>
+
+            <p>
+              Die Web‑Version muss nicht installiert werden und kann direkt im
+              Browser verwendet werden.
+            </p>
+            <p>
+              Bei Verwendung der Web‑Version auf PC oder Notebook können
+              PNG‑Bilder, die mit der Kamera aufgenommen wurden, kopiert werden.
+            </p>
+            <p>
+              Bei Nutzung der Web‑Version im mobilen Browser können Bilder
+              derzeit nicht kopiert werden. Der erkannte Text, Titel,
+              Beschreibung sowie Erstellungs‑ und Änderungsdaten können jedoch
+              kopiert werden.
+            </p>
+            <p><strong>WICHTIG</strong></p>
+            <p>
+              Wenn Sie die Web‑Version auf Ihrem Telefon öffnen, stellen Sie
+              sicher, dass sie im <strong>mobilen Modus</strong> (nicht
+              Desktop‑Modus) angezeigt wird, um die beste Benutzererfahrung zu
+              erhalten. Der mobile Modus bietet eine native App‑ähnliche
+              Oberfläche und ermöglicht Spracheingabe über Ihre Tastatur.
+            </p>
           </div>
-          <div class="button-wrapper">
-            <ion-button
-              (click)="onGetSourceCode()"
-              (keydown.enter)="onGetSourceCode()"
-              color="primary"
-              expand="block"
-              class="download-button"
-              title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
-              aria-label="Open GitHub repository (opens in a new tab)"
-            >
-              <ion-icon name="logo-github" slot="start"></ion-icon>
-              Get Source Code
-            </ion-button>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Start Web App"
+          title="{{ getAccordionTooltip('I2T: Start Web App') }}"
+        >
+          <ion-item slot="header" color="light">
+            <h4>{{ "MAIN.ACCORDION.START_WEB_APP" | translate }}</h4>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <div>
+              Entdecken Sie die z‑control Image to Text App direkt in Ihrem
+              Browser.
+            </div>
+
+            <p>
+              Machen Sie ein Foto oder wählen Sie ein Bild von Ihrem Gerät aus
+              und erleben Sie die Texterkennung in Bildern, das Hinzufügen von
+              Titeln und Beschreibungen sowie Kopier‑ und Freigabefunktionen in
+              Echtzeit.
+            </p>
+
+            <p>
+              Die Web‑App ermöglicht es Ihnen, den Erkennungsworkflow, das
+              Kontingentmanagement und die Benutzeroberfläche zu testen, ohne
+              Software installieren zu müssen.
+            </p>
+
+            <app-web-app-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-web-app-apps>
           </div>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-  </div>
-</ion-accordion>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Get Mobile App"
+          title="{{ getAccordionTooltip('I2T: Get Mobile App') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.DOWNLOAD_MOBILE_APP" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-mobile-app-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+              [maxImageProcessingTotalPerMonth]="
+                parameters!.maxImageProcessingTotalPerMonth
+              "
+            ></app-mobile-app-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Inline Help"
+          title="{{ getAccordionTooltip('I2T: Inline Help') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.INLINE_HELP" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-help-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-help-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Feedback"
+          title="{{ getAccordionTooltip('I2T: Feedback') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.FEEDBACK_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-feedback-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-feedback-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Privacy Policy"
+          title="{{ getAccordionTooltip('I2T: Privacy Policy') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.PRIVACY_POLICY_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-privacy-policy-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-privacy-policy-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Release Notes"
+          title="{{ getAccordionTooltip('I2T: Release Notes') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.CHANGE_LOG_APPS" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-change-log-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-change-log-apps>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion
+          value="I2T: Get Source Code"
+          title="{{ getAccordionTooltip('I2T: Get Source Code') }}"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "MAIN.ACCORDION.SHOW_SOURCE_CODE" | translate
+            }}</ion-label>
+          </ion-item>
+          <div class="ion-padding accordion-content" slot="content" title="">
+            <app-source-code-apps
+              [selectedLanguage]="
+                parameters!.appSectionParameters.selectedLanguage
+              "
+              [selectedAccordion]="
+                parameters!.appSectionParameters.selectedAccordion
+              "
+            ></app-source-code-apps>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </div>
+  </ion-accordion>
+</ng-template>

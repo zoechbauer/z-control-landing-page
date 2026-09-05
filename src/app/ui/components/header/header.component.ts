@@ -10,9 +10,9 @@ import {
 import { NgIf } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { LogoType, Tab } from './../../../shared/enums';
+import { LogoType, Tab } from '@app/shared/enums';
 import { UtilsService } from '@app/services/utils.service';
-import { LogoComponent } from '../logo/logo.component';
+import { LogoComponent } from '@ui/components/logo/logo.component';
 
 @Component({
   selector: 'app-header',

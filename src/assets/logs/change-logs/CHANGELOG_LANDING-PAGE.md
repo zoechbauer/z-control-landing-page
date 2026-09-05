@@ -2,30 +2,37 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
-## [4.0] - 2026-08-24
+## [4.0] - 2026-09-05
 
 ### ✨ New Features
 
-- Redesigned header to match other z-control apps, improving brand consistency and visual alignment across the z-control family.
-- Added a Settings component to the Landing Page that centralizes user preferences. The component is adapted from the z-control Image To Text app and includes English and German translations.
-- Added a Help page (ported from the z-control Ionic Setup app); removed the Quota Management and Mobile App sections that were not applicable.
-- Added translation files for the new Settings and Help pages (English and German).
+- Added a Settings component to the Landing Page that centralizes user preferences and previous footer content.
+- Added a Help page (ported from the z-control Ionic Setup app); removed the Quota Management and Mobile App sections that were not applicable. Note: the help page must be updated to reflect the landing page content accurately.
+- Added translation files for the home page,new Settings and Help page (English and German).
 - Moved the Github Analytics caller from the footer to a new accordion with explaining text, improving discoverability and user understanding of the feature.
+- Removed the previous footer component as its content has been moved to the new Settings component.
+- Redesigned header to match other z-control apps, improving brand consistency and visual alignment across the z-control family.
 
 ### 🚀 Improvements
 
 - Moved footer content into a dedicated "Feedback" accordion and removed the redundant footer component.
 - Accordions on the home page and settings are visually disabled when analytics are turned off, clarifying feature availability.
 - Removed the "switch language" button from the privacy policy page; language selection is now available via the Language accordion dropdown.
-- Analytics toggle now displays "Enable Firebase analytics" when disabled and "Disable Firebase analytics" when enabled. The toggle uses the standard color scheme and is placed in its own accordion for clearer context.
+- Analytics toggle now shows "Enable Firebase analytics" when off and "Disable Firebase analytics" when on. Changing the setting displays a contextual toast. The switch follows the standard color scheme and is placed in its own accordion for clearer context.
+- Improved wording in the privacy policy and analytics-related messages for better clarity and user understanding.
+- Improved changelog modal header: added a go-to-top button and adjusted the app title to one line in landscape and two lines in portrait for better readability.
 
 ### 🔧 Internal
 
 - Added follow-up tracking entries to `TODO-list-open-activities.md`.
 - Refactored the Landing Page app to improve code quality and maintainability.
-- Added unit tests for `privacy-viewer.component.ts` and `privacy.service.ts`; removed `privacy-debug.component.ts`.
+- Refactored import of ui components to use the `@ui` alias for improved maintainability and consistency across the codebase.
+- Refactored Firebase Analytics event logging: subcomponents now invoke firebaseAnalyticsService directly instead of emitting events to parent components for logging.
+- Consolidated the welcome message, the "analytics disabled" notice, the feedback, privacy policy, get native app, inline help and changelog into separate components to improve modularity and maintainability.
+- Improved Structure and maintainability of the privacy-related components and added unit tests for `privacy-viewer.component.ts` and `privacy.service.ts`; removed `privacy-debug.component.ts`.
 - Fixed timer handling and adjusted spy configurations in test beforeEach blocks to prevent side effects.
-- Updated unit tests for the new Settings and Help pages (355 specs, 99.34% statement coverage) to validate behavior and functionality.
+- Renamed the HomePage component to MainPage to better reflect its role as the primary landing page of the app, and to be consistent with the other z-control apps.
+- Updated unit tests for the new Settings and Help pages (325 specs, 95.26% statement coverage) to validate behavior and functionality. Some tests were updated to align with the new component structure and features; redundant tests were removed, and a small number of tests remain to be implemented.
 
 ## [3.8] - 2026-08-15
 

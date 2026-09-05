@@ -11,7 +11,7 @@ import {
   REPOS,
 } from '@app/shared/GitHubConstants';
 import { UtilsService } from '@app/services/utils.service';
-import { GithubAnalyticsDetailsComponent } from './github-analytics-details.component';
+import { GithubAnalyticsDetailsComponent } from '@ui/components/github-analytics-details/github-analytics-details.component';
 
 // Mock FirebaseFirestoreService to avoid real Firebase calls
 class MockFirebaseFirestoreService {
@@ -136,42 +136,6 @@ describe('GithubAnalyticsDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call checkOrientation on window resize', () => {
-    spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-      Promise.resolve(mockAnalyticsData),
-    );
-    const checkOrientationSpy = spyOn(component as any, 'checkOrientation');
-
-    window.dispatchEvent(new Event('resize'));
-    expect(checkOrientationSpy).toHaveBeenCalled();
-  });
-
-  describe('checkOrientation', () => {
-    it('should set isMobilePortrait to true when isSmallScreen and isPortrait are true', () => {
-      utilsServiceSpy.isSmallScreen = true;
-      utilsServiceSpy.isPortrait = true;
-
-      component['checkOrientation']();
-      expect(component.isMobilePortrait).toBeTrue();
-    });
-
-    it('should set isMobilePortrait to false when isSmallScreen is false', () => {
-      utilsServiceSpy.isSmallScreen = false;
-      utilsServiceSpy.isPortrait = true;
-
-      component['checkOrientation']();
-      expect(component.isMobilePortrait).toBeFalse();
-    });
-
-    it('should set isMobilePortrait to false when isPortrait is false', () => {
-      utilsServiceSpy.isSmallScreen = true;
-      utilsServiceSpy.isPortrait = false;
-
-      component['checkOrientation']();
-      expect(component.isMobilePortrait).toBeFalse();
-    });
-  });
-
   describe('onGetSourceCode', () => {
     let windowOpenSpy: jasmine.Spy;
 
@@ -245,37 +209,6 @@ describe('GithubAnalyticsDetailsComponent', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Error opening GitHub Analytics help document:',
         jasmine.any(Error),
-      );
-    });
-  });
-
-  describe('init', () => {
-    it('should call checkOrientation', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-        Promise.resolve(mockAnalyticsData),
-      );
-      const checkOrientationSpy = spyOn(
-        component as any,
-        'checkOrientation',
-      ).and.callThrough();
-
-      await (component as any).init();
-      expect(checkOrientationSpy).toHaveBeenCalled();
-    });
-
-    it('should add addEventListener for resize event', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-        Promise.resolve(mockAnalyticsData),
-      );
-      const addEventListenerSpy = spyOn(
-        globalThis.window,
-        'addEventListener',
-      ).and.callThrough();
-
-      await (component as any).init();
-      expect(addEventListenerSpy).toHaveBeenCalledWith(
-        'resize',
-        jasmine.any(Function),
       );
     });
   });

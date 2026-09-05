@@ -10,16 +10,12 @@ export const routes: Routes = [
       {
         path: 'main',
         loadComponent: () =>
-          import('../home/home.page').then(
-            (m) => m.HomePage
-          ),
+          import('@app/main/main.page').then((m) => m.MainPage),
       },
       {
         path: 'settings',
         loadComponent: () =>
-          import('../settings/settings.page').then(
-            (m) => m.SettingsPage
-          ),
+          import('@app/settings/settings.page').then((m) => m.SettingsPage),
       },
       {
         path: '',
@@ -28,7 +24,7 @@ export const routes: Routes = [
       },
     ],
   },
-    {
+  {
     path: 'privacy-policy',
     redirectTo: 'privacy/basic/en',
     pathMatch: 'full',
@@ -36,9 +32,9 @@ export const routes: Routes = [
   {
     path: 'privacy/:type/:language',
     loadComponent: () =>
-      import(
-        '../privacy/components/privacy-viewer/privacy-viewer.component'
-      ).then((m) => m.PrivacyViewerComponent),
+      import('@privacy/components/privacy-viewer/privacy-viewer.component').then(
+        (m) => m.PrivacyViewerComponent,
+      ),
   },
   {
     path: 'privacy/:type',
@@ -50,7 +46,7 @@ export const routes: Routes = [
     redirectTo: 'privacy/basic/en',
     pathMatch: 'full',
   },
-    {
+  {
     path: '',
     redirectTo: '/tabs/main',
     pathMatch: 'full',

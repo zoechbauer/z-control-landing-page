@@ -8,7 +8,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 
-import { MarkdownViewerComponent } from './markdown-viewer.component';
+import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
 
 describe('MarkdownViewerComponent', () => {
   let component: MarkdownViewerComponent;

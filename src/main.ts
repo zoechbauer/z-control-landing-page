@@ -1,8 +1,11 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 import { addIcons } from 'ionicons';
 import {
     appsOutline,
     arrowBackOutline,
+    arrowUpOutline,
     book,
     checkmark,
     cloud,
@@ -47,10 +50,11 @@ import {
     settingsOutline,
     helpOutline,
     openOutline,
+    languageOutline,
 } from 'ionicons/icons';
 
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { appConfig } from '@app/app.config';
+import { AppComponent } from '@app/app.component';
 
 // Register Ionicons used in the application
 addIcons({
@@ -58,6 +62,7 @@ addIcons({
   'apps-outline': appsOutline,
   'arrow-back': arrowBack,
   'arrow-back-outline': arrowBackOutline,
+  'arrow-up-outline': arrowUpOutline,
   book: book,
   checkmark: checkmark,
   'chevron-back-outline': chevronBackOutline,
@@ -82,6 +87,7 @@ addIcons({
   home: home,
   information: information,
   'information-circle': informationCircle,
+  'language-outline': languageOutline,
   library: library,
   list: list,
   'list-outline': listOutline,
@@ -103,5 +109,8 @@ addIcons({
   'trash-outline': trashOutline,
   warning: warning,
 });
+
+// Register German locale data for number/date pipes
+registerLocaleData(localeDe, 'de-DE');
 
 bootstrapApplication(AppComponent, appConfig);
