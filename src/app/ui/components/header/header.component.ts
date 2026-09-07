@@ -1,14 +1,18 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { Component, Input, inject } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
   IonButtons,
   IonButton,
   IonIcon,
+  IonTitle,
 } from '@ionic/angular/standalone';
+import { NgIf } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { LogoType, Tab } from '@app/shared/enums';
 import { UtilsService } from '@app/services/utils.service';
+import { LogoComponent } from '@ui/components/logo/logo.component';
 
 @Component({
   selector: 'app-header',
@@ -16,46 +20,67 @@ import { UtilsService } from '@app/services/utils.service';
   styleUrls: ['./header.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    RouterModule,
+    TranslateModule,
     IonHeader,
     IonToolbar,
     IonButtons,
     IonButton,
     IonIcon,
+    IonTitle,
+    NgIf,
+    LogoComponent,
   ],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  private readonly router = inject(Router);
-  private readonly utilsService = inject(UtilsService);
+export class HeaderComponent {
+  translate = inject(TranslateService);
+  readonly utilsService = inject(UtilsService);
 
-  public isMobile = false;
-  private resizeHandler?: () => void;
-
-  @Input() selectedAccordion: string = '';
+  @Input() currentTab!: Tab;
   @Input() showBackButton: boolean = false;
 
-  ngOnInit(): void {
-    this.isMobile = globalThis.window.innerWidth <= 600;
+  LogoType = LogoType;
+  Tab = Tab;
 
-    this.resizeHandler = () => {
-      this.isMobile = globalThis.window.innerWidth <= 600;
-    };
-    globalThis.window.addEventListener('resize', this.resizeHandler);
+  get isLargeScreen(): boolean {
+    return !this.utilsService.isSmallScreen;
   }
 
-  goBack() {
-    this.router.navigate(['/home']);
+  get onMainFeatureTab(): boolean {
+    return this.currentTab === Tab.MainFeature;
   }
 
-  openFooter() {
-    // firebase analytics event handled in footer component
-    this.utilsService.onLogoClicked();
+  get onSettingsTab(): boolean {
+    return this.currentTab === Tab.Settings;
   }
 
-  ngOnDestroy(): void {
-    if (this.resizeHandler) {
-      globalThis.window.removeEventListener('resize', this.resizeHandler);
-    }
+  get hideTabsBar(): boolean {
+    return !this.utilsService.isShowIonTabBar;
+  }
+
+  goToSettings() {
+    this.utilsService.navigateToTab(Tab.Settings);
+  }
+
+  goToMainFeature() {
+    this.utilsService.navigateToTab(Tab.MainFeature);
+  }
+
+  goToSettingsAndOpenFeedback() {
+    this.utilsService.navigateToTabWithParams(Tab.Settings, {
+      open: 'z-control',
+    });
+    setTimeout(() => {
+      this.utilsService.logoClickedSub.next(true);
+    }, 500);
+  }
+
+  openHelpModal(): Promise<void> {
+    return this.utilsService.openHelpModal();
+  }
+
+  goBack(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.utilsService.navigateToTab(this.currentTab);
   }
 }

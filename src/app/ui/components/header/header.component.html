@@ -1,46 +1,64 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start" class="back-button">
-      @if (showBackButton) {
-      <ion-button 
+<ion-header class="app-header" [class.landscape]="!utilsService.isPortrait">
+  <ion-toolbar color="primary" [class.landscape]="!utilsService.isPortrait">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="showBackButton"
+        name="go-back"
         fill="clear"
-        (click)="goBack()"
-        (keydown.enter)="goBack()"
-        title="Go back"
+        (click)="goBack($event)"
+        (keydown.enter)="goBack($event)"
+        title="{{ 'HEADER.TOOLTIP.GO_BACK' | translate }}"
+        ><ion-icon name="arrow-back-outline" slot="icon-only" ></ion-icon>
+        </ion-button
       >
-        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-      </ion-button>
-      }
+      <app-logo
+        [type]="LogoType.Company"
+        (click)="goToSettingsAndOpenFeedback()"
+        (keydown.enter)="goToSettingsAndOpenFeedback()"
+        (keydown.space)="goToSettingsAndOpenFeedback()"
+        title="{{ 'HEADER.TOOLTIP.OPEN_FEEDBACK' | translate }}"
+      ></app-logo>
     </ion-buttons>
-
-    <div class="header-flex-row">
-      <div class="logo-container"
-        (click)="openFooter()"
-        (keydown.enter)="openFooter()"
-        [class.with-back-button]="showBackButton"
-        tabindex="0"
-        role="button"
-        title="Toggle footer — show or hide information about z-control and this app"
+    <ion-title *ngIf="onMainFeatureTab">
+      <b>{{
+        !isLargeScreen
+          ? ("HEADER.CURRENT_PAGE.MAIN_SHORT" | translate)
+          : ("HEADER.CURRENT_PAGE.MAIN_LONG" | translate)
+      }}</b>
+    </ion-title>
+    <ion-title *ngIf="onSettingsTab">
+      <ion-title>{{ "SETTINGS.TITLE" | translate }}</ion-title>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        *ngIf="hideTabsBar && onMainFeatureTab"
+        (click)="goToSettings()"
+        (keydown.enter)="goToSettings()"
+        (keydown.space)="goToSettings()"
+        title="{{ 'HEADER.TOOLTIP.GOTO_SETTINGS' | translate }}"
+        fill="clear"
       >
-        <img
-          class="logo"
-          src="assets/icon/z-control-logo-32px.png"
-          alt="z-control logo"
-        />
-        <span class="logo-title">z-control</span>
-      </div>
-      <div class="center-title">
-        <span class="app-title">Apps & Tools</span>
-      </div>
-      <div class="selected-accordion-container">
-        @if (selectedAccordion) {
-        <span
-          class="selected-accordion"
-          title="selected accordion"
-          >{{ selectedAccordion }}</span
-        >
-        }
-      </div>
-    </div>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngIf="hideTabsBar && onSettingsTab"
+        (click)="goToMainFeature()"
+        (keydown.enter)="goToMainFeature()"
+        (keydown.space)="goToMainFeature()"
+        title="{{ 'HEADER.TOOLTIP.GOTO_MAIN' | translate }}"
+        fill="clear"
+      >
+        <ion-icon name="apps-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+        class="icon-color"
+        fill="clear"
+        (click)="openHelpModal()"
+        (keydown.enter)="openHelpModal()"
+        (keydown.space)="openHelpModal()"
+        title="{{ 'HEADER.TOOLTIP.OPEN_HELP' | translate }}"
+      >
+        <ion-icon slot="icon-only" name="help-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

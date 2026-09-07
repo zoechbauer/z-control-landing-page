@@ -1,7 +1,4 @@
-<app-header
-  [selectedAccordion]="selectedAccordion"
-  [showBackButton]="showBackButtonAndFooter"
-></app-header>
+<app-header [currentTab]="currentTab" [showBackButton]="showBackButton"></app-header>
 
 <ion-content class="ion-padding">
   <!-- Loading State -->
@@ -22,18 +19,6 @@
 
   <!-- Policy Content -->
   <div *ngIf="policy && !loading && !error" class="policy-container">
-    <!-- Language Switcher -->
-    <div class="language-switcher" *ngIf="hasOtherLanguage">
-      <ion-button
-        fill="outline"
-        size="small"
-        (click)="switchLanguage(otherLanguage)"
-      >
-        <ion-icon name="globe-outline" slot="start"></ion-icon>
-        {{ otherLanguageLabel }}
-      </ion-button>
-    </div>
-
     <!-- Policy Header -->
     <div class="policy-header">
       <h1>{{ policy.title }}</h1>
@@ -43,7 +28,7 @@
     <div class="policy-content" [innerHTML]="policy.content"></div>
 
     <!-- Back Button -->
-    <div class="action-buttons" *ngIf="showBackButtonAndFooter">
+    <div class="action-buttons" *ngIf="showBackButton">
       <ion-button fill="outline" (click)="goBack()" size="small">
         <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
         {{ backToHomeButtonLabel }}
@@ -51,5 +36,3 @@
     </div>
   </div>
 </ion-content>
-
-<app-footer *ngIf="showBackButtonAndFooter"></app-footer>

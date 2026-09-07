@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -10,6 +10,8 @@ import {
   provideIonicAngular,
 } from '@ionic/angular/standalone';
 import { provideHttpClient } from '@angular/common/http';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -25,7 +27,8 @@ import {
 } from '@angular/fire/functions';
 import { provideMarkdown } from 'ngx-markdown';
 
-import { routes } from './app.routes';
+import { routes } from '@app/app.routes';
+import { ServicesModule } from './services.module';
 import { environment } from '@env/environment';
 
 function getEmulatorHost(): string | undefined {
@@ -55,6 +58,13 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+
+    importProvidersFrom(ServicesModule),
+    provideTranslateService({ fallbackLang: 'de' }),
+    ...provideTranslateHttpLoader({
+      prefix: './assets/i18n/',
+      suffix: '.json',
+    }),
 
     provideMarkdown(),
 

@@ -40,7 +40,7 @@ export interface GithubArrayTrafficEntry {
   timestamp: string;
   count: number;
   uniques: number;
-};
+}
 
 export interface GithubAnalyticsTrafficDocument {
   collection: (typeof COLLECTION)[keyof typeof COLLECTION];
@@ -56,12 +56,12 @@ export interface GithubAnalyticsTrafficDocument {
     uniques: number;
     clones: GithubArrayTrafficEntry[];
   };
-};
+}
 
 export enum TrafficType {
   VIEWS = 'views',
   CLONES = 'clones',
-};
+}
 
 // used for privacy policy
 export const ALL_REPOS = 'all';
@@ -73,5 +73,20 @@ export const APPS = {
   IONIC_SETUP: 'z-control Ionic Setup App',
   IMAGE_TO_TEXT: 'z-control Image to Text App',
   BACKEND_FUNCTIONS: 'z-control Backend Functions',
-  IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup',
+  IONIC_ANGULAR21_VITEST_SETUP: 'Ionic Angular21 Vitest Setup',
 };
+
+// Runtime keys for AppKey with IDE completion (Option A)
+export const APP_KEYS = {
+  LANDING_PAGE: 'LANDING_PAGE',
+  QR_CODE_GENERATOR: 'QR_CODE_GENERATOR',
+  BACKUP_SCRIPTS: 'BACKUP_SCRIPTS',
+  MULTI_LANGUAGE_TRANSLATOR: 'MULTI_LANGUAGE_TRANSLATOR',
+  IONIC_SETUP: 'IONIC_SETUP',
+  IMAGE_TO_TEXT: 'IMAGE_TO_TEXT',
+  BACKEND_FUNCTIONS: 'BACKEND_FUNCTIONS',
+  IONIC_ANGULAR21_VITEST_SETUP: 'IONIC_ANGULAR21_VITEST_SETUP',
+} as const;
+
+// AppKey type representing keys of APPS
+export type AppKey = keyof typeof APPS;

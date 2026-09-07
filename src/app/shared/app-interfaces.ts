@@ -1,3 +1,5 @@
+import { AppKey } from './GitHubConstants';
+
 export interface QrCodeGeneratorSectionParameters {
   appSectionParameters: AppSectionParameters;
   maxInputLength: number;
@@ -27,7 +29,7 @@ export interface IonicSetupSectionParameters {
   maxFeatureCharsUserPerMonth: number;
 }
 export interface AppSectionParameters {
-  selectedAccordion: string;
+  selectedAccordion: AppKey;
   currentMainAccordion: string;
-  isAnalyticsAllowed: boolean;
+  selectedLanguage: string;
 }

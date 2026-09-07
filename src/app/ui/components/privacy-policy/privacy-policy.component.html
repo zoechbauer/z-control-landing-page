@@ -1,0 +1,58 @@
+<app-logo [type]="LogoType.Copyright"></app-logo>
+
+<ng-container *ngIf="lang === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- E N G L I S H   T E M P L A T E -->
+
+<ng-template #englishTemplate>
+  <div class="additional-margin-right">
+    <p>
+      We store anonymous, i.e. non-personal usage data in Google Firebase
+      Analytics.
+    </p>
+    <p>
+      This data is used solely for analyzing usage, improving content, and troubleshooting.
+    </p>
+    <p>
+      The full privacy policy will be displayed when clicking on the
+      <a
+        [routerLink]="privacyPolicyLink"
+        [queryParams]="{ internal: 'true' }"
+        title="Read our privacy policy"
+      >
+        Privacy Policy
+        <ion-icon name="open-outline"></ion-icon>
+      </a>
+      link.
+    </p>
+  </div>
+</ng-template>
+
+<!-- G E R M A N   T E M P L A T E -->
+
+<ng-template #germanTemplate>
+  <div class="additional-margin-right">
+    <p>
+      Wir speichern anonyme, d.h. keine personenbezogenen Nutzungsdaten in
+      Google Firebase Analytics.
+    </p>
+    <p>
+      Diese Daten werden ausschließlich zur Analyse der Nutzung, Verbesserung von Inhalten und zur
+      Fehlerbehebung verwendet.
+    </p>
+    <p>
+      Die vollständige Datenschutzerklärung sehen Sie, wenn Sie auf den Link
+      <a
+        [routerLink]="privacyPolicyLink"
+        [queryParams]="{ internal: 'true' }"
+        title="Lesen Sie unsere Datenschutzerklärung"
+      >
+        Datenschutzerklärung
+        <ion-icon name="open-outline"></ion-icon>
+      </a>
+      klicken.
+    </p>
+  </div>
+</ng-template>

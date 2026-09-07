@@ -1,0 +1,122 @@
+{
+  "------ global": "-------",
+  "APP": {
+    "LOADING_DATA": "Loading data...",
+    "UNDER_CONSTRUCTION": "This feature is under construction."
+  },
+  "------ header page": "-------",
+  "HEADER": {
+    "CURRENT_PAGE": {
+      "MAIN_LONG": "z-control Applications and Tools",
+      "MAIN_SHORT": "Apps & Tools",
+      "SETTINGS": "Settings"
+    },
+    "TOOLTIP": {
+      "OPEN_FEEDBACK": "Open feedback page",
+      "OPEN_HELP": "Open help page",
+      "GOTO_MAIN": "Go to text recognition page",
+      "GOTO_SETTINGS": "Go to settings page",
+      "GO_BACK": "Go Back"
+    }
+  },
+  "------ tabs page": "-------",
+  "TABS": {
+    "MAIN": "Apps & Tools",
+    "SETTINGS": "Settings"
+  },
+
+  "------ main page": "-------",
+  "MAIN": {
+    "CARD": {
+      "TITLE": "z-control Apps & Tools"
+    },
+    "ACCORDION": {
+      "USES_BACKEND": "uses z-control Backend Functions",
+      "IS_BACKEND": "Backend Functions are used by marked Apps with icon",
+      "WHAT_DOES_APP_DO": "What does the app do?",
+      "FEEDBACK_APPS": "Send feedback to z-control",
+      "PRIVACY_POLICY_APPS": "Show Privacy Policy",
+      "CHANGE_LOG_APPS": "Show Change Log",
+      "DOWNLOAD_MOBILE_APP": "Install Android App",
+      "SHOW_SOURCE_CODE": "View Source Code on GitHub",
+      "INLINE_HELP": "Show Inline Help",
+      "LIMITATIONS_AND_QUOTAS": "What are the limitations and monthly quotas?",
+      "DIFFERENCES_WEB_MOBILE": "Differences between the Web and Mobile App",
+      "START_WEB_APP": "Try the Web App (no installation required)",
+      "KEY_FEATURES": "Key Features",
+      "HOW_TO_USE": "How to use the app"
+    }
+  },
+
+  "------ settings page": "-------",
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "INFORMATIONS": "Informations",
+    "BUTTON": {
+      "CLOSE": "Back to Settings"
+    },
+    "TOOLTIPS": {
+      "OPEN_ACCORDION": "Open settings",
+      "CLOSE_ACCORDION": "Close settings"
+    },
+    "LANGUAGE": {
+      "ACCORDION": "Change Language",
+      "LABEL": {
+        "LANG": "Language"
+      },
+      "SELECT": {
+        "EN": "English",
+        "DE": "German"
+      },
+      "TOOLTIPS": {
+        "CHANGE_LANGUAGE": "Change the language"
+      }
+    },
+    "FEEDBACK": {
+      "ACCORDION": "Send feedback to z-control",
+      "SEPARATOR": "Feedback",
+      "Z-CONTROL-DESCRIPTION": "Innovative Open Source Solutions & Tools",
+      "ALWAYS_FREE": "Always Free",
+      "COUNTRY": "Austria",
+      "TOOLTIP": {
+        "CONTACT_SUPPORT": "Contact z-control support via email"
+      }
+    },
+    "FIREBASE_ANALYTICS": {
+      "ACCORDION": "Enable or disable Firebase Analytics",
+      "ENABLE_ANALYTICS": "Enable Firebase Analytics",
+      "DISABLE_ANALYTICS": "Disable Firebase Analytics",
+      "TOOLTIPS": {
+        "ANALYTICS_BUTTON": "Enable or disable Firebase Analytics"
+      },
+      "TOAST": {
+        "ANALYTICS_ENABLED": "Firebase Analytics has been enabled.",
+        "ANALYTICS_DISABLED": "Firebase Analytics has been disabled."
+      }
+    },
+    "GITHUB_ANALYTICS": {
+      "ACCORDION": "GitHub Analytics of z-control Apps & Tools",
+      "TOOLTIPS": {
+        "OPEN_DASHBOARD": "Open z-control GitHub Analytics Dashboard"
+      }
+    },
+    "PRIVACY": {
+      "ACCORDION": "Privacy Policy",
+      "TOOLTIPS": {
+        "OPEN_POLICY": "Open privacy policy in a new tab"
+      }
+    },
+    "RELEASE-NOTES": {
+      "ACCORDION": "App Version {{versionInfo}} - Release Notes",
+      "TOOLTIPS": {
+        "OPEN_RELEASE_NOTES": "Open release notes (changelog) — grouped by categories and showing the newest entries first."
+      }
+    },
+    "SOURCE": {
+      "ACCORDION": "Get Source Code",
+      "TOOLTIPS": {
+        "DOWNLOAD": "Open GitHub repository in a new tab — view source code, license, changelog, and documentation."
+      }
+    }
+  }
+}

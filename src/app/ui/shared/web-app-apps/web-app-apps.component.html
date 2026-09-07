@@ -1,0 +1,107 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div>
+    <p>
+      <strong>Open the app on desktop, tablet, or mobile devices</strong>
+      to explore its features and functionality.
+    </p>
+
+    <div class="button-wrapper">
+      <ion-button
+        (click)="onOpenWebApp()"
+        (keydown.enter)="onOpenWebApp()"
+        color="secondary"
+        expand="block"
+        class="web-app-button"
+        title="Open Web App in a new tab"
+      >
+        <ion-icon name="logo-firebase" slot="start"></ion-icon>
+        Open Web App
+      </ion-button>
+    </div>
+    <div class="firebase-note">
+      <ion-icon name="logo-firebase"></ion-icon>
+      Hosted on Google Firebase
+    </div>
+
+    <div class="help-tip">
+      <p>
+        <strong>Need Help?</strong> Click the <strong>?</strong> icon within the
+        app to access online help and feature documentation.
+      </p>
+
+      <h6>Using Voice Input</h6>
+
+      <p>
+        <strong>Windows:</strong> Activate voice input using Windows Dictation
+        (<i>Windows + H</i>).
+      </p>
+
+      <p>
+        <strong>Mobile Devices:</strong> Use your keyboard's built-in voice
+        input. For the best experience, ensure the website is displayed in
+        mobile mode rather than desktop mode.
+      </p>
+    </div>
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div>
+    <p>
+      <strong>Öffnen Sie die App auf Desktop, Tablet oder Mobilgeräten</strong>
+      , um die Funktionen und Möglichkeiten kennenzulernen.
+    </p>
+
+    <div class="button-wrapper">
+      <ion-button
+        (click)="onOpenWebApp()"
+        (keydown.enter)="onOpenWebApp()"
+        color="secondary"
+        expand="block"
+        class="web-app-button"
+        title="Web App in neuem Tab öffnen"
+      >
+        <ion-icon name="logo-firebase" slot="start"></ion-icon>
+        Web App öffnen
+      </ion-button>
+    </div>
+    <div class="firebase-note">
+      <ion-icon name="logo-firebase"></ion-icon>
+      Gehostet auf Google Firebase
+    </div>
+
+    <div class="help-tip">
+      <p>
+        <strong>Benötigen Sie Hilfe?</strong> Klicken Sie auf das
+        <strong>?</strong>‑Symbol innerhalb der App, um Online‑Hilfe und
+        Dokumentation zu öffnen.
+      </p>
+
+      <h6>Verwendung der Spracheingabe</h6>
+
+      <p>
+        <strong>Windows:</strong> Aktivieren Sie die Windows‑Diktierfunktion (<i
+          >Windows + H</i
+        >).
+      </p>
+
+      <p>
+        <strong>Mobile Geräte:</strong> Verwenden Sie die integrierte
+        Spracheingabe Ihrer Tastatur. Für das beste Ergebnis sollte die Webseite
+        im mobilen Modus statt im Desktop‑Modus angezeigt werden.
+      </p>
+    </div>
+  </div>
+</ng-template>

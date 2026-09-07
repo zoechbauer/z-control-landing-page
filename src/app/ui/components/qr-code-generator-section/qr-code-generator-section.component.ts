@@ -13,11 +13,19 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { APPS } from '@app/shared/GitHubConstants';
+import { TranslatePipe } from '@ngx-translate/core';
+
+import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { Tab } from '@app/shared/enums';
 import { QrCodeGeneratorSectionParameters } from '@app/shared/app-interfaces';
 import { UtilsService } from '@app/services/utils.service';
-import { OpenSourceComponent } from '../open-source/open-source.component';
-
+import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
+import { HelpAppsComponent } from '@ui/shared/help-apps/help-apps.component';
+import { FeedbackAppsComponent } from '@ui/shared/feedback-apps/feedback-apps.component';
+import { PrivacyPolicyAppsComponent } from '@ui/shared/privacy-policy-apps/privacy-policy-apps.component';
+import { ChangeLogAppsComponent } from '@ui/shared/change-log-apps/change-log-apps.component';
+import { SourceCodeAppsComponent } from '@ui/shared/source-code-apps/source-code-apps.component';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 @Component({
   selector: 'app-qr-code-generator-section',
   templateUrl: './qr-code-generator-section.component.html',
@@ -35,81 +43,84 @@ import { OpenSourceComponent } from '../open-source/open-source.component';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    OpenSourceComponent,
+    TranslatePipe,
+    OpenSourceAppsComponent,
+    HelpAppsComponent,
+    FeedbackAppsComponent,
+    PrivacyPolicyAppsComponent,
+    ChangeLogAppsComponent,
+    SourceCodeAppsComponent,
   ],
 })
 export class QrCodeGeneratorSectionComponent {
   private readonly utilsService = inject(UtilsService);
+  private readonly fa = inject(FirebaseAnalyticsService);
 
   @Input() parameters?: QrCodeGeneratorSectionParameters;
-
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() analyticsEvent = new EventEmitter<{
-    eventName: string;
-    params: any;
-  }>();
 
-  nativeDownloadUrl =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp';
-  sourceCodeUrl = 'https://github.com/zoechbauer/z-control-qr-code-generator';
-  webAppUrl = 'https://z-control-qr-code.web.app';
   selectedSubAccordion: string = '';
+  Tab = Tab;
 
+  /**
+   * Opens the Play Store link for the selected accordion in a new tab and logs the event.
+   */
   onDownloadNative() {
-    globalThis.window.open(this.nativeDownloadUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'download_native',
-      params: {
-        platform: 'android',
-        url: this.nativeDownloadUrl,
-        app: APPS.LANDING_PAGE,
-      },
+    const url = this.utilsService.getPlayStoreLinkPathForAccordion(
+      this.parameters!.appSectionParameters.selectedAccordion,
+    );
+    globalThis.window.open(url, '_blank');
+
+    this.fa.logEvent('download_native', {
+      platform: 'android',
+      url: url,
+      app: APPS.LANDING_PAGE,
     });
   }
 
-  onGetSourceCode() {
-    globalThis.window.open(this.sourceCodeUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'get_source_code',
-      params: {
-        repo: APPS.QR_CODE_GENERATOR,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  }
-
+  /**
+   * Opens the web link for the selected accordion in a new tab and logs the event.
+   */
   onOpenWebApp() {
-    globalThis.window.open(this.webAppUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'open_web_app',
-      params: {
-        url: this.webAppUrl,
-        app: APPS.LANDING_PAGE,
-      },
+    const url = this.utilsService.getWebLinkPathForAccordion(
+      this.parameters!.appSectionParameters.selectedAccordion,
+    );
+    globalThis.window.open(url, '_blank');
+    
+    this.fa.logEvent('open_web_app', {
+      url: url,
+      app: APPS.LANDING_PAGE,
     });
   }
 
-  async onOpenChangelog() {
-    const selectedAccordion = this.parameters?.appSectionParameters
-      .selectedAccordion as keyof typeof APPS;
-    this.utilsService.openChangelog(selectedAccordion);
-  }
-
+  /**
+   * Handles the change event for a sub-accordion.
+   * @param event The custom event triggered when a sub-accordion changes.
+   */
   subAccordionChange(event?: CustomEvent) {
     this.selectedSubAccordion = event?.detail?.value || '';
   }
 
-  getAccordionTooltip(value: string): string {
-    return this.selectedSubAccordion == value
-      ? `Collapse ${value}`
-      : `Expand ${value}`;
-  }
-
-  getMailToLinkForFeedback(): string {
-    return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.QR_CODE_GENERATOR}%20Feedback`;
-  }
-
-  get privacyPolicyLink() {
-    return ['/privacy', 'qr-code-generator', 'en'];
+  /**
+   * Gets the tooltip text for an accordion or sub-accordion.
+   * @param value The value of the accordion or sub-accordion.
+   * @param isSubAccordion Indicates whether the tooltip is for a sub-accordion (default: true).
+   * @returns The tooltip text for the specified accordion or sub-accordion.
+   */
+  getAccordionTooltip(value: string, isSubAccordion: boolean = true): string {
+    if (!isSubAccordion) {
+      return this.utilsService.getAccordionTooltip(
+        this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+        APPS.QR_CODE_GENERATOR,
+        this.parameters?.appSectionParameters?.currentMainAccordion || '',
+        value,
+      );
+    }
+    return this.utilsService.getSubAccordionTooltip(
+      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+      this.selectedSubAccordion,
+      value,
+    );
   }
 }

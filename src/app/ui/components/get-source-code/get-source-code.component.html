@@ -1,0 +1,36 @@
+<app-logo [type]="LogoType.Copyright"></app-logo>
+
+<app-source-code-apps
+  [selectedLanguage]="lang"
+  [selectedAccordion]="appNameKey"
+></app-source-code-apps>
+
+<ng-container *ngIf="lang === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- E N G L I S H   T E M P L A T E -->
+
+<ng-template #englishTemplate>
+  <div class="additional-margin-right">
+    <p class="small-text">
+      <i
+        >Note: The link opens in your browser. Afterward, return to the
+        {{ utilsService.getDisplayNameForAccordion(this.appNameKey) }}.</i
+      >
+    </p>
+  </div>
+</ng-template>
+
+<!-- G E R M A N   T E M P L A T E -->
+
+<ng-template #germanTemplate>
+  <div class="additional-margin-right">
+    <p class="small-text">
+      <i
+        >Hinweis: Der Link öffnet sich in Ihrem Browser. Kehren Sie danach zur
+        {{ utilsService.getDisplayNameForAccordion(this.appNameKey) }} zurück.</i
+      >
+    </p>
+  </div>
+</ng-template>

@@ -1,0 +1,61 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div class="privacy-policy-apps">
+    <p>
+      <ion-icon name="checkmark"></ion-icon>
+      Your privacy is important to us.
+    </p>
+    <p>
+      Please read our
+      <a
+        [routerLink]="privacyPolicyLink"
+        [queryParams]="{
+          from: selectedAccordion,
+          internal: 'true',
+          currentTab: Tab.MainFeature,
+        }"
+        title="View privacy policy."
+      >
+        Privacy Policy
+        <ion-icon name="open-outline"></ion-icon>
+      </a>
+      of the <i>{{ appName }}</i> to learn how we handle your data.
+    </p>
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div class="privacy-policy-apps">
+    <p>
+      <ion-icon name="checkmark"></ion-icon>
+      Ihre Privatsphäre ist uns wichtig.
+    </p>
+    <p>
+      Bitte lesen Sie unsere
+      <a
+        [routerLink]="privacyPolicyLink"
+        [queryParams]="{
+          from: selectedAccordion,
+          internal: 'true',
+          currentTab: Tab.MainFeature,
+        }"
+        title="Datenschutzerklärung anzeigen."
+      >
+        Datenschutzerklärung
+        <ion-icon name="open-outline"></ion-icon>
+      </a>
+      der <i>{{ appName }}</i> um zu erfahren, wie wir mit Ihren Daten umgehen.
+    </p>
+  </div>
+</ng-template>

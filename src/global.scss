@@ -36,6 +36,28 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+.web-app-width {
+  ion-router-outlet {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+}
+
+.native-app-height-hide-tabs-bar {
+  ion-router-outlet {
+    height: calc(100vh - 44px);
+  }
+}
+
+ion-tab-bar {
+  padding-bottom: var(--safe-area-bottom-fix, 44px);
+  display: flex;
+
+  &.hide-ion-tab-bar {
+    display: none;
+  }
+}
+
 ion-app {
   width: 100%;
   margin: 0 auto;
@@ -98,13 +120,12 @@ ion-header {
   }
 }
 
-// Footer styling for all pages
-ion-footer {
-  ion-toolbar {
-    --background: var(--ion-color-light);
-    --color: var(--ion-color-medium);
-    min-height: auto;
-  }
+ion-title {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  font-size: 1.1rem;
 }
 
 // site ready for testing
@@ -280,7 +301,13 @@ ion-card-content {
     }
   }
 
-  // Button wrapper for guaranteed centering
+  .firebase-note {
+    display: flex ;
+    justify-content: center;
+    margin-top: -8px;
+    font-size: .75rem;
+  }
+
   .button-wrapper {
     text-align: center;
     margin: 16px 0;

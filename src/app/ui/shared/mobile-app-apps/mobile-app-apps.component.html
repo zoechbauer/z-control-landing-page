@@ -1,0 +1,121 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div>
+    <h5>
+      <ion-icon name="mail-outline" class="margin-right"></ion-icon>
+      <b>Limited Availability - Beta Testing Only</b>
+    </h5>
+    <app-mobile-app-restriction
+      [selectedLanguage]="selectedLanguage"
+      [selectedAccordion]="selectedAccordion"
+      [maxProcessingTotalPerMonth]="maxImageProcessingTotalPerMonth"
+    ></app-mobile-app-restriction>
+    <p>
+      <strong>Want to join?</strong> Send us your email address via
+      <b>Send Feedback to z&#8209;control</b> to be added to the beta testing group. You'll then
+      receive access to <strong>install the test version from Google Play Store</strong>.
+    </p>
+
+    <p>
+      <ion-icon name="checkmark"></ion-icon>
+      <strong>100% Free</strong> •
+      <ion-icon name="lock-closed"></ion-icon>
+      <strong>No registration required</strong> •
+      <ion-icon name="phone-portrait"></ion-icon>
+      <strong>Optimized for mobile</strong>
+    </p>
+
+    <div class="button-wrapper">
+      <ion-button
+        (click)="onDownloadNative()"
+        (keydown.enter)="onDownloadNative()"
+        color="primary"
+        expand="block"
+        class="download-button"
+        title="Download the native Android app from the Google Play Store"
+      >
+        <ion-icon name="logo-google-playstore" slot="start"></ion-icon>
+        {{ "MAIN.ACCORDION.DOWNLOAD_MOBILE_APP" | translate }}
+      </ion-button>
+    </div>
+
+    <div class="platform-note">
+      <strong>Using a PC or Notebook?</strong> This is an Android app. Try our
+      <a
+        href="{{ utilsService.getWebLinkPathForAccordion(selectedAccordion) }}"
+        target="_blank"
+        class="web-app-link"
+        title="Open Web App in a new tab"
+      >
+        <strong>Web App</strong>
+      </a>
+      instead - it works in any browser!
+    </div>
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <div>
+    <h5>
+      <ion-icon name="mail-outline" class="margin-right"></ion-icon>
+      <b>Begrenzte Verfügbarkeit - Nur Beta-Test</b>
+    </h5>
+    <app-mobile-app-restriction
+      [selectedLanguage]="selectedLanguage"
+      [selectedAccordion]="selectedAccordion"
+      [maxProcessingTotalPerMonth]="maxImageProcessingTotalPerMonth"
+    ></app-mobile-app-restriction>
+    <p>
+      <strong>Möchten Sie teilnehmen?</strong> Senden Sie uns Ihre E-Mail-Adresse über
+      <b>Feedback an z&#8209;control senden</b>. Wir fügen Sie dann zur Beta-Testgruppe hinzu. Sie können dann
+      die <strong>Testversion aus dem Google Play Store installieren</strong>.
+    </p>
+
+    <p>
+      <ion-icon name="checkmark"></ion-icon>
+      <strong>100% Kostenlos</strong> •
+      <ion-icon name="lock-closed"></ion-icon>
+      <strong>Keine Registrierung erforderlich</strong> •
+      <ion-icon name="phone-portrait"></ion-icon>
+      <strong>Für Mobilgeräte optimiert</strong>
+    </p>
+
+    <div class="button-wrapper">
+      <ion-button
+        (click)="onDownloadNative()"
+        (keydown.enter)="onDownloadNative()"
+        color="primary"
+        expand="block"
+        class="download-button"
+        title="Android-App aus dem Google Play Store installieren"
+      >
+        <ion-icon name="logo-google-playstore" slot="start"></ion-icon>
+        {{ "MAIN.ACCORDION.DOWNLOAD_MOBILE_APP" | translate }}
+      </ion-button>
+    </div>
+
+    <div class="platform-note">
+      <strong>Sie nutzen einen PC oder Laptop?</strong> Dies ist eine Android-App. Benutzen Sie unsere
+      <a
+        href="{{ utilsService.getWebLinkPathForAccordion(selectedAccordion) }}"
+        target="_blank"
+        class="web-app-link"
+        title="Web-App in einem neuen Tab öffnen"
+      >
+        <strong>Web-App</strong>
+      </a>
+      stattdessen - sie funktioniert in jedem Browser!
+    </div>
+  </div>
+</ng-template>

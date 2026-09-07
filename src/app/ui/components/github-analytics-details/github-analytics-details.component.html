@@ -1,7 +1,7 @@
 <div slot="content" class="repo-details">
   <table aria-hidden="true" class="repo-details-table">
     <thead>
-      <tr [ngClass]="{ 'views-clones-flex': isMobilePortrait }">
+      <tr [ngClass]="{ 'views-clones-flex': this.utilsService.isSmallScreen }">
         <td style="padding: 0">
           <div>
             <strong>Last Updated:</strong>
@@ -50,7 +50,7 @@
           </div>
         </td>
       </tr>
-      <tr [ngClass]="{ 'views-clones-flex': isMobilePortrait }">
+      <tr [ngClass]="{ 'views-clones-flex': this.utilsService.isSmallScreen }">
         <td class="views-clones">
           <section class="views">
             <h6>Views</h6>

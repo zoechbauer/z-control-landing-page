@@ -33,6 +33,22 @@
       }
     },
     {
+      "files": ["src/app/ui/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@ui",
+                "message": "Import specific UI symbols using '@ui/<path>' inside src/app/ui to avoid circular imports caused by the barrel index.ts."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["**/*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}

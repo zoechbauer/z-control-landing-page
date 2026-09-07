@@ -1,7 +1,11 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 import { addIcons } from 'ionicons';
 import {
+    appsOutline,
     arrowBackOutline,
+    arrowUpOutline,
     book,
     checkmark,
     cloud,
@@ -43,16 +47,22 @@ import {
     downloadOutline,
     alertCircleOutline,
     arrowBack,
+    settingsOutline,
+    helpOutline,
+    openOutline,
+    languageOutline,
 } from 'ionicons/icons';
 
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { appConfig } from '@app/app.config';
+import { AppComponent } from '@app/app.component';
 
 // Register Ionicons used in the application
 addIcons({
   'alert-circle-outline': alertCircleOutline,
+  'apps-outline': appsOutline,
   'arrow-back': arrowBack,
   'arrow-back-outline': arrowBackOutline,
+  'arrow-up-outline': arrowUpOutline,
   book: book,
   checkmark: checkmark,
   'chevron-back-outline': chevronBackOutline,
@@ -72,10 +82,12 @@ addIcons({
   'eye-outline': eyeOutline,
   globe: globe,
   'globe-outline': globeOutline,
+  'help-outline': helpOutline,
   help: help,
   home: home,
   information: information,
   'information-circle': informationCircle,
+  'language-outline': languageOutline,
   library: library,
   list: list,
   'list-outline': listOutline,
@@ -86,14 +98,19 @@ addIcons({
   'logo-google-playstore': logoGooglePlaystore,
   mail: mail,
   'mail-outline': mailOutline,
+  'open-outline': openOutline,
   person: person,
   'person-outline': personOutline,
   'phone-portrait': phonePortrait,
   rocket: rocket,
   'search-outline': searchOutline,
+  'settings-outline': settingsOutline,
   sunny: sunny,
   'trash-outline': trashOutline,
   warning: warning,
 });
+
+// Register German locale data for number/date pipes
+registerLocaleData(localeDe, 'de-DE');
 
 bootstrapApplication(AppComponent, appConfig);

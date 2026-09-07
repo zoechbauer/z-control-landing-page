@@ -1,0 +1,92 @@
+<ion-accordion value="firebase-analytics" id="firebase-analytics">
+  <ion-item slot="header" color="light">
+    <ion-label
+      >{{ "SETTINGS.FIREBASE_ANALYTICS.ACCORDION" | translate }}
+    </ion-label>
+  </ion-item>
+  <div class="ion-padding" slot="content" title="">
+    <div
+      class="ion-text-center"
+      data-testid="enable-analytics"
+      [class.firebase-analytics-not-enabled]="(fa.enabled$ | async) === false"
+    >
+      <ion-toggle
+        [checked]="fa.enabled$ | async"
+        (ionChange)="onChangeEnableAnalytics($event.detail.checked)"
+        title="{{
+          'SETTINGS.FIREBASE_ANALYTICS.TOOLTIPS.ANALYTICS_BUTTON' | translate
+        }}"
+      >
+        {{ enableAnalyticsLabel }}
+      </ion-toggle>
+    </div>
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <div class="ion-padding-top">
+        <p>
+          Enable anonymous analytics to explore our full collection of apps and
+          tools.
+        </p>
+        <p>
+          We collect only non-identifying usage data to improve our services.
+        </p>
+        <p>
+          To view our complete privacy policy, click on this link:
+          <a
+            [routerLink]="privacyPolicyLink"
+            [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
+            title="Read our privacy policy"
+          >
+            Privacy Policy
+            <ion-icon name="open-outline"></ion-icon>
+          </a>
+          You will then have access to all information regarding the processing of your data.
+        </p>
+        <p>
+          By clicking on
+          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon> in
+          the displayed privacy policy at the top left, you will return to this view.
+        </p>
+      </div>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <div class="ion-padding-top">
+        <p>
+          Aktivieren Sie anonyme Analysen, um unsere vollständige Sammlung von
+          Apps und Tools zu erkunden.
+        </p>
+        <p>
+          Wir erfassen nur anonyme Nutzungsdaten, d.h. keine personenbezogenen
+          Daten, damit wir unsere Dienste verbessern können.
+        </p>
+        <p>
+          Wenn Sie auf diesen Link
+          <a
+            [routerLink]="privacyPolicyLink"
+            [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
+            title="Lesen Sie unsere Datenschutzerklärung"
+          >
+            Datenschutzerklärung
+            <ion-icon name="open-outline"></ion-icon>
+          </a>
+          klicken, wird die vollständige Datenschutzerklärung angezeigt und Sie
+          erhalten alle Informationen zur Verarbeitung Ihrer Daten.
+        </p>
+        <p>
+          Durch Klick auf
+          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon> in
+          der angezeigten Datenschutzerklärung oben links kehren Sie dann wieder
+          zu dieser Ansicht zurück.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</ion-accordion>

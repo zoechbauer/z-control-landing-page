@@ -1,5 +1,29 @@
-.dashboard-access {
-  font-size: 12px;
-  margin-top: 16px;
-  margin-bottom: 8px;
+.documentation-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ion-color-medium);
+  font-style: italic;
+}
+
+.ul-li-disc {
+  margin-left: 20px;
+  li {
+    list-style-type: disc;
+  }
+}
+
+.feature-list {
+  margin-top: -16px;
+  li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.how-to-use-list {
+  li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }

@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { GithubAnalyticsComponent } from './github-analytics.component';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
 import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
 import {
   COLLECTION,
@@ -83,8 +85,16 @@ describe('GithubAnalyticsComponent', () => {
       'openMarkdownDoc',
     ]);
     TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), GithubAnalyticsComponent],
+      imports: [
+        IonicModule.forRoot(),
+        TranslateModule.forRoot(),
+        GithubAnalyticsComponent,
+      ],
       providers: [
+        {
+          provide: TranslateService,
+          useValue: createTranslateServiceMock(),
+        },
         {
           provide: FirebaseFirestoreService,
           useClass: MockFirebaseFirestoreService,
@@ -124,42 +134,6 @@ describe('GithubAnalyticsComponent', () => {
     expect(component.isRepoOpened).withContext('close repo').toBeFalse();
   });
 
-  it('should call checkOrientation on window resize', () => {
-    spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-      Promise.resolve(mockAnalyticsData),
-    );
-    const checkOrientationSpy = spyOn(component as any, 'checkOrientation');
-
-    window.dispatchEvent(new Event('resize'));
-    expect(checkOrientationSpy).toHaveBeenCalled();
-  });
-
-  describe('checkOrientation', () => {
-    it('should set isMobilePortrait to true when isSmallScreen and isPortrait are true', () => {
-      utilsServiceSpy.isSmallScreen = true;
-      utilsServiceSpy.isPortrait = true;
-
-      component['checkOrientation']();
-      expect(component.isMobilePortrait).toBeTrue();
-    });
-
-    it('should set isMobilePortrait to false when isSmallScreen is false', () => {
-      utilsServiceSpy.isSmallScreen = false;
-      utilsServiceSpy.isPortrait = true;
-
-      component['checkOrientation']();
-      expect(component.isMobilePortrait).toBeFalse();
-    });
-
-    it('should set isMobilePortrait to false when isPortrait is false', () => {
-      utilsServiceSpy.isSmallScreen = true;
-      utilsServiceSpy.isPortrait = false;
-
-      component['checkOrientation']();
-      expect(component.isMobilePortrait).toBeFalse();
-    });
-  });
-
   describe('init', () => {
     it('should call getAnalyticsData and set analyticsData', async () => {
       spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
@@ -171,35 +145,6 @@ describe('GithubAnalyticsComponent', () => {
       await (component as any).init();
       expect(component.analyticsData).toEqual(mockAnalyticsData);
       expect(component.githubTrafficData).toEqual(mockAnalyticsData);
-    });
-
-    it('should call checkOrientation', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-        Promise.resolve(mockAnalyticsData),
-      );
-      const checkOrientationSpy = spyOn(
-        component as any,
-        'checkOrientation',
-      ).and.callThrough();
-
-      await (component as any).init();
-      expect(checkOrientationSpy).toHaveBeenCalled();
-    });
-
-    it('should add addEventListener for resize event', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
-        Promise.resolve(mockAnalyticsData),
-      );
-      const addEventListenerSpy = spyOn(
-        globalThis.window,
-        'addEventListener',
-      ).and.callThrough();
-
-      await (component as any).init();
-      expect(addEventListenerSpy).toHaveBeenCalledWith(
-        'resize',
-        jasmine.any(Function),
-      );
     });
 
     it('should set isLoading to false after init', async () => {
@@ -259,7 +204,7 @@ describe('GithubAnalyticsComponent', () => {
       expect(getAnalyticsDataSpy).toHaveBeenCalledWith(
         collection,
         'all',
-        false
+        false,
       );
     });
 

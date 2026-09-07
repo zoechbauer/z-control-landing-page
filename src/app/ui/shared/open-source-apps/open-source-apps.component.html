@@ -1,0 +1,41 @@
+<ng-container
+  *ngIf="
+    this.selectedLanguage === 'de';
+    else englishTemplate
+  "
+>
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <div class="open-source-note">
+    <div data-testid="open-source-info">
+      <ion-icon name="logo-github"></ion-icon>
+      <b>Open source:</b> Source code and documentation available on GitHub.
+    </div>
+    <div *ngIf="showFirebaseInfo" data-testid="firebase-info">
+      <ion-icon name="logo-firebase"></ion-icon>
+      Hosted on Google Firebase
+    </div>
+  </div>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+<ng-template #germanTemplate> 
+  <div class="open-source-note">
+    <div data-testid="open-source-info">
+      <ion-icon name="logo-github"></ion-icon>
+      <b>Open source:</b> Quellcode und Dokumentation auf GitHub verfügbar.
+    </div>
+    <div *ngIf="showFirebaseInfo" data-testid="firebase-info">
+      <ion-icon name="logo-firebase"></ion-icon>
+      Gehostet auf Google Firebase
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,77 @@
+<ng-container *ngIf="selectedLanguage === 'de'; else englishTemplate">
+  <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+</ng-container>
+
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+
+<ng-template #englishTemplate>
+  <p *ngIf="selectedAccordion === 'IMAGE_TO_TEXT'">
+    We can process up to
+    <b
+      >{{ maxProcessingTotalPerMonth | number: "1.0-0" : "de-DE" }} images per
+      month</b
+    >
+    using the <i>Google Cloud Vision API for text recognition</i
+    ><b> free of charge</b>.
+  </p>
+
+  <p
+    *ngIf="
+      selectedAccordion === 'IONIC_SETUP' ||
+      selectedAccordion === 'MULTI_LANGUAGE_TRANSLATOR'
+    "
+  >
+    We can translate up to
+    <b
+      >{{ maxProcessingTotalPerMonth | number: "1.0-0" : "de-DE" }} characters
+      per month</b
+    >
+    using the <i>Google Cloud Translation API</i><b> free of charge</b>.
+  </p>
+
+  <!-- valid for all apps -->
+  <p>
+    Because this quota is limited, we cannot offer the app publicly and can only
+    make it available to a limited number of beta testers.
+  </p>
+</ng-template>
+
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
+
+<ng-template #germanTemplate>
+  <p *ngIf="selectedAccordion === 'IMAGE_TO_TEXT'">
+    Wir können
+    <b
+      >{{ maxProcessingTotalPerMonth | number: "1.0-0" : "de-DE" }} Bilder pro
+      Monat</b
+    >
+    über die <i>Google Cloud Vision API für Texterkennung</i
+    ><b> kostenlos</b> verarbeiten lassen.
+  </p>
+
+  <p
+    *ngIf="
+      selectedAccordion === 'IONIC_SETUP' ||
+      selectedAccordion === 'MULTI_LANGUAGE_TRANSLATOR'
+    "
+  >
+    Wir können
+    <b
+      >{{ maxProcessingTotalPerMonth | number: "1.0-0" : "de-DE" }} Zeichen pro
+      Monat</b
+    >
+    über die <i>Google Cloud Translation API</i><b> kostenlos</b> übersetzen
+    lassen.
+  </p>
+
+  <!-- valid for all apps -->
+  <p>
+    Da dieses Kontingent begrenzt ist, können wir die App nicht öffentlich
+    anbieten und nur einer begrenzten Anzahl von Beta-Testern zur Verfügung
+    stellen.
+  </p>
+</ng-template>

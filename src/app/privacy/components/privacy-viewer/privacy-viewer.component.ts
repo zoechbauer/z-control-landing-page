@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import type { PolicyType, Language } from '@privacy/services/privacy.service';
 import {
   IonContent,
   IonButton,
@@ -8,9 +9,10 @@ import {
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 
-import { HeaderComponent } from '../../../ui/components/header/header.component';
-import { FooterComponent } from '../../../ui/components/footer/footer.component';
-import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
+import { HeaderComponent } from '@ui';
+import { PrivacyService, PrivacyPolicy } from '@privacy/services/privacy.service';
+import { Tab } from '@app/shared/enums';
+import { UtilsService } from '@app/services/utils.service';
 
 @Component({
   selector: 'app-privacy-viewer',
@@ -24,22 +26,24 @@ import { PrivacyService, PrivacyPolicy } from '../../services/privacy.service';
     IonIcon,
     IonSpinner,
     HeaderComponent,
-    FooterComponent,
   ],
 })
 export class PrivacyViewerComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly privacyService = inject(PrivacyService);
+  private readonly utilsService = inject(UtilsService);
 
   policy: PrivacyPolicy | null = null;
   loading = true;
   error = false;
   selectedAccordion = '';
-  policyType = '';
-  language = 'en';
+  policyType: PolicyType = 'qr-code-generator';
+  language: Language = 'en';
   availableLanguages: string[] = [];
-  showBackButtonAndFooter = false;
+  showBackButton = false;
+  currentTab = Tab.Settings;
+  Tab = Tab;
 
   ngOnInit() {
     // Check for internal navigation first
@@ -55,9 +59,10 @@ export class PrivacyViewerComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.selectedAccordion = params['from'] || 'Privacy Policy';
 
-      // Check for internal parameter - if present, show footer/back button
+      // Check for internal parameter - if present, show back button
       if (params['internal'] === 'true') {
-        this.showBackButtonAndFooter = true;
+        this.showBackButton = true;
+        this.currentTab = params['currentTab'] || Tab.Settings;
       }
     });
   }
@@ -66,23 +71,11 @@ export class PrivacyViewerComponent implements OnInit {
     // Check if navigation came from Angular Router with state
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['internal']) {
-      this.showBackButtonAndFooter = true;
+      this.showBackButton = true;
     } else {
       // Default to false (external access)
-      this.showBackButtonAndFooter = false;
+      this.showBackButton = false;
     }
-  }
-
-  get otherLanguage(): string {
-    return this.language === 'en' ? 'de' : 'en';
-  }
-
-  get otherLanguageLabel(): string {
-    return this.language === 'en' ? 'Switch to German' : 'Zu Englisch wechseln';
-  }
-
-  get hasOtherLanguage(): boolean {
-    return this.availableLanguages.includes(this.otherLanguage);
   }
 
   get backToHomeButtonLabel(): string {
@@ -114,7 +107,6 @@ export class PrivacyViewerComponent implements OnInit {
       next: (policy) => {
         this.policy = policy;
         this.loading = false;
-        this.loadAvailableLanguages();
       },
       error: () => {
         this.error = true;
@@ -123,25 +115,7 @@ export class PrivacyViewerComponent implements OnInit {
     });
   }
 
-  private loadAvailableLanguages() {
-    this.privacyService.getAvailablePolicies().subscribe((policies) => {
-      const policyMeta = policies.find((p) => p.type === this.policyType);
-      this.availableLanguages = policyMeta?.languages || ['en'];
-    });
-  }
-
-  switchLanguage(newLanguage: string) {
-    if (
-      newLanguage !== this.language &&
-      this.availableLanguages.includes(newLanguage)
-    ) {
-      this.router.navigate(['/privacy', this.policyType, newLanguage], {
-        queryParamsHandling: 'preserve',
-      });
-    }
-  }
-
   goBack() {
-    this.router.navigate(['/home']);
+    this.utilsService.navigateToTab(this.currentTab);
   }
 }

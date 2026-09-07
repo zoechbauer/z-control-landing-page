@@ -1,31 +1,62 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
+import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 import { UtilsService } from '@app/services/utils.service';
-import { APPS } from '@app/shared/GitHubConstants';
-import { QrCodeGeneratorSectionComponent } from '../..';
+import { QrCodeGeneratorSectionComponent } from '@ui/components/qr-code-generator-section/qr-code-generator-section.component';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { PrivacyService } from '@app/privacy/services/privacy.service';
+import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 
 describe('QrCodeGeneratorSectionComponent', () => {
   const nativeDownloadUrl =
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodegenerator';
   const sourceCodeUrl =
     'https://github.com/zoechbauer/z-control-qr-code-generator';
-  const webAppUrl = 'https://z-control-qr-code-generator.web.app';
+  const webAppUrl = 'https://z-control-qr-code.web.app';
 
   let component: QrCodeGeneratorSectionComponent;
   let fixture: ComponentFixture<QrCodeGeneratorSectionComponent>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
-  let modalControllerSpy: jasmine.SpyObj<any>;
+  let firebaseAnalyticsServiceSpy: jasmine.SpyObj<any>;
   let activatedRouteSpy: any;
+  let privacyServiceSpy: jasmine.SpyObj<PrivacyService>;
 
   beforeEach(waitForAsync(() => {
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
-      'openGitHubAnalytics',
       'openChangelog',
       'openMarkdownDoc',
+      'getAccordionTooltip',
+      'getSubAccordionTooltip',
+      'getWebLinkPathForAccordion',
+      'getDisplayNameForAccordion',
+      'getPlayStoreLinkPathForAccordion',
     ]);
-    modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
+    utilsServiceSpy.getSubAccordionTooltip.and.callFake(
+      (_lang: string, selectedSubAccordion: string, value: string) => {
+        if (selectedSubAccordion === value) {
+          return `Collapse ${value}`;
+        }
+        return `Expand ${value}`;
+      },
+    );
+    utilsServiceSpy.getWebLinkPathForAccordion.and.returnValue(webAppUrl);
+    utilsServiceSpy.getPlayStoreLinkPathForAccordion.and.returnValue(
+      nativeDownloadUrl,
+    );
+
+    firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
+      'FirebaseAnalyticsService',
+      ['logEvent'],
+    );
+
+    privacyServiceSpy = jasmine.createSpyObj('PrivacyService', [
+      'getPrivacyPolicy',
+      'getPolicyName',
+    ]);
+
     activatedRouteSpy = {
       snapshot: {
         queryParams: {},
@@ -35,14 +66,35 @@ describe('QrCodeGeneratorSectionComponent', () => {
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), QrCodeGeneratorSectionComponent],
       providers: [
+        {
+          provide: TranslateService,
+          useValue: createTranslateServiceMock(),
+        },
         { provide: UtilsService, useValue: utilsServiceSpy },
-        { provide: 'ModalController', useValue: modalControllerSpy },
+        {
+          provide: FirebaseAnalyticsService,
+          useValue: firebaseAnalyticsServiceSpy,
+        },
+        { provide: PrivacyService, useValue: privacyServiceSpy },
         { provide: ActivatedRoute, useValue: activatedRouteSpy },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QrCodeGeneratorSectionComponent);
     component = fixture.componentInstance;
+
+    const selectedAccordion = APP_KEYS.QR_CODE_GENERATOR as AppKey;
+    component.parameters = {
+      appSectionParameters: {
+        selectedAccordion: selectedAccordion,
+        currentMainAccordion: selectedAccordion,
+        selectedLanguage: 'en',
+      },
+    } as any;
+    component.selectedSubAccordion = selectedAccordion;
+    component.isAnalyticsEnabled = true;
+    firebaseAnalyticsServiceSpy.logEvent.calls.reset();
+
     fixture.detectChanges();
   }));
 
@@ -50,85 +102,39 @@ describe('QrCodeGeneratorSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should open changelog when onOpenChangelog is called', async () => {
-    const selectedAccordion = APPS.BACKEND_FUNCTIONS;
-    component.parameters = {
-      appSectionParameters: {
-        selectedAccordion: selectedAccordion,
-      },
-    } as any;
-    await component.onOpenChangelog();
-    expect(utilsServiceSpy.openChangelog).toHaveBeenCalledWith(
-      APPS.BACKEND_FUNCTIONS as keyof typeof APPS,
-    );
-  });
-
-  it('should open source code URL in a new tab and emit analytics event when onGetSourceCode is called', () => {
+  it('should open download URL in a new tab and log analytics event when onDownloadNative is called', () => {
     spyOn(globalThis.window, 'open');
-    spyOn(component.analyticsEvent, 'emit');
-    component.sourceCodeUrl = sourceCodeUrl;
-    component.onGetSourceCode();
-
-    expect(globalThis.window.open).toHaveBeenCalledWith(
-      component.sourceCodeUrl,
-      '_blank',
-    );
-    expect(component.analyticsEvent.emit).toHaveBeenCalledWith({
-      eventName: 'get_source_code',
-      params: {
-        repo: APPS.QR_CODE_GENERATOR,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  });
-
-  it('should open download URL in a new tab and emit analytics event when onDownloadNative is called', () => {
-    spyOn(globalThis.window, 'open');
-    spyOn(component.analyticsEvent, 'emit');
-    component.nativeDownloadUrl = nativeDownloadUrl;
     component.onDownloadNative();
 
     expect(globalThis.window.open).toHaveBeenCalledWith(
-      component.nativeDownloadUrl,
+      nativeDownloadUrl,
       '_blank',
     );
-    expect(component.analyticsEvent.emit).toHaveBeenCalledWith({
-      eventName: 'download_native',
-      params: {
+    expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
+      'download_native',
+      {
         platform: 'android',
-        url: component.nativeDownloadUrl,
+        url: nativeDownloadUrl,
         app: APPS.LANDING_PAGE,
       },
-    });
+    );
   });
 
-  it('should open Web URL in a new tab and emit analytics event when onOpenWebApp is called', () => {
+  it('should open Web URL in a new tab and log analytics event when onOpenWebApp is called', () => {
     spyOn(globalThis.window, 'open');
-    spyOn(component.analyticsEvent, 'emit');
-    component.webAppUrl = webAppUrl;
     component.onOpenWebApp();
 
-    expect(globalThis.window.open).toHaveBeenCalledWith(
-      component.webAppUrl,
-      '_blank',
+    expect(utilsServiceSpy.getWebLinkPathForAccordion).toHaveBeenCalledWith(
+      APP_KEYS.QR_CODE_GENERATOR as AppKey,
     );
-    expect(component.analyticsEvent.emit).toHaveBeenCalledWith({
-      eventName: 'open_web_app',
-      params: {
-        url: component.webAppUrl,
+    expect(globalThis.window.open).toHaveBeenCalledWith(webAppUrl, '_blank');
+    expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
+      'open_web_app',
+      {
+        url: webAppUrl,
         app: APPS.LANDING_PAGE,
       },
-    });
-  });
-
-  it('should return correct mailto link for feedback', () => {
-    const expectedMailToLink = `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.QR_CODE_GENERATOR}%20Feedback`;
-    expect(component.getMailToLinkForFeedback()).toBe(expectedMailToLink);
-  });
-
-  it('should return the correct privacy policy link', () => {
-    const privacyPolicyLink = component.privacyPolicyLink;
-    expect(privacyPolicyLink).toEqual(['/privacy', 'qr-code-generator', 'en']);
+    );
   });
 
   it('should return correct tooltip for subaccordion', () => {

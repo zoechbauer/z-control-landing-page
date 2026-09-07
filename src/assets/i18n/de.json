@@ -1,0 +1,122 @@
+{
+  "------ global": "-------",
+  "APP": {
+    "LOADING_DATA": "Daten werden geladen...",
+    "UNDER_CONSTRUCTION": "Diese Funktion ist in Arbeit."
+  },
+  "------ header page": "-------",
+  "HEADER": {
+    "CURRENT_PAGE": {
+      "MAIN_LONG": "z-control Anwendungen und Tools",
+      "MAIN_SHORT": "Apps & Tools",
+      "SETTINGS": "Einstellungen "
+    },
+    "TOOLTIP": {
+      "OPEN_FEEDBACK": "Feedback-Seite öffnen",
+      "OPEN_HELP": "Hilfeseite öffnen",
+      "GOTO_MAIN": "Zur Texterkennungsseite wechseln",
+      "GOTO_SETTINGS": "Zur Einstellungsseite wechseln",
+      "GO_BACK": "Zurück"
+    }
+  },
+  "------ tabs page": "-------",
+  "TABS": {
+    "MAIN": "Apps & Tools",
+    "SETTINGS": "Einstellungen"
+  },
+
+  "------ main page": "-------",
+  "MAIN": {
+    "CARD": {
+      "TITLE": "z-control Apps & Tools"
+    },
+    "ACCORDION": {
+      "USES_BACKEND": "verwendet z-control Backend Funktionen",
+      "IS_BACKEND": "Backend Functions werden von markierten Apps mit Symbol verwendet",
+      "WHAT_DOES_APP_DO": "Was macht die App",
+      "FEEDBACK_APPS": "Feedback an z-control senden",
+      "PRIVACY_POLICY_APPS": "Datenschutzerklärung anzeigen",
+      "CHANGE_LOG_APPS": "Änderungsprotokoll anzeigen",
+      "DOWNLOAD_MOBILE_APP": "Android App installieren",
+      "SHOW_SOURCE_CODE": "Quellcode in GitHub ansehen",
+      "INLINE_HELP": "Inline-Hilfe anzeigen",
+      "LIMITATIONS_AND_QUOTAS": "Welche Einschränkungen und Kontingente gibt es?",
+      "DIFFERENCES_WEB_MOBILE": "Unterschiede zwischen der Web- und der Mobile-App",
+      "START_WEB_APP": "Probieren Sie die Web‑App aus (keine Installation erforderlich)",
+      "KEY_FEATURES": "Hauptmerkmale",
+      "HOW_TO_USE": "Wie man die App benutzt"
+    }
+  },
+
+  "------ settings page": "-------",
+  "SETTINGS": {
+    "TITLE": "Einstellungen",
+    "INFORMATIONS": "Informationen",
+    "BUTTON": {
+      "CLOSE": "Zurück zu Einstellungen"
+    },
+    "TOOLTIPS": {
+      "OPEN_ACCORDION": "Einstellungen öffnen",
+      "CLOSE_ACCORDION": "Einstellungen schließen"
+    },
+    "LANGUAGE": {
+      "ACCORDION": "Sprache ändern",
+      "LABEL": {
+        "LANG": "Sprache"
+      },
+      "SELECT": {
+        "EN": "Englisch",
+        "DE": "Deutsch"
+      },
+      "TOOLTIPS": {
+        "CHANGE_LANGUAGE": "Sprache ändern"
+      }
+    },
+    "FEEDBACK": {
+      "ACCORDION": "Feedback an z-control senden",
+      "SEPARATOR": "Feedback",
+      "Z-CONTROL-DESCRIPTION": "Innovative Open Source Lösungen & Tools",
+      "ALWAYS_FREE": "Immer kostenlos",
+      "COUNTRY": "Österreich",
+      "TOOLTIP": {
+        "CONTACT_SUPPORT": "Kontaktieren Sie den Support von z-control per Mail"
+      }
+    },
+    "FIREBASE_ANALYTICS": {
+      "ACCORDION": "Firebase Analytics aktivieren oder deaktivieren",
+      "ENABLE_ANALYTICS": "Firebase Analytics aktivieren",
+      "DISABLE_ANALYTICS": "Firebase Analytics deaktivieren",
+      "TOOLTIPS": {
+        "ANALYTICS_BUTTON": "Firebase Analytics aktivieren oder deaktivieren"
+      },
+      "TOAST": {
+        "ANALYTICS_ENABLED": "Firebase Analytics wurde aktiviert.",
+        "ANALYTICS_DISABLED": "Firebase Analytics wurde deaktiviert."
+      }
+    },
+    "GITHUB_ANALYTICS": {
+      "ACCORDION": "GitHub Statistiken der z-control Apps & Tools",
+      "TOOLTIPS": {
+        "OPEN_DASHBOARD": "z-control GitHub Statistik Dashboard öffnen"
+      }
+    },
+    "PRIVACY": {
+      "ACCORDION": "Datenschutz-Bestimmungen",
+      "TOOLTIPS": {
+        "OPEN_POLICY": "Datenschutzrichtlinie in einem neuen Tab öffnen"
+      }
+    },
+    "RELEASE-NOTES": {
+      "ACCORDION": "App Version {{versionInfo}} - Versionshinweise",
+      "TOOLTIPS": {
+        "OPEN_RELEASE_NOTES": "Release-Notes (Changelog) öffnen — nach Kategorien gruppiert und es werden zuerst die neuesten Einträge angezeigt."
+      }
+    },
+    "SOURCE": {
+      "ACCORDION": "Quellcode abrufen",
+      "TOOLTIPS": {
+        "DOWNLOAD": "GitHub-Repository in einem neuen Tab öffnen — Quellcode, Lizenz, Release Notes und Dokumentationen anzeigen."
+      }
+    }
+  }
+}

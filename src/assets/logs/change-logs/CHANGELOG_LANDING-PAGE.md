@@ -2,6 +2,40 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [4.0] - 2026-09-07
+
+### ✨ New Features
+
+- **Redesigned the Landing Page:** Aligned the app structure and layout with other z-control apps to provide a consistent user experience across the platform.
+- **Added a Settings page:** Centralized user preferences and content previously displayed in the footer.
+- **Added a Help page:** Provides users with guidance and troubleshooting information.
+- **Added translations:** Introduced English and German translation files for the Main Page, Settings, and Help pages.
+- **Added German translations for app and tool accordions:** Translated all accordions on the Main Page into German.
+- **Added a dedicated GitHub Analytics accordion:** Moved the GitHub Analytics caller from the footer into a dedicated accordion with explanatory text, making the feature easier to discover and understand.
+- **Redesigned the header:** Aligned the header with other z-control apps to improve brand consistency and visual coherence across the z-control family.
+
+### 🚀 Improvements
+
+- **Reorganized feedback content:** Moved footer content into a dedicated **Feedback** accordion and removed the redundant footer component.
+- **Improved analytics visibility:** Home Page and Settings accordions are now visually disabled when analytics are turned off, making feature availability clearer.
+- **Simplified language selection:** Removed the language switch button from the Privacy Policy page. Language selection is now available through the **Language** accordion dropdown.
+- **Improved analytics controls:** The analytics toggle now displays **"Enable Firebase Analytics"** when disabled and **"Disable Firebase Analytics"** when enabled. Changing the setting displays a contextual toast notification. The toggle follows the standard color scheme and is placed in its own accordion for improved context and usability.
+- **Improved privacy and analytics wording:** Refined privacy policy text and analytics-related messages for better clarity and user understanding.
+- **Improved the changelog modal:** Added a go-to-top button and adjusted the app title to display on one line in landscape mode and two lines in portrait mode for better readability.
+
+### 🔧 Internal
+
+- **Updated activity tracking:** Added follow-up tracking entries to `TODO-list-open-activities.md`.
+- **Refactored the Landing Page:** Improved code quality, structure, and maintainability.
+- **Standardized UI imports:** Updated UI component imports to use the `@ui` alias for improved consistency and maintainability.
+- **Refactored Firebase Analytics logging:** Subcomponents now invoke `firebaseAnalyticsService` directly instead of emitting events to parent components for event logging.
+- **Improved component modularity:** Separated the welcome message, analytics-disabled notice, feedback, privacy policy, native app information, inline help, and changelog into dedicated components.
+- **Refactored privacy-related components:** Improved their structure and maintainability, added unit tests for `privacy-viewer.component.ts` and `privacy.service.ts`, and removed the obsolete `privacy-debug.component.ts`.
+- **Improved test stability:** Fixed timer handling and adjusted spy configurations in `beforeEach` blocks to prevent unintended side effects.
+- **Renamed `HomePage` to `MainPage`:** Updated the component name to better reflect its role as the primary page of the app and to align with the naming conventions of other z-control apps.
+- **Updated unit tests:** Added and updated tests for the new Settings and Help pages, resulting in **350 specs and 99.05% statement coverage**. Existing tests were adapted to the new component structure and functionality, and redundant tests were removed.
+- **Updated project documentation:** Updated `README.md` with the latest project structure and development instructions.
+
 ## [3.8] - 2026-08-15
 
 ### 🚀 Improvements
@@ -185,7 +219,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 - Added a loading indicator to the GitHub Analytics section so users get feedback while data is loading.
 - Standardized the app name across all `What's New` accordions for better consistency and clarity.
 - Added the app name to the changelog dialog title when opening `What's New` for better context.
-  
+
 ### 🐛 Fixes
 
 - Fixed an issue where app parameters were not updated correctly when switching accordions, ensuring the correct changelog is shown for each app.

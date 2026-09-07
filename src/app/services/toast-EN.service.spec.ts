@@ -6,16 +6,20 @@ import { UtilsService } from './utils.service';
 
 describe('ToastService', () => {
   let service: ToastService;
-  const toastControllerSpy = jasmine.createSpyObj('ToastController', [
-    'create',
-  ]);
-  const utilsServiceSpy: any = {};
-  const modalControllerSpy = jasmine.createSpyObj('ModalController', [
-    'dismiss',
-    'create',
-  ]);
+  let utilsServiceSpy: any;
 
   beforeEach(() => {
+    utilsServiceSpy = {} as any;
+
+    const toastControllerSpy = jasmine.createSpyObj('ToastController', [
+      'create',
+    ]);
+
+    const modalControllerSpy = jasmine.createSpyObj('ModalController', [
+      'dismiss',
+      'create',
+    ]);
+
     TestBed.configureTestingModule({
       providers: [
         { provide: ModalController, useValue: modalControllerSpy },
@@ -41,7 +45,7 @@ describe('ToastService', () => {
       });
 
       toastController = TestBed.inject(
-        ToastController
+        ToastController,
       ) as jasmine.SpyObj<ToastController>;
 
       // Basic toast mock
@@ -51,26 +55,30 @@ describe('ToastService', () => {
     });
 
     it('should show toast at bottom on big devices', () => {
-      spyOnProperty(utilsServiceSpy, 'isSmallDevice', 'get').and.returnValue(false);
-      
+      spyOnProperty(utilsServiceSpy, 'isSmallDevice', 'get').and.returnValue(
+        false,
+      );
+
       service.showToast('Test Message');
-      
+
       expect(toastController.create).toHaveBeenCalledWith(
         jasmine.objectContaining({
           position: 'bottom',
-        })
+        }),
       );
     });
 
     it('should show toast at top on small devices', () => {
-      spyOnProperty(utilsServiceSpy, 'isSmallDevice', 'get').and.returnValue(true);
-      
+      spyOnProperty(utilsServiceSpy, 'isSmallDevice', 'get').and.returnValue(
+        true,
+      );
+
       service.showToast('Test Message');
-      
+
       expect(toastController.create).toHaveBeenCalledWith(
         jasmine.objectContaining({
           position: 'top',
-        })
+        }),
       );
     });
   });
@@ -81,7 +89,7 @@ describe('ToastService', () => {
 
     beforeEach(() => {
       toastController = TestBed.inject(
-        ToastController
+        ToastController,
       ) as jasmine.SpyObj<ToastController>;
 
       // Basic toast mock
@@ -101,21 +109,25 @@ describe('ToastService', () => {
         jasmine.objectContaining({
           message,
           duration,
-        })
+        }),
       );
     });
 
     it('should handle error when toast presentation fails', async () => {
       // Arrange
       const message = 'Test Message';
-      spyOn<any>(service, 'showToastMessage').and.returnValue(Promise.reject(new Error('Toast creation failed')));
+      spyOn<any>(service, 'showToastMessage').and.returnValue(
+        Promise.reject(new Error('Toast creation failed')),
+      );
       const consoleErrorSpy = spyOn(console, 'error');
       // Act
       service.showToast(message);
       await Promise.resolve();
       // Assert
-      expect(consoleErrorSpy).toHaveBeenCalledWith('Error presenting toast:', new Error('Toast creation failed'));
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error presenting toast:',
+        new Error('Toast creation failed'),
+      );
     });
   });
-
 });

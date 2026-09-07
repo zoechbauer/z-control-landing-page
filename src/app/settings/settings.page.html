@@ -1,0 +1,103 @@
+<div id="toast-anchor-settings">
+  <app-header [currentTab]="Tab.Settings"></app-header>
+</div>
+<ion-content
+  #content
+  class="settings-content"
+  [class.landscape]="!utilsService.isPortrait"
+>
+  <h6 class="ion-text-center">{{ displayLandingPageAppName }}</h6>
+  <ion-accordion-group
+    [value]="openAccordion"
+    (ionValueChange)="onAccordionGroupChange($event, content)"
+    title="{{this.showAllAccordions ? ('SETTINGS.TOOLTIPS.OPEN_ACCORDION' | translate) : ('SETTINGS.TOOLTIPS.CLOSE_ACCORDION' | translate) }}"
+  >
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <div *ngIf="!isLoading && selectedLanguage">
+      <!-- Show all accordions and section title  -->
+      @if (showAllAccordions && !openAccordion && selectedLanguage) {
+      <h5 class="ion-text-center settings-section-title" title="">
+        {{'SETTINGS.TITLE' | translate}}
+      </h5>
+      <app-firebase-analytics-accordion></app-firebase-analytics-accordion>
+      <app-language-accordion></app-language-accordion>
+      <h5 class="ion-text-center settings-section-title" title="">
+        {{ "SETTINGS.FEEDBACK.SEPARATOR" | translate }}
+      </h5>
+      <app-feedback-accordion
+        [disableAccordion]="!isAnalyticsEnabled"
+      ></app-feedback-accordion>
+
+      <h5 class="ion-text-center settings-section-title" title="">
+        {{ "SETTINGS.INFORMATIONS" | translate }}
+      </h5>
+      <app-get-github-analytics-accordion
+        [disableAccordion]="!isAnalyticsEnabled"
+      ></app-get-github-analytics-accordion>
+      <app-privacy-policy-accordion></app-privacy-policy-accordion>
+      <app-change-log-accordion
+        [versionInfo]="versionInfo"
+        [disableAccordion]="!isAnalyticsEnabled"
+      ></app-change-log-accordion>
+      <app-get-source-accordion
+        [disableAccordion]="!isAnalyticsEnabled"
+      ></app-get-source-accordion>
+      }
+      <!-- Show only the opened accordion  -->
+      @if (!showAllAccordions && openAccordion && selectedLanguage) { @switch
+      (openAccordion) { @case ('firebase-analytics') {
+      <app-firebase-analytics-accordion
+        [lang]="selectedLanguage"
+      ></app-firebase-analytics-accordion>
+      } @case ('language') {
+      <app-language-accordion
+        [lang]="selectedLanguage"
+        (ionChange)="onLanguageChange($event)"
+      ></app-language-accordion>
+      } @case ('z-control') {
+      <app-feedback-accordion
+        [lang]="selectedLanguage"
+        [disableAccordion]="!isAnalyticsEnabled"
+        [appNameKey]="LANDING_PAGE_APP_KEY"
+      ></app-feedback-accordion>
+      } @case ('github-analytics') {
+      <app-get-github-analytics-accordion
+        [lang]="selectedLanguage"
+        [disableAccordion]="!isAnalyticsEnabled"
+      ></app-get-github-analytics-accordion>
+      } @case ('privacy-policy') {
+      <app-privacy-policy-accordion
+        [lang]="selectedLanguage"
+      ></app-privacy-policy-accordion>
+      } @case ('change-log') {
+      <app-change-log-accordion
+        [lang]="selectedLanguage"
+        [versionInfo]="versionInfo"
+        [appNameKey]="LANDING_PAGE_APP_KEY"
+        [disableAccordion]="!isAnalyticsEnabled"
+        (ionChange)="openChangelog()"
+      ></app-change-log-accordion>
+      } @case ('get-source') {
+      <app-get-source-accordion
+        [lang]="selectedLanguage"
+        [appNameKey]="LANDING_PAGE_APP_KEY"
+        [disableAccordion]="!isAnalyticsEnabled"
+      ></app-get-source-accordion>
+      } }
+      <!-- Button to show all accordions -->
+      <div class="ion-padding ion-text-center accordion-close-button">
+        <ion-button
+          (click)="showAll()"
+          (keydown.enter)="showAll()"
+          title="{{ 'SETTINGS.TOOLTIPS.CLOSE_ACCORDION' | translate }}"
+          size="small"
+          fill="clear"
+        >
+          <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+          {{ 'SETTINGS.BUTTON.CLOSE' | translate }}
+        </ion-button>
+      </div>
+      }
+    </div>
+  </ion-accordion-group>
+</ion-content>

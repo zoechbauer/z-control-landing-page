@@ -1,0 +1,68 @@
+<ion-accordion value="z-control" id="z-control" [disabled]="disableAccordion">
+  <ion-item slot="header" color="light">
+    <ion-label>{{ "SETTINGS.FEEDBACK.ACCORDION" | translate }}</ion-label>
+  </ion-item>
+  <div class="ion-padding ion-text-center" slot="content" title="">
+    <app-logo [type]="LogoType.Copyright"></app-logo>
+    <div>
+      <p>
+        {{ "SETTINGS.FEEDBACK.Z-CONTROL-DESCRIPTION" | translate }}<br />{{
+          "SETTINGS.FEEDBACK.ALWAYS_FREE" | translate
+        }}
+      </p>
+      <div style="font-size: 0.75em">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>Hans Zöchbauer</span>
+      </div>
+      <div style="font-size: 0.75em">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ "SETTINGS.FEEDBACK.COUNTRY" | translate }}</span>
+      </div>
+
+      <div class="ion-padding-top">
+        <ion-icon name="mail-outline" style="margin-bottom: 0px"></ion-icon>
+        <a
+          href="{{ mailtoLink }}"
+          title="{{ 'SETTINGS.FEEDBACK.TOOLTIP.CONTACT_SUPPORT' | translate }}"
+          >z-control Support</a
+        >
+      </div>
+    </div>
+
+    <ng-container *ngIf="lang === 'de'; else englishTemplate">
+      <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
+    </ng-container>
+
+    <!-- E N G L I S H   T E M P L A T E -->
+
+    <ng-template #englishTemplate>
+      <div class="ion-padding-top ion-text-left">
+        <p>
+          If you would like to send us feedback, questions, or suggestions to
+          <i>{{ utilsService.getDisplayNameForAccordion(appNameKey) }}</i
+          >, simply click on the "z-control Support" link.
+        </p>
+        <p>
+          Your email program will open automatically, allowing you to contact us
+          directly.
+        </p>
+      </div>
+    </ng-template>
+
+    <!-- G E R M A N   T E M P L A T E -->
+
+    <ng-template #germanTemplate>
+      <div class="ion-padding-top ion-text-left">
+        <p>
+          Wenn Sie uns Feedback, Fragen oder Vorschläge zur
+          <i>{{ utilsService.getDisplayNameForAccordion(appNameKey) }}</i>
+          senden möchten, klicken Sie einfach auf den Link „z-control Support“.
+        </p>
+        <p>
+          Ihr E-Mail-Programm öffnet sich automatisch, sodass Sie uns direkt
+          kontaktieren können.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</ion-accordion>

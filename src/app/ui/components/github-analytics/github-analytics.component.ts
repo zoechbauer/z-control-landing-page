@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { CommonModule, JsonPipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   IonContent,
   IonHeader,
@@ -15,16 +15,17 @@ import {
   IonAccordion,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 import {
   COLLECTION,
   GithubAnalyticsTrafficDocument,
   ALL_REPOS,
 } from '@app/shared/GitHubConstants';
-
 import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
 import { environment } from '@env/environment';
 import { UtilsService } from '@app/services/utils.service';
-import { GithubAnalyticsDetailsComponent } from '../github-analytics-details/github-analytics-details.component';
+import { GithubAnalyticsDetailsComponent } from '@ui/components/github-analytics-details/github-analytics-details.component';
 
 @Component({
   selector: 'app-github-analytics',
@@ -33,6 +34,7 @@ import { GithubAnalyticsDetailsComponent } from '../github-analytics-details/git
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     IonAccordion,
     IonAccordionGroup,
     IonButton,
@@ -46,17 +48,21 @@ import { GithubAnalyticsDetailsComponent } from '../github-analytics-details/git
     IonToolbar,
     JsonPipe,
     IonSpinner,
+    NgIf,
+    NgTemplateOutlet,
     GithubAnalyticsDetailsComponent,
   ],
 })
 export class GithubAnalyticsComponent implements OnInit {
+  translate = inject(TranslateService);
+  readonly utilsService = inject(UtilsService);
   private readonly firestoreService = inject(FirebaseFirestoreService);
   private readonly modalController = inject(ModalController);
-  private readonly utilsService = inject(UtilsService);
+
+  @Input() lang!: string;
 
   analyticsData: GithubAnalyticsTrafficDocument[] = [];
   githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
-  isMobilePortrait = false;
   isRepoOpened = false;
   isLoading = true;
 
@@ -72,8 +78,6 @@ export class GithubAnalyticsComponent implements OnInit {
     this.githubTrafficData = await this.getAnalyticsData(
       COLLECTION.GITHUB_ANALYTICS_TRAFFIC,
     );
-    this.checkOrientation();
-    window.addEventListener('resize', () => this.checkOrientation());
     this.isLoading = false;
   }
 
@@ -123,15 +127,6 @@ export class GithubAnalyticsComponent implements OnInit {
    */
   closeModal() {
     this.modalController.dismiss();
-  }
-
-  /**
-   * Checks if the device is in portrait mode and has a small screen width.
-   * Sets isMobilePortrait to true if so.
-   */
-  private checkOrientation(): void {
-    this.isMobilePortrait =
-      this.utilsService.isSmallScreen && this.utilsService.isPortrait;
   }
 
   /**

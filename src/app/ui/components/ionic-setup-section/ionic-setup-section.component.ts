@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
-  IonButton,
   IonAccordion,
   IonAccordionGroup,
   IonItem,
@@ -13,11 +13,18 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
+
 import { APPS } from '@app/shared/GitHubConstants';
 import { IonicSetupSectionParameters } from '@app/shared/app-interfaces';
+import { Tab } from '@app/shared/enums';
 import { UtilsService } from '@app/services/utils.service';
-import { OpenSourceComponent } from '../open-source/open-source.component';
-
+import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
+import { FeedbackAppsComponent } from '@ui/shared/feedback-apps/feedback-apps.component';
+import { ChangeLogAppsComponent } from '@ui/shared/change-log-apps/change-log-apps.component';
+import { SourceCodeAppsComponent } from '@ui/shared/source-code-apps/source-code-apps.component';
+import { MobileAppAppsComponent } from '@ui/shared/mobile-app-apps/mobile-app-apps.component';
+import { HelpAppsComponent } from '@ui/shared/help-apps/help-apps.component';
+import { WebAppAppsComponent } from '@ui/shared/web-app-apps/web-app-apps.component';
 @Component({
   selector: 'app-ionic-setup-section',
   templateUrl: './ionic-setup-section.component.html',
@@ -27,7 +34,6 @@ import { OpenSourceComponent } from '../open-source/open-source.component';
     RouterModule,
     IonIcon,
     IonCard,
-    IonButton,
     IonAccordion,
     IonAccordionGroup,
     IonItem,
@@ -35,84 +41,54 @@ import { OpenSourceComponent } from '../open-source/open-source.component';
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    OpenSourceComponent,
+    TranslatePipe,
+    OpenSourceAppsComponent,
+    FeedbackAppsComponent,
+    ChangeLogAppsComponent,
+    MobileAppAppsComponent,
+    HelpAppsComponent,
+    SourceCodeAppsComponent,
+    WebAppAppsComponent,
   ],
 })
 export class IonicSetupSectionComponent {
-  private readonly utilsService = inject(UtilsService);
+  readonly utilsService = inject(UtilsService);
 
   @Input() parameters?: IonicSetupSectionParameters;
+  @Input() isAnalyticsEnabled = false;
   @Output() accordionChange = new EventEmitter<CustomEvent>();
-  @Output() analyticsEvent = new EventEmitter<{
-    eventName: string;
-    params: any;
-  }>();
 
-  nativeDownloadUrl =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup';
-  sourceCodeUrl = 'https://github.com/zoechbauer/z-control-ionic-setup';
-  webAppUrl = 'https://z-control-ionic-setup.web.app';
   selectedSubAccordion: string = '';
+  Tab = Tab;
+  APPS = APPS;
 
-  get showBackendFunctionsInfo(): boolean {
-    return !this.utilsService.isSmallScreen && !this.utilsService.isSmallDevice;
-  }
-
-  onDownloadNative() {
-    globalThis.window.open(this.nativeDownloadUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'download_native',
-      params: {
-        platform: 'android',
-        url: this.nativeDownloadUrl,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  }
-
-  onGetSourceCode() {
-    globalThis.window.open(this.sourceCodeUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'get_source_code',
-      params: {
-        repo: APPS.IONIC_SETUP,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  }
-
-  onOpenWebApp() {
-    globalThis.window.open(this.webAppUrl, '_blank');
-    this.analyticsEvent.emit({
-      eventName: 'open_web_app',
-      params: {
-        url: this.webAppUrl,
-        app: APPS.LANDING_PAGE,
-      },
-    });
-  }
-
-  async onOpenChangelog() {
-    const selectedAccordion = this.parameters?.appSectionParameters
-      .selectedAccordion as keyof typeof APPS;
-    this.utilsService.openChangelog(selectedAccordion);
-  }
-
+  /**
+   * Handles the change event for a sub-accordion.
+   * @param event The custom event triggered when a sub-accordion changes.
+   */
   subAccordionChange(event?: CustomEvent) {
     this.selectedSubAccordion = event?.detail?.value || '';
   }
 
-  getAccordionTooltip(value: string): string {
-    return this.selectedSubAccordion == value
-      ? `Collapse ${value}`
-      : `Expand ${value}`;
-  }
-
-  getMailToLinkForFeedback(): string {
-    return `mailto:zcontrol.app.qr@gmail.com?subject=${APPS.IONIC_SETUP}%20Feedback`;
-  }
-
-  get privacyPolicyLink() {
-    return ['/privacy', 'multi-language-translator', 'en'];
+  /**
+   * Gets the tooltip text for an accordion or sub-accordion.
+   * @param value The value of the accordion or sub-accordion.
+   * @param isSubAccordion Indicates whether the tooltip is for a sub-accordion (default: true).
+   * @returns The tooltip text for the specified accordion or sub-accordion.
+   */
+  getAccordionTooltip(value: string, isSubAccordion: boolean = true): string {
+    if (!isSubAccordion) {
+      return this.utilsService.getAccordionTooltip(
+        this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+        APPS.IONIC_SETUP,
+        this.parameters?.appSectionParameters?.currentMainAccordion || '',
+        value,
+      );
+    }
+    return this.utilsService.getSubAccordionTooltip(
+      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
+      this.selectedSubAccordion,
+      value,
+    );
   }
 }

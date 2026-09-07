@@ -1,5 +1,28 @@
 # Privacy Policy System Architecture
 
+## Adding a new Policy (TODOs)
+
+To add a new privacy policy for an app or feature, follow these steps:
+
+### Insert the privacy document in the assets folder
+
+1. Create a new folder in `src/assets/privacy/policies/` named after your policy type (e.g., `my-new-app`).
+2. Add the HTML files for each supported language, using the format:
+   - `my-new-app-en.html`
+   - `my-new-app-de.html`  
+     (Add more languages as needed.)
+
+### Update `privacy.service.ts`
+
+Read inline documentation of `privacy.service.ts`. Follow the instructions to add a new entry for your policy type, specifying supported languages and a description.
+
+> **Note:**  
+> The folder name in `assets/privacy/policies/{new-policy-folder}` must match the `type` used in `privacy.service.ts`.
+>
+> Currently, browsers cache the pages for up to 1 hour, as indicated by the response header: `cache-control: max-age=3600`. Please keep this in mind when testing new privacy policies.
+
+## Technical Information
+
 ### Project file structure (cleaned)
 
 ```
@@ -70,41 +93,16 @@ Notes
 - Assets folder is the single source of policy HTML templates; the privacy service loads templates via HTTP.
 - FirebaseAnalyticsService stays in src/app/services as an app-wide cross-cutting service.
 
-### Adding a new Policy (TODOs)
-
-To add a new privacy policy for an app or feature, follow these steps:
-
-#### Insert the privacy document in the assets folder
-
-1. Create a new folder in `src/assets/privacy/policies/` named after your policy type (e.g., `my-new-app`).
-2. Add the HTML files for each supported language, using the format:
-   - `my-new-app-en.html`
-   - `my-new-app-de.html`  
-     (Add more languages as needed.)
-
-#### Update `privacy.service.ts`
-
-1. In `availablePolicies`, add a new entry for your policy type, specifying supported languages and a description.
-2. In the `getTitle` method, add a new entry for your policy type with localized titles for each language.
-3. Ensure the `type` matches the folder name you created in the assets directory.
-
-> **Note:**  
-> The folder name in `assets/privacy/policies/{new-policy-folder}` must match the `type` used in `privacy.service.ts`.
->
-> Currently, browsers cache the pages for up to 1 hour, as indicated by the response header: `cache-control: max-age=3600`. Please keep this in mind when testing new privacy policies.
-
 ---
 
-### **Key Technical Implementation**
-
-#### **File Organization & DRY Principle**
+### **File Organization & DRY Principle**
 
 - **Single Source of Truth**: All privacy policy HTML templates are stored only in `src/assets/privacy/policies/`
 - **No Duplication**: The `src/app/privacy/policies/` folder contains only a README.md explaining the architecture
 - **HTTP Access**: Templates are loaded dynamically via Angular's HttpClient from the assets folder
 - **Enterprise Policies**: Removed as discussed - only basic and premium policies are maintained
 
-#### **Privacy Service (Final)**
+### **Privacy Service**
 
 ```typescript
 // ✅ Loads actual HTML files via HTTP
@@ -129,7 +127,7 @@ getPolicy(type: string, language: string): Observable<PrivacyPolicy | null> {
 }
 ```
 
-#### **HTTP Client Integration**
+### **HTTP Client Integration**
 
 ```typescript
 // ✅ Added to main.ts
@@ -143,7 +141,7 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-#### **Routing (Final)**
+### **Routing**
 
 ```typescript
 // ✅ Clean routing structure

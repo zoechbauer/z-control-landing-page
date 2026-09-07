@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Analytics } from 'firebase/analytics';
 import { BehaviorSubject } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { environment } from '@env/environment';
 import { FirebaseAnalyticsAdapterService } from './firebase-analytics-adapter.service';
 import { WindowRefService } from './window-ref.service';
 
