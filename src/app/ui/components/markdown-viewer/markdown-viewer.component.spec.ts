@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
-import { IonicModule } from '@ionic/angular';
+import { IonContent } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 
 import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
@@ -22,7 +22,6 @@ describe('MarkdownViewerComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MarkdownViewerComponent,
-        IonicModule.forRoot(),
         MarkdownModule.forRoot(),
       ],
       providers: [
@@ -36,7 +35,6 @@ describe('MarkdownViewerComponent', () => {
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
 
-    // Manually replace the modalController
     (component as any).modalController = modalControllerSpy;
   }));
 
@@ -113,5 +111,13 @@ describe('MarkdownViewerComponent', () => {
   it('should require fullChangeLogPath input', () => {
     component.fullChangeLogPath = 'some/path.md';
     expect(component.fullChangeLogPath).toBeDefined();
+  });
+
+  it('should scroll to top when scrollToTop is called', () => {
+    const scrollSpy = jasmine.createSpy('scrollToTop');
+    component.content = { scrollToTop: scrollSpy } as unknown as IonContent;
+    
+    component.scrollToTop();
+    expect(scrollSpy).toHaveBeenCalledWith(300);
   });
 });

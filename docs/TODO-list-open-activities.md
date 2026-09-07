@@ -19,6 +19,6 @@ This document lists open tasks and follow-ups for the **z-control Landing Page p
 - [x] Refactor Firebase Analytics logEvent: call utilsService direct in subcomponents instead of emitting events to the parent component.
 - [x] Translate the Landing Page content to English and German, including all text, labels, and messages.
 - [x] Move existing unit tests to align with the new component structure.
-- [ ] Update the Help component to provide complete, Landing Page–specific guidance. Currently it only contains a basic skeleton copied from the z-control Ionic Setup app; expand and adapt the content to explain features, navigation, configuration, and links to relevant resources.
-- [ ] Add missing unit tests for the new components, ensuring they behave correctly and integrate well with the Landing Page.
-- [ ] Update README.md to document the full project structure.
+- [x] Update the Help component to provide complete, Landing Page–specific guidance. Currently it only contains a basic skeleton copied from the z-control Ionic Setup app; expand and adapt the content to explain features, navigation, configuration, and links to relevant resources.
+- [x] Add missing unit tests for the new components, ensuring they behave correctly and integrate well with the Landing Page.
+- [x] Update README.md to document the full project structure.

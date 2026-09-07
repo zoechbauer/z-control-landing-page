@@ -60,6 +60,10 @@ ion-content {
     margin-left: 1em;
     padding-left: 1em;
     margin-bottom: 16px;
+
+    li {
+      margin-bottom: 8px;
+    }
   }
 
   .quick-tip {
@@ -123,6 +127,10 @@ ion-content {
         margin-bottom: 0;
       }
     }
+  }
+
+  p, li {
+    line-height: 1.5em;
   }
 }
 

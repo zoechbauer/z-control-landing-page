@@ -73,7 +73,7 @@ export const APPS = {
   IONIC_SETUP: 'z-control Ionic Setup App',
   IMAGE_TO_TEXT: 'z-control Image to Text App',
   BACKEND_FUNCTIONS: 'z-control Backend Functions',
-  IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup',
+  IONIC_ANGULAR21_VITEST_SETUP: 'Ionic Angular21 Vitest Setup',
 };
 
 // Runtime keys for AppKey with IDE completion (Option A)

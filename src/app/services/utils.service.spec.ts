@@ -202,186 +202,73 @@ describe('UtilsService', () => {
   });
 
   describe('openChangelog', () => {
-    it('should log analytics and open changelog for landing page', async () => {
-      const presentSpy = jasmine
-        .createSpy('present')
-        .and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(
-        Promise.resolve({ present: presentSpy } as any),
-      );
+    const testCases = [
+      {
+        key: 'IMAGE_TO_TEXT',
+        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md',
+        appName: APPS.IMAGE_TO_TEXT,
+      },
+      {
+        key: 'IONIC_SETUP',
+        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md',
+        appName: APPS.IONIC_SETUP,
+      },
+      {
+        key: 'LANDING_PAGE',
+        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
+        appName: APPS.LANDING_PAGE,
+      },
+      {
+        key: 'MULTI_LANGUAGE_TRANSLATOR',
+        fullChangeLogPath:
+          'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
+        appName: APPS.MULTI_LANGUAGE_TRANSLATOR,
+      },
+      {
+        key: 'QR_CODE_GENERATOR',
+        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_QR-CODE.md',
+        appName: APPS.QR_CODE_GENERATOR,
+      },
+      {
+        key: 'BACKEND_FUNCTIONS',
+        fullChangeLogPath:
+          'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
+        appName: APPS.BACKEND_FUNCTIONS,
+      },
+    ];
 
-      await service.openChangelog(APP_KEYS.LANDING_PAGE as AppKey);
+    it('should open changelog and log analytics for each test case', async () => {
+      for (const testCase of testCases) {
+        modalControllerSpy.create.calls.reset();
+        firebaseAnalyticsServiceSpy.logEvent.calls.reset();
 
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath:
-            'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
-          title1line: `Changelog for ${APPS.LANDING_PAGE}`,
-          title2lines: `Changelog for<br />${APPS.LANDING_PAGE}`,
-        },
-        cssClass: 'change-log-modal',
-      });
-      expect(presentSpy).toHaveBeenCalled();
-      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
-        'open_changelog',
-        {
-          changelog_for: APP_KEYS.LANDING_PAGE,
-          app: APPS.LANDING_PAGE,
-        },
-      );
-    });
+        const presentSpy = jasmine
+          .createSpy('present')
+          .and.returnValue(Promise.resolve());
+        modalControllerSpy.create.and.returnValue(
+          Promise.resolve({ present: presentSpy } as any),
+        );
 
-    it('should open image to text changelog with correct path', async () => {
-      const presentSpy = jasmine
-        .createSpy('present')
-        .and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(
-        Promise.resolve({ present: presentSpy } as any),
-      );
+        await service.openChangelog(testCase.key as AppKey);
 
-      await service.openChangelog(APP_KEYS.IMAGE_TO_TEXT as AppKey);
+        const createArg = modalControllerSpy.create.calls.mostRecent().args[0];
+        expect(createArg.component).toBe(MarkdownViewerComponent);
+        expect(createArg.cssClass).toBe('change-log-modal');
+        expect(createArg.componentProps).toEqual({
+          fullChangeLogPath: testCase.fullChangeLogPath,
+          title1line: `Changelog for ${testCase.appName}`,
+          title2lines: `Changelog for<br />${testCase.appName}`,
+        });
+        expect(presentSpy).toHaveBeenCalled();
 
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath:
-            'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md',
-          title1line: `Changelog for ${APPS.IMAGE_TO_TEXT}`,
-          title2lines: `Changelog for<br />${APPS.IMAGE_TO_TEXT}`,
-        },
-        cssClass: 'change-log-modal',
-      });
-      expect(presentSpy).toHaveBeenCalled();
-      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
-        'open_changelog',
-        {
-          changelog_for: APP_KEYS.IMAGE_TO_TEXT,
-          app: APPS.LANDING_PAGE,
-        },
-      );
-      expect(presentSpy).toHaveBeenCalled();
-    });
-
-    it('should open backend functions changelog with correct path', async () => {
-      const presentSpy = jasmine
-        .createSpy('present')
-        .and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(
-        Promise.resolve({ present: presentSpy } as any),
-      );
-
-      await service.openChangelog(APP_KEYS.BACKEND_FUNCTIONS as AppKey);
-
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath:
-            'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
-          title1line: `Changelog for ${APPS.BACKEND_FUNCTIONS}`,
-          title2lines: `Changelog for<br />${APPS.BACKEND_FUNCTIONS}`,
-        },
-        cssClass: 'change-log-modal',
-      });
-      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
-        'open_changelog',
-        {
-          changelog_for: APP_KEYS.BACKEND_FUNCTIONS,
-          app: APPS.LANDING_PAGE,
-        },
-      );
-      expect(presentSpy).toHaveBeenCalled();
-    });
-
-    it('should open ionic setup changelog with correct path', async () => {
-      const presentSpy = jasmine
-        .createSpy('present')
-        .and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(
-        Promise.resolve({ present: presentSpy } as any),
-      );
-
-      await service.openChangelog(APP_KEYS.IONIC_SETUP as AppKey);
-
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md',
-          title1line: `Changelog for ${APPS.IONIC_SETUP}`,
-          title2lines: `Changelog for<br />${APPS.IONIC_SETUP}`,
-        },
-        cssClass: 'change-log-modal',
-      });
-      expect(presentSpy).toHaveBeenCalled();
-      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
-        'open_changelog',
-        {
-          changelog_for: APP_KEYS.IONIC_SETUP,
-          app: APPS.LANDING_PAGE,
-        },
-      );
-      expect(presentSpy).toHaveBeenCalled();
-    });
-
-    it('should open qr code generator changelog with correct path', async () => {
-      const presentSpy = jasmine
-        .createSpy('present')
-        .and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(
-        Promise.resolve({ present: presentSpy } as any),
-      );
-
-      await service.openChangelog(APP_KEYS.QR_CODE_GENERATOR as AppKey);
-
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_QR-CODE.md',
-          title1line: `Changelog for ${APPS.QR_CODE_GENERATOR}`,
-          title2lines: `Changelog for<br />${APPS.QR_CODE_GENERATOR}`,
-        },
-        cssClass: 'change-log-modal',
-      });
-      expect(presentSpy).toHaveBeenCalled();
-      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
-        'open_changelog',
-        {
-          changelog_for: APP_KEYS.QR_CODE_GENERATOR,
-          app: APPS.LANDING_PAGE,
-        },
-      );
-      expect(presentSpy).toHaveBeenCalled();
-    });
-
-    it('should open multi-language translator changelog with correct path', async () => {
-      const presentSpy = jasmine
-        .createSpy('present')
-        .and.returnValue(Promise.resolve());
-      modalControllerSpy.create.and.returnValue(
-        Promise.resolve({ present: presentSpy } as any),
-      );
-
-      await service.openChangelog(APP_KEYS.MULTI_LANGUAGE_TRANSLATOR as AppKey);
-
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath:
-            'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
-          title1line: `Changelog for ${APPS.MULTI_LANGUAGE_TRANSLATOR}`,
-          title2lines: `Changelog for<br />${APPS.MULTI_LANGUAGE_TRANSLATOR}`,
-        },
-        cssClass: 'change-log-modal',
-      });
-      expect(presentSpy).toHaveBeenCalled();
-      expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
-        'open_changelog',
-        {
-          changelog_for: APP_KEYS.MULTI_LANGUAGE_TRANSLATOR,
-          app: APPS.LANDING_PAGE,
-        },
-      );
-      expect(presentSpy).toHaveBeenCalled();
+        expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
+          'open_changelog',
+          {
+            changelog_for: testCase.key,
+            app: APPS.LANDING_PAGE,
+          },
+        );
+      }
     });
 
     it('should return empty path for unknown accordion and still open modal', async () => {
@@ -394,14 +281,13 @@ describe('UtilsService', () => {
 
       await service.openChangelog('UNKNOWN' as AppKey);
 
-      expect(modalControllerSpy.create).toHaveBeenCalledWith({
-        component: MarkdownViewerComponent,
-        componentProps: {
-          fullChangeLogPath: '',
-          title1line: 'Changelog for undefined',
-          title2lines: 'Changelog for<br />undefined',
-        },
-        cssClass: 'change-log-modal',
+      const createArg = modalControllerSpy.create.calls.mostRecent().args[0];
+      expect(createArg.component).toBe(MarkdownViewerComponent);
+      expect(createArg.cssClass).toBe('change-log-modal');
+      expect(createArg.componentProps).toEqual({
+        fullChangeLogPath: '',
+        title1line: 'Changelog for undefined',
+        title2lines: 'Changelog for<br />undefined',
       });
       expect(presentSpy).toHaveBeenCalled();
     });
@@ -567,5 +453,289 @@ describe('UtilsService', () => {
       service.showOrHideIonTabBar();
       expect(tabBar.classList.contains('hide-ion-tab-bar')).toBeTrue();
     });
+  });
+
+  describe('Get path for links', () => {
+    it('should return the correct webLinkPath for all APP_KEYS', () => {
+      const appKeysWebLinkPathArray = [
+        {
+          key: 'IMAGE_TO_TEXT',
+          path: 'https://z-control-image-to-text.web.app',
+        },
+        { key: 'IONIC_SETUP', path: 'https://z-control-ionic-setup.web.app' },
+        {
+          key: 'MULTI_LANGUAGE_TRANSLATOR',
+          path: 'https://z-control-translator.web.app',
+        },
+        { key: 'QR_CODE_GENERATOR', path: 'https://z-control-qr-code.web.app' },
+        { key: 'LANDING_PAGE', path: 'https://z-control-4070.web.app' },
+        { key: 'BACKEND_FUNCTIONS', path: '' },
+        { key: 'BACKUP_SCRIPTS', path: '' },
+        { key: 'IONIC_ANGULAR21_VITEST_SETUP', path: '' },
+      ];
+      appKeysWebLinkPathArray.forEach(({ key, path }) => {
+        const result = service.getWebLinkPathForAccordion(key as AppKey);
+        expect(result).toBe(path);
+      });
+      expect(appKeysWebLinkPathArray).toHaveSize(Object.keys(APP_KEYS).length);
+    });
+
+    it('should return the correct sourceLinkPath for all APP_KEYS', () => {
+      const appKeysSourceLinkPathArray = [
+        {
+          key: 'IMAGE_TO_TEXT',
+          path: 'https://github.com/zoechbauer/z-control-image-to-text',
+        },
+        {
+          key: 'IONIC_SETUP',
+          path: 'https://github.com/zoechbauer/z-control-ionic-setup',
+        },
+        {
+          key: 'MULTI_LANGUAGE_TRANSLATOR',
+          path: 'https://github.com/zoechbauer/z-control-multi-language-translator',
+        },
+        {
+          key: 'QR_CODE_GENERATOR',
+          path: 'https://github.com/zoechbauer/z-control-qr-code-generator',
+        },
+        {
+          key: 'LANDING_PAGE',
+          path: 'https://github.com/zoechbauer/z-control-landing-page',
+        },
+        {
+          key: 'BACKEND_FUNCTIONS',
+          path: 'https://github.com/zoechbauer/z-control-backend-functions',
+        },
+        {
+          key: 'BACKUP_SCRIPTS',
+          path: 'https://github.com/zoechbauer/z-control-Backup-Scripts',
+        },
+        {
+          key: 'IONIC_ANGULAR21_VITEST_SETUP',
+          path: 'https://github.com/zoechbauer/ionic-angular21-vitest-setup',
+        },
+      ];
+      appKeysSourceLinkPathArray.forEach(({ key, path }) => {
+        const result = service.getSourceLinkPathForAccordion(key as AppKey);
+        expect(result).toBe(path);
+      });
+      expect(appKeysSourceLinkPathArray).toHaveSize(
+        Object.keys(APP_KEYS).length,
+      );
+    });
+
+    it('should return the correct playStoreLinkPath for all APP_KEYS', () => {
+      const appKeysPlayStoreLinkPathArray = [
+        {
+          key: 'IMAGE_TO_TEXT',
+          path: 'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.image-to-text',
+        },
+        {
+          key: 'IONIC_SETUP',
+          path: 'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionic-setup',
+        },
+        {
+          key: 'MULTI_LANGUAGE_TRANSLATOR',
+          path: 'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.translator',
+        },
+        {
+          key: 'QR_CODE_GENERATOR',
+          path: 'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodeapp',
+        },
+        { key: 'LANDING_PAGE', path: '' },
+        { key: 'BACKEND_FUNCTIONS', path: '' },
+        { key: 'BACKUP_SCRIPTS', path: '' },
+        { key: 'IONIC_ANGULAR21_VITEST_SETUP', path: '' },
+      ];
+      appKeysPlayStoreLinkPathArray.forEach(({ key, path }) => {
+        const result = service.getPlayStoreLinkPathForAccordion(key as AppKey);
+        expect(result).toBe(path);
+      });
+      expect(appKeysPlayStoreLinkPathArray).toHaveSize(
+        Object.keys(APP_KEYS).length,
+      );
+    });
+
+    it('should return the correct changelogPath for all APP_KEYS', () => {
+      const appKeysChangelogPathArray = [
+        {
+          key: 'IMAGE_TO_TEXT',
+          path: 'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md',
+        },
+        {
+          key: 'IONIC_SETUP',
+          path: 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md',
+        },
+        {
+          key: 'MULTI_LANGUAGE_TRANSLATOR',
+          path: 'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
+        },
+        {
+          key: 'QR_CODE_GENERATOR',
+          path: 'assets/logs/change-logs/CHANGELOG_QR-CODE.md',
+        },
+        {
+          key: 'LANDING_PAGE',
+          path: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
+        },
+        {
+          key: 'BACKEND_FUNCTIONS',
+          path: 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
+        },
+        { key: 'BACKUP_SCRIPTS', path: '' },
+        { key: 'IONIC_ANGULAR21_VITEST_SETUP', path: '' },
+      ];
+      appKeysChangelogPathArray.forEach(({ key, path }) => {
+        const result = (service as any).getChangelogPathForAccordion(
+          key as AppKey,
+        );
+        expect(result).toBe(path);
+      });
+      expect(appKeysChangelogPathArray).toHaveSize(
+        Object.keys(APP_KEYS).length,
+      );
+    });
+  });
+
+  it('should show the correct display name for all APP_KEYS', () => {
+    const appKeysDisplayNameArray = [
+      { key: 'IMAGE_TO_TEXT', displayName: 'z\u2011control Image to Text App' },
+      { key: 'IONIC_SETUP', displayName: 'z\u2011control Ionic Setup App' },
+      {
+        key: 'MULTI_LANGUAGE_TRANSLATOR',
+        displayName: 'z\u2011control Translator App',
+      },
+      {
+        key: 'QR_CODE_GENERATOR',
+        displayName: 'z\u2011control QR Code Generator App',
+      },
+      { key: 'LANDING_PAGE', displayName: 'z\u2011control Landing Page App' },
+      {
+        key: 'BACKEND_FUNCTIONS',
+        displayName: 'z\u2011control Backend Functions',
+      },
+      { key: 'BACKUP_SCRIPTS', displayName: 'z\u2011control Backup Scripts' },
+      {
+        key: 'IONIC_ANGULAR21_VITEST_SETUP',
+        displayName: 'Ionic Angular21 Vitest Setup',
+      },
+    ];
+    appKeysDisplayNameArray.forEach(({ key, displayName }) => {
+      const result = service.getDisplayNameForAccordion(key as AppKey);
+      expect(result).toBe(displayName);
+    });
+    expect(appKeysDisplayNameArray).toHaveSize(Object.keys(APP_KEYS).length);
+  });
+
+  describe('getAccordionTooltip', () => {
+    it('should return expand message when tooltip of main accordion differs from selected main accordion', () => {
+      const accordionName = APPS.LANDING_PAGE;
+      const selectedMainAccordion = APPS.QR_CODE_GENERATOR;
+      const tooltipMainAccordion = APPS.LANDING_PAGE;
+
+      let lang = 'en';
+      let result = service.getAccordionTooltip(
+        lang,
+        accordionName,
+        selectedMainAccordion,
+        tooltipMainAccordion,
+      );
+      expect(result).toBe(`Expand ${accordionName} section`);
+
+      lang = 'de';
+      result = service.getAccordionTooltip(
+        lang,
+        accordionName,
+        selectedMainAccordion,
+        tooltipMainAccordion,
+      );
+      expect(result).toBe(`Abschnitt ${accordionName} öffnen`);
+    });
+
+    it('should return collapse message when tooltip of main accordion is equal to selected main accordion', () => {
+      const accordionName = APPS.LANDING_PAGE;
+      const selectedMainAccordion = APPS.LANDING_PAGE;
+      const tooltipMainAccordion = APPS.LANDING_PAGE;
+
+      let lang = 'en';
+      let result = service.getAccordionTooltip(
+        lang,
+        accordionName,
+        selectedMainAccordion,
+        tooltipMainAccordion,
+      );
+      expect(result).toBe(`Collapse ${accordionName} section`);
+
+      lang = 'de';
+      result = service.getAccordionTooltip(
+        lang,
+        accordionName,
+        selectedMainAccordion,
+        tooltipMainAccordion,
+      );
+      expect(result).toBe(`Abschnitt ${accordionName} schließen`);
+    });
+  });
+
+  describe('getSubAccordionTooltip', () => {
+    it('should return expand message when tooltip of sub accordion differs from selected sub accordion', () => {
+      const selectedSubAccordion = APPS.QR_CODE_GENERATOR;
+      const tooltipSubAccordion = APPS.LANDING_PAGE;
+
+      let lang = 'en';
+      let result = service.getSubAccordionTooltip(
+        lang,
+        selectedSubAccordion,
+        tooltipSubAccordion,
+      );
+      expect(result).toBe('Expand this part-section');
+
+      lang = 'de';
+      result = service.getSubAccordionTooltip(
+        lang,
+        selectedSubAccordion,
+        tooltipSubAccordion,
+      );
+      expect(result).toBe('Diesen Teil-Abschnitt öffnen');
+    });
+
+    it('should return collapse message when tooltip of sub accordion is equal to selected sub accordion', () => {
+      const selectedSubAccordion = APPS.QR_CODE_GENERATOR;
+      const tooltipSubAccordion = APPS.QR_CODE_GENERATOR;
+
+      let lang = 'en';
+      let result = service.getSubAccordionTooltip(
+        lang,
+        selectedSubAccordion,
+        tooltipSubAccordion,
+      );
+      expect(result).toBe('Collapse this part-section');
+
+      lang = 'de';
+      result = service.getSubAccordionTooltip(
+        lang,
+        selectedSubAccordion,
+        tooltipSubAccordion,
+      );
+      expect(result).toBe('Diesen Teil-Abschnitt schließen');
+    });
+  });
+
+  it('should open web app for a selected accordion and log firebase analytics event', () => {
+    const accordionName = APP_KEYS.QR_CODE_GENERATOR;
+    const expected_qr_code_url = 'https://z-control-qr-code.web.app';
+    spyOn(window, 'open');
+
+    service.onOpenWebApp(accordionName);
+
+    expect(window.open).toHaveBeenCalledWith(expected_qr_code_url, '_blank');
+
+    expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
+      'open_web_app',
+      {
+        url: expected_qr_code_url,
+        app: APPS.LANDING_PAGE,
+      },
+    );
   });
 });

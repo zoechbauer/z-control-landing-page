@@ -54,11 +54,6 @@
             >How do I use the app?</a
           >
         </li>
-        <li>
-          <a href="#" (click)="utilsService.scrollTo('technical-info', $event)"
-            >Technical Information</a
-          >
-        </li>
         <li class="toc-increase-margin-top">
           <a
             href="#"
@@ -70,103 +65,300 @@
       </ol>
     </div>
 
-    <p style="color: var(--ion-color-danger)">
-      This help page is a placeholder and should be customized for your
-      application.
-    </p>
-
     <h3 id="what-can-the-app-do">What can the app do?</h3>
     <strong>What is this app for?</strong>
     <p>
-      <i>Describe the app's core functionality here.</i>
+      The app
+      <strong
+        >describes and provides all z&#8209;control open source solutions and
+        tools</strong
+      >. This information is shown on the app's <strong>home page</strong>.
     </p>
-    <p>You can choose the base language (English or German) in the settings.</p>
+    <p>
+      In addition, the app provides
+      <strong>information about z&#8209;control and about the app itself</strong
+      >. This information is shown on the app's <strong>settings page</strong>.
+    </p>
+    <p>
+      All apps and tools are <strong>free of charge</strong> and can be used
+      without registration.
+    </p>
+    <p>
+      You can select the language (<strong>English or German</strong>) in the
+      settings.
+    </p>
     <p><strong>Highlights:</strong></p>
     <ul class="no-list-style-inside">
-      <li>Describe highlight 1.</li>
-      <li>Describe highlight 2, and so on.</li>
+      <li>
+        <strong>User support:</strong><br />Easy to use, with clear navigation
+        and an intuitive design.
+      </li>
+      <li>
+        The app offers comprehensive help pages and guides for all features.
+      </li>
+      <li>
+        You can switch between the various features and settings at any time.
+      </li>
+      <li>
+        <strong>User interface:</strong><br />
+        Same user interface as in all other <i>z&#8209;control apps</i>.
+      </li>
+      <li>
+        All apps use standardized components and designs so that you can find
+        and use specific features in the apps more easily.
+      </li>
+      <li>
+        <strong>Languages:</strong><br />
+        Supports English and German.
+      </li>
+      <li>
+        <strong>Apps and source code:</strong><br />
+        You can use the web version of the app directly, install the Android
+        version, or access the application's source code on GitHub.
+      </li>
+      <li>
+        <strong>Free of charge:</strong><br />
+        All apps and tools are free of charge and can be used without
+        registration.
+      </li>
     </ul>
-    
+
     <h3 id="how-to-use-the-app">How do I use the app?</h3>
     <ul class="no-list-style">
       <li>
-        <strong>Opening the app for the first time</strong>
+        <strong>First launch of the app</strong>
         <ul class="no-list-style-inside">
           <li>
-            Describe the settings that must be configured when opening the app
-            for the first time.
+            When you first start the app, a notice is displayed telling you that
+            you need to activate Firebase Analytics.
+          </li>
+          <li>
+            Without this consent, the use of the app is limited: you can only
+            access the activation function, the language settings, and the
+            privacy policy.
+          </li>
+          <li>The privacy policy describes how your data is processed.</li>
+          <li>
+            Once you have consented to the use of Firebase Analytics, you can
+            use the app without restrictions.
           </li>
         </ul>
       </li>
       <li>
-        <p><strong>Run the app feature</strong></p>
+        <p><strong>Exploring a specific app</strong></p>
         <ol>
+          <li>Select the row of the app that you want to explore.</li>
           <li>
-            Describe the workflow how to run the app feature, e.g. step 1.
+            The detail view of the app opens, and the name of the app is shown
+            in the title bar.
           </li>
-          <li>step 2, etc.</li>
+          <li>In the detail view, you can explore the features of the app.</li>
+          <li>
+            Switch between the various features of the app by tapping the
+            corresponding accordion to open it.
+          </li>
+          <li>
+            The first section, "What does the app do", has a different
+            background and always stays open. For the other sections, only the
+            most recently selected accordion is shown.
+          </li>
+          <li>Finish exploring by closing the detail view.</li>
+          <li>You can return to the app overview at any time.</li>
         </ol>
       </li>
       <li>
-        <strong>How do I switch between feature and settings?</strong>
+        <strong>What do the cloud icons in the overview mean?</strong>
+        <p>
+          If the cloud icon
+          <ion-icon name="cloudy-outline"></ion-icon> is shown next to an app in
+          the app overview, this means that the app uses certain functions of
+          the z&#8209;control backend service to process data or provide
+          additional services.
+        </p>
+        <p>
+          This information gives users transparency about which apps access the
+          backend functions of z&#8209;control.
+        </p>
+        <p>
+          On mobile devices in landscape mode or on large screens, the note
+          "uses z&#8209;control backend functions" is also displayed.
+        </p>
+        <p>
+          The app "z&#8209;control Backend Functions" shows the cloud icon
+          <ion-icon name="cloud-circle-outline"></ion-icon> so that you can
+          immediately see that this app provides the backend functions.
+        </p>
+      </li>
+      <li>
+        <strong>How do I switch between features and settings?</strong>
         <ul class="no-list-style-inside">
-          <li>
+          <li *ngIf="this.utilsService.isShowIonTabBar">
             <strong>On mobile devices in portrait mode:</strong> Use the tabs at
-            the bottom of the screen to switch between feature and settings.
+            the bottom of the screen to switch between features and settings.
           </li>
-          <li>
-            <strong>On tablets, desktop PCs or in landscape mode:</strong> Use
-            the button at the top right of the header to switch between feature
-            and settings.
+          <li *ngIf="this.utilsService.isShowIonTabBar">
+            <strong>On tablets, desktop PCs, or in landscape mode:</strong>
+            Use the button at the top right of the header to switch between
+            features <ion-icon name="apps-outline"></ion-icon> and settings
+            <ion-icon name="settings-outline"></ion-icon>.
+          </li>
+          <li *ngIf="!this.utilsService.isShowIonTabBar">
+            Use the button at the top right of the header to switch between
+            features
+            <ion-icon name="apps-outline"></ion-icon> and settings
+            <ion-icon name="settings-outline"></ion-icon>.
           </li>
         </ul>
       </li>
       <li>
-        <strong>How do I change the app's language?</strong>
+        <strong>How do I change the app language?</strong>
         <p>
-          In the settings, select the "Select language" option to switch between
-          English and German. The change is applied immediately.
+          In the settings, select the option "Select language" to switch between
+          English and German. The change takes effect immediately.
         </p>
+      </li>
+      <li>
+        <strong>Where can I find the apps' privacy policies?</strong>
+        <p>Every z&#8209;control app has its own privacy policy.</p>
         <p>
-          When the selected base language is changed, the list of target
-          languages is automatically updated to exclude the base language.
+          You can find the privacy policy of this app (z&#8209;control Landing
+          Page App) in the settings under the "Privacy Policy" section. All
+          relevant information about this app's privacy policy is available
+          there.
+        </p>
+
+        <p>
+          You can find the privacy policies of all other z&#8209;control apps in
+          the description of the respective app under the "Show privacy policy"
+          section.
+        </p>
+      </li>
+      <li>
+        <strong
+          >Where can I find the GitHub statistics of the z&#8209;control apps
+          and tools?</strong
+        >
+        <p>
+          You can find the statistics on the "Settings" page in the "GitHub
+          statistics of the z&#8209;control apps and tools" section. This page
+          also provides detailed information and explanations about the
+          statistics.
         </p>
       </li>
       <li>
         <strong>How do I switch between dark and light mode?</strong>
         <p>
           The app follows your device's system settings. Change your device's
-          theme ("Dark theme", "Light theme") in the system settings. The change
-          is applied immediately.
+          design ("Dark design", "Light design") in the system settings. The
+          change takes effect immediately.
         </p>
       </li>
       <li>
         <strong>How can I give feedback or contact support?</strong>
         <p>
           You can send us feedback, questions, or suggestions via the email link
-          in the settings. Click on the logo in the header to open the feedback
-          area. Use the "z-control Support" link to send us an email.
+          in the settings. Tap the logo in the header to open the feedback area.
+          You can send us an email via the "z&#8209;control Support" link.
         </p>
       </li>
     </ul>
-
-    <h3 id="technical-info">Technical Information</h3>
-    <p>Describe the app's technical functionality here.</p>
 
     <div>
       <h3 id="troubleshooting">Troubleshooting & Problem Solving</h3>
       <ul class="no-list-style">
         <li>
           <p>
-            <b>Description of problem 1:</b>
+            <strong>Why can't I install the Android app?</strong>
           </p>
-          <p>Description of the cause and solution for this problem.</p>
-        </li>
-        <li *ngIf="isNative">
           <p>
-            <b>Description of problem 2:</b>
+            Currently, only the
+            <strong
+              >Android version of the z&#8209;control QR Code Generator
+              app</strong
+            >
+            has been published on Google Play.
           </p>
-          <p>Description of the cause and solution for this problem.</p>
+          <p>
+            All other apps are currently available on Google Play as test
+            versions only.
+          </p>
+          <p>
+            You can install a test version only if we add you to the test group.
+            To do so, you need to provide us with your email address, as
+            described on the respective app page.
+          </p>
+          <p>
+            To install the Android app, make sure that you are using an Android
+            device and that the Google Play Store app is installed.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong
+              >Why is this application displayed so poorly on my phone?</strong
+            >
+          </p>
+          <p>
+            The application is optimized for mobile display. If it appears
+            squeezed or scaled down, the browser's desktop mode is usually
+            enabled. Make sure the web page is displayed in mobile mode and not
+            in desktop mode.
+          </p>
+
+          <h5>Android (Google Chrome)</h5>
+          <ol>
+            <li>
+              Open the menu via the three dots <strong>⋮</strong> at the top
+              right, next to the address bar.
+            </li>
+            <li>
+              Deactivate the option <strong>"Desktop site"</strong> (in older
+              versions: "Request desktop site").
+            </li>
+            <li>
+              If necessary, reload the page by tapping the refresh icon in the
+              menu.
+            </li>
+          </ol>
+
+          <h5>Android (Samsung Internet)</h5>
+          <ol>
+            <li>
+              Tap the menu icon <strong>☰</strong> (three lines) at the bottom
+              of the bar.
+            </li>
+            <li>Deactivate the entry <strong>"Desktop version"</strong>.</li>
+          </ol>
+
+          <h5>Android (Firefox)</h5>
+          <ol>
+            <li>Tap the menu <strong>⋮</strong> at the bottom right.</li>
+            <li>Deactivate the option <strong>"Desktop site"</strong>.</li>
+          </ol>
+
+          <h5>iPhone / iPad (Safari)</h5>
+          <ol>
+            <li>Tap the <strong>"aA"</strong> symbol in the address bar.</li>
+            <li>
+              Select <strong>"Request Mobile Website"</strong>. (If this option
+              is grayed out, mobile mode is already active.)
+            </li>
+          </ol>
+          <p>
+            Additionally, you can deactivate the option
+            <strong>"Automatically Request Desktop Websites"</strong> in the
+            section <strong>Settings → Safari</strong> (from iOS 18:
+            <strong>Settings → Apps → Safari</strong>) of your device settings
+            so that Safari loads all websites in mobile mode by default.
+          </p>
+
+          <p>
+            <i
+              >If the page is still displayed incorrectly, close the tab
+              completely, reopen the application, and, if necessary, clear the
+              browser cache.</i
+            >
+          </p>
         </li>
       </ul>
     </div>
@@ -226,13 +418,6 @@
             >Wie benutze ich die App?</a
           >
         </li>
-        <li>
-          <a
-            href="#"
-            (click)="utilsService.scrollTo('technical-info-DE', $event)"
-            >Technische Informationen</a
-          >
-        </li>
         <li class="toc-increase-margin-top">
           <a
             href="#"
@@ -244,24 +429,68 @@
       </ol>
     </div>
 
-    <p style="color: var(--ion-color-danger)">
-      Diese Hilfeseite dient als Platzhalter und sollte für Ihre Anwendung
-      angepasst werden.
-    </p>
-
     <h3 id="what-can-the-app-do-DE">Was kann die App?</h3>
     <strong>Wofür ist diese App gedacht?</strong>
     <p>
-      <i>Beschreiben Sie hier die Funktionen der App.</i>
+      Die App
+      <strong
+        >beschreibt und stellt alle z&#8209;control Open-Source-Lösungen und
+        Tools bereit</strong
+      >. Diese Informationen werden auf der <strong>Startseite</strong> der App
+      angezeigt.
     </p>
     <p>
-      Die Basissprache (Englisch oder Deutsch) können Sie in den Einstellungen
-      auswählen.
+      Darüber hinaus stellt die App
+      <strong>Informationen zu z&#8209;control und zu dieser App</strong>
+      bereit. Diese Informationen werden auf der
+      <strong>Einstellungsseite</strong>
+      der App angezeigt.
+    </p>
+    <p>
+      Alle Apps und Tools sind <strong>kostenlos</strong> und können ohne
+      Registrierung genutzt werden.
+    </p>
+    <p>
+      Die Sprache (<strong>Englisch oder Deutsch</strong>) können Sie in den
+      Einstellungen auswählen.
     </p>
     <p><strong>Highlights:</strong></p>
     <ul class="no-list-style-inside">
-      <li>Beschreiben Sie Highlight 1.</li>
-      <li>Beschreiben Sie Highlight 2 usw.</li>
+      <li>
+        <strong>Benutzerunterstützung:</strong><br />Einfach zu bedienen, mit
+        klarer Navigation und intuitivem Design.
+      </li>
+      <li>
+        Die App bietet umfassende Hilfeseiten und Anleitungen für alle
+        Funktionen.
+      </li>
+      <li>
+        Sie können jederzeit zwischen den verschiedenen Features und
+        Einstellungen wechseln.
+      </li>
+      <li>
+        <strong>Benutzeroberfläche:</strong><br />
+        Gleiche Benutzeroberfläche wie in allen anderen
+        <i>z&#8209;control Apps</i>.
+      </li>
+      <li>
+        Alle Apps verwenden standardisierte Komponenten und Designs, damit Sie
+        bestimmte Features in den Apps leichter finden und nutzen können.
+      </li>
+      <li>
+        <strong>Sprachen:</strong><br />
+        Unterstützt Englisch und Deutsch.
+      </li>
+      <li>
+        <strong>Apps und Quellcode:</strong><br />
+        Sie können die Web-Version der App direkt nutzen, die Android-Version
+        installieren oder auf den Quellcode der Anwendung auf GitHub zugreifen.
+      </li>
+      <li>
+        <strong>Kostenlos:</strong><br />
+        Alle Apps und Tools sind kostenlos und können ohne Registrierung genutzt
+        werden.
+      </li>
     </ul>
 
     <h3 id="how-to-use-the-app-DE">Wie benutze ich die App?</h3>
@@ -270,20 +499,73 @@
         <strong>Erster Aufruf der App</strong>
         <ul class="no-list-style-inside">
           <li>
-            Beschreiben Sie hier die Einstellungen, die beim ersten Aufruf der
-            App vorgenommen werden müssen.
+            Beim ersten Start der App wird ein Hinweis angezeigt, dass Sie
+            Firebase Analytics aktivieren müssen.
+          </li>
+          <li>
+            Ohne diese Zustimmung ist die Nutzung der App eingeschränkt: Sie
+            können nur die Aktivierungsfunktion, die Spracheinstellungen und die
+            Datenschutzbestimmungen aufrufen.
+          </li>
+          <li>
+            In den Datenschutzbestimmungen ist beschrieben, wie Ihre Daten
+            verarbeitet werden.
+          </li>
+          <li>
+            Nachdem Sie der Nutzung von Firebase Analytics zugestimmt haben,
+            können Sie die App uneingeschränkt verwenden.
           </li>
         </ul>
       </li>
       <li>
-        <p><strong>Feature der App ausführen</strong></p>
+        <p><strong>Eine bestimmte App erkunden</strong></p>
         <ol>
+          <li>Wählen Sie die Zeile der App aus, die Sie erkunden möchten.</li>
           <li>
-            Beschreiben Sie hier den Workflow, wie das Feature der App
-            ausgeführt wird, z.B. Schritt 1,
+            Die Detailansicht der App wird geöffnet, und in der Titelleiste wird
+            der Name der App angezeigt.
           </li>
-          <li>Schritt 2, usw.</li>
+          <li>
+            In der Detailansicht können Sie die Funktionen der App erkunden.
+          </li>
+          <li>
+            Wechseln Sie zwischen den einzelnen Features der App, indem Sie das
+            entsprechende Accordion durch Antippen öffnen.
+          </li>
+          <li>
+            Der erste Abschnitt „Was macht die App“ hat einen anderen
+            Hintergrund und bleibt immer geöffnet. Bei den übrigen Abschnitten
+            wird immer nur das zuletzt ausgewählte Accordion angezeigt.
+          </li>
+          <li>
+            Beenden Sie die Erkundung, indem Sie die Detailansicht schließen.
+          </li>
+          <li>Sie können jederzeit zur Übersicht der Apps zurückkehren.</li>
         </ol>
+      </li>
+      <li>
+        <strong>Was bedeuten die Wolkensymbole in der Übersicht?</strong>
+        <p>
+          Wird in der App-Übersicht bei einer App das Wolkensymbol
+          <ion-icon name="cloudy-outline"></ion-icon> angezeigt, bedeutet dies,
+          dass diese App bestimmte Funktionen des z&#8209;control
+          Backend-Services nutzt, um Daten zu verarbeiten oder zusätzliche
+          Dienste bereitzustellen.
+        </p>
+        <p>
+          Diese Information gibt den Nutzern Transparenz darüber, welche Apps
+          auf die Backend-Funktionen von z&#8209;control zugreifen.
+        </p>
+        <p>
+          Auf Mobilgeräten im Querformat oder auf großen Bildschirmen wird
+          zusätzlich der Hinweis „verwendet z&#8209;control Backend Funktionen“
+          angezeigt.
+        </p>
+        <p>
+          Bei der App „z&#8209;control Backend Functions“ wird das Wolkensymbol
+          <ion-icon name="cloud-circle-outline"></ion-icon> angezeigt, damit Sie
+          sofort erkennen, dass diese App die Backend-Funktionen bereitstellt.
+        </p>
       </li>
       <li>
         <strong>Wie wechsle ich zwischen Feature und Einstellungen?</strong>
@@ -296,14 +578,14 @@
           <li *ngIf="this.utilsService.isShowIonTabBar">
             <strong>Auf Tablets, Desktop-PCs oder im Querformat:</strong>
             Verwenden Sie die Schaltfläche oben rechts in der Kopfzeile, um
-            zwischen Feature <ion-icon name="language-outline"></ion-icon> und
+            zwischen Feature <ion-icon name="apps-outline"></ion-icon> und
             Einstellungen <ion-icon name="settings-outline"></ion-icon> zu
             wechseln.
           </li>
           <li *ngIf="!this.utilsService.isShowIonTabBar">
             Verwenden Sie die Schaltfläche oben rechts in der Kopfzeile, um
             zwischen Feature
-            <ion-icon name="language-outline"></ion-icon> und Einstellungen
+            <ion-icon name="apps-outline"></ion-icon> und Einstellungen
             <ion-icon name="settings-outline"></ion-icon> zu wechseln.
           </li>
         </ul>
@@ -311,16 +593,44 @@
       <li>
         <strong>Wie ändere ich die App-Sprache?</strong>
         <p>
-          Wählen Sie in den Einstellungen die Option "Sprache auswählen", um
+          Wählen Sie in den Einstellungen die Option „Sprache auswählen“, um
           zwischen Englisch und Deutsch zu wechseln. Die Änderung wird sofort
           übernommen.
+        </p>
+      </li>
+      <li>
+        <strong>Wie finde ich die Datenschutzerklärungen der Apps?</strong>
+        <p>Jede z&#8209;control App hat ihre eigene Datenschutzerklärung.</p>
+        <p>
+          Die Datenschutzerklärung dieser App (z&#8209;control Landing Page App)
+          finden Sie in den Einstellungen unter dem Abschnitt
+          „Datenschutz-Bestimmungen“. Dort finden Sie alle relevanten
+          Informationen zu den Datenschutzrichtlinien dieser App.
+        </p>
+
+        <p>
+          Die Datenschutzerklärungen aller anderen z&#8209;control Apps finden
+          Sie in der Beschreibung der jeweiligen App unter dem Abschnitt
+          „Datenschutzerklärung anzeigen“.
+        </p>
+      </li>
+      <li>
+        <strong
+          >Wie finde ich die Github Statistiken der z&#8209;control Apps und
+          Tools?</strong
+        >
+        <p>
+          Die Statistiken finden Sie auf der Seite „Einstellungen“ im Abschnitt
+          „Github Statistiken der z&#8209;control Apps und Tools“. Auf dieser
+          Seite finden Sie auch ausführliche Informationen und Erklärungen zur
+          Statistik.
         </p>
       </li>
       <li>
         <strong>Wie wechsle ich zwischen Dunkel- und Hellmodus?</strong>
         <p>
           Die App folgt den Systemeinstellungen Ihres Geräts. Ändern Sie das
-          Design Ihres Geräts ("Dunkles Design", "Helles Design") in den
+          Design Ihres Geräts („Dunkles Design“, „Helles Design“) in den
           Systemeinstellungen. Die Änderung wird sofort übernommen.
         </p>
       </li>
@@ -330,30 +640,119 @@
         >
         <p>
           Sie können uns Feedback, Fragen oder Vorschläge über den E-Mail-Link
-          in den Einstellungen senden. Klicken Sie auf das Logo in der
-          Kopfzeile, um den Feedback-Bereich zu öffnen. Über den Link „z-control
+          in den Einstellungen senden. Tippen Sie auf das Logo in der Kopfzeile,
+          um den Feedback-Bereich zu öffnen. Über den Link „z&#8209;control
           Support“ können Sie uns eine E-Mail senden.
         </p>
       </li>
     </ul>
-
-    <h3 id="technical-info-DE">Technische Informationen</h3>
-    <p>Beschreiben Sie hier die technische Funktionsweise der App.</p>
 
     <div>
       <h3 id="troubleshooting-DE">Fehlerbehebung & Problemlösung</h3>
       <ul class="no-list-style">
         <li>
           <p>
-            <strong>Beschreibung von Problem 1:</strong>
+            <strong>Warum kann ich die Android-App nicht installieren?</strong>
           </p>
-          <p>Beschreibung der Ursache und Lösung des Problems.</p>
-        </li>
-        <li *ngIf="isNative">
           <p>
-            <strong>Beschreibung von Problem 2:</strong>
+            Derzeit wurde nur die
+            <strong
+              >Android-Version der z&#8209;control QR Code Generator App</strong
+            >
+            in Google Play veröffentlicht.
           </p>
-          <p>Beschreibung der Ursache und Lösung des Problems.</p>
+          <p>
+            Alle anderen Apps sind derzeit in Google Play nur als Testversion
+            verfügbar.
+          </p>
+          <p>
+            Eine Testversion können Sie nur installieren, wenn wir Sie zur
+            Testgruppe hinzufügen. Dazu müssen Sie uns Ihre E-Mail-Adresse
+            mitteilen, wie auf der jeweiligen App-Seite beschrieben.
+          </p>
+          <p>
+            Um die Android-App installieren zu können, stellen Sie sicher, dass
+            Sie ein Android-Gerät verwenden und die Google Play Store-App
+            installiert ist.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong
+              >Warum wird diese Anwendung am Handy so schlecht
+              dargestellt?</strong
+            >
+          </p>
+          <p>
+            Die Anwendung ist für die mobile Darstellung optimiert. Wenn sie
+            gestaucht oder verkleinert erscheint, ist meist der Desktop‑Modus
+            des Browsers aktiviert. Stellen Sie sicher, dass die Webseite im
+            mobilen Modus und nicht im Desktop‑Modus angezeigt wird.
+          </p>
+
+          <h5>Android (Google Chrome)</h5>
+          <ol>
+            <li>
+              Öffnen Sie das Menü über die drei Punkte
+              <strong>⋮</strong> oben rechts neben der Adressleiste.
+            </li>
+            <li>
+              Deaktivieren Sie die Option <strong>„Desktop‑Version“</strong>
+              (in älteren Versionen: „Website für Desktop“).
+            </li>
+            <li>
+              Laden Sie die Seite bei Bedarf neu, indem Sie im Menü auf das
+              Aktualisieren-Symbol tippen.
+            </li>
+          </ol>
+
+          <h5>Android (Samsung Internet)</h5>
+          <ol>
+            <li>
+              Tippen Sie auf das Menü-Symbol <strong>☰</strong> (drei Striche)
+              unten in der Leiste.
+            </li>
+            <li>
+              Deaktivieren Sie den Eintrag
+              <strong>„Desktop‑Version“</strong>.
+            </li>
+          </ol>
+
+          <h5>Android (Firefox)</h5>
+          <ol>
+            <li>Tippen Sie auf das Menü <strong>⋮</strong> rechts unten.</li>
+            <li>
+              Deaktivieren Sie die Option
+              <strong>„Desktop‑Website“</strong>.
+            </li>
+          </ol>
+
+          <h5>iPhone / iPad (Safari)</h5>
+          <ol>
+            <li>
+              Tippen Sie in der Adressleiste auf das Symbol
+              <strong>„aA“</strong>.
+            </li>
+            <li>
+              Wählen Sie <strong>„Mobile Website anfordern“</strong>. (Ist die
+              Option ausgegraut, ist der mobile Modus bereits aktiv.)
+            </li>
+          </ol>
+          <p>
+            Zusätzlich können Sie in den Geräteeinstellungen unter
+            <strong>Einstellungen → Safari</strong> (ab iOS 18:
+            <strong>Einstellungen → Apps → Safari</strong>) im Abschnitt
+            <strong>„Desktop‑Websites automatisch anfordern“</strong> die Option
+            deaktivieren, damit Safari alle Webseiten standardmäßig mobil lädt.
+          </p>
+
+          <p>
+            <i
+              >Wird die Seite weiterhin falsch dargestellt, schließen Sie den
+              Tab vollständig, öffnen Sie die Anwendung erneut und leeren Sie
+              gegebenenfalls den Browser‑Cache.</i
+            >
+          </p>
         </li>
       </ul>
     </div>

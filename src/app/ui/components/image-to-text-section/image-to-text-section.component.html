@@ -409,7 +409,7 @@
         alt="z-control App Logo"
       />
       <ion-label>{{ APPS.IMAGE_TO_TEXT }}</ion-label>
-      <ion-label *ngIf="this.utilsService.isSmallScreen">{{
+      <ion-label *ngIf="!this.utilsService.isSmallScreen">{{
         "MAIN.ACCORDION.USES_BACKEND" | translate
       }}</ion-label>
       <ion-icon

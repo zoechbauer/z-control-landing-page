@@ -60,6 +60,7 @@ export class IonicSetupSectionComponent {
 
   selectedSubAccordion: string = '';
   Tab = Tab;
+  APPS = APPS;
 
   /**
    * Handles the change event for a sub-accordion.

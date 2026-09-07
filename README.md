@@ -30,16 +30,23 @@ A modern, mobile-first landing page built with Ionic and Angular, highlighting t
 ### z-control Translator App
 
 - **Web App**: [Try directly in browser](https://z-control-translator.web.app) without installation
-- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.translator) — currently available through closed testing.
+- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.translator) — currently available through closed testing group.
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-multi-language-translator)
-- **Features**: Multi-language translation, text-to-speech functionality, customizable translation preferences, generous free translation allowance
+- **Features**: Multi-language translation, text-to-speech functionality, customizable translation preferences, generous free translation allowance.
 
 ### z-control Ionic Setup App
 
 - **Web App**: [Try directly in browser](https://z-control-ionic-setup.web.app) without installation
-- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup) — currently available through internal testing.
+- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup) — currently available through closed testing group.
 - **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-ionic-setup)
-- **Features**: Starter template for Ionic Apps, Quota management, built in help, and settings tab with accordions for configuration, Feedback, Change-log, Privacy Policy, and support
+- **Features**: Starter template for Ionic Apps with Quota management, built in help, and settings tab with accordions for configuration, Feedback, Change-log, Privacy Policy, and support.
+
+### z-control Image to Text App
+
+- **Web App**: [Try directly in browser](https://z-control-image-to-text.web.app) without installation
+- **Android App**: [Available on Google Play Store](https://play.google.com/store/apps/details?id=at.zcontrol.zoe.imageToText) — currently available through closed testing group.
+- **Source Code**: [GitHub Repository](https://github.com/zoechbauer/z-control-image-to-text)
+- **Features**: Image to text conversion with Quota management, built in help, and settings tab with accordions for configuration, Feedback, Change-log, Privacy Policy, and support.
 
 ## 🛠️ Tech Stack
 
@@ -66,7 +73,6 @@ landing-page/
 ├─ .vscode/
 ├─ angular.json
 ├─ capacitor.config.ts
-├─ firebase-example.json
 ├─ ionic.config.json
 ├─ karma.conf.js
 ├─ LICENSE
@@ -77,32 +83,9 @@ landing-page/
 ├─ tsconfig.json
 ├─ tsconfig.spec.json
 ├─ docs/                        # technical documentation
-│  ├─ FIREBASE_ANALYTICS.md
-│  ├─ FIREBASE_ANALYTICS_USED_IN_APP.md
-│  ├─ FIREBASE_CONFIG_ENVIRONMENT_FILES.md
-│  ├─ FIREBASE_DEPLOYMENT_GUIDE.md
-│  ├─ FIREBASE_SECURITY.md
-│  ├─ GITHUB_ANALYTICS_ARCHITECTURE.md
-│  ├─ GITHUB_ANALYTICS_TEST_LOCALLY.md
-│  ├─ GITHUB_ANALYTICS_EXPLANATION.md
-│  ├─ PRIVACY_POLICY_ARCHITECTURE.md
-│  ├─ unit-tests/
-│  │  ├─ FIREBASE_ANALYTICS_SERVICE_TESTS.md
-│  │  └─ UNIT_TESTING_PLAN.md
+│  ├─ README.md                 # Overview of the documentation folder
 │  └─ ...other docs...
-├─ functions/                   # Firebase Cloud Functions (GitHub Analytics)
-│  ├─ lib/
-│  ├─ node_modules/
-│  ├─ src/
-│  │  ├─ shared/
-│  │  │  └─ GitHubConstants.ts
-│  │  ├─ GitHubAnalytics.ts
-│  │  ├─Index.ts
-│  │  └─ testEnv.ts
-│  └─ ...other files, like package.json, tsconfig.json...
 ├─ node_modules/
-├─ shared/
-│  └─ GitHubConstants.ts
 ├─ tools/
 │  ├─ generate-env.js
 │  ├─ backup_non_committed_files.ps1
@@ -111,44 +94,52 @@ landing-page/
 │  ├─ CHANGELOG_template DE.md
 │  └─ README.md
 └─ src/
-   ├─ index.html
-   ├─ index_DEBUG_FIREBASE-config.html  # local debug index (do NOT commit)
-   ├─ global.scss
-   ├─ main.html
-   ├─ environments/
-   │  ├─ environment.ts
-   │  └─ environment.prod.ts
-   ├─ assets/
-   │  ├─ icon/
-   │  ├─ app-docs/
-   │  │  ├─ backup-scripts-app/
-   │  │  │   └─ example folders and files
-   │  │  └─ backend-functions-app/
-   │  │     ├─ github-analytics-help.md
-   │  │     └─ firebase-functions-multi-app-deploy-playbook.md
-   │  ├─ logs/
-   │  │  └─ change-logs/
-   │  │        ├─ CHANGELOG_LANDING-PAGE.md
-   │  │        ├─ CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md
-   │  │        ├─ CHANGELOG_IONIC-SETUP.md
-   │  │        └─ CHANGELOG_QR-CODE.md
-   │  └─ privacy/
-   │     └─ policies/
-   │        ├─ landing-page/
-   │        │  ├─ landing-page-en.html
-   │        │  └─ landing-page-de.html
-   │        ├─ multi-language-translator/
-   │        │  ├─ multi-language-translator-en.html
-   │        │  └─ multi-language-translator-de.html
-   │        └─ qr-code-generator/
-   │           ├─ qr-code-generator-en.html
-   │           └─ qr-code-generator-de.html
+  ├─ index.html
+  ├─ global.scss
+  ├─ main.ts
+  ├─ polyfills.ts
+  ├─ test.ts
+  ├─ zone-flags.ts
+  ├─ environments/
+  ├─ assets/
+  │  ├─ icon/
+  │  ├─ i18n/                  # translation files EN, DE
+  │  ├─ app-docs/
+  │  │  ├─ backup-scripts-app/
+  │  │  │   └─ example folders and files
+  │  │  └─ backend-functions-app/
+  │  │     ├─ github-analytics-help.md
+  │  │     └─ firebase-functions-multi-app-deploy-playbook.md
+  │  ├─ logs/
+  │  │  └─ change-logs/
+  │  │        ├─ CHANGELOG_LANDING-PAGE.md
+  │  │        ├─ CHANGELOG_BACKEND-FUNCTIONS.md
+  │  │        ├─ CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md
+  │  │        ├─ CHANGELOG_IONIC-SETUP.md
+  │  │        ├─ CHANGELOG_IMAGE-TO-TEXT.md
+  │  │        └─ CHANGELOG_QR-CODE.md
+  │  └─ privacy/
+  │     └─ policies/
+  │        ├─ landing-page/
+  │        │  ├─ landing-page-en.html
+  │        │  └─ landing-page-de.html
+  │        ├─ image-to-text/
+  │        │  ├─ image-to-text-en.html
+  │        │  └─ image-to-text-de.html
+  │        ├─ multi-language-translator/
+  │        │  ├─ multi-language-translator-en.html
+  │        │  └─ multi-language-translator-de.html
+  │        └─ qr-code-generator/
+  │           ├─ qr-code-generator-en.html
+  │           └─ qr-code-generator-de.html
    └─ app/
       ├─ app.component.ts
       ├─ app.component.html
       ├─ app.component.scss
       ├─ app.routes.ts
-      ├─ home/                    # main landing page sources
+      ├─ main/                    # main landing page sources
+      ├─ settings/                # settings page sources
+      ├─ tabs/                    # tabs page sources & routing
       ├─ privacy/                 # privacy policy system
       │  ├─ components/
       │  │  └─ privacy-viewer/
@@ -158,21 +149,46 @@ landing-page/
       │  │  └─ README.md
       │  └─ services/
       │     └─ privacy.service.ts
+      ├─ shared/
+      │  ├─ GitHubConstants.ts
+      │  ├─ app-interfaces.ts
+      │  └─ enums.ts
       ├─ services/                # app-wide / cross-cutting services
+      │  ├─ app-metadata.service.ts
       │  ├─ firebase-analytics.service.ts
       │  ├─ firebase-firestore.service.ts
       │  ├─ local-storage.service.ts
       │  ├─ utils.service.ts
+      │  ├─ ... other services
       ├─ ui/
       │  └─ components/
+      │     ├─ accordions/
+      │     ├─ backend-functions-section/
       │     ├─ backup-scripts-section/
-      │     ├─ footer/
+      │     ├─ get-help/
+      │     ├─ get-source-code/
       │     ├─ github-analytics/
+      │     ├─ github-analytics-details/
       │     ├─ header/
+      │     ├─ image-to-text-section/
+      │     ├─ ionic-setup-section/
+      │     ├─ logo/
       │     ├─ markdown-viewer/
       │     ├─ multi-language-translator-section/
-      │     ├─ ionic-setup-section/
+      │     ├─ privacy-policy/
       │     ├─ qr-code-generator-section/
+      │     ├─ spinner/
+      │     ├─ welcome/
+      │     ├─ shared/
+      │     │  ├─ change-log-apps/
+      │     │  ├─ feedback-apps/
+      │     │  ├─ help-apps/
+      │     │  ├─ mobile-app-apps/
+      │     │  ├─ mobile-app-restriction/
+      │     │  ├─ open-source-apps/
+      │     │  ├─ privacy-policy-apps/
+      │     │  ├─ source-code-apps/
+      │     │  └─ web-app-apps/
       │     └─ index.ts
       └─ theme/                    # global styling (variables, global.scss)
 ```

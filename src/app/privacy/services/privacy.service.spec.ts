@@ -1,3 +1,4 @@
+import { AppKey } from './../../shared/GitHubConstants';
 import { TestBed } from '@angular/core/testing';
 import {
   provideHttpClientTesting,
@@ -105,6 +106,13 @@ describe('PrivacyService', () => {
       });
     });
 
+    it('should return null for an unknown policy type', (done) => {
+      service.getPolicy('unknown-policy' as any, 'en').subscribe((policy) => {
+        expect(policy).toBeNull();
+        done();
+      });
+    });
+
     it('should return null when loading content fails', (done) => {
       spyOn(service as any, 'loadPolicyContent').and.returnValue(
         throwError(() => new Error('load failure')),
@@ -128,6 +136,18 @@ describe('PrivacyService', () => {
       const req = httpMock.expectOne(expectedFilePath);
       expect(req.request.method).toBe('GET');
       req.flush('<p>Sample Privacy Policy Content</p>');
+    });
+  });
+
+  describe('getPolicyName', () => {
+    it('should return the correct policy name for a known type and language', () => {
+      const name = (service as any).getPolicyName('QR_CODE_GENERATOR', 'en');
+      expect(name).toBe('qr-code-generator');
+    });
+
+    it('should return "Unknown Privacy Policy" for an unknown policy type', () => {
+      const name = (service as any).getPolicyName('unknown-policy', 'en');
+      expect(name).toBe('policy-not-defined-for-unknown-policy');
     });
   });
 });

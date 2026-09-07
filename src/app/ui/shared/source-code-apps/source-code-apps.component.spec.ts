@@ -3,8 +3,9 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SourceCodeAppsComponent } from './source-code-apps.component';
-import { UtilsService } from 'src/app/services/utils.service';
-import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
+import { APP_KEYS, APPS } from '@app/shared/GitHubConstants';
+import { UtilsService } from '@app/services/utils.service';
+import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 describe('SourceCodeAppsComponent', () => {
@@ -18,9 +19,10 @@ describe('SourceCodeAppsComponent', () => {
       'getDisplayNameForAccordion',
       'getSourceLinkPathForAccordion',
     ]);
-    firebaseAnalyticsServiceSpy = jasmine.createSpyObj('FirebaseAnalyticsService', [
-      'logEvent',
-    ]);
+    firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
+      'FirebaseAnalyticsService',
+      ['logEvent'],
+    );
 
     TestBed.configureTestingModule({
       declarations: [],
@@ -34,7 +36,10 @@ describe('SourceCodeAppsComponent', () => {
           provide: UtilsService,
           useValue: utilsServiceSpy,
         },
-        { provide: FirebaseAnalyticsService, useValue: firebaseAnalyticsServiceSpy },
+        {
+          provide: FirebaseAnalyticsService,
+          useValue: firebaseAnalyticsServiceSpy,
+        },
       ],
     }).compileComponents();
 
@@ -45,5 +50,26 @@ describe('SourceCodeAppsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call getDisplayNameForAccordion method of UtilsService', () => {
+    component.selectedAccordion = APP_KEYS.QR_CODE_GENERATOR;
+    component.appName;
+    expect(utilsServiceSpy.getDisplayNameForAccordion).toHaveBeenCalledWith(
+      APP_KEYS.QR_CODE_GENERATOR,
+    );
+  });
+
+  it('should open source link for the selected accordion and log the analytics event', () => {
+    component.selectedAccordion = APP_KEYS.QR_CODE_GENERATOR;
+    component.onGetSourceCode();
+
+    expect(utilsServiceSpy.getSourceLinkPathForAccordion).toHaveBeenCalledWith(
+      APP_KEYS.QR_CODE_GENERATOR,
+    );
+    expect(firebaseAnalyticsServiceSpy.logEvent).toHaveBeenCalledWith(
+      'get_source_code',
+      { repo: APP_KEYS.QR_CODE_GENERATOR, app: APPS.LANDING_PAGE },
+    );
   });
 });

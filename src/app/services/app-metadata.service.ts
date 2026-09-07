@@ -30,7 +30,8 @@ export class AppMetadataService {
     QR_CODE_GENERATOR: 'z-control-qr-code-generator',
     LANDING_PAGE: 'z-control-landing-page',
     BACKEND_FUNCTIONS: 'z-control-backend-functions',
-    BACKUP_SCRIPTS: 'z-control-Backup-Scripts'
+    BACKUP_SCRIPTS: 'z-control-Backup-Scripts',
+    IONIC_ANGULAR21_VITEST_SETUP: 'ionic-angular21-vitest-setup'
   };
 
   private readonly playStoreAppName: Partial<Record<AppKey, string>> = {

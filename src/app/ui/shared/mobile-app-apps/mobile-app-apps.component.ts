@@ -35,12 +35,9 @@ export class MobileAppAppsComponent {
     globalThis.window.open(url, '_blank');
 
     this.fa.logEvent('download_native', {
-      eventName: 'download_native',
-      params: {
         platform: 'android',
         url: url,
         app: APPS.LANDING_PAGE,
-      },
     });
   }
 }

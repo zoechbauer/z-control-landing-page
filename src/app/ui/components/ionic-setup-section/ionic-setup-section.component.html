@@ -23,10 +23,10 @@
         src="assets/icon/z-control-ionic-setup-logo-32px.png"
         alt="z-control Ionic Setup Logo"
       />
-      <ion-label>z-control Ionic Setup App</ion-label>
-      <ion-label *ngIf="!utilsService.isSmallScreen"
-        >uses z-control Backend Functions</ion-label
-      >
+      <ion-label>{{ APPS.IONIC_SETUP }}</ion-label>
+      <ion-label *ngIf="!this.utilsService.isSmallScreen">{{
+        "MAIN.ACCORDION.USES_BACKEND" | translate
+      }}</ion-label>
       <ion-icon
         name="cloudy-outline"
         title="{{ 'MAIN.ACCORDION.USES_BACKEND' | translate }}"
@@ -427,10 +427,10 @@
         src="assets/icon/z-control-ionic-setup-logo-32px.png"
         alt="z-control Ionic Setup Logo"
       />
-      <ion-label>z-control Ionic Setup‑App</ion-label>
-      <ion-label *ngIf="!this.utilsService.isSmallScreen"
-        >verwendet z-control Backend‑Funktionen</ion-label
-      >
+      <ion-label>{{ APPS.IONIC_SETUP }}</ion-label>
+      <ion-label *ngIf="!this.utilsService.isSmallScreen">{{
+        "MAIN.ACCORDION.USES_BACKEND" | translate
+      }}</ion-label>
       <ion-icon
         name="cloudy-outline"
         title="{{ 'MAIN.ACCORDION.USES_BACKEND' | translate }}"

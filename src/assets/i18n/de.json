@@ -31,7 +31,7 @@
       "TITLE": "z-control Apps & Tools"
     },
     "ACCORDION": {
-      "USES_BACKEND": "verwendet z-control Backend Functions",
+      "USES_BACKEND": "verwendet z-control Backend Funktionen",
       "IS_BACKEND": "Backend Functions werden von markierten Apps mit Symbol verwendet",
       "WHAT_DOES_APP_DO": "Was macht die App",
       "FEEDBACK_APPS": "Feedback an z-control senden",
