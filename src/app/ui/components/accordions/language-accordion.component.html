@@ -1,4 +1,11 @@
-<ion-accordion value="language" id="language">
+<ion-accordion value="LPS_ChangeLanguage"
+  title="{{
+    utilsService.getSettingsAccordionTooltip(
+      SettingsAccordion.LPS_ChangeLanguage  ,
+      isAnalyticsEnabled,
+      showAllAccordions
+    ) | translate
+  }}">
   <ion-item slot="header" color="light">
     <ion-label>{{ "SETTINGS.LANGUAGE.ACCORDION" | translate }} </ion-label>
   </ion-item>

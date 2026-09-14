@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
+import { TranslateService } from '@ngx-translate/core';
 
 import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
@@ -12,6 +13,7 @@ import {
 } from '@app/shared/GitHubConstants';
 import { UtilsService } from '@app/services/utils.service';
 import { GithubAnalyticsDetailsComponent } from '@ui/components/github-analytics-details/github-analytics-details.component';
+import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 // Mock FirebaseFirestoreService to avoid real Firebase calls
 class MockFirebaseFirestoreService {
@@ -94,10 +96,11 @@ describe('GithubAnalyticsDetailsComponent', () => {
       'openMarkdownDoc',
       'addLeadingBlanks',
     ]);
-    
+
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), GithubAnalyticsDetailsComponent],
       providers: [
+        { provide: TranslateService, useValue: createTranslateServiceMock() },
         {
           provide: FirebaseFirestoreService,
           useClass: MockFirebaseFirestoreService,
@@ -125,8 +128,6 @@ describe('GithubAnalyticsDetailsComponent', () => {
 
   afterEach(() => {
     component.item.timestamp = timestampBackup;
-
-
   });
 
   it('should create', () => {
@@ -183,20 +184,26 @@ describe('GithubAnalyticsDetailsComponent', () => {
 
     it('should open markdown and call logEvent on FirebaseAnalyticsService with correct parameters', async () => {
       for (const repoObj of REPOS) {
-        await component.onOpenGithubAnalyticsHelp(repoObj.repo);
+        for (const lang of ['en', 'de']) {
+          component.lang = lang;
+          await component.onOpenGithubAnalyticsHelp(repoObj.repo);
 
-        expect(utilsServiceSpy.openMarkdownDoc)
-          .withContext('openMarkdownDoc for repo: ' + repoObj.repo)
-          .toHaveBeenCalledWith(
-            'assets/app-docs/backend-functions-app/github-analytics-help.md',
-          );
+          expect(utilsServiceSpy.openMarkdownDoc)
+            .withContext('openMarkdownDoc for repo: ' + repoObj.repo)
+            .toHaveBeenCalledWith(
+              `assets/app-docs/backend-functions-app/github-analytics-help-${lang}.md`,
+              'SETTINGS.GITHUB_ANALYTICS.LABEL.HELP_PAGE_TITLE_1_LINE',
+              'SETTINGS.GITHUB_ANALYTICS.LABEL.HELP_PAGE_TITLE_2_LINES',
+            );
 
-        expect(firebaseAnalyticsService.logEvent)
-          .withContext('logEvent for repo: ' + repoObj.repo)
-          .toHaveBeenCalledWith('get_github_analytics_help', {
-            repo: repoObj.repo,
-            app: REPO.Z_CONTROL_LANDING_PAGE,
-          });
+          expect(firebaseAnalyticsService.logEvent)
+            .withContext('logEvent for repo: ' + repoObj.repo)
+            .toHaveBeenCalledWith('get_github_analytics_help', {
+              repo: repoObj.repo,
+              language: lang,
+              app: REPO.Z_CONTROL_LANDING_PAGE,
+            });
+        }
       }
     });
 
@@ -273,12 +280,14 @@ describe('GithubAnalyticsDetailsComponent', () => {
 
   describe('getFormattedFirstAccessDays', () => {
     it('should return the correct formatted first access days (1 day ago)', () => {
+      component.lang = 'en';
       const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
       const formattedDays = component.getFormattedFirstAccessDays(item);
       expect(formattedDays).toBe('= 1 day ago'); // 2026-06-19 - 2026-06-18 = 1 day
     });
 
     it('should return the correct formatted first access days (13 days ago)', () => {
+      component.lang = 'en';
       const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
       item.timestamp = '2026-06-21T16:00:36.488Z';
       const formattedDays = component.getFormattedFirstAccessDays(item);
@@ -286,6 +295,7 @@ describe('GithubAnalyticsDetailsComponent', () => {
     });
 
     it('should return the correct formatted first access days (1 month ago)', () => {
+      component.lang = 'en';
       const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
       item.timestamp = '2026-07-19T16:00:36.488Z'; // 1 month ago from 2026-06-19
       const formattedDays = component.getFormattedFirstAccessDays(item);
@@ -294,11 +304,45 @@ describe('GithubAnalyticsDetailsComponent', () => {
     });
 
     it('should return the correct formatted first access days (2 months ago)', () => {
+      component.lang = 'en';
       const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
       item.timestamp = '2026-08-19T16:00:36.488Z'; // 2 months ago from 2026-06-19
       const formattedDays = component.getFormattedFirstAccessDays(item);
 
       expect(formattedDays).toBe('= 2 months ago'); // 2026-08-19 - 2026-06-19 = 2 months
+    });
+
+    it('should return the correct formatted first access days (vor 1 Tag)', () => {
+      component.lang = 'de';
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[0];
+      const formattedDays = component.getFormattedFirstAccessDays(item);
+      expect(formattedDays).toBe('= vor 1 Tag'); // 2026-06-19 - 2026-06-18 = 1 day
+    });
+
+    it('should return the correct formatted first access days (vor 13 Tagen)', () => {
+      component.lang = 'de';
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
+      item.timestamp = '2026-06-21T16:00:36.488Z';
+      const formattedDays = component.getFormattedFirstAccessDays(item);
+      expect(formattedDays).toBe('= vor 13 Tagen'); // 2026-06-21 - 2026-06-08 = 13 days
+    });
+
+    it('should return the correct formatted first access days (vor 1 Monat)', () => {
+      component.lang = 'de';
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
+      item.timestamp = '2026-07-19T16:00:36.488Z'; // 1 month ago from 2026-06-19
+      const formattedDays = component.getFormattedFirstAccessDays(item);
+
+      expect(formattedDays).toBe('= vor 1 Monat'); // 2026-06-19 - 2026-05-01 = 1 month
+    });
+
+    it('should return the correct formatted first access days (vor 2 Monaten)', () => {
+      component.lang = 'de';
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
+      item.timestamp = '2026-08-19T16:00:36.488Z'; // 2 months ago from 2026-06-19
+      const formattedDays = component.getFormattedFirstAccessDays(item);
+
+      expect(formattedDays).toBe('= vor 2 Monaten'); // 2026-08-19 - 2026-06-19 = 2 months
     });
 
     it('should return empty string if there are no views or clones', () => {
@@ -314,6 +358,7 @@ describe('GithubAnalyticsDetailsComponent', () => {
 
   describe('getFormattedLastAccessDays', () => {
     it('should return the correct formatted last access days (1 day ago)', () => {
+      component.lang = 'en';
       const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
       item.timestamp = '2026-06-20T16:00:36.488Z';
       const formattedDays = component.getFormattedLastAccessDays(item);
@@ -322,11 +367,30 @@ describe('GithubAnalyticsDetailsComponent', () => {
     });
 
     it('should return the correct formatted last access days (2 days ago)', () => {
+      component.lang = 'en';
       const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
       item.timestamp = '2026-06-21T16:00:36.488Z';
       const formattedDays = component.getFormattedLastAccessDays(item);
 
       expect(formattedDays).toBe('2 days ago'); // 2026-06-21 - 2026-06-19 = 2 days
+    });
+
+    it('should return the correct formatted last access days (vor 1 Tag)', () => {
+      component.lang = 'de';
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
+      item.timestamp = '2026-06-20T16:00:36.488Z';
+      const formattedDays = component.getFormattedLastAccessDays(item);
+
+      expect(formattedDays).toBe('vor 1 Tag'); // 2026-06-20 - 2026-06-19 = 1 day
+    });
+
+    it('should return the correct formatted last access days (vor 2 Tagen)', () => {
+      component.lang = 'de';
+      const item: GithubAnalyticsTrafficDocument = mockAnalyticsData[1];
+      item.timestamp = '2026-06-21T16:00:36.488Z';
+      const formattedDays = component.getFormattedLastAccessDays(item);
+
+      expect(formattedDays).toBe('vor 2 Tagen'); // 2026-06-21 - 2026-06-19 = 2 days
     });
 
     it('should return empty string if there are no views or clones', () => {

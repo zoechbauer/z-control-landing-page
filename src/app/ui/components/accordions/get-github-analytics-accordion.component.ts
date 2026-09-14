@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { UtilsService } from '@app/services/utils.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { SettingsAccordion } from '@app/shared/enums';
 
 @Component({
   selector: 'app-get-github-analytics-accordion',
@@ -32,14 +33,14 @@ import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 export class GetGithubAnalyticsAccordionComponent implements OnInit, OnDestroy {
   translate = inject(TranslateService);
   readonly fa = inject(FirebaseAnalyticsService);
-  private readonly utilsService = inject(UtilsService);
+  readonly utilsService = inject(UtilsService);
 
   @Input() lang!: string;
-  @Input() disableAccordion = true;
-
-  isAnalyticsEnabled = false;
+  @Input() isAnalyticsEnabled!: boolean;
+  @Input() showAllAccordions!: boolean;
 
   private readonly sub = new Subscription();
+  SettingsAccordion = SettingsAccordion;
 
   ngOnInit(): void {
     this.sub.add(

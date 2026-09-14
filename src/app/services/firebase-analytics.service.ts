@@ -47,15 +47,17 @@ export class FirebaseAnalyticsService {
   logEvent(name: string, params?: { [key: string]: any }) {
     // Disable logging from localhost by default during development.
     // Set to true in .env.local for testing new events from localhost.
+    
+    // do not log if window is not available
+    if (!this.windowRef.isAvailable) return;
+    // do not log if running on localhost and logging in dev mode is disabled
     const doLoggingInDevMode = environment.logAnalyticsInDevMode;
-    if (!this.windowRef.isAvailable && !doLoggingInDevMode) {
-      const host = this.windowRef.hostname;
-      if (host === 'localhost' || host === '127.0.0.1' || host === '::1') {
-        return; // skip analytics on local dev hosts
-      }
-    }
+    const host = this.windowRef.hostname;
+    const localhost = host === 'localhost' || host === '127.0.0.1' || host === '::1';
+    if (localhost && !doLoggingInDevMode) return;
+    // do not log if analytics is not initialized or collection is disabled
+    if (!this.analytics || !this.enabled) return; 
 
-    if (!this.analytics || !this.enabled) return; // do not log if collection disabled
     try {
       this.analyticsAdapter.logEvent(this.analytics, name, params);
     } catch (e) {

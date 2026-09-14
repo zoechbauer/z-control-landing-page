@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import { ModalController, IonContent } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
@@ -132,6 +132,14 @@ describe('GithubAnalyticsComponent', () => {
     component.isRepoOpened = true;
     component.onAccordionGroupChange(event);
     expect(component.isRepoOpened).withContext('close repo').toBeFalse();
+  });
+
+  it('should scroll to top when scrollToTop is called', () => {
+    const scrollSpy = jasmine.createSpy('scrollToTop');
+    component.content = { scrollToTop: scrollSpy } as unknown as IonContent;
+
+    component.scrollToTop();
+    expect(scrollSpy).toHaveBeenCalledWith(300);
   });
 
   describe('init', () => {

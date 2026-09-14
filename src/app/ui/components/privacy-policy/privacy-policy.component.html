@@ -4,55 +4,92 @@
   <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
 </ng-container>
 
-<!-- E N G L I S H   T E M P L A T E -->
+<!-- *********************************** -->
+<!-- E N G L I S H   T E M P L A T E     -->
+<!-- *********************************** -->
 
 <ng-template #englishTemplate>
   <div class="additional-margin-right">
     <p>
-      We store anonymous, i.e. non-personal usage data in Google Firebase
-      Analytics.
+      <strong>Firebase Analytics is optional and disabled by default.</strong>
     </p>
+
     <p>
-      This data is used solely for analyzing usage, improving content, and troubleshooting.
+      Analytics is required to explore our full collection of applications and
+      tools. When enabled, Firebase Analytics helps us understand how our
+      applications are used so that we can improve functionality and develop new
+      features.
     </p>
+
     <p>
-      The full privacy policy will be displayed when clicking on the
+      Analytics may process usage and technical information. We do not require
+      registration and do not use Analytics to send you advertising or
+      promotional emails.
+    </p>
+
+    <p>
+      When Analytics is disabled, our application does not send its own
+      Analytics events to Firebase.
+    </p>
+
+    <p>
+      For complete information about the data processed, the purposes of
+      processing, your rights, and how you can withdraw your consent, please
+      read our
       <a
         [routerLink]="privacyPolicyLink"
         [queryParams]="{ internal: 'true' }"
         title="Read our privacy policy"
       >
         Privacy Policy
-        <ion-icon name="open-outline"></ion-icon>
-      </a>
-      link.
+        <ion-icon name="open-outline"></ion-icon> </a
+      >.
     </p>
   </div>
 </ng-template>
 
-<!-- G E R M A N   T E M P L A T E -->
+<!-- *********************************** -->
+<!-- G E R M A N   T E M P L A T E       -->
+<!-- *********************************** -->
 
 <ng-template #germanTemplate>
   <div class="additional-margin-right">
     <p>
-      Wir speichern anonyme, d.h. keine personenbezogenen Nutzungsdaten in
-      Google Firebase Analytics.
+      <strong>
+        Firebase Analytics ist optional und standardmäßig deaktiviert.
+      </strong>
     </p>
+
     <p>
-      Diese Daten werden ausschließlich zur Analyse der Nutzung, Verbesserung von Inhalten und zur
-      Fehlerbehebung verwendet.
+      Analytics ist erforderlich, um unsere vollständige Sammlung von
+      Anwendungen und Tools zu erkunden. Nach der Aktivierung hilft uns Firebase
+      Analytics zu verstehen, wie unsere Anwendungen genutzt werden, damit wir
+      Funktionen verbessern und neue entwickeln können.
     </p>
+
     <p>
-      Die vollständige Datenschutzerklärung sehen Sie, wenn Sie auf den Link
+      Analytics kann Nutzungs- und technische Informationen verarbeiten. Eine
+      Registrierung ist nicht erforderlich. Wir verwenden Analytics nicht, um
+      Ihnen Werbung oder Werbe-E-Mails zu senden.
+    </p>
+
+    <p>
+      Wenn Analytics deaktiviert ist, übermittelt unsere Anwendung keine eigenen
+      Analytics-Ereignisse an Firebase.
+    </p>
+
+    <p>
+      Ausführliche Informationen über die verarbeiteten Daten, die Zwecke der
+      Verarbeitung, Ihre Rechte und den Widerruf Ihrer Einwilligung finden Sie
+      in unserer vollständigen
       <a
         [routerLink]="privacyPolicyLink"
         [queryParams]="{ internal: 'true' }"
         title="Lesen Sie unsere Datenschutzerklärung"
       >
         Datenschutzerklärung
-        <ion-icon name="open-outline"></ion-icon>
-      </a>
-      klicken.
+        <ion-icon name="open-outline"></ion-icon> </a
+      >.
     </p>
   </div>
 </ng-template>

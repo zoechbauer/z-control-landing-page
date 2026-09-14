@@ -81,6 +81,10 @@ export class HeaderComponent {
   goBack(event: Event) {
     event.preventDefault();
     event.stopPropagation();
+
     this.utilsService.navigateToTab(this.currentTab);
+    setTimeout(() => {
+      this.utilsService.openFirebaseAnalyticsSub.next(true);
+    }, 500);
   }
 }

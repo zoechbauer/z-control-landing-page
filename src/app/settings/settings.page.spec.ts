@@ -20,6 +20,7 @@ import {
   GetGithubAnalyticsAccordionComponent,
   FirebaseAnalyticsAccordionComponent,
 } from '@ui';
+import { SettingsAccordion } from '@app/shared/enums';
 
 @Component({
   selector: 'app-language-accordion',
@@ -39,7 +40,6 @@ class MockLanguageAccordionComponent {
 class MockFeedbackAccordionComponent {
   @Input() lang!: string;
 }
-
 
 @Component({
   selector: 'app-privacy-policy-accordion',
@@ -205,65 +205,63 @@ describe('SettingsPage', () => {
     });
 
     describe('versionInfo', () => {
-        it('should format versionInfo correctly when values exist', () => {
-          const versionInfo = component.versionInfo;
+      it('should format versionInfo correctly when values exist', () => {
+        const versionInfo = component.versionInfo;
 
-          expect(versionInfo).toMatch(
-            /^Version \d+\.\d+ \(\d{4}-\d{2}-\d{2}\)$/,
-          );
-        });
-
-        it('should return version unknown when major is missing', () => {
-          const versionString = (component as any).getVersionString({
-            minor: 1,
-            date: '2024-01-01',
-          });
-          expect(versionString).toBe(
-            'Version unknown (missing version information)',
-          );
-        });
-        it('should not return version unknown when major or minor is 0', () => {
-          let versionString = (component as any).getVersionString({
-            major: 0,
-            minor: 1,
-            date: '2024-01-01',
-          });
-          expect(versionString)
-            .withContext('major version 0')
-            .toBe('Version 0.1 (2024-01-01)');
-
-          versionString = (component as any).getVersionString({
-            major: 1,
-            minor: 0,
-            date: '2024-01-01',
-          });
-          expect(versionString)
-            .withContext('minor version 0')
-            .toBe('Version 1.0 (2024-01-01)');
-        });
-
-        it('should return version unknown when date is invalid', () => {
-          const versionString = (component as any).getVersionString({
-            major: 1,
-            minor: 1,
-            date: 'YYYY-MM-DD',
-          });
-          expect(versionString).toBe(
-            'Version unknown (missing version information)',
-          );
-        });
-
-        it('should return version unknown when no environment version is provided', () => {
-          const versionString = (component as any).getVersionString({});
-          expect(versionString).toBe(
-            'Version unknown (missing version information)',
-          );
-        });
+        expect(versionInfo).toMatch(/^Version \d+\.\d+ \(\d{4}-\d{2}-\d{2}\)$/);
       });
+
+      it('should return version unknown when major is missing', () => {
+        const versionString = (component as any).getVersionString({
+          minor: 1,
+          date: '2024-01-01',
+        });
+        expect(versionString).toBe(
+          'Version unknown (missing version information)',
+        );
+      });
+      it('should not return version unknown when major or minor is 0', () => {
+        let versionString = (component as any).getVersionString({
+          major: 0,
+          minor: 1,
+          date: '2024-01-01',
+        });
+        expect(versionString)
+          .withContext('major version 0')
+          .toBe('Version 0.1 (2024-01-01)');
+
+        versionString = (component as any).getVersionString({
+          major: 1,
+          minor: 0,
+          date: '2024-01-01',
+        });
+        expect(versionString)
+          .withContext('minor version 0')
+          .toBe('Version 1.0 (2024-01-01)');
+      });
+
+      it('should return version unknown when date is invalid', () => {
+        const versionString = (component as any).getVersionString({
+          major: 1,
+          minor: 1,
+          date: 'YYYY-MM-DD',
+        });
+        expect(versionString).toBe(
+          'Version unknown (missing version information)',
+        );
+      });
+
+      it('should return version unknown when no environment version is provided', () => {
+        const versionString = (component as any).getVersionString({});
+        expect(versionString).toBe(
+          'Version unknown (missing version information)',
+        );
+      });
+    });
 
     describe('accordion behavior', () => {
       it('should set openAccordion to null and showAllAccordions to true when showAll is called', () => {
-        component.openAccordion = 'language';
+        component.openAccordion = SettingsAccordion.LPS_ChangeLanguage;
         component.showAllAccordions = false;
 
         component.showAll();
@@ -274,13 +272,13 @@ describe('SettingsPage', () => {
 
       it('should set openAccordion to the selected value and showAllAccordions to false on accordion change', () => {
         const event = {
-          detail: { value: 'language' },
+          detail: { value: SettingsAccordion.LPS_ChangeLanguage },
         } as CustomEvent;
         const content = {} as any;
 
         component.onAccordionGroupChange(event, content);
 
-        expect(component.openAccordion).toBe('language');
+        expect(component.openAccordion).toBe(SettingsAccordion.LPS_ChangeLanguage);
         expect(component.showAllAccordions).toBeFalse();
       });
 
@@ -296,46 +294,14 @@ describe('SettingsPage', () => {
         expect(component.showAllAccordions).toBeTrue();
       });
 
-      it('should not change values on accordion change when normalized value is undefined', () => {
-        component.openAccordion = 'language';
-        component.showAllAccordions = false;
-        const event = {
-          detail: { value: undefined },
-        } as CustomEvent;
-        const content = {} as any;
-        spyOn(component as any, 'normalizeAccordionValue').and.returnValue(
-          undefined,
-        );
-
-        component.onAccordionGroupChange(event, content);
-
-        expect(component.openAccordion).toBe('language');
-        expect(component.showAllAccordions).toBeFalse();
-      });
-
-      it('should normalize accordion values correctly', () => {
-        expect((component as any).normalizeAccordionValue('language')).toBe(
-          'language',
-        );
-        expect((component as any).normalizeAccordionValue('z-control')).toBe(
-          'z-control',
-        );
-        expect(
-          (component as any).normalizeAccordionValue(undefined),
-        ).toBeNull();
-        expect(
-          (component as any).normalizeAccordionValue('invalid'),
-        ).toBeUndefined();
-      });
-
       it('should open feedback accordion when logo is clicked', () => {
         (component as any).openFeedbackAccordion();
-        expect(component.openAccordion).toBe('z-control');
+        expect(component.openAccordion).toBe(SettingsAccordion.LPS_Feedback);
       });
 
       it('should open Firebase analytics accordion when firebase analytics button is clicked', () => {
         (component as any).openFirebaseAnalyticsAccordion();
-        expect(component.openAccordion).toBe('firebase-analytics');
+        expect(component.openAccordion).toBe(SettingsAccordion.LPS_FirebaseAnalytics);
       });
     });
 
@@ -541,8 +507,8 @@ describe('SettingsPage', () => {
           'app-get-source-accordion',
         );
         const closeButtonArea = fixture.nativeElement.querySelector(
-          '.accordion-close-button',
-        );
+          '[data-testid="accordion-close-button"] ion-button',
+        ) as HTMLButtonElement;
 
         expect(languageAccordion).toBeTruthy();
         expect(feedbackAccordion).toBeTruthy();
@@ -553,7 +519,7 @@ describe('SettingsPage', () => {
       });
 
       it('should render only selected accordion and close button in single-accordion mode', () => {
-        component.openAccordion = 'language';
+        component.openAccordion = SettingsAccordion.LPS_ChangeLanguage;
         component.showAllAccordions = false;
         fixture.detectChanges();
 
@@ -564,12 +530,14 @@ describe('SettingsPage', () => {
           'app-feedback-accordion',
         );
         const closeButtonArea = fixture.nativeElement.querySelector(
-          '.accordion-close-button',
-        );
+          '[data-testid="accordion-close-button"] ion-button',
+        ) as HTMLButtonElement;
 
-        expect(languageAccordion).toBeTruthy();
-        expect(feedbackAccordion).toBeNull();
-        expect(closeButtonArea).toBeTruthy();
+        expect(languageAccordion)
+          .withContext('Language accordion')
+          .toBeTruthy();
+        expect(feedbackAccordion).withContext('Feedback accordion').toBeNull();
+        expect(closeButtonArea).withContext('Close button area').toBeTruthy();
       });
 
       it('should switch to single-accordion mode when ionValueChange emits selected accordion value', () => {
@@ -580,28 +548,28 @@ describe('SettingsPage', () => {
 
         group.dispatchEvent(
           new CustomEvent('ionValueChange', {
-            detail: { value: 'language' },
+            detail: { value: SettingsAccordion.LPS_ChangeLanguage },
             bubbles: true,
           }),
         );
         fixture.detectChanges();
 
-        expect(component.openAccordion).toBe('language');
+        expect(component.openAccordion).toBe(SettingsAccordion.LPS_ChangeLanguage);
         expect(component.showAllAccordions).toBeFalse();
 
         const closeButtonArea = fixture.nativeElement.querySelector(
-          '.accordion-close-button',
-        );
+          '[data-testid="accordion-close-button"] ion-button',
+        ) as HTMLButtonElement;
         expect(closeButtonArea).toBeTruthy();
       });
 
       it('should show all accordions again when close button is clicked', () => {
-        component.openAccordion = 'language';
+        component.openAccordion = SettingsAccordion.LPS_ChangeLanguage;
         component.showAllAccordions = false;
         fixture.detectChanges();
 
         const closeButton = fixture.nativeElement.querySelector(
-          '.accordion-close-button ion-button',
+          '[data-testid="accordion-close-button"] ion-button',
         ) as HTMLElement;
         expect(closeButton).toBeTruthy();
 
@@ -615,8 +583,8 @@ describe('SettingsPage', () => {
           'app-feedback-accordion',
         );
         const closeButtonArea = fixture.nativeElement.querySelector(
-          '.accordion-close-button',
-        );
+          '[data-testid="accordion-close-button"] ion-button',
+        ) as HTMLButtonElement;
         expect(feedbackAccordion).toBeTruthy();
         expect(closeButtonArea).toBeNull();
       });

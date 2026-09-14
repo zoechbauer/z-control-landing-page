@@ -82,14 +82,13 @@ export class MultiLanguageTranslatorSectionComponent {
   getAccordionTooltip(value: string, isSubAccordion: boolean = true): string {
     if (!isSubAccordion) {
       return this.utilsService.getAccordionTooltip(
-        this.parameters?.appSectionParameters?.selectedLanguage || 'en',
         APPS.MULTI_LANGUAGE_TRANSLATOR,
         this.parameters?.appSectionParameters?.currentMainAccordion || '',
         value,
+        this.isAnalyticsEnabled,
       );
     }
     return this.utilsService.getSubAccordionTooltip(
-      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
       this.selectedSubAccordion,
       value,
     );

@@ -42,27 +42,37 @@ export class MarkdownViewerComponent implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly modalController = inject(ModalController);
 
-  @Input() fullChangeLogPath!: string;
-  @Input() title1line: string = 'z-control Release Notes';
-  @Input() title2lines: string = 'z-control <br />Release Notes';
+  @Input() fullPath!: string;
+  @Input() title1line: string = 'z-control file data';
+  @Input() title2lines: string = 'z-control <br />file data';
   @ViewChild('content', { static: false }) content!: IonContent;
   markdown: string = '';
   isPortrait = this.utilsService.isPortrait;
 
   ngOnInit() {
-    this.loadMarkdownChangelog();
+    this.loadFile();
   }
 
+  /**
+   * Closes the modal dialog.
+   */
   closeModal() {
     this.modalController.dismiss();
   }
 
-  scrollToTop() {
-    this.content.scrollToTop(300);
+  /**
+   * Scrolls the content to the top.
+   * @returns A promise that resolves when the scroll animation is complete.
+   */
+  scrollToTop(): Promise<void> {
+    return this.content.scrollToTop(300);
   }
 
-  private loadMarkdownChangelog() {
-    this.http.get(this.fullChangeLogPath, { responseType: 'text' }).subscribe({
+  /**
+   * Loads the file from the specified path.
+   */
+  private loadFile() {
+    this.http.get(this.fullPath, { responseType: 'text' }).subscribe({
       next: (data) => {
         this.markdown = data;
       },

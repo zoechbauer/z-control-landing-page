@@ -1,7 +1,13 @@
 <ion-accordion
-  value="github-analytics"
-  id="github-analytics"
-  [disabled]="disableAccordion"
+  value="LPS_GithubAnalytics"
+  [disabled]="!isAnalyticsEnabled"
+  title="{{
+    utilsService.getSettingsAccordionTooltip(
+      SettingsAccordion.LPS_GithubAnalytics,
+      isAnalyticsEnabled,
+      showAllAccordions
+    ) | translate
+  }}"
 >
   <ion-item slot="header" color="light" class="accordion-margin-top">
     <ion-label>{{
@@ -49,8 +55,7 @@
             }}"
           >
             <ion-icon name="logo-github" slot="start"></ion-icon>
-            z-control<br />
-            GitHub Analytics Dashboard
+            {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.BUTTON_STATISTICS" | translate }}
           </ion-button>
         </div>
       </div>
@@ -94,8 +99,7 @@
             }}"
           >
             <ion-icon name="logo-github" slot="start"></ion-icon>
-            z-control<br />
-            GitHub Analytics Dashboard
+            {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.BUTTON_STATISTICS" | translate }}
           </ion-button>
         </div>
       </div>

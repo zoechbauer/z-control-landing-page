@@ -13,22 +13,22 @@ describe('BackupScriptsSectionComponent', () => {
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
   beforeEach(waitForAsync(() => {
-utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
+    utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'openChangelog',
       'openMarkdownDoc',
       'getAccordionTooltip',
       'getSubAccordionTooltip',
       'getWebLinkPathForAccordion',
-      'getDisplayNameForAccordion'
+      'getDisplayNameForAccordion',
     ]);
     utilsServiceSpy.getSubAccordionTooltip.and.callFake(
-  (_lang: string, selectedSubAccordion: string, value: string) => {
-    if (selectedSubAccordion === value) {
-      return `Collapse ${value}`;
-    }
-    return `Expand ${value}`;
-  },
-);
+      (selectedSubAccordion: string, value: string) => {
+        if (selectedSubAccordion === value) {
+          return `Collapse ${value}`;
+        }
+        return `Expand ${value}`;
+      },
+    );
 
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), BackupScriptsSectionComponent],
@@ -43,7 +43,7 @@ utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
 
     fixture = TestBed.createComponent(BackupScriptsSectionComponent);
     component = fixture.componentInstance;
-    
+
     const selectedAccordion = APP_KEYS.BACKUP_SCRIPTS as AppKey;
     component.parameters = {
       appSectionParameters: {
@@ -63,8 +63,14 @@ utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
 
   it('should call utilsService.openMarkdownDoc when onOpenMarkdownDoc is called', async () => {
     const docPath = 'assets/some-folder/test-doc.md';
+    const title1line = `GitHub Documentation: ${docPath.split('/').pop()}`;
+    const title2lines = `GitHub Documentation<br />${docPath.split('/').pop()}`;
     await component.onOpenMarkdownDoc(docPath);
-    expect(utilsServiceSpy.openMarkdownDoc).toHaveBeenCalledWith(docPath);
+    expect(utilsServiceSpy.openMarkdownDoc).toHaveBeenCalledWith(
+      docPath,
+      title1line,
+      title2lines,
+    );
   });
 
   it('should return correct tooltip for subaccordion', () => {
@@ -89,6 +95,10 @@ utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
 
     event = { detail: { value: '' } } as CustomEvent;
     component.subAccordionChange(event);
+    expect(component.selectedSubAccordion).toBe('');
+
+    component.selectedSubAccordion = 'something';
+    component.subAccordionChange(undefined);
     expect(component.selectedSubAccordion).toBe('');
   });
 });

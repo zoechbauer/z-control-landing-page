@@ -1,4 +1,11 @@
-<ion-accordion value="change-log" id="change-log" [disabled]="disableAccordion">
+<ion-accordion value="LPS_ChangeLog" [disabled]="!isAnalyticsEnabled"
+  title="{{
+    utilsService.getSettingsAccordionTooltip(
+      SettingsAccordion.LPS_ChangeLog,
+      isAnalyticsEnabled,
+      showAllAccordions
+    ) | translate
+  }}">
   <ion-item slot="header" color="light" class="accordion-margin-top">
     <ion-label>{{
       "SETTINGS.RELEASE-NOTES.ACCORDION"
@@ -6,9 +13,9 @@
     }}</ion-label>
   </ion-item>
   <div class="ion-padding" slot="content" title="">
-    <div class="version-info ion-text-center">
+    <div class="ion-text-center">
       <p class="version">{{ versionInfo }}</p>
-      <div class="button-wrapper ion-text-center">
+      <div class="button-wrapper">
         <ion-button
           color="primary"
           (click)="openChangelog()"

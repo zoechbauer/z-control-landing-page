@@ -1,0 +1,9 @@
+<div class="header-info-section">
+  <div class="app-name">{{ appName }}</div>
+
+  @if (!isAnalyticsEnabled) {
+    <div class="analytics-disabled-info class-{{ tab }}">
+      {{ "APP.ANALYTICS_DISABLED_INFO" | translate }}
+    </div>
+  }
+</div>

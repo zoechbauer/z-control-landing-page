@@ -17,6 +17,7 @@ import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.servi
 import { APPS } from '@app/shared/GitHubConstants';
 import { FirebaseAnalyticsAccordionComponent } from '@ui/components/accordions/firebase-analytics-accordion.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { Tab } from 'src/app/shared/enums';
 
 describe('FirebaseAnalyticsAccordionComponent', () => {
   let component: FirebaseAnalyticsAccordionComponent;
@@ -42,6 +43,8 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
       'logoClicked$',
       'openGitHubAnalytics',
       'openChangelog',
+      'getSettingsAccordionTooltip',
+      'navigateToTab',
     ]);
     utilsServiceSpy.logoClicked$ = of(false);
 
@@ -89,7 +92,7 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
     });
 
     describe('onChangeEnableAnalytics', () => {
-      it('should enable collection on FirebaseAnalyticsService, save in localStorage and log event  if not enabled', () => {
+      it('should enable collection on FirebaseAnalyticsService, save in localStorage, log event and navigate to main feature tab if not enabled', () => {
         component.isAnalyticsEnabled = false;
         component.onChangeEnableAnalytics(true);
 
@@ -103,6 +106,9 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
         expect(
           firebaseAnalyticsServiceSpy.enableCollection,
         ).toHaveBeenCalledWith(true);
+        expect(utilsServiceSpy.navigateToTab).toHaveBeenCalledWith(
+          Tab.MainFeature,
+        );
       });
 
       it('should disable collection on FirebaseAnalyticsService, save in localStorage and log event after delay if enabled', fakeAsync(() => {
@@ -126,7 +132,7 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
         component.isAnalyticsEnabled = false;
         component.onChangeEnableAnalytics(true);
         expect(toastServiceSpy.showToast).toHaveBeenCalledWith(
-          'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_ENABLED'
+          'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_ENABLED',
         );
       });
 
@@ -134,7 +140,7 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
         component.isAnalyticsEnabled = true;
         component.onChangeEnableAnalytics(false);
         expect(toastServiceSpy.showToast).toHaveBeenCalledWith(
-          'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_DISABLED'
+          'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_DISABLED',
         );
       });
     });
@@ -232,6 +238,13 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
 
         expect(analyticsToggleText.textContent).toContain(
           'SETTINGS.FIREBASE_ANALYTICS.DISABLE_ANALYTICS',
+        );
+      });
+
+      it('should show the main feature tab when analytics is enabled on settings page', () => {
+        component.onChangeEnableAnalytics(true);
+        expect(utilsServiceSpy.navigateToTab).toHaveBeenCalledWith(
+          Tab.MainFeature,
         );
       });
     });

@@ -9,25 +9,29 @@ import { IonContent } from '@ionic/angular/standalone';
 import { ModalController } from '@ionic/angular/standalone';
 
 import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
+import { UtilsService } from 'src/app/services/utils.service';
 
 describe('MarkdownViewerComponent', () => {
   let component: MarkdownViewerComponent;
   let fixture: ComponentFixture<MarkdownViewerComponent>;
   let httpMock: HttpTestingController;
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
+  let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
   beforeEach(waitForAsync(() => {
     modalControllerSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
+    utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
+      'getChangelogPathForAccordion',
+      'isSmallScreen',
+    ]);
 
     TestBed.configureTestingModule({
-      imports: [
-        MarkdownViewerComponent,
-        MarkdownModule.forRoot(),
-      ],
+      imports: [MarkdownViewerComponent, MarkdownModule.forRoot()],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ModalController, useValue: modalControllerSpy },
+        { provide: UtilsService, useValue: utilsServiceSpy },
       ],
     }).compileComponents();
 
@@ -54,7 +58,7 @@ describe('MarkdownViewerComponent', () => {
   describe('ngOnInit method', () => {
     it('should load markdown content on ngOnInit', () => {
       const mockMarkdown = '# Test Changelog';
-      component.fullChangeLogPath = 'assets/changelog.md';
+      component.fullPath = 'assets/changelog.md';
 
       component.ngOnInit();
 
@@ -66,7 +70,7 @@ describe('MarkdownViewerComponent', () => {
 
     it('should handle HTTP error when loading markdown fails', () => {
       spyOn(console, 'error');
-      component.fullChangeLogPath = 'assets/nonexistent.md';
+      component.fullPath = 'assets/nonexistent.md';
 
       component.ngOnInit();
 
@@ -82,7 +86,7 @@ describe('MarkdownViewerComponent', () => {
 
     it('should handle large markdown files', () => {
       const largeMockdown = '#'.repeat(1000) + ' Large Content';
-      component.fullChangeLogPath = 'assets/large.md';
+      component.fullPath = 'assets/large.md';
 
       component.ngOnInit();
 
@@ -93,7 +97,7 @@ describe('MarkdownViewerComponent', () => {
     });
 
     it('should handle empty markdown response', () => {
-      component.fullChangeLogPath = 'assets/empty.md';
+      component.fullPath = 'assets/empty.md';
 
       component.ngOnInit();
 
@@ -108,15 +112,15 @@ describe('MarkdownViewerComponent', () => {
     expect(component.markdown).toBe('');
   });
 
-  it('should require fullChangeLogPath input', () => {
-    component.fullChangeLogPath = 'some/path.md';
-    expect(component.fullChangeLogPath).toBeDefined();
+  it('should require fullPath input', () => {
+    component.fullPath = 'some/path.md';
+    expect(component.fullPath).toBeDefined();
   });
 
   it('should scroll to top when scrollToTop is called', () => {
     const scrollSpy = jasmine.createSpy('scrollToTop');
     component.content = { scrollToTop: scrollSpy } as unknown as IonContent;
-    
+
     component.scrollToTop();
     expect(scrollSpy).toHaveBeenCalledWith(300);
   });

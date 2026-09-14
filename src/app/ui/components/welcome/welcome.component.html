@@ -8,36 +8,60 @@
 
 <ng-template #englishTemplate>
   <div class="welcome-info">
-    <h2>Welcome to our Applications & Tools</h2>
+    <h2>Welcome to z-control</h2>
+
     @if (isAnalyticsEnabled) {
       <div class="feature">
-        <p>Discover our open-source solutions & tools.</p>
-        <p>
-          All apps & tools are free to use and available without registration.
+        <p [innerHTML]="splitText(
+              'You can now explore our open-source applications and tools. Everything is free to use and requires no registration.'
+            )">
         </p>
       </div>
     }
+
     @if (!isAnalyticsEnabled) {
       <div class="analytics-not-enabled">
         <p class="ion-text-left">
-          <b>Important:</b> Enable anonymous analytics to explore our apps and
-          tools.
+          <strong>Enable Analytics to explore our apps and tools</strong>
         </p>
-        <p class="ion-text-left ion-padding-top">
-          We collect only non-identifying usage data to improve our services.
-        </p>
-        <p class="ion-text-left ion-padding-top">
-          You can enable Analytics by clicking the link
-          <a
-            (click)="onAnalyticsEnabledClick()"
-            title="Open Firebase Analytics Settings"
-            style="cursor: pointer"
-          >
-            Firebase Analytics Settings
-          </a>
 
-          You can change this setting at any time in Settings under "Enable or
-          disable Firebase Analytics."
+        <p class="ion-text-left ion-padding-top">
+          Our applications and tools are free to use and require no
+          registration. To explore them, Firebase Analytics must be enabled.
+        </p>
+
+        <p class="ion-text-left ion-padding-top">
+          Analytics helps us understand how our apps and tools are used, so we
+          can improve existing features and develop new ones.
+        </p>
+
+        <p class="ion-text-left ion-padding-top">
+          Analytics is optional and disabled by default. When enabled, it may
+          process usage and technical information. We do not use Analytics for
+          advertising or personalized marketing.
+        </p>
+
+        <div class="button-wrapper ion-margin-top">
+          <ion-button
+            (click)="onAnalyticsEnabledClick()"
+            (keydown.enter)="onAnalyticsEnabledClick()"
+            color="primary"
+            title="Open Firebase Analytics Settings"
+            aria-label="Open Firebase Analytics Settings"
+          >
+            <ion-icon name="analytics-outline" slot="start"></ion-icon>
+            Enable Firebase Analytics to continue
+          </ion-button>
+        </div>
+
+        <p class="ion-text-left ion-padding-top">
+          You can change this setting at any time under
+          <strong>Settings → Enable or disable Firebase Analytics</strong>.
+        </p>
+
+        <p class="ion-text-left ion-padding-top">
+          For more information, please see our
+          <a href="/privacy-policy">Privacy Policy</a>.
         </p>
       </div>
     }
@@ -45,44 +69,82 @@
 </ng-template>
 
 <!-- *********************************** -->
-<!-- G E R M A N   T E M P L A T E       -->
+
+<!-- G E R M A N   T E M P L A T E -->
+
 <!-- *********************************** -->
 
 <ng-template #germanTemplate>
   <div class="welcome-info">
-    <h2>Willkommen bei z-control</h2>
+    <h2>Willkommen bei z-control</h2> 
+
     @if (isAnalyticsEnabled) {
       <div class="feature">
-        <p>Entdecken Sie unsere Open Source Lösungen & Tools.</p>
-        <p>
-          Alle Apps & Tools sind kostenlos und können ohne Registrierung genutzt
-          werden.
+        <p [innerHTML]="splitText(
+              'Sie können jetzt unsere Open-Source-Apps und Tools erkunden. Alle Anwendungen sind kostenlos und erfordern keine Registrierung.'
+            )">
         </p>
       </div>
     }
+
     @if (!isAnalyticsEnabled) {
       <div class="analytics-not-enabled">
         <p class="ion-text-left">
-          <b>Wichtig:</b> Aktivieren Sie anonyme Analysen. Sie können dann
-          unsere Apps und Werkzeugen erkunden.
+          <strong>
+            Aktivieren Sie Analytics, um unsere Apps und Tools zu erkunden
+          </strong>
         </p>
-        <p class="ion-text-left ion-padding-top">
-          Wir erheben keine personenbezogenen oder identifizierenden
-          Nutzungsdaten, wir sammeln nur anonyme Daten um unsere Dienste zu
-          verbessern.
-        </p>
-        <p class="ion-text-left ion-padding-top">
-          Analytics können Sie über den Link
-          <a
-            (click)="onAnalyticsEnabledClick()"
-            title="Firebase Analytics-Einstellungen öffnen"
-            style="cursor: pointer"
-          >
-            Firebase Analytics-Einstellungen
-          </a>
 
-          aktivieren. Sie können diese Einstellung jederzeit in den
-          Einstellungen ändern.
+        <p class="ion-text-left ion-padding-top">
+          Unsere Anwendungen und Tools sind kostenlos und erfordern keine
+          Registrierung. Um sie erkunden zu können, muss Firebase Analytics
+          aktiviert sein.
+        </p>
+
+        <p class="ion-text-left ion-padding-top">
+          Analytics hilft uns zu verstehen, wie unsere Apps und Tools genutzt
+          werden. So können wir bestehende Funktionen verbessern und neue
+          entwickeln.
+        </p>
+
+        <p class="ion-text-left ion-padding-top">
+          Analytics ist optional und standardmäßig deaktiviert. Nach der
+          Aktivierung können Nutzungs- und technische Informationen verarbeitet
+          werden. Wir verwenden Analytics nicht für Werbung oder
+          personalisiertes Marketing.
+        </p>
+
+        <div class="button-wrapper ion-margin-top">
+          <ion-button
+            (click)="onAnalyticsEnabledClick()"
+            (keydown.enter)="onAnalyticsEnabledClick()"
+            color="primary"
+            title="Firebase Analytics-Einstellungen öffnen"
+            aria-label="Firebase Analytics-Einstellungen öffnen"
+          >
+            <ion-icon name="analytics-outline" slot="start"></ion-icon>
+            Firebase Analytics aktivieren und fortfahren
+          </ion-button>
+        </div>
+
+        <p class="ion-text-left ion-padding-top">
+          Sie können diese Einstellung jederzeit unter
+          <strong>
+            Einstellungen → Firebase Analytics aktivieren oder deaktivieren
+          </strong>
+          ändern.
+        </p>
+
+        <p>
+          Weitere Informationen finden Sie in unserer
+          <a
+            [routerLink]="privacyPolicyLink"
+            [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
+            title="Lesen Sie unsere Datenschutzerklärung"
+          >
+            Datenschutzerklärung
+            <ion-icon name="open-outline"></ion-icon> </a
+          >.
         </p>
       </div>
     }

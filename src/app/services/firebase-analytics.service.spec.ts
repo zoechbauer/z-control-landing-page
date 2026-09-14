@@ -3,16 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
 import { FirebaseAnalyticsAdapterService } from './firebase-analytics-adapter.service';
 import { WindowRefService } from './window-ref.service';
+import { environment } from '@env/environment';
 
 describe('FirebaseAnalyticsService', () => {
   let service: FirebaseAnalyticsService;
   let adapterSpy: jasmine.SpyObj<FirebaseAnalyticsAdapterService>;
   let consoleWarnSpy: jasmine.Spy;
   let windowRefMock: { hostname: string; isAvailable: boolean };
+  let environmentBackup: typeof environment;
 
   const analyticsMock = {} as any;
 
   beforeEach(() => {
+    environmentBackup = { ...environment };
+
     adapterSpy = jasmine.createSpyObj<FirebaseAnalyticsAdapterService>(
       'FirebaseAnalyticsAdapterService',
       ['initialize', 'setCollectionEnabled', 'logEvent'],
@@ -32,6 +36,7 @@ describe('FirebaseAnalyticsService', () => {
   });
 
   afterEach(() => {
+    Object.assign(environment, environmentBackup);
     adapterSpy.initialize.calls.reset();
     adapterSpy.setCollectionEnabled.calls.reset();
     adapterSpy.logEvent.calls.reset();
@@ -142,6 +147,44 @@ describe('FirebaseAnalyticsService', () => {
         service.logEvent('test_event');
 
         expect(adapterSpy.logEvent).not.toHaveBeenCalled();
+      }
+    });
+
+    it('should skip logging on localhost hosts when window is available but doLoggingInDevMode is false', () => {
+      adapterSpy.initialize.and.returnValue(analyticsMock);
+      environment.logAnalyticsInDevMode = false;
+      windowRefMock.isAvailable = true;
+
+      const hosts = ['localhost', '127.0.0.1', '::1'];
+
+      for (const hostname of hosts) {
+        adapterSpy.logEvent.calls.reset();
+        windowRefMock.hostname = hostname;
+
+        service.init();
+        service.enableCollection(true);
+        service.logEvent('test_event');
+
+        expect(adapterSpy.logEvent).not.toHaveBeenCalled();
+      }
+    });
+
+    it('should log on localhost hosts when window is available and doLoggingInDevMode is true', () => {
+      adapterSpy.initialize.and.returnValue(analyticsMock);
+      environment.logAnalyticsInDevMode = true;
+      windowRefMock.isAvailable = true;
+      
+      const hosts = ['localhost', '127.0.0.1', '::1'];
+
+      for (const hostname of hosts) {
+        adapterSpy.logEvent.calls.reset();
+        windowRefMock.hostname = hostname;
+
+        service.init();
+        service.enableCollection(true);
+        service.logEvent('test_event');
+
+        expect(adapterSpy.logEvent).toHaveBeenCalled();
       }
     });
 

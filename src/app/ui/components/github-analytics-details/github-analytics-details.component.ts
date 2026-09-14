@@ -1,11 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
+
 import {
   REPO,
   GithubAnalyticsTrafficDocument,
 } from '@app/shared/GitHubConstants';
-
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { UtilsService } from '@app/services/utils.service';
 
@@ -14,13 +15,15 @@ import { UtilsService } from '@app/services/utils.service';
   templateUrl: './github-analytics-details.component.html',
   styleUrls: ['./github-analytics-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonButton, IonIcon],
+  imports: [CommonModule, IonButton, IonIcon, TranslatePipe],
 })
 export class GithubAnalyticsDetailsComponent {
+  @Input() lang!: string;
   @Input() item!: GithubAnalyticsTrafficDocument;
   @Input() analyticsData!: GithubAnalyticsTrafficDocument[];
   @Input() githubTrafficData!: GithubAnalyticsTrafficDocument[];
 
+  translate = inject(TranslateService);
   readonly utilsService = inject(UtilsService);
   private readonly fa = inject(FirebaseAnalyticsService);
 
@@ -117,7 +120,7 @@ export class GithubAnalyticsDetailsComponent {
   }
 
   /**
-   * Gets the last access time formatted as a human-readable string.
+   * Gets the last access time formatted as a human-readable string in English or German.
    * @param item - The analytics document for the repository.
    * @returns A string representing the last access time, e.g., "3 days ago" or "1 day ago".
    */
@@ -125,12 +128,21 @@ export class GithubAnalyticsDetailsComponent {
     const lastAccessDays = this.getLastAccessDays(item);
     const daysAgo =
       lastAccessDays !== null && lastAccessDays > 1 ? 'days ago' : 'day ago';
-    return lastAccessDays !== null ? `${lastAccessDays} ${daysAgo}` : '';
+    const daysAgoDE =
+      lastAccessDays !== null && lastAccessDays > 1 ? 'Tagen' : 'Tag';
+
+    if (this.lang === 'en') {
+      return lastAccessDays !== null ? `${lastAccessDays} ${daysAgo}` : '';
+    }
+    if (this.lang === 'de') {
+      return lastAccessDays !== null ? `vor ${lastAccessDays} ${daysAgoDE}` : '';
+    }
+    return '';
   }
 
   /**
-   * Gets the first access time formatted as a human-readable string in days 
-   * (if less than 1 month) or months.
+   * Gets the first access time formatted as a human-readable string in days
+   * (if less than 1 month) or months in English or German.
    * @param item - The analytics document for the repository.
    * @returns A string representing the first access time, e.g., "3 months ago" or "1 day ago".
    */
@@ -144,15 +156,27 @@ export class GithubAnalyticsDetailsComponent {
     const diffTime = Math.abs(lastUpdate - oldestDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const daysAgo = diffDays > 1 ? 'days ago' : 'day ago';
+    const daysAgoDE = diffDays > 1 ? 'Tagen' : 'Tag';
 
     const diffMonths = Math.floor(diffDays / 30);
     const monthsAgo = diffMonths > 1 ? 'months ago' : 'month ago';
+    const monthsAgoDE = diffMonths > 1 ? 'Monaten' : 'Monat';
 
-    if (diffMonths >= 1) {
-      return `= ${diffMonths} ${monthsAgo}`;
-    } else {
-      return `= ${diffDays} ${daysAgo}`;
+    if (this.lang === 'en') {
+      if (diffMonths >= 1) {
+        return `= ${diffMonths} ${monthsAgo}`;
+      } else {
+        return `= ${diffDays} ${daysAgo}`;
+      }
     }
+    if (this.lang === 'de') {
+      if (diffMonths >= 1) {
+        return `= vor ${diffMonths} ${monthsAgoDE}`;
+      } else {
+        return `= vor ${diffDays} ${daysAgoDE}`;
+      }
+    }
+    return '';
   }
 
   /**
@@ -162,10 +186,19 @@ export class GithubAnalyticsDetailsComponent {
   async onOpenGithubAnalyticsHelp(repo: (typeof REPO)[keyof typeof REPO]) {
     try {
       const docPath =
-        'assets/app-docs/backend-functions-app/github-analytics-help.md';
-      await this.utilsService.openMarkdownDoc(docPath);
+        this.lang === 'en'
+          ? 'assets/app-docs/backend-functions-app/github-analytics-help-en.md'
+          : 'assets/app-docs/backend-functions-app/github-analytics-help-de.md';
+      const title1line = this.translate.instant(
+        'SETTINGS.GITHUB_ANALYTICS.LABEL.HELP_PAGE_TITLE_1_LINE',
+      );
+      const title2lines = this.translate.instant(
+        'SETTINGS.GITHUB_ANALYTICS.LABEL.HELP_PAGE_TITLE_2_LINES',
+      );
+      await this.utilsService.openMarkdownDoc(docPath, title1line, title2lines);
       this.fa.logEvent('get_github_analytics_help', {
         repo: repo,
+        language: this.lang,
         app: REPO.Z_CONTROL_LANDING_PAGE,
       });
     } catch (error) {

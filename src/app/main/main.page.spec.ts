@@ -115,7 +115,7 @@ describe('MainPage', () => {
 
         expect(utilsServiceMock.navigateToTabWithParams).toHaveBeenCalledWith(
           Tab.Settings,
-          { open: 'firebase-analytics' },
+          { open: 'LPS_FirebaseAnalytics' },
         );
 
         expect(nextSpy).toHaveBeenCalledWith(true);
@@ -182,6 +182,48 @@ describe('MainPage', () => {
         expect(
           (component as any).handlePotentialMainAccordionClose,
         ).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('ionViewWillEnter', () => {
+      it('should call closeAccordionIfOpen when the view is about to enter and analytics is not enabled', () => {
+        spyOn(component as any, 'closeAccordionIfOpen').and.callThrough();
+        component.isAnalyticsEnabled = false;
+        component.ionViewWillEnter();
+        
+        expect((component as any).closeAccordionIfOpen).toHaveBeenCalled();
+      });
+
+      it('should not call closeAccordionIfOpen when the view is about to enter and analytics is enabled', () => {
+        spyOn(component as any, 'closeAccordionIfOpen').and.callThrough();
+        component.isAnalyticsEnabled = true;
+        component.ionViewWillEnter();
+
+        expect((component as any).closeAccordionIfOpen).not.toHaveBeenCalled();
+      });
+
+      it('should close open accordions when the view is about to enter and analytics is not enabled', () => {
+        component.isAnalyticsEnabled = false;
+        component.currentMainAccordion = 'QR';
+        component.selectedAccordion = APP_KEYS.QR_CODE_GENERATOR as AppKey;
+        component.ionViewWillEnter();
+
+        expect(component.currentMainAccordion).toBe('');
+        expect(component.selectedAccordion).toBe(
+          APP_KEYS.LANDING_PAGE as AppKey,
+        );
+      });
+
+      it('should not close open accordions when the view is about to enter and analytics is enabled', () => {
+        component.isAnalyticsEnabled = true;
+        component.currentMainAccordion = 'QR';
+        component.selectedAccordion = APP_KEYS.QR_CODE_GENERATOR as AppKey;
+        component.ionViewWillEnter();
+
+        expect(component.currentMainAccordion).toBe('QR');
+        expect(component.selectedAccordion).toBe(
+          APP_KEYS.QR_CODE_GENERATOR as AppKey,
+        );
       });
     });
   });

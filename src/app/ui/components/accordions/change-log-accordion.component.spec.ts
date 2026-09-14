@@ -14,7 +14,8 @@ describe('ChangeLogAccordionComponent', () => {
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'getPrivacyPolicy',
       'getPolicyName',
-      'getDisplayNameForAccordion'
+      'getDisplayNameForAccordion',
+      'getSettingsAccordionTooltip'
     ]);
 
     await TestBed.configureTestingModule({

@@ -1,16 +1,30 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { WelcomeComponent } from '@ui/components/welcome/welcome.component';
+import { UtilsService } from 'src/app/services/utils.service';
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
   let fixture: ComponentFixture<WelcomeComponent>;
+  let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
   beforeEach(waitForAsync(() => {
+    const activatedRouteSpy = jasmine.createSpyObj('ActivatedRoute', [], {
+      snapshot: { params: {} },
+      params: jasmine.createSpyObj('Observable', ['subscribe']),
+    });
+
+    utilsServiceSpy = jasmine.createSpyObj('UtilsService', ['isSmallScreen']);
+
     TestBed.configureTestingModule({
       declarations: [],
       imports: [IonicModule.forRoot(), WelcomeComponent],
+      providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteSpy },
+        { provide: UtilsService, useValue: utilsServiceSpy }
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WelcomeComponent);
@@ -61,7 +75,7 @@ describe('WelcomeComponent', () => {
       fixture.detectChanges();
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('.welcome-info')?.textContent).toContain(
-        'Welcome to our Applications & Tools',
+        'Welcome to z-control',
       );
     });
 

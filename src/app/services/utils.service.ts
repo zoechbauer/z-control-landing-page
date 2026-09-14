@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
@@ -10,7 +11,7 @@ import { HelpModalComponent } from '@ui/components/get-help/get-help.component';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
 import { AppMetadataService } from './app-metadata.service';
 import { Router } from '@angular/router';
-import { Tab } from '@app/shared/enums';
+import { SettingsAccordion, Tab } from '@app/shared/enums';
 import { environment } from '@env/environment';
 
 @Injectable({
@@ -21,6 +22,7 @@ export class UtilsService {
   private readonly firebaseAnalyticsService = inject(FirebaseAnalyticsService);
   private readonly appMetadata = inject(AppMetadataService);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
 
   /**
    * Subject that emits when the logo is clicked (for feedback or navigation).
@@ -143,7 +145,7 @@ export class UtilsService {
    * Opens a markdown document in a modal.
    * @param docPath The path to the markdown document.
    */
-  async openMarkdownDoc(docPath: string) {
+  async openMarkdownDoc(docPath: string, title1line: string, title2lines: string) {
     const docFileName = docPath.split('/').pop();
     this.firebaseAnalyticsService.logEvent('open_markdown_document', {
       document: docFileName,
@@ -153,8 +155,9 @@ export class UtilsService {
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
       componentProps: {
-        fullChangeLogPath: docPath,
-        title: `GitHub Documentation:<br>${docPath.split('/').pop()}`,
+        fullPath: docPath,
+        title1line: title1line,
+        title2lines: title2lines,
       },
       cssClass: 'documentation-modal',
     });
@@ -199,7 +202,7 @@ export class UtilsService {
     const modal = await this.modalController.create({
       component: MarkdownViewerComponent,
       componentProps: {
-        fullChangeLogPath: changeLogPath,
+        fullPath: changeLogPath,
         title1line: `Changelog for ${appName}`,
         title2lines: `Changelog for<br />${appName}`,
       },
@@ -299,49 +302,86 @@ export class UtilsService {
   }
 
   /**
-   * Returns the tooltip text for a main accordion section based on the language and whether it is currently selected.
-   * @param lang The language code ('en' for English, 'de' for German)
+   * Returns the translatedtooltip text for a main accordion section based on
+   * whether it is currently selected and whether analytics is enabled.
    * @param accordionName The name of the accordion section
    * @param selectedMainAccordion The currently selected main accordion
    * @param toolTipMainAccordion The main accordion for which the tooltip is being generated
-   * @returns The tooltip text for the accordion section based on the language and selection state
+   * @param isAnalyticsEnabled Indicates whether analytics is enabled.
+   * @returns The translated tooltip text for the accordion section
    */
   getAccordionTooltip(
-    lang: string,
     accordionName: string,
     selectedMainAccordion: string,
     toolTipMainAccordion: string,
+    isAnalyticsEnabled: boolean = false,
   ): string {
-    if (lang === 'en') {
-      return selectedMainAccordion === toolTipMainAccordion
-        ? `Collapse ${accordionName} section`
-        : `Expand ${accordionName} section`;
+    if (!isAnalyticsEnabled) {
+      return this.translate.instant(
+        'MAIN.ACCORDION.TOOLTIPS.OPEN_ACCORDION_NOT_ENABLED',
+        {
+          accordionName,
+        },
+      );
     }
+
     return selectedMainAccordion === toolTipMainAccordion
-      ? `Abschnitt ${accordionName} schließen`
-      : `Abschnitt ${accordionName} öffnen`;
+      ? this.translate.instant('MAIN.ACCORDION.TOOLTIPS.CLOSE_ACCORDION', {
+          accordionName,
+        })
+      : this.translate.instant('MAIN.ACCORDION.TOOLTIPS.OPEN_ACCORDION', {
+          accordionName,
+        });
   }
 
   /**
-   * Returns the tooltip text for a sub-accordion section based on the language and whether it is currently selected.
-   * @param lang The language code ('en' for English, 'de' for German)
+   * Returns the translated tooltip text for a sub-accordion section based on whether it is currently selected.
    * @param selectedSubAccordion The currently selected sub-accordion
    * @param toolTipSubAccordion The sub-accordion for which the tooltip is being generated
-   * @returns The tooltip text for the accordion section based on the language and selection state
+   * @returns The translated tooltip text for the accordion section
    */
   getSubAccordionTooltip(
-    lang: string,
     selectedSubAccordion: string,
     toolTipSubAccordion: string,
   ): string {
-    if (lang === 'en') {
-      return selectedSubAccordion == toolTipSubAccordion
-        ? 'Collapse this part-section'
-        : 'Expand this part-section';
-    }
     return selectedSubAccordion == toolTipSubAccordion
-      ? 'Diesen Teil-Abschnitt schließen'
-      : 'Diesen Teil-Abschnitt öffnen';
+      ? this.translate.instant('MAIN.ACCORDION.TOOLTIPS.CLOSE_SUBACCORDION')
+      : this.translate.instant('MAIN.ACCORDION.TOOLTIPS.OPEN_SUBACCORDION');
+  }
+
+  /**
+   * Returns the translation tooltip key for the settings accordion section.
+   * @param accordionName The name of the settings accordion section
+   * @param isAnalyticsEnabled Indicates whether analytics is enabled
+   * @param showAllAccordions Indicates whether all accordions are currently expanded
+   * @returns The translation tooltip key for the settings accordion section
+   */
+  getSettingsAccordionTooltip(
+    accordionName: SettingsAccordion,
+    isAnalyticsEnabled: boolean,
+    showAllAccordions: boolean,
+  ): string {
+    if (isAnalyticsEnabled) {
+      // if analytics is enabled, the tooltip depends on whether all accordions are expanded
+      return showAllAccordions
+        ? 'SETTINGS.TOOLTIPS.OPEN_ACCORDION'
+        : 'SETTINGS.TOOLTIPS.CLOSE_ACCORDION';
+    }
+
+    if (
+      accordionName === SettingsAccordion.LPS_FirebaseAnalytics ||
+      accordionName === SettingsAccordion.LPS_ChangeLanguage ||
+      accordionName === SettingsAccordion.LPS_Feedback ||
+      accordionName === SettingsAccordion.LPS_PrivacyPolicy
+    ) {
+      // these accordions are never disabled
+      return showAllAccordions
+        ? 'SETTINGS.TOOLTIPS.OPEN_ACCORDION'
+        : 'SETTINGS.TOOLTIPS.CLOSE_ACCORDION';
+    } else {
+      // all other accordions are disabled if analytics is not enabled
+      return 'SETTINGS.TOOLTIPS.OPEN_ACCORDION_NOT_ENABLED';
+    }
   }
 
   /**

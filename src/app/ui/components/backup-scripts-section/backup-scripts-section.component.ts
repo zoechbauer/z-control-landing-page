@@ -63,7 +63,9 @@ export class BackupScriptsSectionComponent {
    * @param docPath The path to the Markdown documentation file.
    */
   async onOpenMarkdownDoc(docPath: string) {
-    await this.utilsService.openMarkdownDoc(docPath);
+    const title1line = `GitHub Documentation: ${docPath.split('/').pop()}`;
+    const title2lines = `GitHub Documentation<br />${docPath.split('/').pop()}`;
+    await this.utilsService.openMarkdownDoc(docPath, title1line, title2lines);
   }
 
   /**
@@ -83,14 +85,13 @@ export class BackupScriptsSectionComponent {
   getAccordionTooltip(value: string, isSubAccordion: boolean = true): string {
     if (!isSubAccordion) {
       return this.utilsService.getAccordionTooltip(
-        this.parameters?.appSectionParameters?.selectedLanguage || 'en',
         APPS.BACKUP_SCRIPTS,
         this.parameters?.appSectionParameters?.currentMainAccordion || '',
         value,
+        this.isAnalyticsEnabled,
       );
     }
     return this.utilsService.getSubAccordionTooltip(
-      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
       this.selectedSubAccordion,
       value,
     );

@@ -15,6 +15,7 @@ import {
   SpinnerComponent,
   HeaderComponent,
   WelcomeComponent,
+  AnalyticsDisabledInfoComponent
 } from '@ui';
 import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 import {
@@ -27,7 +28,7 @@ import {
   BackendFunctionsSectionParameters,
 } from '@app/shared/app-interfaces';
 import { environment } from '@env/environment';
-import { Tab } from '@app/shared/enums';
+import { SettingsAccordion, Tab } from '@app/shared/enums';
 import { UtilsService } from '../services/utils.service';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -50,6 +51,7 @@ import { LocalStorageService } from '../services/local-storage.service';
     BackendFunctionsSectionComponent,
     SpinnerComponent,
     WelcomeComponent,
+    AnalyticsDisabledInfoComponent,
   ],
 })
 export class MainPage implements OnInit, OnDestroy {
@@ -74,6 +76,10 @@ export class MainPage implements OnInit, OnDestroy {
   isLoading = true;
   private readonly subscriptions: Subscription[] = [];
 
+  /**
+   * Lifecycle hook that is called after the component has been initialized.
+   * Sets up necessary subscriptions and initializes section parameters.
+   */
   ngOnInit(): void {
     this.utilsService.showOrHideIonTabBar();
     this.setupSubscriptions();
@@ -81,6 +87,35 @@ export class MainPage implements OnInit, OnDestroy {
     this.initializeAllSectionParameters();
   }
 
+  /**
+   * Lifecycle hook that is called when the view is about to enter and become the active page.
+   * If analytics is disabled, it closes any open main accordions.
+   */
+  ionViewWillEnter(){
+    if (!this.isAnalyticsEnabled) {
+      this.closeAccordionIfOpen();
+    }
+  }
+
+  /**
+   * Closes the currently open main accordion, if any.
+   * Resets the component state and collapses the IonAccordionGroup UI.
+   */
+  
+  private closeAccordionIfOpen() {
+  // reset component state
+  this.handlePotentialMainAccordionClose();
+
+  // collapse the actual IonAccordionGroup UI
+  // use optional chaining and timeout to avoid lifecycle race conditions
+  setTimeout(() => {
+    this.accordionGroup.value = '';
+  }, 0);
+}
+
+  /**
+   * Returns the name of the currently selected app based on the selected accordion.
+   */
   get currentAppName(): string {
     return APPS[this.selectedAccordion];
   }
@@ -96,6 +131,7 @@ export class MainPage implements OnInit, OnDestroy {
       }),
       this.fa.enabled$.subscribe((enabled) => {
         this.isAnalyticsEnabled = enabled;
+        if (!enabled) this.closeAccordionIfOpen();
       }),
     );
   }
@@ -105,6 +141,11 @@ export class MainPage implements OnInit, OnDestroy {
       (await this.localStorageService.getAnalyticsConsent()) === true;
   }
 
+  /**
+   * Handles changes in the accordion group.
+   * Logs the change event to Firebase Analytics and updates the current main accordion state.
+   * @param event The custom event containing the new accordion value.
+   */
   accordionGroupChange(event: CustomEvent) {
     const value: string = event.detail.value;
     this.fa.logEvent('accordion_change', {
@@ -150,7 +191,6 @@ export class MainPage implements OnInit, OnDestroy {
    * Resets the current main accordion and all related section parameters.
    */
   private handlePotentialMainAccordionClose() {
-    // Main accordion is actually closing
     this.currentMainAccordion = '';
     this.setSelectedAccordion('');
     this.initializeAllSectionParameters();
@@ -165,6 +205,12 @@ export class MainPage implements OnInit, OnDestroy {
     this.setBackendFunctionsParameters();
   }
 
+  /**
+   * Sets the selected accordion based on the provided group identifier.
+   * Updates the corresponding section parameters for the selected accordion.
+   * @param group The identifier of the accordion group to select.
+   */
+  
   setSelectedAccordion(group: string) {
     switch (group) {
       case 'QR':
@@ -255,9 +301,13 @@ export class MainPage implements OnInit, OnDestroy {
     };
   }
 
+  /*
+   * Navigates to the Settings tab and opens the Firebase Analytics accordion.
+   * Also triggers the opening of the Firebase Analytics sub-section after a short delay.
+   */
   goToSettingsAndOpenFirebaseAnalytics() {
     this.utilsService.navigateToTabWithParams(Tab.Settings, {
-      open: 'firebase-analytics',
+      open: SettingsAccordion.LPS_FirebaseAnalytics,
     });
     setTimeout(() => {
       this.utilsService.openFirebaseAnalyticsSub.next(true);

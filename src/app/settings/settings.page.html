@@ -1,16 +1,19 @@
 <div id="toast-anchor-settings">
   <app-header [currentTab]="Tab.Settings"></app-header>
+  <app-analytics-disabled-info
+    [tab]="Tab.Settings"
+    [appName]="displayLandingPageAppName"
+    [isAnalyticsEnabled]="isAnalyticsEnabled"
+  ></app-analytics-disabled-info>
 </div>
 <ion-content
   #content
   class="settings-content"
   [class.landscape]="!utilsService.isPortrait"
 >
-  <h6 class="ion-text-center">{{ displayLandingPageAppName }}</h6>
   <ion-accordion-group
     [value]="openAccordion"
     (ionValueChange)="onAccordionGroupChange($event, content)"
-    title="{{this.showAllAccordions ? ('SETTINGS.TOOLTIPS.OPEN_ACCORDION' | translate) : ('SETTINGS.TOOLTIPS.CLOSE_ACCORDION' | translate) }}"
   >
     <app-spinner *ngIf="isLoading"></app-spinner>
     <div *ngIf="!isLoading && selectedLanguage">
@@ -19,73 +22,94 @@
       <h5 class="ion-text-center settings-section-title" title="">
         {{'SETTINGS.TITLE' | translate}}
       </h5>
-      <app-firebase-analytics-accordion></app-firebase-analytics-accordion>
+      <app-firebase-analytics-accordion
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
+      ></app-firebase-analytics-accordion>
       <app-language-accordion></app-language-accordion>
       <h5 class="ion-text-center settings-section-title" title="">
         {{ "SETTINGS.FEEDBACK.SEPARATOR" | translate }}
       </h5>
       <app-feedback-accordion
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-feedback-accordion>
 
       <h5 class="ion-text-center settings-section-title" title="">
         {{ "SETTINGS.INFORMATIONS" | translate }}
       </h5>
       <app-get-github-analytics-accordion
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-get-github-analytics-accordion>
-      <app-privacy-policy-accordion></app-privacy-policy-accordion>
+      <app-privacy-policy-accordion
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
+      ></app-privacy-policy-accordion>
       <app-change-log-accordion
         [versionInfo]="versionInfo"
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-change-log-accordion>
       <app-get-source-accordion
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-get-source-accordion>
       }
       <!-- Show only the opened accordion  -->
       @if (!showAllAccordions && openAccordion && selectedLanguage) { @switch
-      (openAccordion) { @case ('firebase-analytics') {
+      (openAccordion) { @case (SettingsAccordion.LPS_FirebaseAnalytics) {
       <app-firebase-analytics-accordion
         [lang]="selectedLanguage"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-firebase-analytics-accordion>
-      } @case ('language') {
+      } @case (SettingsAccordion.LPS_ChangeLanguage) {
       <app-language-accordion
         [lang]="selectedLanguage"
         (ionChange)="onLanguageChange($event)"
       ></app-language-accordion>
-      } @case ('z-control') {
+      } @case (SettingsAccordion.LPS_Feedback) {
       <app-feedback-accordion
         [lang]="selectedLanguage"
-        [disableAccordion]="!isAnalyticsEnabled"
         [appNameKey]="LANDING_PAGE_APP_KEY"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-feedback-accordion>
-      } @case ('github-analytics') {
+      } @case (SettingsAccordion.LPS_GithubAnalytics) {
       <app-get-github-analytics-accordion
         [lang]="selectedLanguage"
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-get-github-analytics-accordion>
-      } @case ('privacy-policy') {
+      } @case (SettingsAccordion.LPS_PrivacyPolicy) {
       <app-privacy-policy-accordion
         [lang]="selectedLanguage"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-privacy-policy-accordion>
-      } @case ('change-log') {
+      } @case (SettingsAccordion.LPS_ChangeLog) {
       <app-change-log-accordion
         [lang]="selectedLanguage"
         [versionInfo]="versionInfo"
         [appNameKey]="LANDING_PAGE_APP_KEY"
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
         (ionChange)="openChangelog()"
       ></app-change-log-accordion>
-      } @case ('get-source') {
+      } @case (SettingsAccordion.LPS_GetSource) {
       <app-get-source-accordion
         [lang]="selectedLanguage"
         [appNameKey]="LANDING_PAGE_APP_KEY"
-        [disableAccordion]="!isAnalyticsEnabled"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
+        [showAllAccordions]="showAllAccordions"
       ></app-get-source-accordion>
       } }
       <!-- Button to show all accordions -->
-      <div class="ion-padding ion-text-center accordion-close-button">
+      <div
+        class="ion-padding ion-text-center"
+        data-testid="accordion-close-button"
+      >
         <ion-button
           (click)="showAll()"
           (keydown.enter)="showAll()"

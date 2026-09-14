@@ -1,4 +1,7 @@
-<app-header [currentTab]="currentTab" [showBackButton]="showBackButton"></app-header>
+<app-header
+  [currentTab]="currentTab"
+  [showBackButton]="showBackButton"
+></app-header>
 
 <ion-content class="ion-padding">
   <!-- Loading State -->
@@ -28,10 +31,16 @@
     <div class="policy-content" [innerHTML]="policy.content"></div>
 
     <!-- Back Button -->
-    <div class="action-buttons" *ngIf="showBackButton">
-      <ion-button fill="outline" (click)="goBack()" size="small">
-        <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
-        {{ backToHomeButtonLabel }}
+    <div class="ion-padding ion-text-center" *ngIf="showBackButton">
+      <ion-button
+        (click)="goBack()"
+        (keydown.enter)="goBack()"
+        title="{{ 'PRIVACY_VIEWER.TOOLTIPS.CLOSE' | translate }}"
+        size="small"
+        fill="clear"
+      >
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        {{ "PRIVACY_VIEWER.BUTTON.CLOSE" | translate }}
       </ion-button>
     </div>
   </div>

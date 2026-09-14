@@ -1,10 +1,18 @@
-<ion-accordion value="firebase-analytics" id="firebase-analytics">
+<ion-accordion value="LPS_FirebaseAnalytics"
+  title="{{
+    utilsService.getSettingsAccordionTooltip(
+      SettingsAccordion.LPS_FirebaseAnalytics,
+      isAnalyticsEnabled,
+      showAllAccordions
+    ) | translate
+  }}">
   <ion-item slot="header" color="light">
-    <ion-label
-      >{{ "SETTINGS.FIREBASE_ANALYTICS.ACCORDION" | translate }}
+    <ion-label>
+      {{ "SETTINGS.FIREBASE_ANALYTICS.ACCORDION" | translate }}
     </ion-label>
   </ion-item>
-  <div class="ion-padding" slot="content" title="">
+
+  <div class="ion-padding" slot="content">
     <div
       class="ion-text-center"
       data-testid="enable-analytics"
@@ -20,71 +28,92 @@
         {{ enableAnalyticsLabel }}
       </ion-toggle>
     </div>
+
+    <!-- *********************************** -->
+    <!-- E N G L I S H   T E M P L A T E     -->
+    <!-- *********************************** -->
+
     <ng-container *ngIf="lang === 'de'; else englishTemplate">
       <ng-container *ngTemplateOutlet="germanTemplate"></ng-container>
     </ng-container>
 
-    <!-- E N G L I S H   T E M P L A T E -->
-
     <ng-template #englishTemplate>
       <div class="ion-padding-top">
         <p>
-          Enable anonymous analytics to explore our full collection of apps and
-          tools.
+          <strong> Enable Analytics to explore our apps and tools. </strong>
         </p>
+
         <p>
-          We collect only non-identifying usage data to improve our services.
+          Firebase Analytics is optional and disabled by default. When enabled,
+          it helps us understand how our apps and tools are used so we can
+          improve them and develop new features.
         </p>
+
         <p>
-          To view our complete privacy policy, click on this link:
+          Analytics may process usage and technical information. We do not use
+          Analytics for advertising or personalized marketing.
+        </p>
+
+        <p>
+          You can disable Analytics at any time using the toggle above. When
+          disabled, our application will not send any further Analytics events
+          to Firebase.
+        </p>
+
+        <p>
+          For more information, please see our
           <a
             [routerLink]="privacyPolicyLink"
             [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
             title="Read our privacy policy"
           >
             Privacy Policy
-            <ion-icon name="open-outline"></ion-icon>
-          </a>
-          You will then have access to all information regarding the processing of your data.
-        </p>
-        <p>
-          By clicking on
-          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon> in
-          the displayed privacy policy at the top left, you will return to this view.
+            <ion-icon name="open-outline"></ion-icon> </a
+          >.
         </p>
       </div>
     </ng-template>
 
-    <!-- G E R M A N   T E M P L A T E -->
+    <!-- *********************************** -->
+    <!-- G E R M A N   T E M P L A T E       -->
+    <!-- *********************************** -->
 
     <ng-template #germanTemplate>
       <div class="ion-padding-top">
         <p>
-          Aktivieren Sie anonyme Analysen, um unsere vollständige Sammlung von
-          Apps und Tools zu erkunden.
+          <strong>
+            Aktivieren Sie Analytics, um unsere Apps und Tools zu erkunden.
+          </strong>
         </p>
+
         <p>
-          Wir erfassen nur anonyme Nutzungsdaten, d.h. keine personenbezogenen
-          Daten, damit wir unsere Dienste verbessern können.
+          Firebase Analytics ist optional und standardmäßig deaktiviert. Nach
+          der Aktivierung hilft es uns zu verstehen, wie unsere Apps und Tools
+          genutzt werden, damit wir sie verbessern und neue Funktionen
+          entwickeln können.
         </p>
+
         <p>
-          Wenn Sie auf diesen Link
+          Analytics kann Nutzungs- und technische Informationen verarbeiten. Wir
+          verwenden Analytics nicht für Werbung oder personalisiertes Marketing.
+        </p>
+
+        <p>
+          Sie können Analytics jederzeit über den Schalter oben deaktivieren.
+          Wenn Analytics deaktiviert ist, übermittelt unsere Anwendung keine
+          weiteren Analytics-Ereignisse an Firebase.
+        </p>
+
+        <p>
+          Weitere Informationen finden Sie in unserer
           <a
             [routerLink]="privacyPolicyLink"
             [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
             title="Lesen Sie unsere Datenschutzerklärung"
           >
             Datenschutzerklärung
-            <ion-icon name="open-outline"></ion-icon>
-          </a>
-          klicken, wird die vollständige Datenschutzerklärung angezeigt und Sie
-          erhalten alle Informationen zur Verarbeitung Ihrer Daten.
-        </p>
-        <p>
-          Durch Klick auf
-          <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon> in
-          der angezeigten Datenschutzerklärung oben links kehren Sie dann wieder
-          zu dieser Ansicht zurück.
+            <ion-icon name="open-outline"></ion-icon> </a
+          >.
         </p>
       </div>
     </ng-template>

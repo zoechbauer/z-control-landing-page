@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { UtilsService } from '@app/services/utils.service';
 import { environment } from '@env/environment';
+import { APPS } from 'src/app/shared/GitHubConstants';
+import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 
 @Component({
   selector: 'app-get-help',
@@ -37,6 +39,7 @@ export class HelpModalComponent implements OnInit, OnDestroy {
   private readonly modalController = inject(ModalController);
   private readonly translate = inject(TranslateService);
   private readonly localStorage = inject(LocalStorageService);
+  private readonly fa = inject(FirebaseAnalyticsService);
 
   // Optional: ID of the section to scroll to when the modal opens (e.g., 'floating-keyboard' or 'web-version')
   @Input() scrollToSection?: string;
@@ -97,6 +100,11 @@ export class HelpModalComponent implements OnInit, OnDestroy {
     window.addEventListener('resize', this.orientationListener);
     window.addEventListener('orientationchange', this.orientationListener);
     this.orientationListener();
+
+    this.fa.logEvent('get_help_open', {
+      language: this.selectedLanguage,
+      app: APPS.LANDING_PAGE,
+    });
   }
 
   private setScrollToTopObj() {

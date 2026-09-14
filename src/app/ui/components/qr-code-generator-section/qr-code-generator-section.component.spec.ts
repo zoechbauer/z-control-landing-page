@@ -13,8 +13,6 @@ import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.se
 describe('QrCodeGeneratorSectionComponent', () => {
   const nativeDownloadUrl =
     'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.qrcodegenerator';
-  const sourceCodeUrl =
-    'https://github.com/zoechbauer/z-control-qr-code-generator';
   const webAppUrl = 'https://z-control-qr-code.web.app';
 
   let component: QrCodeGeneratorSectionComponent;
@@ -35,7 +33,7 @@ describe('QrCodeGeneratorSectionComponent', () => {
       'getPlayStoreLinkPathForAccordion',
     ]);
     utilsServiceSpy.getSubAccordionTooltip.and.callFake(
-      (_lang: string, selectedSubAccordion: string, value: string) => {
+      (selectedSubAccordion: string, value: string) => {
         if (selectedSubAccordion === value) {
           return `Collapse ${value}`;
         }
@@ -160,6 +158,10 @@ describe('QrCodeGeneratorSectionComponent', () => {
 
     event = { detail: { value: '' } } as CustomEvent;
     component.subAccordionChange(event);
+    expect(component.selectedSubAccordion).toBe('');
+
+    component.selectedSubAccordion = 'something';
+    component.subAccordionChange(undefined);
     expect(component.selectedSubAccordion).toBe('');
   });
 });

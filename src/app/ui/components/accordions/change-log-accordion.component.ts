@@ -11,6 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import type { AppKey } from '@app/shared/GitHubConstants';
 import { UtilsService } from '@app/services/utils.service';
+import { SettingsAccordion } from '@app/shared/enums';
 @Component({
   selector: 'app-change-log-accordion',
   templateUrl: './change-log-accordion.component.html',
@@ -32,8 +33,11 @@ export class ChangeLogAccordionComponent {
   @Input() versionInfo!: string;
   @Input() lang!: string;
   @Input() appNameKey!: AppKey;
-  @Input() disableAccordion = true;
+  @Input() isAnalyticsEnabled!: boolean;
+  @Input() showAllAccordions!: boolean;
   @Output() ionChange = new EventEmitter<void>();
+
+  SettingsAccordion = SettingsAccordion;
 
   openChangelog() {
     this.ionChange.emit();

@@ -4,19 +4,35 @@
       <tr [ngClass]="{ 'views-clones-flex': this.utilsService.isSmallScreen }">
         <td style="padding: 0">
           <div>
-            <strong>Last Updated:</strong>
+            <strong
+              >{{
+                "SETTINGS.GITHUB_ANALYTICS.LABEL.LAST_UPDATED" | translate
+              }}:</strong
+            >
             {{ item.timestamp | date: "yyyy-MM-dd HH:mm:ss" }}
           </div>
           <div [hidden]="getLastAccessDays(item) === null">
-            <strong>Last Accessed:</strong>
+            <strong
+              >{{
+                "SETTINGS.GITHUB_ANALYTICS.LABEL.LAST_ACCESSED" | translate
+              }}:</strong
+            >
             {{ getFormattedLastAccessDays(item) }}
           </div>
           <div [hidden]="getMostRecentItem(item) === null">
-            <strong>Last Record Date:</strong>
+            <strong
+              >{{
+                "SETTINGS.GITHUB_ANALYTICS.LABEL.LAST_RECORD_DATE" | translate
+              }}:</strong
+            >
             {{ getMostRecentItem(item) | date: "yyyy-MM-dd" }}
           </div>
           <div [hidden]="getOldestItem(item) === null">
-            <strong>First Record Date:</strong>
+            <strong
+              >{{
+                "SETTINGS.GITHUB_ANALYTICS.LABEL.FIRST_RECORD_DATE" | translate
+              }}:</strong
+            >
             {{ getOldestItem(item) | date: "yyyy-MM-dd" }}
             {{ getFormattedFirstAccessDays(item) }}
           </div>
@@ -26,26 +42,37 @@
           <div class="button-wrapper">
             <ion-button
               (click)="onGetSourceCode(item.repo)"
+              (keydown.enter)="onGetSourceCode(item.repo)"
               color="primary"
-              expand="block"
-              class="download-button"
-              title="Open GitHub repository in a new tab — view source, license, changelog, and documentation"
-              aria-label="Open GitHub repository (opens in a new tab)"
+              title="{{
+                'SETTINGS.GITHUB_ANALYTICS.TOOLTIPS.BUTTON_SOURCE_CODE'
+                  | translate
+              }}"
+              aria-label="{{
+                'SETTINGS.GITHUB_ANALYTICS.TOOLTIPS.BUTTON_SOURCE_CODE'
+                  | translate
+              }}"
             >
               <ion-icon name="logo-github" slot="start"></ion-icon>
-              Get Source Code
+              {{
+                "SETTINGS.GITHUB_ANALYTICS.LABEL.BUTTON_SOURCE_CODE" | translate
+              }}
             </ion-button>
           </div>
           <div class="button-wrapper">
             <ion-button
               color="primary"
-              expand="block"
               (click)="onOpenGithubAnalyticsHelp(item.repo)"
               (keydown.enter)="onOpenGithubAnalyticsHelp(item.repo)"
-              title="Explanation of GitHub Analytics metrics, including clones, unique clones, visitors, and unique visitors"
+              title="{{
+                'SETTINGS.GITHUB_ANALYTICS.TOOLTIPS.BUTTON_HELP' | translate
+              }}"
+              aria-label="{{
+                'SETTINGS.GITHUB_ANALYTICS.TOOLTIPS.BUTTON_HELP' | translate
+              }}"
             >
               <ion-icon name="information-circle" slot="start"></ion-icon>
-              Help / Explanation
+              {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.BUTTON_HELP" | translate }}
             </ion-button>
           </div>
         </td>
@@ -53,13 +80,19 @@
       <tr [ngClass]="{ 'views-clones-flex': this.utilsService.isSmallScreen }">
         <td class="views-clones">
           <section class="views">
-            <h6>Views</h6>
+            <h6>Views / Visitors</h6>
             <table style="margin-bottom: 1em">
               <thead>
                 <tr>
-                  <th class="ion-text-end">Date</th>
-                  <th class="ion-text-end">Count</th>
-                  <th class="ion-text-end">Unique</th>
+                  <th class="ion-text-end">
+                    {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.DATE" | translate }}
+                  </th>
+                  <th class="ion-text-end">
+                    {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.COUNT" | translate }}
+                  </th>
+                  <th class="ion-text-end">
+                    {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.UNIQUE" | translate }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -68,14 +101,24 @@
                     {{ view.timestamp | date: "yyyy-MM-dd" }}
                   </td>
                   <td class="ion-text-end">
-                    {{ utilsService.addLeadingBlanks(view.count, totalCountLength) }}
+                    {{
+                      utilsService.addLeadingBlanks(
+                        view.count,
+                        totalCountLength
+                      )
+                    }}
                   </td>
                   <td class="ion-text-end">
-                    {{ utilsService.addLeadingBlanks(view.uniques, totalCountLength) }}
+                    {{
+                      utilsService.addLeadingBlanks(
+                        view.uniques,
+                        totalCountLength
+                      )
+                    }}
                   </td>
                 </tr>
                 <tr style="font-weight: bold">
-                  <td class="ion-text-end">Total</td>
+                  <td class="ion-text-end">{{ "SETTINGS.GITHUB_ANALYTICS.LABEL.TOTAL" | translate }}</td>
                   <td class="ion-text-end">
                     {{ getViewsTotalCount(item) }}
                   </td>
@@ -90,13 +133,19 @@
         <td class="spacer"></td>
         <td class="views-clones">
           <section class="clones">
-            <h6>Clones</h6>
+            <h6>Clones / Downloads</h6>
             <table>
               <thead>
                 <tr>
-                  <th class="ion-text-end">Date</th>
-                  <th class="ion-text-end">Count</th>
-                  <th class="ion-text-end">Unique</th>
+                  <th class="ion-text-end">
+                    {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.DATE" | translate }}
+                  </th>
+                  <th class="ion-text-end">
+                    {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.COUNT" | translate }}
+                  </th>
+                  <th class="ion-text-end">
+                    {{ "SETTINGS.GITHUB_ANALYTICS.LABEL.UNIQUE" | translate }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -105,14 +154,24 @@
                     {{ clone.timestamp | date: "yyyy-MM-dd" }}
                   </td>
                   <td class="ion-text-end">
-                    {{ utilsService.addLeadingBlanks(clone.count, totalCountLength) }}
+                    {{
+                      utilsService.addLeadingBlanks(
+                        clone.count,
+                        totalCountLength
+                      )
+                    }}
                   </td>
                   <td class="ion-text-end">
-                    {{ utilsService.addLeadingBlanks(clone.uniques, totalCountLength) }}
+                    {{
+                      utilsService.addLeadingBlanks(
+                        clone.uniques,
+                        totalCountLength
+                      )
+                    }}
                   </td>
                 </tr>
                 <tr style="font-weight: bold">
-                  <td class="ion-text-end">Total</td>
+                  <td class="ion-text-end">{{ "SETTINGS.GITHUB_ANALYTICS.LABEL.TOTAL" | translate }}</td>
                   <td class="ion-text-end">
                     {{ getClonesTotalCount(item) }}
                   </td>

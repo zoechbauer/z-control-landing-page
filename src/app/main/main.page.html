@@ -1,12 +1,14 @@
 <!-- Start Page Proposal for Firebase Hosting -->
 <div id="toast-anchor-main">
   <app-header [currentTab]="Tab.MainFeature"></app-header>
-  <div class="ion-text-center ion-padding-top ion-padding-bottom">
-    {{ currentAppName }}
-  </div>
+  <app-analytics-disabled-info
+    [tab]="Tab.MainFeature"
+    [appName]="currentAppName"
+    [isAnalyticsEnabled]="isAnalyticsEnabled"
+  ></app-analytics-disabled-info>
 </div>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding-left ion-padding-right ion-padding-bottom">
   <app-welcome
     [selectedLanguage]="selectedLanguage"
     [isAnalyticsEnabled]="isAnalyticsEnabled"

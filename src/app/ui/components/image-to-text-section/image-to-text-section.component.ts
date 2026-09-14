@@ -82,14 +82,13 @@ export class ImageToTextSectionComponent {
   getAccordionTooltip(value: string, isSubAccordion: boolean = true): string {
     if (!isSubAccordion) {
       return this.utilsService.getAccordionTooltip(
-        this.parameters?.appSectionParameters?.selectedLanguage || 'en',
         APPS.IMAGE_TO_TEXT,
         this.parameters?.appSectionParameters?.currentMainAccordion || '',
         value,
+        this.isAnalyticsEnabled,
       );
     }
     return this.utilsService.getSubAccordionTooltip(
-      this.parameters?.appSectionParameters?.selectedLanguage || 'en',
       this.selectedSubAccordion,
       value,
     );

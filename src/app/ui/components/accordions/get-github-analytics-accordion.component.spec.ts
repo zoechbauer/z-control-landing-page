@@ -13,7 +13,9 @@ describe('GetGithubAnalyticsAccordionComponent', () => {
   let utilsServiceMock: any;
 
   beforeEach(() => {
-    utilsServiceMock = createUtilsServiceMock();
+    utilsServiceMock = createUtilsServiceMock({
+      getSettingsAccordionTooltip: jasmine.createSpy('getSettingsAccordionTooltip'),
+    });
 
     TestBed.configureTestingModule({
       imports: [GetGithubAnalyticsAccordionComponent],

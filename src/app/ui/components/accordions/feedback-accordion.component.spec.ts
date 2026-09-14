@@ -12,7 +12,8 @@ describe('FeedbackAccordionComponent', () => {
 
   beforeEach(() => {
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
-      'getDisplayNameForAccordion'
+      'getDisplayNameForAccordion',
+      'getSettingsAccordionTooltip',
     ]);
 
     TestBed.configureTestingModule({

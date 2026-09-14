@@ -2,17 +2,49 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [4.1] - 2026-09-14
+
+### ✨ New Features
+
+- Added an **analytics disabled info component** to inform users when Analytics is turned off.
+- Closed all main accordions when Analytics is disabled.
+- Automatically display the main page when user enables Analytics.
+- Added **tooltips to the settings accordions** informing users that Analytics must be enabled to open them.
+- Added **Firebase Analytics logging to the settings accordions**.
+- **Feedback to z‑control** can now be submitted even if the user has not enabled Analytics.
+- Added translations for **GitHub Analytics** and improved its help page.
+
+### 🚀 Improvements
+
+- Improved the **Privacy Viewer** component by updating the back button functionality and ensuring proper translation support.
+- Improved the text of the **Welcome message and Firebase Analytics page** to make it clearer what data is tracked and how it is used.
+- Improved the **text and layout** of the **Privacy Policy** page in the **z‑control Landing Page** app for better readability and user experience.
+- **Improved the GitHub Analytics modal:** Added a go-to-top button for easier navigation through the modal content.
+- Replaced the hyphen in z‑control throughout this changelog with a non-breaking hyphen to ensure consistent display of the brand name across different devices and browsers.
+- When a requested privacy policy is not available, the app now displays an empty page instead of falling back to the QR Code privacy policy as it did in the past.
+
+### 🐛 Fixes
+
+- **Fixed Analytics logging on localhost:** Analytics events are now correctly skipped on localhost when `logAnalyticsInDevMode` is set to false.
+- **Fixed the header of documentation pages:** Since the previous version, the header layout could be split into two lines on smaller screen sizes, causing display issues on documentation pages. This has now been fixed.
+
+### 🔧 Internal
+
+- Added 2 unit tests for the Firebase Analytics service to verify logging behavior on localhost depending on the `logAnalyticsInDevMode` setting, and some other unit tests to verify translation. The test suite now contains **363 specs with 99.3% statement coverage**.
+- **Cleaned up button styles and removed unnecessary attributes** for greater consistency across the app.
+- **Improved the sub-accordion tooltip functionality** to use translations consistently.
+
 ## [4.0] - 2026-09-07
 
 ### ✨ New Features
 
-- **Redesigned the Landing Page:** Aligned the app structure and layout with other z-control apps to provide a consistent user experience across the platform.
+- **Redesigned the Landing Page:** Aligned the app structure and layout with other z&#8209;control apps to provide a consistent user experience across the platform.
 - **Added a Settings page:** Centralized user preferences and content previously displayed in the footer.
 - **Added a Help page:** Provides users with guidance and troubleshooting information.
 - **Added translations:** Introduced English and German translation files for the Main Page, Settings, and Help pages.
 - **Added German translations for app and tool accordions:** Translated all accordions on the Main Page into German.
 - **Added a dedicated GitHub Analytics accordion:** Moved the GitHub Analytics caller from the footer into a dedicated accordion with explanatory text, making the feature easier to discover and understand.
-- **Redesigned the header:** Aligned the header with other z-control apps to improve brand consistency and visual coherence across the z-control family.
+- **Redesigned the header:** Aligned the header with other z&#8209;control apps to improve brand consistency and visual coherence across the z&#8209;control family.
 
 ### 🚀 Improvements
 
@@ -32,7 +64,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 - **Improved component modularity:** Separated the welcome message, analytics-disabled notice, feedback, privacy policy, native app information, inline help, and changelog into dedicated components.
 - **Refactored privacy-related components:** Improved their structure and maintainability, added unit tests for `privacy-viewer.component.ts` and `privacy.service.ts`, and removed the obsolete `privacy-debug.component.ts`.
 - **Improved test stability:** Fixed timer handling and adjusted spy configurations in `beforeEach` blocks to prevent unintended side effects.
-- **Renamed `HomePage` to `MainPage`:** Updated the component name to better reflect its role as the primary page of the app and to align with the naming conventions of other z-control apps.
+- **Renamed `HomePage` to `MainPage`:** Updated the component name to better reflect its role as the primary page of the app and to align with the naming conventions of other z&#8209;control apps.
 - **Updated unit tests:** Added and updated tests for the new Settings and Help pages, resulting in **350 specs and 99.05% statement coverage**. Existing tests were adapted to the new component structure and functionality, and redundant tests were removed.
 - **Updated project documentation:** Updated `README.md` with the latest project structure and development instructions.
 
@@ -43,8 +75,8 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 - **Unified "What the app does"**: Standardized the layout and content of the "What the app does" section across all app accordions to improve consistency and readability.
 - Moved styles from "What the app does" sections to `global.scss` to improve maintainability and keep code DRY.
 - Added Open Source component: Introduced a reusable `app-open-source` component to centralize open-source links and avoid duplicated markup across app sections.
-- **Header background**: Updated the header background to the app’s primary color to match other z-control apps and improve visual consistency.
-- **Header and Footer logo**: Replaced the page header and footer logos with the z-control logo to strengthen brand recognition across the app.
+- **Header background**: Updated the header background to the app’s primary color to match other z&#8209;control apps and improve visual consistency.
+- **Header and Footer logo**: Replaced the page header and footer logos with the z&#8209;control logo to strengthen brand recognition across the app.
 
 ### 🐛 Fixes
 
@@ -62,7 +94,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 🚀 Improvements
 
-- Replaced the hyphen in z-control with a non‑breaking hyphen in all accordion HTML files to prevent the name from breaking across lines.
+- Replaced the hyphen in z&#8209;control with a non‑breaking hyphen in all accordion HTML files to prevent the name from breaking across lines.
 - Reordered the apps on the Landing Page so the newest repositories appear first, improving discoverability.
 - Promoted the "Try the Web App" section in the z‑control apps to a prominent heading for better visibility.
 - Promoted the "Get Mobile App" section in the z‑control QR Code Generator to a prominent heading to highlight its availability on Google Play.
@@ -95,14 +127,14 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features
 
-- Added the **z-control Image to Text** repository to the REPOS and REPO array in `GitHubConstants.ts` to ensure it is included in the GitHub analytics tracking.
-- Added the **z-control Image to Text** privacy policy to the Landing Page app, providing users with clear information about data handling and privacy practices for this new application.
-- Added the **z-control Image to Text** changelog to the landing page app, ensuring users can view the update history directly within the app.
+- Added the **z&#8209;control Image to Text** repository to the REPOS and REPO array in `GitHubConstants.ts` to ensure it is included in the GitHub analytics tracking.
+- Added the **z&#8209;control Image to Text** privacy policy to the Landing Page app, providing users with clear information about data handling and privacy practices for this new application.
+- Added the **z&#8209;control Image to Text** changelog to the landing page app, ensuring users can view the update history directly within the app.
 
 ### 🚀 Improvements
 
 - Changed the order of the GitHub Analytics repositories in the Landing Page app to show the newest repositories first, improving visibility for recently added projects.
-- Replaced the hyphen in `z-control` with the non-breaking hyphen character in all privacy policy HTML files to ensure that z-control is not broken across lines.
+- Replaced the hyphen in `z&#8209;control` with the non-breaking hyphen character in all privacy policy HTML files to ensure that z&#8209;control is not broken across lines.
 
 ## [3.4] - 2026-07-12
 
@@ -191,7 +223,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features
 
-- Added a footer link to the **z-control Landing Page** repository, giving users quick access to the source code and documentation.
+- Added a footer link to the **z&#8209;control Landing Page** repository, giving users quick access to the source code and documentation.
 - Disabled footer links when analytics are turned off, making it clear that certain features are unavailable without consent.
 - Added a toast message when users try to open disabled features, explaining that analytics must be enabled to view the content.
 
@@ -211,8 +243,8 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features
 
-- Added a `What's New` accordion for the **z-control Backend Functions** repository on the home page, giving users a central place to review the latest updates and improvements.
-- Added the **z-control Backend Functions** changelog to the landing page, making detailed release notes and change history easy to access from one place.
+- Added a `What's New` accordion for the **z&#8209;control Backend Functions** repository on the home page, giving users a central place to review the latest updates and improvements.
+- Added the **z&#8209;control Backend Functions** changelog to the landing page, making detailed release notes and change history easy to access from one place.
 
 ### 🚀 Improvements
 
@@ -228,51 +260,51 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features
 
-- Added a `GitHub Analytics for z-control Repositories` accordion to the **z-control Backend Functions** section on the home page. It provides quick access to the existing GitHub Analytics Dashboard and includes links to each repository’s source code.
+- Added a `GitHub Analytics for z&#8209;control Repositories` accordion to the **z&#8209;control Backend Functions** section on the home page. It provides quick access to the existing GitHub Analytics Dashboard and includes links to each repository’s source code.
 
 ### 🚀 Improvements
 
-- Moved the Firebase Functions for GitHub Analytics to **z-control-backend-functions** to improve organization, maintainability, and separation of concerns.
-- Moved the GitHub Analytics documents and backend Firebase documents to **z-control-backend-functions**, and updated the landing page references accordingly.
-- Added a **uses z-control Backend Functions** label with a cloud icon to the z-control Translator and z-control Ionic Setup sections on the landing page.
+- Moved the Firebase Functions for GitHub Analytics to **z&#8209;control-backend-functions** to improve organization, maintainability, and separation of concerns.
+- Moved the GitHub Analytics documents and backend Firebase documents to **z&#8209;control-backend-functions**, and updated the landing page references accordingly.
+- Added a **uses z&#8209;control Backend Functions** label with a cloud icon to the z&#8209;control Translator and z&#8209;control Ionic Setup sections on the landing page.
 - Added `key.enter` bindings to accordion buttons on the landing page to improve keyboard accessibility.
 
 ## [2.17] – 2026-06-12
 
 ### ✨ New Features
 
-- Added a dedicated accordion for the **z-control Backend Functions** repository on the home page, providing an overview of the repository along with documentation, how-to-use guides, and source code.
+- Added a dedicated accordion for the **z&#8209;control Backend Functions** repository on the home page, providing an overview of the repository along with documentation, how-to-use guides, and source code.
 
 ### 🚀 Improvements
 
-- Updated the release notes for the z-control Translator app and the z-control Ionic Setup repository on the landing page to reflect the latest changes.
-- Added the **z-control-backend-functions** repository to GitHub Analytics tracking for visibility in the landing page analytics section.
+- Updated the release notes for the z&#8209;control Translator app and the z&#8209;control Ionic Setup repository on the landing page to reflect the latest changes.
+- Added the **z&#8209;control-backend-functions** repository to GitHub Analytics tracking for visibility in the landing page analytics section.
 - Updated the README to include the new repository and recent enhancements.
-- Renamed logos for non-app repositories to `z-control-logo` for more consistent branding across the landing page.
+- Renamed logos for non-app repositories to `z&#8209;control-logo` for more consistent branding across the landing page.
 - Grouped backend and utility repositories visually with a shared logo to distinguish them from the main applications.
 
 ## [2.16] – 2026-06-08
 
 ### ✨ New Features
 
-- Added a dedicated accordion for the **z-control Ionic Setup** repository on the home page, providing an overview of the app along with quick access to the changelog, source code, and online demo.
-- Added the **z-control Ionic Setup** changelog to the Landing Page, giving users a centralized view of updates and improvements across all z-control applications.
+- Added a dedicated accordion for the **z&#8209;control Ionic Setup** repository on the home page, providing an overview of the app along with quick access to the changelog, source code, and online demo.
+- Added the **z&#8209;control Ionic Setup** changelog to the Landing Page, giving users a centralized view of updates and improvements across all z&#8209;control applications.
 
 ### 🚀 Improvements
 
 - Improved the layout of the **Send Us Feedback** section across all apps for better readability and user experience.
-- Enhanced the text in the **Try the Web App** section of the z-control Translator app to align with the style and structure used in the z-control Ionic Setup app.
+- Enhanced the text in the **Try the Web App** section of the z&#8209;control Translator app to align with the style and structure used in the z&#8209;control Ionic Setup app.
 - Improved the layout of the accordions by reducing the space between the header and content, resulting in a more compact and visually appealing design.
 
 ### 🐛 Fixes
 
-- Corrected the app name displayed in the privacy policy section of the z-control Translator app description.
+- Corrected the app name displayed in the privacy policy section of the z&#8209;control Translator app description.
 
 ## [2.15] – 2026-06-07
 
 ### ✨ New Features
 
-- Added **z-control-ionic-setup** repository to GitHub Analytics tracking for visibility in the Landing Page analytics section.
+- Added **z&#8209;control-ionic-setup** repository to GitHub Analytics tracking for visibility in the Landing Page analytics section.
 
 ## [2.14] – 2026-05-16
 
@@ -287,16 +319,16 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 🚀 Improvements
 
-- Updated app title and favicon to "z-control Landing Page" for improved brand consistency and recognition.
-- Updated z-control Translator Release Notes to reflect the latest changes and improvements to the app.
+- Updated app title and favicon to "z&#8209;control Landing Page" for improved brand consistency and recognition.
+- Updated z&#8209;control Translator Release Notes to reflect the latest changes and improvements to the app.
 
 ## [2.12] – 2026-03-03
 
 ### 🚀 Improvements
 
-- Rebranded the app z-control Multi Language Translator to **z-control Translator** for improved memorability and a more modern, streamlined brand identity.
+- Rebranded the app z&#8209;control Multi Language Translator to **z&#8209;control Translator** for improved memorability and a more modern, streamlined brand identity.
 - Changed hosting URL to https://z-control-translator.web.app/ for a more concise and user-friendly web address.
-- Updated the download link to the new z-control Translator app, now available to Google Play Closed Test group members.
+- Updated the download link to the new z&#8209;control Translator app, now available to Google Play Closed Test group members.
 
 ## [2.11] – 2026-02-28
 
@@ -309,14 +341,14 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features
 
-- Added **z-control Multi Language Translator** to GitHub Analytics tracking so its repository traffic appears in the Landing Page analytics section.
+- Added **z&#8209;control Multi Language Translator** to GitHub Analytics tracking so its repository traffic appears in the Landing Page analytics section.
 - Added a .env.local variable to enable the **Firebase Emulator** for GitHub Analytics fetching, allowing local testing without touching production data.
 
 ## [2.9] – 2026-02-24
 
 ### ✨ New Features
 
-- Added a dedicated accordion for **z-control Multi Language Translator** to the Landing Page for easier access.
+- Added a dedicated accordion for **z&#8209;control Multi Language Translator** to the Landing Page for easier access.
 - Added changelog from the Multi Language Translator app to the Landing Page, providing users with a comprehensive overview of updates and improvements across all our applications in one place.
 - Updated the README file to include the new accordion and recent enhancements.
 - Updated privacy policy for the new Multi Language Translator app with statistics about the number of users and translations performed.
@@ -345,7 +377,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features & Improvements
 
-- Added a dedicated accordion for **z-control Backup Scripts** to the Landing Page for easier access.
+- Added a dedicated accordion for **z&#8209;control Backup Scripts** to the Landing Page for easier access.
 - Simplified navigation by removing the _Other Apps_ accordion—now only two main sections remain.
 - Improved header with a clearer, more descriptive title for better recognition.
 - Updated footer text and tooltips for greater clarity and usability.
@@ -358,7 +390,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### ✨ New Features
 
-- Added repository **z-control-Backup-scripts** to the list of tracked repositories for GitHub Analytics.
+- Added repository **z&#8209;control-Backup-scripts** to the list of tracked repositories for GitHub Analytics.
 
 ## [2.5] – 2025-12-05
 
@@ -401,7 +433,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 🚀 Improvements
 
-- Show the back button and footer on the Privacy Policy page only when the page is opened from the Landing Page; hide them when opened from external sources (e.g., the z-control QR Code Generator app).
+- Show the back button and footer on the Privacy Policy page only when the page is opened from the Landing Page; hide them when opened from external sources (e.g., the z&#8209;control QR Code Generator app).
 - Replaced the app-consent-banner with an expanded footer that contains the analytics opt-in toggle.
 - Added query parameters to routing so the Privacy Policy can detect whether it was opened from the Landing Page or from an external app.
 - Updated the informational text shown when analytics are disabled for clearer guidance.
@@ -413,7 +445,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [2.1] – 2025-10-30
 
@@ -422,7 +454,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 - Require explicit consent for anonymous analytics: app access is disabled until the user opts in; if analytics consent is declined, display a clear informational message explaining the limitation.
 - Disable Firebase Analytics on localhost by default; enable it only by explicitly setting the analytics logging variable.
 - Updated footer feedback email subject to include contextual details for quicker identification and handling.
-- Added a new ion-accordion in the z-control QR Code Generator that documents the differences between the web and mobile apps and provides an overview of the app’s structure.
+- Added a new ion-accordion in the z&#8209;control QR Code Generator that documents the differences between the web and mobile apps and provides an overview of the app’s structure.
 - Clicking the logo toggles the footer (open/close) and records a Firebase Analytics event to track the interaction.
 - Added a footer ion-toggle allowing users to opt in/out of analytics collection and updated the Landing Page privacy policy to reflect this choice.
 - Added descriptive tooltips to accordions, buttons, and links to improve clarity, accessibility, and usability.
@@ -441,14 +473,14 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
   - download_native, get_source, open_web_app (CTA clicks)
 - Added scripts/generate-env.js and environment templates to generate environment files from local/CI secrets; prevents committing real credentials.
 - Documented DebugView testing, local debug index usage (index_DEBUG_FIREBASE-config.html), and deployment guidance in docs/FIREBASE_ANALYTICS.md and README.
-- Created a dedicated privacy policy for the Landing Page (DE/EN) and updated the z-control QR Code Generator privacy page for improved layout and clarity.
+- Created a dedicated privacy policy for the Landing Page (DE/EN) and updated the z&#8209;control QR Code Generator privacy page for improved layout and clarity.
 - Minor README and documentation updates describing env generation, testing steps, and opt‑out instructions.
 
 ## [1.20] – 2025-09-25
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.19] – 2025-09-06
 
@@ -459,49 +491,49 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.18] – 2025-08-31
 
 ### 🚀 Improvements
 
-- Updated the download link for the z-control QR Code Generator app to point directly to Google Play.
-- Enhanced the footer design for a consistent look and feel with the z-control QR Code Generator app.
-- Added a new section in "What are CQ Codes and how can you use them?" detailing the features and capabilities of the z-control QR Code Generator app.
+- Updated the download link for the z&#8209;control QR Code Generator app to point directly to Google Play.
+- Enhanced the footer design for a consistent look and feel with the z&#8209;control QR Code Generator app.
+- Added a new section in "What are CQ Codes and how can you use them?" detailing the features and capabilities of the z&#8209;control QR Code Generator app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.17] – 2025-08-24
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.16] – 2025-08-20
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.15] – 2025-08-13
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.14] – 2025-08-05
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.13] – 2025-08-04
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.12] – 2025-08-02
 
@@ -511,17 +543,17 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.11] – 2025-07-30
 
 ### 🚀 Improvements
 
-- Updated the z-control support email address.
+- Updated the z&#8209;control support email address.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.10] – 2025-07-27
 
@@ -534,7 +566,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 ### 🐛 Fixes
 
 - Fixed incorrect link to GitHub source code on the privacy policy page.
-- Updated browser title to "z-control-4070" for better identification.
+- Updated browser title to "z&#8209;control-4070" for better identification.
 
 ## [1.9] – 2025-07-26
 
@@ -546,13 +578,13 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.8] – 2025-07-24
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.7] – 2025-07-22
 
@@ -562,7 +594,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.6] – 2025-07-21
 
@@ -572,28 +604,28 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.5] - 2025-07-19
 
 ### 🚀 Improvements
 
-- **wording improved**: QR code in brand name z-control QR Code Generator changed
+- **wording improved**: QR code in brand name z&#8209;control QR Code Generator changed
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.4] - 2025-07-17
 
 ### ✨ New Features
 
 - **Separate change logs for each application**
-  - z-control QR Code Generator app has a new accordion entry for change log
+  - z&#8209;control QR Code Generator app has a new accordion entry for change log
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.3] - 2025-07-03
 
@@ -607,7 +639,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 🐛 Fixes
 
-- Email Client Issue on mobile devices when **using the Wep App of z-control QR Code Generator**
+- Email Client Issue on mobile devices when **using the Wep App of z&#8209;control QR Code Generator**
   - **Issue**: In the web app, the email client does not open on mobile devices when the "Mail Code" button is used
 
   - **Solution**: new user experience flow for e-mail sending
@@ -632,7 +664,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.2] - 2025-07-02
 
@@ -646,7 +678,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 ### 📦 Installations
 
-- **z-control QR Code Generator App: web installaton updated**: You can see the changes in the z-control QR Code Generator app in the section What's new? (Release Notes)
+- **z&#8209;control QR Code Generator App: web installaton updated**: You can see the changes in the z&#8209;control QR Code Generator app in the section What's new? (Release Notes)
 
 ## [1.1] - 2025-07-01
 
@@ -674,7 +706,7 @@ All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
 - **Landing Page**: Complete showcase for our applications
 - **Privacy Policy**: Comprehensive privacy information in German and English
-- **App Information**: Details about z-control QR Code Generator app and download options
+- **App Information**: Details about z&#8209;control QR Code Generator app and download options
 - **Mobile Ready**: Fully responsive design for all devices
 - **Professional Design**: Clean, modern interface following best practices
 

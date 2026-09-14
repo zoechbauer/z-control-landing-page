@@ -5,15 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
 import { PrivacyService } from '@app/privacy/services/privacy.service';
-import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 import { IonicSetupSectionComponent } from '@ui/components/ionic-setup-section/ionic-setup-section.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 describe('IonicSetupSectionComponent', () => {
-  const nativeDownloadUrl =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.ionicsetup';
-  const sourceCodeUrl = 'https://github.com/zoechbauer/z-control-ionic-setup';
-  const webAppUrl = 'https://z-control-ionic-setup.web.app';
-
   let component: IonicSetupSectionComponent;
   let fixture: ComponentFixture<IonicSetupSectionComponent>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
@@ -31,7 +26,7 @@ describe('IonicSetupSectionComponent', () => {
       'getDisplayNameForAccordion',
     ]);
     utilsServiceSpy.getSubAccordionTooltip.and.callFake(
-      (_lang: string, selectedSubAccordion: string, value: string) => {
+      (selectedSubAccordion: string, value: string) => {
         if (selectedSubAccordion === value) {
           return `Collapse ${value}`;
         }
@@ -68,7 +63,7 @@ describe('IonicSetupSectionComponent', () => {
 
     fixture = TestBed.createComponent(IonicSetupSectionComponent);
     component = fixture.componentInstance;
-    
+
     const selectedAccordion = APP_KEYS.IONIC_SETUP as AppKey;
     component.parameters = {
       appSectionParameters: {
@@ -108,6 +103,10 @@ describe('IonicSetupSectionComponent', () => {
 
     event = { detail: { value: '' } } as CustomEvent;
     component.subAccordionChange(event);
+    expect(component.selectedSubAccordion).toBe('');
+
+    component.selectedSubAccordion = 'something';
+    component.subAccordionChange(undefined);
     expect(component.selectedSubAccordion).toBe('');
   });
 });

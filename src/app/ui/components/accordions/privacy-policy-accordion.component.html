@@ -1,4 +1,11 @@
-<ion-accordion value="privacy-policy" id="privacy-policy">
+<ion-accordion value="LPS_PrivacyPolicy"
+  title="{{
+    utilsService.getSettingsAccordionTooltip(
+      SettingsAccordion.LPS_PrivacyPolicy,
+      isAnalyticsEnabled,
+      showAllAccordions
+    ) | translate
+  }}">
   <ion-item slot="header" color="light" class="accordion-margin-top">
     <ion-label>{{ "SETTINGS.PRIVACY.ACCORDION" | translate }}</ion-label>
   </ion-item>

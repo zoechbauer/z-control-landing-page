@@ -15,7 +15,8 @@ import { Subscription } from 'rxjs';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { ToastService } from '@app/services/toast-EN.service';
-import { Tab } from '@app/shared/enums';
+import { UtilsService } from '@app/services/utils.service';
+import { SettingsAccordion, Tab } from '@app/shared/enums';
 import { APPS } from '@app/shared/GitHubConstants';
 
 @Component({
@@ -37,13 +38,16 @@ import { APPS } from '@app/shared/GitHubConstants';
 export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
   translate = inject(TranslateService);
   readonly fa = inject(FirebaseAnalyticsService);
+  readonly utilsService = inject(UtilsService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly toastService = inject(ToastService);
 
   @Input() lang?: string;
+  @Input() isAnalyticsEnabled!: boolean;
+  @Input() showAllAccordions!: boolean;
 
-  isAnalyticsEnabled = false;
   Tab = Tab;
+    SettingsAccordion = SettingsAccordion;
   private readonly sub = new Subscription();
 
   ngOnInit(): void {
@@ -87,6 +91,7 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
         app: APPS.LANDING_PAGE,
         analytics: eventValue,
       });
+      this.utilsService.navigateToTab(Tab.MainFeature);
     }
 
     this.toastService.showToast(
@@ -94,7 +99,7 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
         enabled
           ? 'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_ENABLED'
           : 'SETTINGS.FIREBASE_ANALYTICS.TOAST.ANALYTICS_DISABLED',
-      ), 
+      ),
     );
   }
 

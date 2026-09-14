@@ -1,4 +1,11 @@
-<ion-accordion value="get-source" id="get-source" [disabled]="disableAccordion">
+<ion-accordion value="LPS_GetSource" [disabled]="!isAnalyticsEnabled"
+  title="{{
+    utilsService.getSettingsAccordionTooltip(
+      SettingsAccordion.LPS_GetSource,
+      isAnalyticsEnabled,
+      showAllAccordions
+    ) | translate
+  }}">
   <ion-item slot="header" color="light" class="accordion-margin-top">
     <ion-label>{{ "SETTINGS.SOURCE.ACCORDION" | translate }}</ion-label>
   </ion-item>

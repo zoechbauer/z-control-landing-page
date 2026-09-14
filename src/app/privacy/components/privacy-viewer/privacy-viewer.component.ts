@@ -8,6 +8,7 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { HeaderComponent } from '@ui';
 import { PrivacyService, PrivacyPolicy } from '@privacy/services/privacy.service';
@@ -26,9 +27,11 @@ import { UtilsService } from '@app/services/utils.service';
     IonIcon,
     IonSpinner,
     HeaderComponent,
+    TranslatePipe,
   ],
 })
 export class PrivacyViewerComponent implements OnInit {
+
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly privacyService = inject(PrivacyService);
@@ -95,10 +98,6 @@ export class PrivacyViewerComponent implements OnInit {
         this.language !== 'en' &&
         this.privacyService.isPolicyAvailable(this.policyType, 'en')
       ) {
-        this.language = 'en';
-      } else {
-        // Fallback to basic policy if the type is not available
-        this.policyType = 'qr-code-generator';
         this.language = 'en';
       }
     }

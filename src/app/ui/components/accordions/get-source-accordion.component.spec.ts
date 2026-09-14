@@ -11,7 +11,7 @@ describe('GetSourceAccordionComponent', () => {
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
   
   beforeEach(() => {
-    utilsServiceSpy = jasmine.createSpyObj('UtilsService', ['getDisplayNameForAccordion']); 
+    utilsServiceSpy = jasmine.createSpyObj('UtilsService', ['getDisplayNameForAccordion', 'getSettingsAccordionTooltip']); 
     TestBed.configureTestingModule({
       imports: [GetSourceAccordionComponent],
       providers: [

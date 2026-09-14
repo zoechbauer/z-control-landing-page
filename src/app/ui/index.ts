@@ -33,3 +33,4 @@ export { PrivacyPolicyAppsComponent } from './shared/privacy-policy-apps/privacy
 export { MobileAppAppsComponent } from './shared/mobile-app-apps/mobile-app-apps.component';
 export { HelpAppsComponent } from './shared/help-apps/help-apps.component';
 export { OpenSourceAppsComponent } from './shared/open-source-apps/open-source-apps.component';
+export { AnalyticsDisabledInfoComponent } from './shared/analytics-disabled-info/analytics-disabled-info.component';

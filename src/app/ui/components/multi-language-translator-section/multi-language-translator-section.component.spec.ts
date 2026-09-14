@@ -10,16 +10,9 @@ import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { APP_KEYS, AppKey } from 'src/app/shared/GitHubConstants';
 
 describe('MultiLanguageTranslatorSectionComponent', () => {
-  // const nativeDownloadUrl =
-  //   'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.multilanguagetranslator';
-  // const sourceCodeUrl =
-  //   'https://github.com/zoechbauer/z-control-multi-language-translator';
-  // const webAppUrl = 'https://z-control-multi-language-translator.web.app';
-
   let component: MultiLanguageTranslatorSectionComponent;
   let fixture: ComponentFixture<MultiLanguageTranslatorSectionComponent>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
-  let modalControllerSpy: jasmine.SpyObj<any>;
   let activatedRouteSpy: any;
   let privacyServiceSpy: jasmine.SpyObj<PrivacyService>;
 
@@ -33,7 +26,7 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
       'getDisplayNameForAccordion',
     ]);
     utilsServiceSpy.getSubAccordionTooltip.and.callFake(
-      (_lang: string, selectedSubAccordion: string, value: string) => {
+      (selectedSubAccordion: string, value: string) => {
         if (selectedSubAccordion === value) {
           return `Collapse ${value}`;
         }
@@ -56,7 +49,6 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
       imports: [IonicModule.forRoot(), MultiLanguageTranslatorSectionComponent],
       providers: [
         { provide: UtilsService, useValue: utilsServiceSpy },
-        // { provide: 'ModalController', useValue: modalControllerSpy },
         { provide: ActivatedRoute, useValue: activatedRouteSpy },
         { provide: PrivacyService, useValue: privacyServiceSpy },
         {
@@ -108,6 +100,10 @@ describe('MultiLanguageTranslatorSectionComponent', () => {
 
     event = { detail: { value: '' } } as CustomEvent;
     component.subAccordionChange(event);
+    expect(component.selectedSubAccordion).toBe('');
+
+    component.selectedSubAccordion = 'something';
+    component.subAccordionChange(undefined);
     expect(component.selectedSubAccordion).toBe('');
   });
 });

@@ -5,7 +5,7 @@ import { IonContent, IonicModule } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 
 import { environment } from '@env/environment';
-import { LogoType, Tab } from '@app/shared/enums';
+import { LogoType, Tab, SettingsAccordion } from '@app/shared/enums';
 import { APP_KEYS, AppKey, APPS } from '@app/shared/GitHubConstants';
 import {
   HeaderComponent,
@@ -17,25 +17,11 @@ import {
   SpinnerComponent,
   GetGithubAnalyticsAccordionComponent,
   FirebaseAnalyticsAccordionComponent,
+  AnalyticsDisabledInfoComponent,
 } from '@ui';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UtilsService } from '../services/utils.service';
 import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
-
-// Single source of truth for settings accordion IDs.
-// Add new accordion IDs here when extending the settings page.
-const ACCORDION_VALUES = [
-  'language',
-  'z-control',
-  'firebase-analytics',
-  'github-analytics',
-  'privacy-policy',
-  'change-log',
-  'get-source',
-] as const;
-
-type AccordionValue = (typeof ACCORDION_VALUES)[number];
-
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -52,6 +38,7 @@ type AccordionValue = (typeof ACCORDION_VALUES)[number];
     SpinnerComponent,
     GetGithubAnalyticsAccordionComponent,
     FirebaseAnalyticsAccordionComponent,
+    AnalyticsDisabledInfoComponent,
   ],
 })
 export class SettingsPage implements OnInit, OnDestroy {
@@ -60,16 +47,14 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly utilsService = inject(UtilsService);
   private readonly fa = inject(FirebaseAnalyticsService);
 
-  private readonly validAccordionValues = new Set<AccordionValue>(
-    ACCORDION_VALUES,
-  );
   readonly LANDING_PAGE_APP_KEY = APP_KEYS.LANDING_PAGE;
-  openAccordion: AccordionValue | null = null;
+  openAccordion: SettingsAccordion | null = null;
   showAllAccordions = true;
   selectedLanguage!: string;
   selectedLanguageName?: string;
   LogoType = LogoType;
   Tab = Tab;
+  SettingsAccordion = SettingsAccordion;
   isLoading = true;
   isAnalyticsEnabled = false;
   private readonly subscriptions: Subscription[] = [];
@@ -110,6 +95,9 @@ export class SettingsPage implements OnInit, OnDestroy {
     return `Version ${major}.${minor} (${date})`;
   }
 
+  /**
+   * Sets up the initial state and subscriptions.
+   */
   ngOnInit() {
     this.isLoading = true;
     this.showAllAccordions = true;
@@ -140,12 +128,12 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private openFeedbackAccordion() {
     this.openAccordion = null;
-    this.openAccordion = 'z-control';
+    this.openAccordion = SettingsAccordion.LPS_Feedback;
   }
 
   private openFirebaseAnalyticsAccordion() {
     this.openAccordion = null;
-    this.openAccordion = 'firebase-analytics';
+    this.openAccordion = SettingsAccordion.LPS_FirebaseAnalytics;
   }
 
   private async getIsAnalyticsAllowed() {
@@ -153,55 +141,67 @@ export class SettingsPage implements OnInit, OnDestroy {
       (await this.localStorageService.getAnalyticsConsent()) === true;
   }
 
+  /**
+   * Handles the change event for the accordion group, updating the open accordion state
+   * and logging the event if analytics are enabled.
+   * @param event The custom event emitted by the accordion group when its value changes.
+   * @param content The IonContent element associated with the accordion group.
+   */
   onAccordionGroupChange(event: CustomEvent, content: IonContent) {
-    const value = this.normalizeAccordionValue(event?.detail?.value);
+    const value = event?.detail?.value
+      ? (event?.detail?.value as SettingsAccordion)
+      : null;
 
-    // Ignore bubbled value-change events from nested controls (e.g. radio groups).
-    if (value === undefined) {
-      return;
+    if (value) {
+      this.fa.logEvent('accordion_change', {
+        accordion_value: value,
+        app: APPS.LANDING_PAGE,
+      });
     }
 
     this.openAccordion = value;
     this.showAllAccordions = this.openAccordion === null;
   }
 
-  private normalizeAccordionValue(
-    rawValue: unknown,
-  ): AccordionValue | null | undefined {
-    // Header toggle close can emit undefined, null, or empty string.
-    if (rawValue === undefined || rawValue === null || rawValue === '') {
-      return null;
-    }
-
-    if (
-      typeof rawValue === 'string' &&
-      this.validAccordionValues.has(rawValue as AccordionValue)
-    ) {
-      return rawValue as AccordionValue;
-    }
-
-    return undefined;
-  }
-
+  /**
+   * Handles the change event for the language selection,
+   * updating the selected language and saving it to local storage.
+   * @param event The custom event emitted when the language selection changes.
+   */
   onLanguageChange(event: any) {
     const lang = event.detail?.value;
     if (lang) {
       this.localStorageService.saveSelectedLanguage(lang);
       this.translate.use(lang);
       this.translate.setDefaultLang(lang);
+
+      this.fa.logEvent('language_change', {
+        language: lang,
+        app: APPS.LANDING_PAGE,
+      });
     }
   }
 
+  /**
+   * Opens all accordions by setting the open accordion state to null
+   * and the showAllAccordions flag to true.
+   */
   showAll() {
     this.openAccordion = null;
     this.showAllAccordions = true;
   }
 
+  /**
+   * Opens the changelog for the landing page application.
+   */
   async openChangelog() {
     const selectedAccordion = APP_KEYS.LANDING_PAGE as AppKey;
     this.utilsService.openChangelog(selectedAccordion);
   }
 
+  /**
+   * Cleans up subscriptions when the component is destroyed.
+   */
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }

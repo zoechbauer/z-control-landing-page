@@ -20,16 +20,16 @@ describe('BackendFunctionsSectionComponent', () => {
       'getSubAccordionTooltip',
       'getWebLinkPathForAccordion',
       'getDisplayNameForAccordion',
-      'openGitHubAnalytics'
+      'openGitHubAnalytics',
     ]);
     utilsServiceSpy.getSubAccordionTooltip.and.callFake(
-  (_lang: string, selectedSubAccordion: string, value: string) => {
-    if (selectedSubAccordion === value) {
-      return `Collapse ${value}`;
-    }
-    return `Expand ${value}`;
-  },
-);
+      (selectedSubAccordion: string, value: string) => {
+        if (selectedSubAccordion === value) {
+          return `Collapse ${value}`;
+        }
+        return `Expand ${value}`;
+      },
+    );
 
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot(), BackendFunctionsSectionComponent],
@@ -44,7 +44,7 @@ describe('BackendFunctionsSectionComponent', () => {
 
     fixture = TestBed.createComponent(BackendFunctionsSectionComponent);
     component = fixture.componentInstance;
-    
+
     const selectedAccordion = APP_KEYS.MULTI_LANGUAGE_TRANSLATOR as AppKey;
     component.parameters = {
       appSectionParameters: {
@@ -79,8 +79,14 @@ describe('BackendFunctionsSectionComponent', () => {
 
   it('should call utilsService.openMarkdownDoc when onOpenMarkdownDoc is called', async () => {
     const docPath = 'assets/some-folder/test-doc.md';
+    const title1line = `GitHub Documentation: ${docPath.split('/').pop()}`;
+    const title2lines = `GitHub Documentation<br />${docPath.split('/').pop()}`;
     await component.onOpenMarkdownDoc(docPath);
-    expect(utilsServiceSpy.openMarkdownDoc).toHaveBeenCalledWith(docPath);
+    expect(utilsServiceSpy.openMarkdownDoc).toHaveBeenCalledWith(
+      docPath,
+      title1line,
+      title2lines,
+    );
   });
 
   it('should return correct tooltip for subaccordion', () => {
@@ -105,6 +111,10 @@ describe('BackendFunctionsSectionComponent', () => {
 
     event = { detail: { value: '' } } as CustomEvent;
     component.subAccordionChange(event);
+    expect(component.selectedSubAccordion).toBe('');
+
+    component.selectedSubAccordion = 'something';
+    component.subAccordionChange(undefined);
     expect(component.selectedSubAccordion).toBe('');
   });
 });

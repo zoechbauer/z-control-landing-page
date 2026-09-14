@@ -1,5 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { CommonModule, JsonPipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  CommonModule,
+  JsonPipe,
+  NgIf,
+  NgTemplateOutlet,
+} from '@angular/common';
 import {
   IonContent,
   IonHeader,
@@ -60,6 +65,7 @@ export class GithubAnalyticsComponent implements OnInit {
   private readonly modalController = inject(ModalController);
 
   @Input() lang!: string;
+  @ViewChild('content', { static: false }) content!: IonContent;
 
   analyticsData: GithubAnalyticsTrafficDocument[] = [];
   githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
@@ -84,6 +90,14 @@ export class GithubAnalyticsComponent implements OnInit {
   onAccordionGroupChange(event: CustomEvent) {
     const openedRepo = event.detail.value;
     this.isRepoOpened = !!openedRepo;
+  }
+
+  /**
+   * Scrolls the content to the top.
+   * @returns A promise that resolves when the scroll animation is complete.
+   */
+  scrollToTop(): Promise<void> {
+    return this.content.scrollToTop(300);
   }
 
   /**

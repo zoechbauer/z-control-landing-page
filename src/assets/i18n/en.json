@@ -2,7 +2,17 @@
   "------ global": "-------",
   "APP": {
     "LOADING_DATA": "Loading data...",
-    "UNDER_CONSTRUCTION": "This feature is under construction."
+    "UNDER_CONSTRUCTION": "This feature is under construction.",
+    "ANALYTICS_DISABLED_INFO": "Analytics is disabled"
+  },
+  "------privacy viewer": "-------",
+  "PRIVACY_VIEWER": {
+    "BUTTON": {
+      "CLOSE": "Back to Settings"
+    },
+    "TOOLTIPS": {
+      "CLOSE": "Close Privacy Policy"
+    }
   },
   "------ header page": "-------",
   "HEADER": {
@@ -44,7 +54,14 @@
       "DIFFERENCES_WEB_MOBILE": "Differences between the Web and Mobile App",
       "START_WEB_APP": "Try the Web App (no installation required)",
       "KEY_FEATURES": "Key Features",
-      "HOW_TO_USE": "How to use the app"
+      "HOW_TO_USE": "How to use the app",
+      "TOOLTIPS": {
+        "OPEN_SUBACCORDION": "Expand this sub-section",
+        "CLOSE_SUBACCORDION": "Collapse this sub-section",
+        "OPEN_ACCORDION": "Expand {{accordionName}} section",
+        "CLOSE_ACCORDION": "Collapse {{accordionName}} section",
+        "OPEN_ACCORDION_NOT_ENABLED": "Enable analytics to open the {{accordionName}} section."
+      }
     }
   },
 
@@ -56,8 +73,9 @@
       "CLOSE": "Back to Settings"
     },
     "TOOLTIPS": {
-      "OPEN_ACCORDION": "Open settings",
-      "CLOSE_ACCORDION": "Close settings"
+      "OPEN_ACCORDION": "Open this setting",
+      "CLOSE_ACCORDION": "Close this setting",
+      "OPEN_ACCORDION_NOT_ENABLED": "Enable analytics to open this setting."
     },
     "LANGUAGE": {
       "ACCORDION": "Change Language",
@@ -96,8 +114,30 @@
     },
     "GITHUB_ANALYTICS": {
       "ACCORDION": "GitHub Analytics of z-control Apps & Tools",
+      "LABEL": {
+        "BUTTON_STATISTICS": "z-control GitHub Analytics",
+        "BUTTON_HELP": "Help / Explanations",
+        "BUTTON_SOURCE_CODE": "View Source Code",
+        "STATS_PAGE_TITLE_1_LINE": "z-control GitHub Analytics & Source Code",
+        "STATS_PAGE_TITLE_2_LINES": "GitHub Analytics<br />and Source Code",
+        "HELP_PAGE_TITLE_1_LINE": "GitHub Statistics: Help & Explanations",
+        "HELP_PAGE_TITLE_2_LINES": "GitHub Statistics:<br />Help & Explanations",
+        "LAST_UPDATED": "Last Updated",
+        "LAST_ACCESSED": "Last Accessed",
+        "LAST_RECORD_DATE": "Last Record Date",
+        "FIRST_RECORD_DATE": "First Record Date",
+        "LAST": "Last",
+        "ACCESS": "Access",
+        "DATE": "Date",
+        "COUNT": "Count",
+        "UNIQUE": "Unique",
+        "TOTAL": "Total",
+        "VIEWING_TIPS": "For optimal viewing, please rotate your device to landscape mode."
+      },
       "TOOLTIPS": {
-        "OPEN_DASHBOARD": "Open z-control GitHub Analytics Dashboard"
+        "OPEN_DASHBOARD": "Open z-control GitHub Analytics Dashboard",
+        "BUTTON_HELP": "Explanation of GitHub Analytics metrics, including clones, unique clones, visitors, and unique visitors",
+        "BUTTON_SOURCE_CODE": "Open GitHub repository in a new tab — view source, license, changelog, and documentation"
       }
     },
     "PRIVACY": {

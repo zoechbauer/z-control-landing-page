@@ -12,8 +12,6 @@
     <i>{{ appName }}</i> are tracked in
   </div>
   <ion-button
-    fill="clear"
-    size="small"
     (click)="onOpenChangelog()"
     (keydown.enter)="onOpenChangelog()"
     class="change-log-button"
@@ -31,11 +29,9 @@
 <ng-template #germanTemplate>
   <div>
     Alle neuen Funktionen, Verbesserungen und Fehlerbehebungen der
-    <i>{{  appName }}</i> werden in den Release Notes dokumentiert.
+    <i>{{ appName }}</i> werden in den Release Notes dokumentiert.
   </div>
   <ion-button
-    fill="clear"
-    size="small"
     (click)="onOpenChangelog()"
     (keydown.enter)="onOpenChangelog()"
     class="change-log-button"
@@ -45,8 +41,6 @@
     Release Notes
   </ion-button>
   <p>
-    Klicken Sie auf die Schaltfläche "Release Notes", um die vollständige
-    Versionshistorie anzuzeigen. Bitte beachten Sie, dass die Release Notes nur
-    in Englisch verfügbar sind.
+    Bitte beachten Sie, dass die Release Notes nur in Englisch verfügbar sind.
   </p>
 </ng-template>

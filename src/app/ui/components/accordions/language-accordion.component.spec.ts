@@ -3,10 +3,12 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { LanguageAccordionComponent } from '@ui/components/accordions/language-accordion.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
+import { UtilsService } from '@app/services/utils.service';
 
 describe('LanguageAccordionComponent', () => {
   let component: LanguageAccordionComponent;
   let fixture: ComponentFixture<LanguageAccordionComponent>;
+  let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
 
   function getNormalizedText(): string {
     return (fixture.nativeElement.textContent || '')
@@ -15,10 +17,12 @@ describe('LanguageAccordionComponent', () => {
   }
 
   beforeEach(async () => {
+    utilsServiceSpy = jasmine.createSpyObj('UtilsService', ['getSettingsAccordionTooltip']);
     await TestBed.configureTestingModule({
       imports: [LanguageAccordionComponent],
       providers: [
         { provide: TranslateService, useValue: createTranslateServiceMock() },
+        { provide: UtilsService, useValue: utilsServiceSpy },
       ],
     }).compileComponents();
 

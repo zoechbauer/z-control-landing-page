@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from './utils.service';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
@@ -9,8 +10,9 @@ import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
 import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
 import { HelpModalComponent } from '@ui/components/get-help/get-help.component';
-import { Tab } from '@app/shared/enums';
+import { SettingsAccordion, Tab } from '@app/shared/enums';
 import { environment } from '@env/environment';
+import { createTranslateServiceMock } from '../testing/translate-service.mock';
 
 describe('UtilsService', () => {
   let service: UtilsService;
@@ -56,6 +58,10 @@ describe('UtilsService', () => {
 
     TestBed.configureTestingModule({
       providers: [
+        {
+          provide: TranslateService,
+          useValue: createTranslateServiceMock(),
+        },
         { provide: ModalController, useValue: modalControllerSpy },
         {
           provide: FirebaseAnalyticsService,
@@ -205,34 +211,33 @@ describe('UtilsService', () => {
     const testCases = [
       {
         key: 'IMAGE_TO_TEXT',
-        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md',
+        fullPath: 'assets/logs/change-logs/CHANGELOG_IMAGE-TO-TEXT.md',
         appName: APPS.IMAGE_TO_TEXT,
       },
       {
         key: 'IONIC_SETUP',
-        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md',
+        fullPath: 'assets/logs/change-logs/CHANGELOG_IONIC-SETUP.md',
         appName: APPS.IONIC_SETUP,
       },
       {
         key: 'LANDING_PAGE',
-        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
+        fullPath: 'assets/logs/change-logs/CHANGELOG_LANDING-PAGE.md',
         appName: APPS.LANDING_PAGE,
       },
       {
         key: 'MULTI_LANGUAGE_TRANSLATOR',
-        fullChangeLogPath:
+        fullPath:
           'assets/logs/change-logs/CHANGELOG_MULTI-LANGUAGE-TRANSLATOR.md',
         appName: APPS.MULTI_LANGUAGE_TRANSLATOR,
       },
       {
         key: 'QR_CODE_GENERATOR',
-        fullChangeLogPath: 'assets/logs/change-logs/CHANGELOG_QR-CODE.md',
+        fullPath: 'assets/logs/change-logs/CHANGELOG_QR-CODE.md',
         appName: APPS.QR_CODE_GENERATOR,
       },
       {
         key: 'BACKEND_FUNCTIONS',
-        fullChangeLogPath:
-          'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
+        fullPath: 'assets/logs/change-logs/CHANGELOG_BACKEND-FUNCTIONS.md',
         appName: APPS.BACKEND_FUNCTIONS,
       },
     ];
@@ -255,7 +260,7 @@ describe('UtilsService', () => {
         expect(createArg.component).toBe(MarkdownViewerComponent);
         expect(createArg.cssClass).toBe('change-log-modal');
         expect(createArg.componentProps).toEqual({
-          fullChangeLogPath: testCase.fullChangeLogPath,
+          fullPath: testCase.fullPath,
           title1line: `Changelog for ${testCase.appName}`,
           title2lines: `Changelog for<br />${testCase.appName}`,
         });
@@ -285,7 +290,7 @@ describe('UtilsService', () => {
       expect(createArg.component).toBe(MarkdownViewerComponent);
       expect(createArg.cssClass).toBe('change-log-modal');
       expect(createArg.componentProps).toEqual({
-        fullChangeLogPath: '',
+        fullPath: '',
         title1line: 'Changelog for undefined',
         title2lines: 'Changelog for<br />undefined',
       });
@@ -297,6 +302,8 @@ describe('UtilsService', () => {
     it('should log analytics and open the markdown document in a modal', async () => {
       const docPath = 'assets/app-docs/test-doc.md';
       const docFile = 'test-doc.md';
+      const title1line = `GitHub Documentation: ${docFile}`;
+      const title2lines = `GitHub Documentation:<br>${docFile}`;
 
       const presentSpy = jasmine
         .createSpy('present')
@@ -305,13 +312,14 @@ describe('UtilsService', () => {
         Promise.resolve({ present: presentSpy } as any),
       );
 
-      await service.openMarkdownDoc(docPath);
+      await service.openMarkdownDoc(docPath, title1line, title2lines);
 
       expect(modalControllerSpy.create).toHaveBeenCalledWith({
         component: MarkdownViewerComponent,
         componentProps: {
-          fullChangeLogPath: docPath,
-          title: `GitHub Documentation:<br>${docFile}`,
+          fullPath: docPath,
+          title1line: title1line,
+          title2lines: title2lines,
         },
         cssClass: 'documentation-modal',
       });
@@ -628,52 +636,64 @@ describe('UtilsService', () => {
   });
 
   describe('getAccordionTooltip', () => {
-    it('should return expand message when tooltip of main accordion differs from selected main accordion', () => {
+    it('should return expand message when tooltip of main accordion differs from selected main accordion and analytics is enabled', () => {
       const accordionName = APPS.LANDING_PAGE;
       const selectedMainAccordion = APPS.QR_CODE_GENERATOR;
       const tooltipMainAccordion = APPS.LANDING_PAGE;
+      const isAnalyticsEnabled = true;
 
-      let lang = 'en';
       let result = service.getAccordionTooltip(
-        lang,
         accordionName,
         selectedMainAccordion,
         tooltipMainAccordion,
+        isAnalyticsEnabled,
       );
-      expect(result).toBe(`Expand ${accordionName} section`);
-
-      lang = 'de';
-      result = service.getAccordionTooltip(
-        lang,
-        accordionName,
-        selectedMainAccordion,
-        tooltipMainAccordion,
-      );
-      expect(result).toBe(`Abschnitt ${accordionName} öffnen`);
+      expect(result).toBe('MAIN.ACCORDION.TOOLTIPS.OPEN_ACCORDION');
     });
 
-    it('should return collapse message when tooltip of main accordion is equal to selected main accordion', () => {
+    it('should return collapse message when tooltip of main accordion is equal to selected main accordion and analytics is enabled', () => {
       const accordionName = APPS.LANDING_PAGE;
       const selectedMainAccordion = APPS.LANDING_PAGE;
       const tooltipMainAccordion = APPS.LANDING_PAGE;
+      const isAnalyticsEnabled = true;
 
-      let lang = 'en';
       let result = service.getAccordionTooltip(
-        lang,
         accordionName,
         selectedMainAccordion,
         tooltipMainAccordion,
+        isAnalyticsEnabled,
       );
-      expect(result).toBe(`Collapse ${accordionName} section`);
+      expect(result).toBe('MAIN.ACCORDION.TOOLTIPS.CLOSE_ACCORDION');
+    });
 
-      lang = 'de';
-      result = service.getAccordionTooltip(
-        lang,
+    it('should return accordion not enabled message when tooltip of main accordion differs from selected main accordion and analytics is not enabled', () => {
+      const accordionName = APPS.LANDING_PAGE;
+      const selectedMainAccordion = APPS.QR_CODE_GENERATOR;
+      const tooltipMainAccordion = APPS.LANDING_PAGE;
+      const isAnalyticsEnabled = false;
+
+      let result = service.getAccordionTooltip(
         accordionName,
         selectedMainAccordion,
         tooltipMainAccordion,
+        isAnalyticsEnabled,
       );
-      expect(result).toBe(`Abschnitt ${accordionName} schließen`);
+      expect(result).toBe('MAIN.ACCORDION.TOOLTIPS.OPEN_ACCORDION_NOT_ENABLED');
+    });
+
+    it('should return accordion not enabled message when tooltip of main accordion is equal to selected main accordion and analytics is not enabled', () => {
+      const accordionName = APPS.LANDING_PAGE;
+      const selectedMainAccordion = APPS.LANDING_PAGE;
+      const tooltipMainAccordion = APPS.LANDING_PAGE;
+      const isAnalyticsEnabled = false;
+
+      let result = service.getAccordionTooltip(
+        accordionName,
+        selectedMainAccordion,
+        tooltipMainAccordion,
+        isAnalyticsEnabled,
+      );
+      expect(result).toBe('MAIN.ACCORDION.TOOLTIPS.OPEN_ACCORDION_NOT_ENABLED');
     });
   });
 
@@ -682,42 +702,89 @@ describe('UtilsService', () => {
       const selectedSubAccordion = APPS.QR_CODE_GENERATOR;
       const tooltipSubAccordion = APPS.LANDING_PAGE;
 
-      let lang = 'en';
       let result = service.getSubAccordionTooltip(
-        lang,
         selectedSubAccordion,
         tooltipSubAccordion,
       );
-      expect(result).toBe('Expand this part-section');
-
-      lang = 'de';
-      result = service.getSubAccordionTooltip(
-        lang,
-        selectedSubAccordion,
-        tooltipSubAccordion,
-      );
-      expect(result).toBe('Diesen Teil-Abschnitt öffnen');
+      expect(result).toBe('MAIN.ACCORDION.TOOLTIPS.OPEN_SUBACCORDION');
     });
 
     it('should return collapse message when tooltip of sub accordion is equal to selected sub accordion', () => {
       const selectedSubAccordion = APPS.QR_CODE_GENERATOR;
       const tooltipSubAccordion = APPS.QR_CODE_GENERATOR;
 
-      let lang = 'en';
       let result = service.getSubAccordionTooltip(
-        lang,
         selectedSubAccordion,
         tooltipSubAccordion,
       );
-      expect(result).toBe('Collapse this part-section');
+      expect(result).toBe('MAIN.ACCORDION.TOOLTIPS.CLOSE_SUBACCORDION');
+    });
+  });
 
-      lang = 'de';
-      result = service.getSubAccordionTooltip(
-        lang,
-        selectedSubAccordion,
-        tooltipSubAccordion,
+  describe('getSettingsAccordionTooltip', () => {
+    it('should return open accordion tooltip if analytics is enabled and showAllAccordions is true', () => {
+      const accordionName = SettingsAccordion.LPS_FirebaseAnalytics;
+      const isAnalyticsEnabled = true;
+      const showAllAccordions = true;
+
+      let result = service.getSettingsAccordionTooltip(
+        accordionName,
+        isAnalyticsEnabled,
+        showAllAccordions,
       );
-      expect(result).toBe('Diesen Teil-Abschnitt schließen');
+      expect(result).toBe('SETTINGS.TOOLTIPS.OPEN_ACCORDION');
+    });
+
+    it('should return close accordion tooltip if analytics is enabled and showAllAccordions is false', () => {
+      const accordionName = SettingsAccordion.LPS_FirebaseAnalytics;
+      const isAnalyticsEnabled = true;
+      const showAllAccordions = false;
+
+      let result = service.getSettingsAccordionTooltip(
+        accordionName,
+        isAnalyticsEnabled,
+        showAllAccordions,
+      );
+      expect(result).toBe('SETTINGS.TOOLTIPS.CLOSE_ACCORDION');
+    });
+
+    it('should return open accordion tooltip if analytics is not enabled and showAllAccordions is true and the accordion is never disabled', () => {
+      const accordionName = SettingsAccordion.LPS_FirebaseAnalytics;
+      const isAnalyticsEnabled = false;
+      const showAllAccordions = true;
+
+      let result = service.getSettingsAccordionTooltip(
+        accordionName,
+        isAnalyticsEnabled,
+        showAllAccordions,
+      );
+      expect(result).toBe('SETTINGS.TOOLTIPS.OPEN_ACCORDION');
+    });
+
+    it('should return close accordion tooltip if analytics is not enabled and showAllAccordions is false and the accordion is never disabled', () => {
+      const accordionName = SettingsAccordion.LPS_FirebaseAnalytics;
+      const isAnalyticsEnabled = false;
+      const showAllAccordions = false;
+
+      let result = service.getSettingsAccordionTooltip(
+        accordionName,
+        isAnalyticsEnabled,
+        showAllAccordions,
+      );
+      expect(result).toBe('SETTINGS.TOOLTIPS.CLOSE_ACCORDION');
+    });
+
+    it('should return analytics not enabled tooltip if analytics is not enabled and showAllAccordions is false and the accordion is disabled', () => {
+      const accordionName = SettingsAccordion.LPS_GithubAnalytics;
+      const isAnalyticsEnabled = false;
+      const showAllAccordions = false;
+
+      let result = service.getSettingsAccordionTooltip(
+        accordionName,
+        isAnalyticsEnabled,
+        showAllAccordions,
+      );
+      expect(result).toBe('SETTINGS.TOOLTIPS.OPEN_ACCORDION_NOT_ENABLED');
     });
   });
 

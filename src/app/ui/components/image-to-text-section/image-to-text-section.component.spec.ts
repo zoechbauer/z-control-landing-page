@@ -4,17 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
-import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
 import { ImageToTextSectionComponent } from '@ui/components/image-to-text-section/image-to-text-section.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { PrivacyService } from 'src/app/privacy/services/privacy.service';
 
 describe('ImageToTextSectionComponent', () => {
-  const nativeDownloadUrl =
-    'https://play.google.com/store/apps/details?id=at.zcontrol.zoe.image-to-text';
-  const sourceCodeUrl = 'https://github.com/zoechbauer/z-control-image-to-text';
-  const webAppUrl = 'https://z-control-image-to-text.web.app';
-
   let component: ImageToTextSectionComponent;
   let fixture: ComponentFixture<ImageToTextSectionComponent>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
@@ -32,7 +27,7 @@ describe('ImageToTextSectionComponent', () => {
       'getDisplayNameForAccordion',
     ]);
     utilsServiceSpy.getSubAccordionTooltip.and.callFake(
-      (_lang: string, selectedSubAccordion: string, value: string) => {
+      (selectedSubAccordion: string, value: string) => {
         if (selectedSubAccordion === value) {
           return `Collapse ${value}`;
         }
@@ -69,7 +64,7 @@ describe('ImageToTextSectionComponent', () => {
 
     fixture = TestBed.createComponent(ImageToTextSectionComponent);
     component = fixture.componentInstance;
-    
+
     const selectedAccordion = APP_KEYS.IMAGE_TO_TEXT as AppKey;
     component.parameters = {
       appSectionParameters: {
@@ -109,6 +104,10 @@ describe('ImageToTextSectionComponent', () => {
 
     event = { detail: { value: '' } } as CustomEvent;
     component.subAccordionChange(event);
+    expect(component.selectedSubAccordion).toBe('');
+
+    component.selectedSubAccordion = 'something';
+    component.subAccordionChange(undefined);
     expect(component.selectedSubAccordion).toBe('');
   });
 });
