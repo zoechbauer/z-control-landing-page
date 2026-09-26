@@ -20,8 +20,8 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { APPS } from '@app/shared/GitHubConstants';
-import { BackupScriptsSectionParameters } from '@app/shared/app-interfaces';
+import { APPS } from 'src/app/shared/github.constants';
+import { BackupScriptsSectionParameters } from 'src/app/shared/app.interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
 import { FeedbackAppsComponent } from '@ui/shared/feedback-apps/feedback-apps.component';

@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SourceCodeAppsComponent } from './source-code-apps.component';
-import { APP_KEYS, APPS } from '@app/shared/GitHubConstants';
+import { APP_KEYS, APPS } from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';

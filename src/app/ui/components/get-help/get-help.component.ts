@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { UtilsService } from '@app/services/utils.service';
 import { environment } from '@env/environment';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { APPS } from 'src/app/shared/github.constants';
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 
 @Component({

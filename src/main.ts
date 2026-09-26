@@ -3,6 +3,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { addIcons } from 'ionicons';
 import {
+    analyticsOutline,
     appsOutline,
     arrowBackOutline,
     arrowUpOutline,
@@ -59,6 +60,7 @@ import { AppComponent } from '@app/app.component';
 // Register Ionicons used in the application
 addIcons({
   'alert-circle-outline': alertCircleOutline,
+  'analytics-outline': analyticsOutline,
   'apps-outline': appsOutline,
   'arrow-back': arrowBack,
   'arrow-back-outline': arrowBackOutline,

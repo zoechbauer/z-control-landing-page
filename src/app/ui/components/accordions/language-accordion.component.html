@@ -15,6 +15,7 @@
         label="{{ 'SETTINGS.LANGUAGE.LABEL.LANG' | translate }}"
         label-placement="stacked"
         [(ngModel)]="lang"
+        (ionChange)="onLanguageChange($event)"
         interface="popover"
         title="{{ 'SETTINGS.LANGUAGE.TOOLTIPS.CHANGE_LANGUAGE' | translate }}"
       >

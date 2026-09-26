@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
-import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { ImageToTextSectionComponent } from '@ui/components/image-to-text-section/image-to-text-section.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { PrivacyService } from 'src/app/privacy/services/privacy.service';

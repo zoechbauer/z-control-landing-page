@@ -26,8 +26,8 @@ import {
   COLLECTION,
   GithubAnalyticsTrafficDocument,
   ALL_REPOS,
-} from '@app/shared/GitHubConstants';
-import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
+} from 'src/app/shared/github.constants';
+import { FirebaseFirestoreGithubService } from 'src/app/services/firebase-firestore-github.service';
 import { environment } from '@env/environment';
 import { UtilsService } from '@app/services/utils.service';
 import { GithubAnalyticsDetailsComponent } from '@ui/components/github-analytics-details/github-analytics-details.component';
@@ -61,7 +61,7 @@ import { GithubAnalyticsDetailsComponent } from '@ui/components/github-analytics
 export class GithubAnalyticsComponent implements OnInit {
   translate = inject(TranslateService);
   readonly utilsService = inject(UtilsService);
-  private readonly firestoreService = inject(FirebaseFirestoreService);
+  private readonly firestoreGithubService = inject(FirebaseFirestoreGithubService);
   private readonly modalController = inject(ModalController);
 
   @Input() lang!: string;
@@ -71,6 +71,12 @@ export class GithubAnalyticsComponent implements OnInit {
   githubTrafficData: GithubAnalyticsTrafficDocument[] = [];
   isRepoOpened = false;
   isLoading = true;
+  title1line = this.translate.instant(
+    'SETTINGS.GITHUB_ANALYTICS.LABEL.STATS_PAGE_TITLE_1_LINE',
+  );
+  title2lines = this.translate.instant(
+    'SETTINGS.GITHUB_ANALYTICS.LABEL.STATS_PAGE_TITLE_2_LINES',
+  );
 
   ngOnInit() {
     this.init();
@@ -161,7 +167,7 @@ export class GithubAnalyticsComponent implements OnInit {
     const useFirebaseEmulator = environment.useFirebaseEmulator;
 
     const data: GithubAnalyticsTrafficDocument[] =
-      await this.firestoreService.getAnalyticsData(
+      await this.firestoreGithubService.getAnalyticsData(
         collection,
         repo,
         useFirebaseEmulator,

@@ -3,7 +3,7 @@ import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { LogoType } from '@app/shared/enums';
-import { AppKey } from '@app/shared/GitHubConstants';
+import { AppKey } from 'src/app/shared/github.constants';
 import { LogoComponent } from '@ui/components/logo/logo.component';
 import { UtilsService } from '@app/services/utils.service';
 import { SourceCodeAppsComponent } from '@ui/shared/source-code-apps/source-code-apps.component';

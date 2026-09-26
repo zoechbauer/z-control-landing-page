@@ -17,7 +17,7 @@ import {
   WelcomeComponent,
   AnalyticsDisabledInfoComponent
 } from '@ui';
-import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import {
   AppSectionParameters,
   BackupScriptsSectionParameters,
@@ -26,7 +26,7 @@ import {
   QrCodeGeneratorSectionParameters,
   IonicSetupSectionParameters,
   BackendFunctionsSectionParameters,
-} from '@app/shared/app-interfaces';
+} from 'src/app/shared/app.interfaces';
 import { environment } from '@env/environment';
 import { SettingsAccordion, Tab } from '@app/shared/enums';
 import { UtilsService } from '../services/utils.service';

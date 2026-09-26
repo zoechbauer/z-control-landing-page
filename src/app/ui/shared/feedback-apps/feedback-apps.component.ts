@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 
-import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, AppKey } from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
 
 @Component({

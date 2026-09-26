@@ -9,14 +9,14 @@ import {
   REPO,
   REPOS,
   TrafficType,
-} from '@app/shared/GitHubConstants';
-import { FirestoreAdapterService } from './firestore-adapter.service';
+} from 'src/app/shared/github.constants';
+import { FirebaseFirestoreAdapterService } from './firebase-firestore-adapter.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FirebaseFirestoreService {
-  private readonly firestoreAdapter = inject(FirestoreAdapterService);
+export class FirebaseFirestoreGithubService {
+  private readonly firebaseFirestoreAdapter = inject(FirebaseFirestoreAdapterService);
 
   private readonly firestore = inject(Firestore);
 
@@ -78,10 +78,10 @@ export class FirebaseFirestoreService {
   private async fetchAnalyticsForRepo(): Promise<GithubAnalyticsTrafficDocument> {
     if (this.useFirebaseEmulator) {
       console.log('Using Firebase Emulator for Firestore');
-      this.firestoreAdapter.connectEmulator('localhost', 8080);
+      this.firebaseFirestoreAdapter.connectEmulator('localhost', 8080);
     }
 
-    const docSnap = await this.firestoreAdapter.getDocSnapshot(
+    const docSnap = await this.firebaseFirestoreAdapter.getDocSnapshot(
       this.collection,
       this.repo,
     );

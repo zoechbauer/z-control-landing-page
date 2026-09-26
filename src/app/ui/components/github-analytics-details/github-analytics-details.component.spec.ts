@@ -3,20 +3,20 @@ import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { TranslateService } from '@ngx-translate/core';
 
-import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
+import { FirebaseFirestoreGithubService } from 'src/app/services/firebase-firestore-github.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import {
   COLLECTION,
   GithubAnalyticsTrafficDocument,
   REPO,
   REPOS,
-} from '@app/shared/GitHubConstants';
+} from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
 import { GithubAnalyticsDetailsComponent } from '@ui/components/github-analytics-details/github-analytics-details.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 
 // Mock FirebaseFirestoreService to avoid real Firebase calls
-class MockFirebaseFirestoreService {
+class MockFirebaseFirestoreGithubService {
   getAnalyticsData(
     collection?: any,
     repo?: any,
@@ -81,7 +81,7 @@ const mockAnalyticsData: GithubAnalyticsTrafficDocument[] = [
 describe('GithubAnalyticsDetailsComponent', () => {
   let component: GithubAnalyticsDetailsComponent;
   let fixture: ComponentFixture<GithubAnalyticsDetailsComponent>;
-  let firestoreService: FirebaseFirestoreService;
+  let firebaseFirestoreGithubService: FirebaseFirestoreGithubService;
   let firebaseAnalyticsService: FirebaseAnalyticsService;
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
   let utilsServiceSpy: jasmine.SpyObj<any>;
@@ -102,8 +102,8 @@ describe('GithubAnalyticsDetailsComponent', () => {
       providers: [
         { provide: TranslateService, useValue: createTranslateServiceMock() },
         {
-          provide: FirebaseFirestoreService,
-          useClass: MockFirebaseFirestoreService,
+          provide: FirebaseFirestoreGithubService,
+          useClass: MockFirebaseFirestoreGithubService,
         },
         {
           provide: FirebaseAnalyticsService,
@@ -116,7 +116,7 @@ describe('GithubAnalyticsDetailsComponent', () => {
 
     fixture = TestBed.createComponent(GithubAnalyticsDetailsComponent);
     component = fixture.componentInstance;
-    firestoreService = TestBed.inject(FirebaseFirestoreService);
+    firebaseFirestoreGithubService = TestBed.inject(FirebaseFirestoreGithubService);
     firebaseAnalyticsService = TestBed.inject(FirebaseAnalyticsService);
 
     component.item = mockAnalyticsData[0];
@@ -131,7 +131,7 @@ describe('GithubAnalyticsDetailsComponent', () => {
   });
 
   it('should create', () => {
-    spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
+    spyOn(firebaseFirestoreGithubService, 'getAnalyticsData').and.returnValue(
       Promise.resolve(mockAnalyticsData),
     );
     expect(component).toBeTruthy();

@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { createUtilsServiceMock } from '@testing/utils-service.mock';
 import { UtilsService } from '@app/services/utils.service';
-import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { GetGithubAnalyticsAccordionComponent } from '@ui/components/accordions/get-github-analytics-accordion.component';
 
 describe('GetGithubAnalyticsAccordionComponent', () => {

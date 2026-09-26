@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
 import { PrivacyService } from '@app/privacy/services/privacy.service';
-import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { IonicSetupSectionComponent } from '@ui/components/ionic-setup-section/ionic-setup-section.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 describe('IonicSetupSectionComponent', () => {

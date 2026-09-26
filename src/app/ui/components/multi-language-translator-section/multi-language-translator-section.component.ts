@@ -14,9 +14,9 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 
-import { APPS } from '@app/shared/GitHubConstants';
+import { APPS } from 'src/app/shared/github.constants';
 import { Tab } from '@app/shared/enums';
-import { MultipleLanguageTranslatorSectionParameters } from '@app/shared/app-interfaces';
+import { MultipleLanguageTranslatorSectionParameters } from 'src/app/shared/app.interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
 import { FeedbackAppsComponent } from '@ui/shared/feedback-apps/feedback-apps.component';
@@ -25,7 +25,7 @@ import { ChangeLogAppsComponent } from '@ui/shared/change-log-apps/change-log-ap
 import { SourceCodeAppsComponent } from '@ui/shared/source-code-apps/source-code-apps.component';
 import { MobileAppAppsComponent } from '@ui/shared/mobile-app-apps/mobile-app-apps.component';
 import { HelpAppsComponent } from '@ui/shared/help-apps/help-apps.component';
-import { WebAppAppsComponent } from '../../shared/web-app-apps/web-app-apps.component';
+import { WebAppAppsComponent } from '@ui/shared/web-app-apps/web-app-apps.component';
 
 @Component({
   selector: 'app-multi-language-translator-section',

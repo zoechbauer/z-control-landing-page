@@ -67,6 +67,7 @@
       } @case (SettingsAccordion.LPS_ChangeLanguage) {
       <app-language-accordion
         [lang]="selectedLanguage"
+        [isAnalyticsEnabled]="isAnalyticsEnabled"
         (ionChange)="onLanguageChange($event)"
       ></app-language-accordion>
       } @case (SettingsAccordion.LPS_Feedback) {

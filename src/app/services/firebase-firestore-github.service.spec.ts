@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Firestore } from '@angular/fire/firestore';
 
-import { FirebaseFirestoreService } from './firebase-firestore.service';
+import { FirebaseFirestoreGithubService } from './firebase-firestore-github.service';
 import {
   ALL_REPOS,
   COLLECTION,
@@ -9,13 +9,13 @@ import {
   REPO,
   REPOS,
   TrafficType,
-} from '@app/shared/GitHubConstants';
-import { FirestoreAdapterService } from './firestore-adapter.service';
+} from 'src/app/shared/github.constants';
+import { FirebaseFirestoreAdapterService } from './firebase-firestore-adapter.service';
 
-describe('FirebaseFirestoreService', () => {
-  let service: FirebaseFirestoreService;
+describe('FirebaseFirestoreGithubService', () => {
+  let service: FirebaseFirestoreGithubService;
   let firestoreSpy: Firestore;
-  let adapterSpy: jasmine.SpyObj<FirestoreAdapterService>;
+  let adapterSpy: jasmine.SpyObj<FirebaseFirestoreAdapterService>;
 
   const collection = COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY;
   const repo1 = REPOS[0].repo;
@@ -63,7 +63,7 @@ describe('FirebaseFirestoreService', () => {
 
   beforeEach(() => {
     firestoreSpy = {} as Firestore;
-    adapterSpy = jasmine.createSpyObj('FirestoreAdapterService', [
+    adapterSpy = jasmine.createSpyObj('FirebaseFirestoreAdapterService', [
       'getDocSnapshot',
       'connectEmulator',
     ]);
@@ -74,13 +74,13 @@ describe('FirebaseFirestoreService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        FirebaseFirestoreService,
+        FirebaseFirestoreGithubService,
         { provide: Firestore, useValue: firestoreSpy },
-        { provide: FirestoreAdapterService, useValue: adapterSpy },
+        { provide: FirebaseFirestoreAdapterService, useValue: adapterSpy },
       ],
     });
 
-    service = TestBed.inject(FirebaseFirestoreService);
+    service = TestBed.inject(FirebaseFirestoreGithubService);
   });
 
   it('should be created', () => {

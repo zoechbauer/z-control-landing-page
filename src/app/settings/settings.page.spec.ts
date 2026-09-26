@@ -2,13 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { of, EMPTY, Subject } from 'rxjs';
+import { of, EMPTY, Subject, BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SettingsPage } from './settings.page';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UtilsService } from '../services/utils.service';
-import { FirebaseFirestoreService } from '../services/firebase-firestore.service';
+import { FirebaseFirestoreGithubService } from '../services/firebase-firestore-github.service';
+import { FirebaseAnalyticsService } from '../services/firebase-analytics.service';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import {
   GetSourceAccordionComponent,
@@ -96,6 +97,7 @@ describe('SettingsPage', () => {
   let fixture: ComponentFixture<SettingsPage>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
   let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
+  let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
 
   beforeEach(async () => {
     utilsServiceSpy = jasmine.createSpyObj(
@@ -121,9 +123,12 @@ describe('SettingsPage', () => {
       },
     );
 
-    const firebaseFirestoreUtilsServiceSpy = jasmine.createSpyObj(
-      'FirebaseFirestoreUtilsService',
-      ['requestStatisticsRefresh'],
+    firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
+      'FirebaseAnalyticsService',
+      ['logEvent', 'enableCollection'],
+      {
+        enabled$: of(true),
+      },
     );
 
     const modalControllerSpy = jasmine.createSpyObj('ModalController', [
@@ -152,8 +157,14 @@ describe('SettingsPage', () => {
           useValue: utilsServiceSpy,
         },
         {
-          provide: FirebaseFirestoreService,
-          useValue: jasmine.createSpyObj('FirebaseFirestoreService', ['init']),
+          provide: FirebaseFirestoreGithubService,
+          useValue: jasmine.createSpyObj('FirebaseFirestoreGithubService', [
+            'init',
+          ]),
+        },
+        {
+          provide: FirebaseAnalyticsService,
+          useValue: firebaseAnalyticsServiceSpy,
         },
         {
           provide: ModalController,
@@ -278,7 +289,9 @@ describe('SettingsPage', () => {
 
         component.onAccordionGroupChange(event, content);
 
-        expect(component.openAccordion).toBe(SettingsAccordion.LPS_ChangeLanguage);
+        expect(component.openAccordion).toBe(
+          SettingsAccordion.LPS_ChangeLanguage,
+        );
         expect(component.showAllAccordions).toBeFalse();
       });
 
@@ -301,7 +314,9 @@ describe('SettingsPage', () => {
 
       it('should open Firebase analytics accordion when firebase analytics button is clicked', () => {
         (component as any).openFirebaseAnalyticsAccordion();
-        expect(component.openAccordion).toBe(SettingsAccordion.LPS_FirebaseAnalytics);
+        expect(component.openAccordion).toBe(
+          SettingsAccordion.LPS_FirebaseAnalytics,
+        );
       });
     });
 
@@ -396,6 +411,28 @@ describe('SettingsPage', () => {
         openFirebaseAnalytics$.emit();
 
         expect(openFirebaseAnalyticsAccordionSpy).toHaveBeenCalled();
+      });
+
+      it('should subscribe to fa.enbabled$ and update isAnalyticsEnabled', () => {
+        spyOn(component, 'showAll');
+        const enabledSubject = new BehaviorSubject<boolean>(true);
+        Object.defineProperty(firebaseAnalyticsServiceSpy, 'enabled$', {
+          get: () => enabledSubject.asObservable(),
+        });
+
+        (component as any).setupSubscriptions();
+
+        expect(component.isAnalyticsEnabled)
+          .withContext('analytics enabled - isAnalyticsEnabled')
+          .toBe(true);
+        expect(component.showAll)
+          .withContext('analytics enabled - showAll')
+          .toHaveBeenCalled();
+
+        enabledSubject.next(false);
+        expect(component.isAnalyticsEnabled)
+          .withContext('analytics disabled - isAnalyticsEnabled')
+          .toBe(false);
       });
 
       it('should subscribe to logoClicked$ and open feedback accordion', () => {
@@ -554,7 +591,9 @@ describe('SettingsPage', () => {
         );
         fixture.detectChanges();
 
-        expect(component.openAccordion).toBe(SettingsAccordion.LPS_ChangeLanguage);
+        expect(component.openAccordion).toBe(
+          SettingsAccordion.LPS_ChangeLanguage,
+        );
         expect(component.showAllAccordions).toBeFalse();
 
         const closeButtonArea = fixture.nativeElement.querySelector(

@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
-import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { BackupScriptsSectionComponent } from '@ui/components/backup-scripts-section/backup-scripts-section.component';
 import { createTranslateServiceMock } from 'src/app/testing/translate-service.mock';
 

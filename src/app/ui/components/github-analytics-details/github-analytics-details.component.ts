@@ -6,7 +6,7 @@ import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import {
   REPO,
   GithubAnalyticsTrafficDocument,
-} from '@app/shared/GitHubConstants';
+} from 'src/app/shared/github.constants';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { UtilsService } from '@app/services/utils.service';
 

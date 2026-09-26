@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { UtilsService } from './utils.service';
 import { FirebaseAnalyticsService } from './firebase-analytics.service';
-import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
 import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
 import { HelpModalComponent } from '@ui/components/get-help/get-help.component';

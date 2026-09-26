@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 
 import { environment } from '@env/environment';
 import { LogoType, Tab, SettingsAccordion } from '@app/shared/enums';
-import { APP_KEYS, AppKey, APPS } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey, APPS } from 'src/app/shared/github.constants';
 import {
   HeaderComponent,
   LanguageAccordionComponent,
@@ -118,10 +118,13 @@ export class SettingsPage implements OnInit, OnDestroy {
         this.openFeedbackAccordion();
       }),
       this.utilsService.openFirebaseAnalytics$.subscribe(() => {
-        this.openFirebaseAnalyticsAccordion();
+          this.openFirebaseAnalyticsAccordion();
       }),
       this.fa.enabled$.subscribe((enabled) => {
         this.isAnalyticsEnabled = enabled;
+        if (enabled) {
+          this.showAll();
+        }
       }),
     );
   }

@@ -26,11 +26,12 @@ export { LanguageAccordionComponent } from './components/accordions/language-acc
 export { PrivacyPolicyAccordionComponent } from './components/accordions/privacy-policy-accordion.component';
 
 // shared components
-export { FeedbackAppsComponent } from './shared/feedback-apps/feedback-apps.component';
-export { ChangeLogAppsComponent } from './shared/change-log-apps/change-log-apps.component';
-export { SourceCodeAppsComponent } from './shared/source-code-apps/source-code-apps.component';
-export { PrivacyPolicyAppsComponent } from './shared/privacy-policy-apps/privacy-policy-apps.component';
-export { MobileAppAppsComponent } from './shared/mobile-app-apps/mobile-app-apps.component';
-export { HelpAppsComponent } from './shared/help-apps/help-apps.component';
-export { OpenSourceAppsComponent } from './shared/open-source-apps/open-source-apps.component';
 export { AnalyticsDisabledInfoComponent } from './shared/analytics-disabled-info/analytics-disabled-info.component';
+export { ChangeLogAppsComponent } from './shared/change-log-apps/change-log-apps.component';
+export { FeedbackAppsComponent } from './shared/feedback-apps/feedback-apps.component';
+export { HelpAppsComponent } from './shared/help-apps/help-apps.component';
+export { MobileAppAppsComponent } from './shared/mobile-app-apps/mobile-app-apps.component';
+export { OpenSourceAppsComponent } from './shared/open-source-apps/open-source-apps.component';
+export { PrivacyPolicyAppsComponent } from './shared/privacy-policy-apps/privacy-policy-apps.component';
+export { SourceCodeAppsComponent } from './shared/source-code-apps/source-code-apps.component';
+export { WebAppAppsComponent } from './shared/web-app-apps/web-app-apps.component';

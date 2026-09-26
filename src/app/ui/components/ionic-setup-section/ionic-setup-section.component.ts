@@ -14,8 +14,8 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 
-import { APPS } from '@app/shared/GitHubConstants';
-import { IonicSetupSectionParameters } from '@app/shared/app-interfaces';
+import { APPS } from 'src/app/shared/github.constants';
+import { IonicSetupSectionParameters } from 'src/app/shared/app.interfaces';
 import { Tab } from '@app/shared/enums';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';

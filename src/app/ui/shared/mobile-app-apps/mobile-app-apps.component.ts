@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { UtilsService } from '@app/services/utils.service';
-import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, AppKey } from 'src/app/shared/github.constants';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 import { MobileAppRestrictionComponent } from '../mobile-app-restriction/mobile-app-restriction.component';
 

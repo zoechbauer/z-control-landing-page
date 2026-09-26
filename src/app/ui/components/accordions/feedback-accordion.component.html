@@ -1,11 +1,13 @@
-<ion-accordion value="LPS_Feedback"
+<ion-accordion
+  value="LPS_Feedback"
   title="{{
     utilsService.getSettingsAccordionTooltip(
       SettingsAccordion.LPS_Feedback,
       isAnalyticsEnabled,
       showAllAccordions
     ) | translate
-  }}">
+  }}"
+>
   <ion-item slot="header" color="light">
     <ion-label>{{ "SETTINGS.FEEDBACK.ACCORDION" | translate }}</ion-label>
   </ion-item>
@@ -29,6 +31,7 @@
       <div class="ion-padding-top">
         <ion-icon name="mail-outline" style="margin-bottom: 0px"></ion-icon>
         <a
+          (click)="logSendFeedback()"
           href="{{ mailtoLink }}"
           title="{{ 'SETTINGS.FEEDBACK.TOOLTIP.CONTACT_SUPPORT' | translate }}"
           >z-control Support</a

@@ -14,9 +14,9 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { APPS } from '@app/shared/GitHubConstants';
+import { APPS } from 'src/app/shared/github.constants';
 import { Tab } from '@app/shared/enums';
-import { ImageToTextSectionParameters } from '@app/shared/app-interfaces';
+import { ImageToTextSectionParameters } from 'src/app/shared/app.interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
 import { PrivacyPolicyAppsComponent } from '@ui/shared/privacy-policy-apps/privacy-policy-apps.component';

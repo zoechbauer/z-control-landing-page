@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { createUtilsServiceMock } from '@testing/utils-service.mock';
 import { FirebaseAnalyticsService } from './services/firebase-analytics.service';
+import { FirebaseFirestoreLandingPageVisitService } from './services/firebase-firestore-landing-page-visit.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { UtilsService } from './services/utils.service';
 
@@ -24,6 +25,7 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
+  let firebaseFirestoreLandingPageVisitServiceSpy: jasmine.SpyObj<FirebaseFirestoreLandingPageVisitService>;
   let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
   let routerSpy: jasmine.SpyObj<Router>;
   let navControllerSpy: jasmine.SpyObj<NavController>;
@@ -37,6 +39,13 @@ describe('AppComponent', () => {
       'FirebaseAnalyticsService',
       ['logEvent', 'init', 'enableCollection'],
     );
+
+    firebaseFirestoreLandingPageVisitServiceSpy = jasmine.createSpyObj(
+      'FirebaseFirestoreLandingPageVisitService',
+      ['init', 'logLandingPageVisit'],
+    );
+    firebaseFirestoreLandingPageVisitServiceSpy.init.and.resolveTo(undefined);
+    firebaseFirestoreLandingPageVisitServiceSpy.logLandingPageVisit.and.returnValue(Promise.resolve());
 
     localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', [
       'initializeServicesAsync',
@@ -80,6 +89,10 @@ describe('AppComponent', () => {
         {
           provide: Platform,
           useValue: { ready: () => Promise.resolve() },
+        },
+        {
+          provide: FirebaseFirestoreLandingPageVisitService,
+          useValue: firebaseFirestoreLandingPageVisitServiceSpy,
         },
       ],
     }).compileComponents();
@@ -148,6 +161,20 @@ describe('AppComponent', () => {
       expect(firebaseAnalyticsServiceSpy.enableCollection).toHaveBeenCalledWith(
         false,
       );
+    });
+
+    it('should call openFirebaseAnalytics method if Firebase Analytics is not enabled', async () => {
+      const openSpy = spyOn(component as any, 'openFirebaseAnalytics');
+
+      localStorageServiceSpy.getAnalyticsConsent.and.returnValue(
+        Promise.resolve(false),
+      );
+
+      fixture.detectChanges();
+      await fixture.whenStable();
+      await Promise.resolve();
+
+      expect(openSpy).toHaveBeenCalled();
     });
 
     it('should log page_view event on navigation', async () => {

@@ -2,10 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 
-enum LocalStorage {
-  SelectedLanguage = 'selectedLanguage',
-  AnalyticsEnabled = 'analytics_enabled',
-}
+import { AppConstants } from '../shared/app.constants';
+import { LocalStorage } from '../shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -111,7 +109,7 @@ export class LocalStorageService {
   }
 
   /**
-   * Stores the user's analytics consent preference in localStorage
+   * Stores the user's analytics consent preference in localStorage and in Firestore DB
    * @param enabled - User's consent decision for analytics
    */
   async setAnalyticsConsent(enabled: boolean): Promise<void> {
@@ -136,6 +134,18 @@ export class LocalStorageService {
         error,
       );
       return false;
+    }
+  }
+
+  /**
+   * Saves the firestore UID to storage.
+   * @param uid The firestore UID to save
+   */
+  async saveFirestoreUid(uid: string): Promise<void> {
+    try {
+      await this.storage.set(AppConstants.currentUser, uid);
+    } catch (error) {
+      console.error('Error saving current user UID:', error);
     }
   }
 }

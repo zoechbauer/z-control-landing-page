@@ -206,4 +206,24 @@ describe('LocalStorageService', () => {
       );
     });
   });
+
+  describe('saveFirestoreUid', () => {
+    it('should save Firestore UID to local storage', async () => {
+      const uid = 'some-uid';
+      await service.saveFirestoreUid(uid);
+      expect(storageSpy.set).toHaveBeenCalledWith('currentUser', uid);
+    });
+
+    it('should log error if saving Firestore UID fails', async () => {
+      spyOn(console, 'error');
+      const error = new Error('some error');
+      storageSpy.set.and.returnValue(Promise.reject(error));
+      await service.saveFirestoreUid('some-uid');
+
+      expect(console.error).toHaveBeenCalledWith(
+        'Error saving current user UID:',
+        error,
+      );
+    });
+  });
 });

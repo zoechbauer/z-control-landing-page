@@ -1,4 +1,4 @@
-import { AppKey } from './GitHubConstants';
+import { AppKey } from './github.constants';
 
 export interface QrCodeGeneratorSectionParameters {
   appSectionParameters: AppSectionParameters;
@@ -32,4 +32,9 @@ export interface AppSectionParameters {
   selectedAccordion: AppKey;
   currentMainAccordion: string;
   selectedLanguage: string;
+}
+export interface DeviceInfo {
+  userAgent: string;
+  platform: string;
+  language: string;
 }

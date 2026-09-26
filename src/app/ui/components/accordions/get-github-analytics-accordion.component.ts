@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 
 import { UtilsService } from '@app/services/utils.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
-import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { SettingsAccordion } from '@app/shared/enums';
 
 @Component({

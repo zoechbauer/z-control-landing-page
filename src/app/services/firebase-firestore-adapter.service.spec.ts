@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { Firestore } from '@angular/fire/firestore';
 import {
-  FirestoreAdapterService,
+  FirebaseFirestoreAdapterService,
   FIRESTORE_CONNECT_EMULATOR,
   FIRESTORE_GET_DOC,
   FIRESTORE_DOC,
-} from './firestore-adapter.service';
+} from './firebase-firestore-adapter.service';
 
-describe('FirestoreAdapterService', () => {
-  let service: FirestoreAdapterService;
+describe('FirebaseFirestoreAdapterService', () => {
+  let service: FirebaseFirestoreAdapterService;
   let firestoreMock: Firestore;
   let connectEmulatorSpy: jasmine.Spy;
   let getDocSpy: jasmine.Spy;
@@ -22,7 +22,7 @@ describe('FirestoreAdapterService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        FirestoreAdapterService,
+        FirebaseFirestoreAdapterService,
         { provide: Firestore, useValue: firestoreMock },
         { provide: FIRESTORE_CONNECT_EMULATOR, useValue: connectEmulatorSpy },
         { provide: FIRESTORE_GET_DOC, useValue: getDocSpy },
@@ -30,7 +30,7 @@ describe('FirestoreAdapterService', () => {
       ],
     });
 
-    service = TestBed.inject(FirestoreAdapterService);
+    service = TestBed.inject(FirebaseFirestoreAdapterService);
   });
 
   it('should create', () => {

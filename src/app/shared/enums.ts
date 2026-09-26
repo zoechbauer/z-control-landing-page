@@ -26,3 +26,34 @@ export enum SettingsAccordion {
   LPS_GetSource = 'LPS_GetSource',
 }
 
+export enum LocalStorage {
+  SelectedLanguage = 'selectedLanguage',
+  AnalyticsEnabled = 'analytics_enabled',
+}
+
+export enum DeviceTypeEnum {
+  // Apple devices
+  iPhone = 'iPhone',
+  iPad = 'iPad',
+  Mac = 'Mac',
+
+  // Android devices
+  AndroidPhone = 'android-phone',
+  AndroidPad = 'android-pad',
+  WinPhone = 'win-phone',
+
+  // Web platforms
+  WebMobile = 'web-mobile',
+  WebDesktop = 'web-desktop',
+}
+
+export enum EventEnum {
+  APP_START = 'app_start',
+  ANALYTICS_CHG_ENABLED = 'analytics_chg_enabled',
+  ANALYTICS_CHG_DISABLED = 'analytics_chg_disabled',
+  LANG_CHG_DE = 'lang_chg_DE',
+  LANG_CHG_EN = 'lang_chg_EN',
+  READ_POLICY_FROM_SETTINGS = 'policy_from_settings',
+  READ_POLICY_FROM_ANALYTICS = 'policy_from_analytics',
+  SEND_FEEDBACK = 'send_feedback'
+}

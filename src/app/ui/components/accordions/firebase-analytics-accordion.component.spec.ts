@@ -14,10 +14,11 @@ import { UtilsService } from '@app/services/utils.service';
 import { ToastService } from '@app/services/toast-EN.service';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
-import { APPS } from '@app/shared/GitHubConstants';
+import { FirebaseFirestoreLandingPageVisitService } from '@app/services/firebase-firestore-landing-page-visit.service';
+import { APPS } from 'src/app/shared/github.constants';
 import { FirebaseAnalyticsAccordionComponent } from '@ui/components/accordions/firebase-analytics-accordion.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
-import { Tab } from 'src/app/shared/enums';
+import { EventEnum, Tab } from 'src/app/shared/enums';
 
 describe('FirebaseAnalyticsAccordionComponent', () => {
   let component: FirebaseAnalyticsAccordionComponent;
@@ -26,6 +27,7 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
   let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
   let utilsServiceSpy: jasmine.SpyObj<UtilsService>;
   let firebaseAnalyticsServiceSpy: jasmine.SpyObj<FirebaseAnalyticsService>;
+  let fbLandingPageVisitServiceSpy: jasmine.SpyObj<FirebaseFirestoreLandingPageVisitService>;
   let activatedRouteSpy: any;
   let enabledSubject: Subject<boolean>;
 
@@ -52,6 +54,11 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
       'FirebaseAnalyticsService',
       ['logEvent', 'enableCollection'],
     );
+
+    fbLandingPageVisitServiceSpy = jasmine.createSpyObj(
+      'FirebaseFirestoreLandingPageVisitService',
+      ['logLandingPageVisit'],
+    );
     enabledSubject = new Subject<boolean>();
     firebaseAnalyticsServiceSpy.enabled$ = enabledSubject.asObservable();
     enabledSubject.next(false);
@@ -72,6 +79,10 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
         {
           provide: FirebaseAnalyticsService,
           useValue: firebaseAnalyticsServiceSpy,
+        },
+        {
+          provide: FirebaseFirestoreLandingPageVisitService,
+          useValue: fbLandingPageVisitServiceSpy,
         },
         { provide: ActivatedRoute, useValue: activatedRouteSpy },
         {
@@ -158,6 +169,26 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
         firebaseAnalyticsServiceSpy.enabled$ = of(false);
         component.ngOnInit();
         expect(component.isAnalyticsEnabled).toBeFalse();
+      });
+    });
+
+    describe('logPrivacyPolicyVisit', () => {
+      it('should log privacy policy visit if analytics is disabled', () => {
+        component.isAnalyticsEnabled = false;
+        component.logPrivacyPolicyVisit();
+
+        expect(
+          fbLandingPageVisitServiceSpy.logLandingPageVisit,
+        ).toHaveBeenCalledWith(false, EventEnum.READ_POLICY_FROM_ANALYTICS);
+      });
+
+      it('should not log privacy policy visit if analytics is enabled', () => {
+        component.isAnalyticsEnabled = true;
+        component.logPrivacyPolicyVisit();
+
+        expect(
+          fbLandingPageVisitServiceSpy.logLandingPageVisit,
+        ).not.toHaveBeenCalled();
       });
     });
 

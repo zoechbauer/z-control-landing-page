@@ -15,7 +15,7 @@ export const FIRESTORE_DOC = new InjectionToken('FIRESTORE_DOC', {
 });
 
 @Injectable({ providedIn: 'root' })
-export class FirestoreAdapterService {
+export class FirebaseFirestoreAdapterService {
   private readonly firestore = inject(Firestore);
 
   private readonly connectEmulatorFn = inject(FIRESTORE_CONNECT_EMULATOR);

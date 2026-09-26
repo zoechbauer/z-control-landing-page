@@ -10,7 +10,8 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UtilsService } from '@app/services/utils.service';
-import { SettingsAccordion } from '@app/shared/enums';
+import { EventEnum, SettingsAccordion } from '@app/shared/enums';
+import { FirebaseFirestoreLandingPageVisitService } from 'src/app/services/firebase-firestore-landing-page-visit.service';
 
 @Component({
   selector: 'app-language-accordion',
@@ -30,10 +31,33 @@ import { SettingsAccordion } from '@app/shared/enums';
 export class LanguageAccordionComponent {
   translate = inject(TranslateService);
   readonly utilsService = inject(UtilsService);
+  private readonly fbLandingPageVisitService = inject(
+    FirebaseFirestoreLandingPageVisitService,
+  );
 
-  @Input() lang?: string;
+  @Input() lang!: string;
   @Input() isAnalyticsEnabled!: boolean;
   @Input() showAllAccordions!: boolean;
 
   SettingsAccordion = SettingsAccordion;
+
+  /**
+   * Calls logLanguageChange when there is a change in language selection.
+   * @param event The event object containing the new language selection.
+   */
+  onLanguageChange(event: any) {
+    this.logLanguageChange(this.lang);
+  }
+
+  /**
+   * Logs a language change if analytics is disabled for the given language.
+   * @param lang The language code for which to log the language change.
+   */
+  private logLanguageChange(lang: string) {
+    if (!this.isAnalyticsEnabled) {
+      const event =
+        lang === 'de' ? EventEnum.LANG_CHG_DE : EventEnum.LANG_CHG_EN;
+      this.fbLandingPageVisitService.logLandingPageVisit(false, event);
+    }
+  }
 }

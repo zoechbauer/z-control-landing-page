@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ChangeLogAppsComponent } from './change-log-apps.component';
 import { UtilsService } from '@app/services/utils.service';
-import { APP_KEYS } from 'src/app/shared/GitHubConstants';
+import { APP_KEYS } from 'src/app/shared/github.constants';
 
 describe('ChangeLogAppsComponent', () => {
   let component: ChangeLogAppsComponent;

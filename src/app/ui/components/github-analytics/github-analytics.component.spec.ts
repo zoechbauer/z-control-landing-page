@@ -5,17 +5,18 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
-import { FirebaseFirestoreService } from '@app/services/firebase-firestore.service';
+import { FirebaseFirestoreGithubService } from 'src/app/services/firebase-firestore-github.service';
 import {
   COLLECTION,
   GithubAnalyticsTrafficDocument,
   REPO,
   REPOS,
-} from '@app/shared/GitHubConstants';
+} from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
+import { environment } from 'src/environments/environment';
 
 // Mock FirebaseFirestoreService to avoid real Firebase calls
-class MockFirebaseFirestoreService {
+class MockFirebaseFirestoreGithubService {
   getAnalyticsData(
     collection?: any,
     repo?: any,
@@ -73,7 +74,7 @@ const mockAnalyticsData: GithubAnalyticsTrafficDocument[] = [
 describe('GithubAnalyticsComponent', () => {
   let component: GithubAnalyticsComponent;
   let fixture: ComponentFixture<GithubAnalyticsComponent>;
-  let firestoreService: FirebaseFirestoreService;
+  let firebaseFirestoreGithubService: FirebaseFirestoreGithubService;
   let modalControllerSpy: jasmine.SpyObj<ModalController>;
   let utilsServiceSpy: jasmine.SpyObj<any>;
 
@@ -96,8 +97,8 @@ describe('GithubAnalyticsComponent', () => {
           useValue: createTranslateServiceMock(),
         },
         {
-          provide: FirebaseFirestoreService,
-          useClass: MockFirebaseFirestoreService,
+          provide: FirebaseFirestoreGithubService,
+          useClass: MockFirebaseFirestoreGithubService,
         },
         { provide: ModalController, useValue: modalControllerSpy },
         { provide: UtilsService, useValue: utilsServiceSpy },
@@ -106,12 +107,14 @@ describe('GithubAnalyticsComponent', () => {
 
     fixture = TestBed.createComponent(GithubAnalyticsComponent);
     component = fixture.componentInstance;
-    firestoreService = TestBed.inject(FirebaseFirestoreService);
+    firebaseFirestoreGithubService = TestBed.inject(
+      FirebaseFirestoreGithubService,
+    );
     fixture.detectChanges();
   }));
 
   it('should create', () => {
-    spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
+    spyOn(firebaseFirestoreGithubService, 'getAnalyticsData').and.returnValue(
       Promise.resolve([]),
     );
     expect(component).toBeTruthy();
@@ -144,7 +147,7 @@ describe('GithubAnalyticsComponent', () => {
 
   describe('init', () => {
     it('should call getAnalyticsData and set analyticsData', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
+      spyOn(firebaseFirestoreGithubService, 'getAnalyticsData').and.returnValue(
         Promise.resolve(mockAnalyticsData),
       );
       component.analyticsData = [];
@@ -156,7 +159,7 @@ describe('GithubAnalyticsComponent', () => {
     });
 
     it('should set isLoading to false after init', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
+      spyOn(firebaseFirestoreGithubService, 'getAnalyticsData').and.returnValue(
         Promise.resolve(mockAnalyticsData),
       );
       component.isLoading = true;
@@ -202,9 +205,14 @@ describe('GithubAnalyticsComponent', () => {
   });
 
   describe('getAnalyticsData', () => {
-    it('should call firestoreService.getAnalyticsData with correct parameters', async () => {
+    let environmentBackup: typeof environment;
+    beforeEach(() => {
+      environmentBackup = { ...environment };
+      environment.useFirebaseEmulator = false;
+    });
+    it('should call firebaseFirestoreGithubService.getAnalyticsData with correct parameters', async () => {
       const getAnalyticsDataSpy = spyOn(
-        firestoreService,
+        firebaseFirestoreGithubService,
         'getAnalyticsData',
       ).and.returnValue(Promise.resolve(mockAnalyticsData));
 
@@ -217,12 +225,16 @@ describe('GithubAnalyticsComponent', () => {
     });
 
     it('should set analyticsData and githubTrafficData after fetching data', async () => {
-      spyOn(firestoreService, 'getAnalyticsData').and.returnValue(
+      spyOn(firebaseFirestoreGithubService, 'getAnalyticsData').and.returnValue(
         Promise.resolve(mockAnalyticsData),
       );
 
       const result = await component['getAnalyticsData'](collection);
       expect(result).toEqual(mockAnalyticsData);
+    });
+    
+    afterEach(() => {
+      Object.assign(environment, environmentBackup);
     });
   });
 });

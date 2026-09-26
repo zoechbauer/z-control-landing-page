@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppKey } from '../shared/GitHubConstants';
+import { AppKey } from '../shared/github.constants';
 
 @Injectable({
   providedIn: 'root',

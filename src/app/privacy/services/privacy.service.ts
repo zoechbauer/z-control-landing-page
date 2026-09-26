@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
-import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, AppKey } from 'src/app/shared/github.constants';
 import { AppMetadataService } from '@app/services/app-metadata.service';
 
 export type PolicyType =

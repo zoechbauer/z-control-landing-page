@@ -2,6 +2,24 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [4.2] - 2026-09-26
+
+### ✨ New Features
+
+- **Record landing page visits in Firebase Firestore:** We store daily aggregated counts for visits with and without analytics consent and capture daily summaries of privacy‑policy reads, feedback, and language changes when analytics is disabled — allowing engagement measurement while preserving user privacy.
+
+### 🚀 Improvements
+
+- **Clarified the Privacy Policy** to explain the new landing‑page tracking and how the data is used.
+- Split the GitHub Analytics modal title into single‑line and two‑line variants for better display on different screen sizes.
+- **Added a visual emphasis to the analytics toggle** to make the enable/disable control more noticeable.
+
+### 🔧 Internal
+
+- Renamed Firebase service classes for clearer intent.
+- Added FIREBASE_ANONYMOUS_LOGIN.md with guidance on anonymous Firebase sign-in.
+- Updated unit tests to cover the Landing Page visit service and environment handling — test suite now contains **416 specs with 99.4% statement coverage**.
+
 ## [4.1] - 2026-09-14
 
 ### ✨ New Features

@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import type { AppKey } from '@app/shared/GitHubConstants';
+import type { AppKey } from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
 import { SettingsAccordion } from '@app/shared/enums';
 @Component({

@@ -6,7 +6,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { FirebaseAnalyticsService } from 'src/app/services/firebase-analytics.service';
 import { MobileAppAppsComponent } from './mobile-app-apps.component';
 import { createTranslateServiceMock } from 'src/app/testing/translate-service.mock';
-import { APP_KEYS, APPS } from 'src/app/shared/GitHubConstants';
+import { APP_KEYS, APPS } from 'src/app/shared/github.constants';
 
 describe('MobileAppAppsComponent', () => {
   let component: MobileAppAppsComponent;

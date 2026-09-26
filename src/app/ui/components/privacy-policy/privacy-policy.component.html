@@ -37,6 +37,7 @@
       processing, your rights, and how you can withdraw your consent, please
       read our
       <a
+        (click)="logPrivacyPolicyVisit()"
         [routerLink]="privacyPolicyLink"
         [queryParams]="{ internal: 'true' }"
         title="Read our privacy policy"
@@ -83,6 +84,7 @@
       Verarbeitung, Ihre Rechte und den Widerruf Ihrer Einwilligung finden Sie
       in unserer vollständigen
       <a
+        (click)="logPrivacyPolicyVisit()"
         [routerLink]="privacyPolicyLink"
         [queryParams]="{ internal: 'true' }"
         title="Lesen Sie unsere Datenschutzerklärung"

@@ -3,7 +3,7 @@ import { IonAccordion, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { GetSourceCodeComponent } from '@ui/components/get-source-code/get-source-code.component';
-import { AppKey } from '@app/shared/GitHubConstants';
+import { AppKey } from 'src/app/shared/github.constants';
 import { SettingsAccordion } from '@app/shared/enums';
 import { UtilsService } from 'src/app/services/utils.service';
 

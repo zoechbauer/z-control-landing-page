@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { APPS, APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
 import { QrCodeGeneratorSectionComponent } from '@ui/components/qr-code-generator-section/qr-code-generator-section.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';

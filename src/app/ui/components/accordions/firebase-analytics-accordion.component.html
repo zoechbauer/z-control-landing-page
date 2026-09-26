@@ -1,11 +1,13 @@
-<ion-accordion value="LPS_FirebaseAnalytics"
+<ion-accordion
+  value="LPS_FirebaseAnalytics"
   title="{{
     utilsService.getSettingsAccordionTooltip(
       SettingsAccordion.LPS_FirebaseAnalytics,
       isAnalyticsEnabled,
       showAllAccordions
     ) | translate
-  }}">
+  }}"
+>
   <ion-item slot="header" color="light">
     <ion-label>
       {{ "SETTINGS.FIREBASE_ANALYTICS.ACCORDION" | translate }}
@@ -14,9 +16,9 @@
 
   <div class="ion-padding" slot="content">
     <div
-      class="ion-text-center"
-      data-testid="enable-analytics"
+      class="enable-analytics-toggle"
       [class.firebase-analytics-not-enabled]="(fa.enabled$ | async) === false"
+      data-testid="enable-analytics"
     >
       <ion-toggle
         [checked]="fa.enabled$ | async"
@@ -63,6 +65,7 @@
         <p>
           For more information, please see our
           <a
+            (click)="logPrivacyPolicyVisit()"
             [routerLink]="privacyPolicyLink"
             [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
             title="Read our privacy policy"
@@ -107,6 +110,7 @@
         <p>
           Weitere Informationen finden Sie in unserer
           <a
+            (click)="logPrivacyPolicyVisit()"
             [routerLink]="privacyPolicyLink"
             [queryParams]="{ internal: 'true', currentTab: Tab.Settings }"
             title="Lesen Sie unsere Datenschutzerklärung"

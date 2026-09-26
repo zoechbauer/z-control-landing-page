@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
 
-import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, AppKey } from 'src/app/shared/github.constants';
 
 @Component({
   selector: 'app-mobile-app-restriction',

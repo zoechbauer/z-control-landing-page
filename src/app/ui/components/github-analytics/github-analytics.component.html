@@ -10,9 +10,10 @@
         <ion-icon name="arrow-up-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{
-      "SETTINGS.GITHUB_ANALYTICS.LABEL.STATS_PAGE_TITLE_1_LINE" | translate
-    }}</ion-title>
+    <ion-title>
+      <span *ngIf="utilsService.isSmallScreen" [innerHTML]="title2lines"></span>
+      <span *ngIf="!utilsService.isSmallScreen" [innerHTML]="title1line"></span>
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button
         fill="clear"

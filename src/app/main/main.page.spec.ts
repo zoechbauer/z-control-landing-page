@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { MainPage } from './main.page';
 import { UtilsService } from '../services/utils.service';
-import { APP_KEYS, AppKey } from '@app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 import { Tab } from '@app/shared/enums';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
 import { createUtilsServiceMock } from '@testing/utils-service.mock';

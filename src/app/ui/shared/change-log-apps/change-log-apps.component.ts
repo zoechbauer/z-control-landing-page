@@ -3,7 +3,7 @@ import { IonIcon, IonButton } from '@ionic/angular/standalone';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 
 import { UtilsService } from '@app/services/utils.service';
-import { AppKey } from '@app/shared/GitHubConstants';
+import { AppKey } from 'src/app/shared/github.constants';
 
 @Component({
   selector: 'app-change-log-apps',

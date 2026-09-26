@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 
-import { APPS, AppKey } from '@app/shared/GitHubConstants';
+import { APPS, AppKey } from 'src/app/shared/github.constants';
 import { MarkdownViewerComponent } from '@ui/components/markdown-viewer/markdown-viewer.component';
 import { GithubAnalyticsComponent } from '@ui/components/github-analytics/github-analytics.component';
 import { HelpModalComponent } from '@ui/components/get-help/get-help.component';

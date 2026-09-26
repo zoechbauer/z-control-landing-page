@@ -20,8 +20,8 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 
-import { APPS, AppKey } from '@app/shared/GitHubConstants';
-import { BackendFunctionsSectionParameters } from '@app/shared/app-interfaces';
+import { APPS, AppKey } from 'src/app/shared/github.constants';
+import { BackendFunctionsSectionParameters } from 'src/app/shared/app.interfaces';
 import { UtilsService } from '@app/services/utils.service';
 import { OpenSourceAppsComponent } from '@ui/shared/open-source-apps/open-source-apps.component';
 import { FeedbackAppsComponent } from '@ui/shared/feedback-apps/feedback-apps.component';

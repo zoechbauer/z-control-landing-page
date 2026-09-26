@@ -16,8 +16,9 @@ import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.servi
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { ToastService } from '@app/services/toast-EN.service';
 import { UtilsService } from '@app/services/utils.service';
-import { SettingsAccordion, Tab } from '@app/shared/enums';
-import { APPS } from '@app/shared/GitHubConstants';
+import { FirebaseFirestoreLandingPageVisitService } from 'src/app/services/firebase-firestore-landing-page-visit.service';
+import { EventEnum, SettingsAccordion, Tab } from '@app/shared/enums';
+import { APPS } from 'src/app/shared/github.constants';
 
 @Component({
   selector: 'app-firebase-analytics-accordion',
@@ -41,15 +42,21 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
   readonly utilsService = inject(UtilsService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly toastService = inject(ToastService);
+  private readonly fbLandingPageVisitService = inject(
+    FirebaseFirestoreLandingPageVisitService,
+  );
 
   @Input() lang?: string;
   @Input() isAnalyticsEnabled!: boolean;
   @Input() showAllAccordions!: boolean;
 
   Tab = Tab;
-    SettingsAccordion = SettingsAccordion;
+  SettingsAccordion = SettingsAccordion;
   private readonly sub = new Subscription();
 
+  /**
+   * Initializes the component and sets up subscriptions.
+   */
   ngOnInit(): void {
     this.sub.add(
       this.fa.enabled$.subscribe((enabled) => {
@@ -68,6 +75,11 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
       : this.translate.instant('SETTINGS.FIREBASE_ANALYTICS.ENABLE_ANALYTICS');
   }
 
+  /**
+   * Handles the change in analytics enablement.
+   * Logs the appropriate events and updates the local storage and Firebase settings.
+   * @param enabled Whether analytics should be enabled or disabled.
+   */
   onChangeEnableAnalytics(enabled: boolean) {
     const eventName = 'toggle_analytics';
     const eventValue = enabled ? 'enabled' : 'disabled';
@@ -80,11 +92,19 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
       });
       setTimeout(() => {
         this.localStorageService.setAnalyticsConsent(enabled);
+        this.fbLandingPageVisitService.logLandingPageVisit(
+          enabled,
+          EventEnum.ANALYTICS_CHG_DISABLED,
+        );
         this.fa.enableCollection(enabled);
       }, 300);
     } else {
       // analytics being enabled
       this.localStorageService.setAnalyticsConsent(enabled);
+      this.fbLandingPageVisitService.logLandingPageVisit(
+        enabled,
+        EventEnum.ANALYTICS_CHG_ENABLED,
+      );
       this.fa.enableCollection(enabled);
       // log event after enabling
       this.fa.logEvent(eventName, {
@@ -103,6 +123,21 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Logs a visit to the privacy policy if analytics is disabled.
+   */
+  logPrivacyPolicyVisit() {
+    if (!this.isAnalyticsEnabled) {
+      this.fbLandingPageVisitService.logLandingPageVisit(
+        false,
+        EventEnum.READ_POLICY_FROM_ANALYTICS,
+      );
+    }
+  }
+
+  /**
+   * Cleans up subscriptions when the component is destroyed.
+   */
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

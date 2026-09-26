@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AnalyticsDisabledInfoComponent } from './analytics-disabled-info.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
-import { APPS } from 'src/app/shared/GitHubConstants';
+import { APPS } from 'src/app/shared/github.constants';
 import { Tab } from 'src/app/shared/enums';
 
 describe('AnalyticsDisabledInfoComponent', () => {

@@ -7,7 +7,7 @@ import { UtilsService } from '@app/services/utils.service';
 import { PrivacyService } from '@app/privacy/services/privacy.service';
 import { MultiLanguageTranslatorSectionComponent } from '@ui/components/multi-language-translator-section/multi-language-translator-section.component';
 import { createTranslateServiceMock } from '@testing/translate-service.mock';
-import { APP_KEYS, AppKey } from 'src/app/shared/GitHubConstants';
+import { APP_KEYS, AppKey } from 'src/app/shared/github.constants';
 
 describe('MultiLanguageTranslatorSectionComponent', () => {
   let component: MultiLanguageTranslatorSectionComponent;

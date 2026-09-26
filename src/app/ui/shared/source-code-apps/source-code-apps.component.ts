@@ -3,7 +3,7 @@ import { IonIcon, IonButton } from '@ionic/angular/standalone';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { AppKey, APPS } from '@app/shared/GitHubConstants';
+import { AppKey, APPS } from 'src/app/shared/github.constants';
 import { UtilsService } from '@app/services/utils.service';
 import { FirebaseAnalyticsService } from '@app/services/firebase-analytics.service';
 
