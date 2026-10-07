@@ -10,6 +10,18 @@ This project uses a simplified major.minor versioning scheme:
 - Minor versions indicate new features, improvements, and bug fixes.
 - Patch numbers are intentionally omitted; all changes are released as major or minor versions.
 
+## [2.9] - 2026-10-07
+
+### ✨ New Features
+
+- **Integrated Firebase staging credentials:** Updated the app to dynamically select between production and staging Firebase configurations based on the environment settings.
+
+### 🔧 Internal
+
+- Added unit tests for App Metadata service.
+- Updated unit tests to cover the Firebase staging environment handling
+- Test suite now contains **679 specs with 99.3% statement coverage**.
+
 ## [2.8] – 2026-07-28
 
 ### 🚀 Improvements

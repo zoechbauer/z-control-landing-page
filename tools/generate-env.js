@@ -50,12 +50,17 @@ function makeEnv(prod = false) {
         maxInputLength: Number(v("appSection.QR.MAX_INPUT_LENGTH", "1000")),
       },
       MLT: {
-        maxTargetLanguages: Number(v("appSection.MLT.MAX_TARGET_LANGUAGES", "5")),
+        maxTargetLanguages: Number(
+          v("appSection.MLT.MAX_TARGET_LANGUAGES", "5"),
+        ),
         maxFreeTranslateCharsPerMonth: Number(
           v("appSection.MLT.MAX_FREE_TRANSLATE_CHARS_PER_MONTH", "500000"),
         ),
         maxFreeTranslateCharsPerMonthForUser: Number(
-          v("appSection.MLT.MAX_FREE_TRANSLATE_CHARS_PER_MONTH_FOR_USER", "10000"),
+          v(
+            "appSection.MLT.MAX_FREE_TRANSLATE_CHARS_PER_MONTH_FOR_USER",
+            "10000",
+          ),
         ),
         maxFreeTranslateCharsBufferPerMonth: Number(
           v("appSection.MLT.MAX_FREE_TRANSLATE_CHARS_BUFFER_PER_MONTH", "5000"),
@@ -63,12 +68,20 @@ function makeEnv(prod = false) {
         maxInputLength: Number(v("appSection.MLT.MAX_INPUT_LENGTH", "100")),
       },
       IS: {
-        maxFeatureCharsTotalPerMonth: Number(v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH", "500000")),
-        maxFeatureCharsUserPerMonth: Number(v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH_FOR_USER", "10000")),
+        maxFeatureCharsTotalPerMonth: Number(
+          v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH", "500000"),
+        ),
+        maxFeatureCharsUserPerMonth: Number(
+          v("appSection.IS.MAX_FREE_FEATURE_CHARS_PER_MONTH_FOR_USER", "10000"),
+        ),
       },
       I2T: {
-        maxImageProcessingTotalPerMonth: Number(v("appSection.I2T.MAX_IMAGE_PROCESSING_TOTAL_PER_MONTH", "1000")),
-        maxImageProcessingUserPerMonth: Number(v("appSection.I2T.MAX_IMAGE_PROCESSING_USER_PER_MONTH", "50")),
+        maxImageProcessingTotalPerMonth: Number(
+          v("appSection.I2T.MAX_IMAGE_PROCESSING_TOTAL_PER_MONTH", "1000"),
+        ),
+        maxImageProcessingUserPerMonth: Number(
+          v("appSection.I2T.MAX_IMAGE_PROCESSING_USER_PER_MONTH", "50"),
+        ),
       },
     },
     firebase: {
@@ -79,6 +92,16 @@ function makeEnv(prod = false) {
       messagingSenderId: v("FIREBASE_MESSAGING_SENDER_ID", ""),
       appId: v("FIREBASE_APP_ID", ""),
       measurementId: v("FIREBASE_MEASUREMENT_ID", ""),
+    },
+    useStagingFunctions: v("USE_STAGING_FUNCTIONS", "false") === "true",
+    firebaseStaging: {
+      apiKey: v("FIREBASE_STAGING_API_KEY", ""),
+      authDomain: v("FIREBASE_STAGING_AUTH_DOMAIN", ""),
+      projectId: v("FIREBASE_STAGING_PROJECT_ID", ""),
+      storageBucket: v("FIREBASE_STAGING_STORAGE_BUCKET", ""),
+      messagingSenderId: v("FIREBASE_STAGING_MESSAGING_SENDER_ID", ""),
+      appId: v("FIREBASE_STAGING_APP_ID", ""),
+      measurementId: v("FIREBASE_STAGING_MEASUREMENT_ID", ""),
     },
   };
   return `export const environment = ${JSON.stringify(env, null, 2)};\n`;
@@ -102,14 +125,22 @@ try {
   if (fs.existsSync(indexPath)) {
     let index = fs.readFileSync(indexPath, "utf8");
     const placeholder = "__FIREBASE_MEASUREMENT_ID__";
-    const measurementId = v("FIREBASE_MEASUREMENT_ID", "");
+    const isStaging = v("USE_STAGING_FUNCTIONS", "false") === "true";
+    const stagingMeasurementId = v("FIREBASE_STAGING_MEASUREMENT_ID", "");
+    const prodMeasurementId = v("FIREBASE_MEASUREMENT_ID", "");
+    const measurementId = isStaging ? stagingMeasurementId : prodMeasurementId;
     if (index.includes(placeholder) && measurementId) {
-      const replaced = index.replace(
-        new RegExp(placeholder, "g"),
-        measurementId,
-      );
+      const replaced = index.replaceAll(placeholder, measurementId);
       fs.writeFileSync(indexPath, replaced, "utf8");
       console.log("Replaced measurement id placeholder in src/index.html");
+    }
+    if (isStaging) {
+      console.log("Using staging Firebase configuration");
+    }
+    const usingEmulator =
+      v("USE_FIREBASE_EMULATOR", "false").toLowerCase() === "true";
+    if (usingEmulator) {
+      console.log("Using Firebase emulator");
     }
   }
 } catch (e) {

@@ -2,6 +2,18 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [4.3] - 2026-10-07
+
+### ✨ New Features
+
+- **Integrated Firebase staging credentials:** Updated the app to dynamically select between production and staging Firebase configurations based on the environment settings.
+
+### 🔧 Internal
+
+- Added unit tests for App Metadata service.
+- Updated unit tests to cover the Landing Page visit service and environment handling
+- Test suite now contains **425 specs with 99.4% statement coverage**.
+
 ## [4.2] - 2026-09-26
 
 ### ✨ New Features

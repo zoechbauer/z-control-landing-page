@@ -39,10 +39,22 @@ describe('FirebaseAnalyticsAdapterService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should initialize analytics', () => {
+  it('should initialize analytics with Firebase production environment', () => {
+    environment.useStagingFunctions = false;
     const result = service.initialize();
+    const firebaseConfig = environment.useStagingFunctions ? environment.firebaseStaging : environment.firebase
 
-    expect(initializeAppSpy).toHaveBeenCalledWith(environment.firebase);
+    expect(initializeAppSpy).toHaveBeenCalledWith(firebaseConfig);
+    expect(getAnalyticsSpy).toHaveBeenCalledWith({ app: 'app' });
+    expect(result).toEqual(jasmine.objectContaining({ analytics: true }));
+  });
+
+    it('should initialize analytics with Firebase staging environment', () => {
+    environment.useStagingFunctions = true;
+    const result = service.initialize();
+    const firebaseConfig = environment.useStagingFunctions ? environment.firebaseStaging : environment.firebase
+
+    expect(initializeAppSpy).toHaveBeenCalledWith(firebaseConfig);
     expect(getAnalyticsSpy).toHaveBeenCalledWith({ app: 'app' });
     expect(result).toEqual(jasmine.objectContaining({ analytics: true }));
   });

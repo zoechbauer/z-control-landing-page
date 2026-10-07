@@ -12,9 +12,24 @@ This project uses a simplified major.minor versioning scheme:
 
 ## What's Coming Next
 
-- Compress photos before saving to reduce storage usage.
-- Add a search feature to find saved photos by title, description, or extracted text.
 - Add unit tests for the new services and components.
+- Add a search feature to find saved photos by title, description, or extracted text.
+- Compress photos before saving to reduce storage usage.
+
+## [1.6] – 2026-10-07
+
+### ✨ New Features
+
+- **Integrated Firebase staging credentials:** Updated the app to dynamically select between production and staging Firebase configurations based on the environment settings.
+
+### 🐛 Fixes
+
+- Fixed translation key for Title in Main page card to display the correct app name in the Browser tab and on the Main page card.
+
+### 🔧 Internal
+
+- Removed unused code and imports (including getHelpComponent and its tests) to reduce clutter and improve maintainability.
+- Added guidance on testing anonymous login with the Firebase Emulator versus production, including recommendations for Firestore initialization and session handling.
 
 ## [1.5] – 2026-08-10
 

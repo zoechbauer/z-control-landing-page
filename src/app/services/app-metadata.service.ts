@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppKey } from '../shared/github.constants';
 
+// TODO add new apps to the mappings below as needed and update unit-tests
 @Injectable({
   providedIn: 'root',
 })

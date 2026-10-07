@@ -88,8 +88,9 @@ describe('FirebaseFirestoreLandingPageVisitService', () => {
       ],
     });
     service = TestBed.inject(FirebaseFirestoreLandingPageVisitService);
-  
+
     authWrapperMock.signInAnonymously.calls.reset();
+    authWrapperMock.onAuthStateChanged.calls.reset();
     localStorageServiceMock.saveFirestoreUid.calls.reset();
   });
 
@@ -299,14 +300,15 @@ describe('FirebaseFirestoreLandingPageVisitService', () => {
     describe('getHttpsCallable', () => {
       it('should execute getHttpsCallable path in logLandingPageVisit and handle failure', async () => {
         spyOn(console, 'error');
-        spyOn<any>(service, 'getHttpsCallable').and.returnValue(() => 
-          Promise.reject(new Error('Test error')));
+        spyOn<any>(service, 'getHttpsCallable').and.returnValue(() =>
+          Promise.reject(new Error('Test error')),
+        );
 
         await service.logLandingPageVisit(false, EventEnum.APP_START);
 
         expect(console.error).toHaveBeenCalledWith(
           'logLandingPageVisit failed',
-          jasmine.any(Error)
+          jasmine.any(Error),
         );
       });
     });

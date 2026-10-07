@@ -6,7 +6,7 @@ import {
   logEvent,
   setAnalyticsCollectionEnabled,
 } from 'firebase/analytics';
-import { environment } from '@env/environment';
+import { FirebaseCredentials } from  './firebase-credentials';
 
 export const FIREBASE_APP_INIT = new InjectionToken('FIREBASE_APP_INIT', {
   factory: () => initializeApp,
@@ -33,7 +33,7 @@ export class FirebaseAnalyticsAdapterService {
   private readonly logEventFn = inject(FIREBASE_LOG_EVENT);
 
   initialize(): Analytics {
-    const app = this.initializeAppFn(environment.firebase);
+    const app = this.initializeAppFn(FirebaseCredentials.getFirebaseCredentials());
     return this.getAnalyticsFn(app);
   }
 

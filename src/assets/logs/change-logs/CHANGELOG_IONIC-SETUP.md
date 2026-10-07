@@ -10,6 +10,20 @@ This project uses a simplified major.minor versioning scheme:
 - Minor versions indicate new features, improvements, and bug fixes.
 - Patch numbers are intentionally omitted; all changes are released as major or minor versions.
 
+## [2.7] – 2026-10-07
+
+### ✨ New Features
+
+- **Integrated Firebase staging credentials:** Updated the app to dynamically select between production and staging Firebase configurations based on the environment settings.
+
+### 🔧 Internal
+
+- Added the document checklist-update-objects.md to the docs folder, providing a comprehensive guide for safely updating nested objects in Angular/TypeScript. This checklist covers immutability, merging strategies, and unit testing best practices to prevent accidental data loss, overwrites, or race conditions.
+- Added addLeadingBlanks and addTrailingBlanks utility functions to the utils folder, enabling developers to easily add leading or trailing blank lines to strings. These functions improve code readability and formatting consistency in generated text outputs.
+- Added guidance on testing anonymous login with the Firebase Emulator versus production, including recommendations for Firestore initialization and session handling.
+- Updated unit tests to cover the Landing Page visit service and environment handling
+- Test suite now contains **556 specs with 99.6% statement coverage.**
+
 ## [2.6] – 2026-07-28
 
 ### 🚀 Improvements

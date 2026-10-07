@@ -29,8 +29,13 @@ import { provideMarkdown } from 'ngx-markdown';
 
 import { routes } from '@app/app.routes';
 import { ServicesModule } from './services.module';
+import { FirebaseCredentials } from './services/firebase-credentials';
 import { environment } from '@env/environment';
 
+/**
+ * Determines if Firebase emulators should be used.
+ * @returns A boolean indicating whether the Firebase emulators should be used.
+ */
 function isEmulatorEnabled(): boolean {
   return !!environment.useFirebaseEmulator;
 }
@@ -84,6 +89,10 @@ function createFirebaseProviders() {
   return [firestoreProvider, functionsProvider];
 }
 
+/**
+ * Application configuration, including providers for routing, HTTP client,
+ * translation, markdown, and Firebase services.
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -103,7 +112,7 @@ export const appConfig: ApplicationConfig = {
 
     provideMarkdown(),
 
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirebaseApp(() => initializeApp(FirebaseCredentials.getFirebaseCredentials())),
     provideAuth(() => getAuth()),
     // Firebase service providers (firestore + functions). Emulator wiring is isolated in createFirebaseProviders().
     ...createFirebaseProviders(),

@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project uses [Semantic Versioning](https://semver.org/).
 
+## [2.8] - 2026-10-07
+
+### Added
+
+- Added `GITHUB_TOKEN` secret definition for secure access to GitHub API in Firebase functions. This is more secure than environment variables which was used before.
+- Created `STAGING_Project` in Firebase for testing and development purposes.
+
+### Changed
+
+- Upgraded node.js version for Firebase functions to node22 because node20 will be decomissioned on 2026-10-30.
+- Test suite: **251 specs with 100% statement coverage.**
+
+## [2.7] - 2026-09-26
+
+### Added
+
+- Added `logLandingPageVisit`: records landing-page visits to Firestore to track user interactions when Firebase Analytics is disabled. Only accordion interactions that work without Analytics are recorded. When Analytics is enabled, Firebase Analytics will capture visits; Firestore logging remains in place to preserve enabled/disabled counts and ensure metric continuity.
+- Added unit tests for `logLandingPageVisit` to verify Firestore recording behavior.
+- Added unit tests for the `secure-extract-text-from-image` feature to verify correct and secure text extraction from images.
+- Test suite: **249 specs with 99.57% statement coverage.**
+
+### Changed
+
+- Renamed class `FireStoreConstants` to `FirestoreConstants` and updated all references accordingly.
+- Used `RecognizeInputData` interface for the input data of the `secure-extract-text-from-image` feature.
+
+## [2.6] - 2026-07-28
+
+### Changed
+
+- Updated the `REPOS` constant in `GitHubConstants.ts` to include the new `z-control-image-to-text` repository, ensuring that analytics data is collected for this repository as well.
+- Updated documentation and unit tests to reflect the addition of the `z-control-image-to-text` repository in the GitHub analytics architecture, ensuring that all references and tests are consistent with the updated repository list.
+
 ## [2.5] - 2026-07-27
 
 ### Added
