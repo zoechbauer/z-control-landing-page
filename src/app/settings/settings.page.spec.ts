@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { of, EMPTY, Subject, BehaviorSubject } from 'rxjs';
+import { of, EMPTY, Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SettingsPage } from './settings.page';
@@ -381,8 +381,8 @@ describe('SettingsPage', () => {
 
       it('should handle empty subscriptions array on destroy', () => {
         (component as any).subscriptions = [];
-        (component as any).ngOnDestroy();
-        // No errors should occur, and the test will pass if it reaches this point without throwing
+        // Should not throw when there are no subscriptions
+        expect(() => (component as any).ngOnDestroy()).not.toThrow();
       });
 
       it('should subscribe to selectedLanguage$ and update selectedLanguage', () => {

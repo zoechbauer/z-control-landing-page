@@ -91,27 +91,35 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
         analytics: eventValue,
       });
       setTimeout(() => {
-        this.localStorageService.setAnalyticsConsent(enabled);
-        this.fbLandingPageVisitService.logLandingPageVisit(
-          enabled,
-          EventEnum.ANALYTICS_CHG_DISABLED,
+        (async () => {
+          await this.localStorageService.setAnalyticsConsent(enabled);
+          await this.fbLandingPageVisitService.logLandingPageVisit(
+            enabled,
+            EventEnum.ANALYTICS_CHG_DISABLED,
+          );
+          this.fa.enableCollection(enabled);
+        })().catch((err) =>
+          console.error('Error during disabling analytics flow:', err),
         );
-        this.fa.enableCollection(enabled);
       }, 300);
     } else {
-      // analytics being enabled
-      this.localStorageService.setAnalyticsConsent(enabled);
-      this.fbLandingPageVisitService.logLandingPageVisit(
-        enabled,
-        EventEnum.ANALYTICS_CHG_ENABLED,
+      (async () => {
+        // analytics being enabled
+        await this.localStorageService.setAnalyticsConsent(enabled);
+        await this.fbLandingPageVisitService.logLandingPageVisit(
+          enabled,
+          EventEnum.ANALYTICS_CHG_ENABLED,
+        );
+        this.fa.enableCollection(enabled);
+        // log event after enabling
+        this.fa.logEvent(eventName, {
+          app: APPS.LANDING_PAGE,
+          analytics: eventValue,
+        });
+        await this.utilsService.navigateToTab(Tab.MainFeature);
+      })().catch((err) =>
+        console.error('Error during enabling analytics flow:', err),
       );
-      this.fa.enableCollection(enabled);
-      // log event after enabling
-      this.fa.logEvent(eventName, {
-        app: APPS.LANDING_PAGE,
-        analytics: eventValue,
-      });
-      this.utilsService.navigateToTab(Tab.MainFeature);
     }
 
     this.toastService.showToast(
@@ -126,9 +134,9 @@ export class FirebaseAnalyticsAccordionComponent implements OnInit, OnDestroy {
   /**
    * Logs a visit to the privacy policy if analytics is disabled.
    */
-  logPrivacyPolicyVisit() {
+  async logPrivacyPolicyVisit() {
     if (!this.isAnalyticsEnabled) {
-      this.fbLandingPageVisitService.logLandingPageVisit(
+      await this.fbLandingPageVisitService.logLandingPageVisit(
         false,
         EventEnum.READ_POLICY_FROM_ANALYTICS,
       );

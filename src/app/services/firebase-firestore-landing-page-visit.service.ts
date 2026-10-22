@@ -114,7 +114,7 @@ export class FirebaseFirestoreLandingPageVisitService {
     } else {
       this.user = this.auth.currentUser;
     }
-    this.saveUserIdToLocalStorage(this.user.uid);
+    await this.saveUserIdToLocalStorage(this.user.uid);
   }
 
   /**

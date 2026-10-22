@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showConsentBanner = false;
   showTabsBar = environment.app.showTabsBar;
   isNativeApp = this.utilsService.isNativeApp;
-  private subscription: Subscription[] = [];
+  private readonly subscription: Subscription[] = [];
 
   ngOnInit(): void {
     (async () => {
@@ -44,11 +44,11 @@ export class AppComponent implements OnInit, OnDestroy {
         console.error('fa.init error', e);
       }
 
-      this.platform.ready().then(async () => {
+      await this.platform.ready().then(async () => {
         const consent =
           (await this.localStorageService.getAnalyticsConsent()) ?? false;
         this.fa.enableCollection(consent);
-        this.fbLandingPageVisitService.logLandingPageVisit(
+        await this.fbLandingPageVisitService.logLandingPageVisit(
           consent,
           EventEnum.APP_START,
         );
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.openFirebaseAnalytics();
         }
       });
-    })();
+    })().catch((err) => console.error('Error during initialization', err));
 
     this.subscription.push(
       this.router.events

@@ -4,7 +4,7 @@ import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { Tab } from '@app/shared/enums';
-import { AppKey, APPS } from 'src/app/shared/github.constants';
+import { AppKey } from 'src/app/shared/github.constants';
 import { PrivacyService } from '@app/privacy/services/privacy.service';
 import { UtilsService } from '@app/services/utils.service';
 

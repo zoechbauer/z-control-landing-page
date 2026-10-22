@@ -83,7 +83,7 @@ export class MainPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.utilsService.showOrHideIonTabBar();
     this.setupSubscriptions();
-    this.getIsAnalyticsAllowed();
+    void this.getIsAnalyticsAllowed();
     this.initializeAllSectionParameters();
   }
 
@@ -122,7 +122,7 @@ export class MainPage implements OnInit, OnDestroy {
 
   private setupSubscriptions() {
     this.subscriptions.push(
-      this.localStorageService.selectedLanguage$.subscribe(async (lang) => {
+      this.localStorageService.selectedLanguage$.subscribe(lang => {
         this.translate.use(lang);
         this.translate.setDefaultLang(lang);
         this.selectedLanguage = lang;

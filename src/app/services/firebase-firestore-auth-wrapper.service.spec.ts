@@ -2,20 +2,6 @@ import * as angularFireAuth from '@angular/fire/auth';
 import { FirebaseFirestoreAuthWrapperService } from './firebase-firestore-auth-wrapper.service';
 
 describe('FirebaseFirestoreAuthWrapperService', () => {
-  describe('FirebaseFirestoreAuthWrapperService (real methods)', () => {
-    let realService: FirebaseFirestoreAuthWrapperService;
-    beforeEach(() => {
-      realService = new FirebaseFirestoreAuthWrapperService();
-    });
-    it('should call the real signInAnonymously and onAuthStateChanged', () => {
-      try {
-        realService.signInAnonymously({} as any);
-      } catch {}
-      try {
-        realService.onAuthStateChanged({} as any, () => {});
-      } catch {}
-    });
-  });
   let service: FirebaseFirestoreAuthWrapperService;
   let authMock: any;
   const userStub: angularFireAuth.User = {
@@ -60,8 +46,29 @@ describe('FirebaseFirestoreAuthWrapperService', () => {
       });
     service = FirebaseFirestoreAuthWrapperService.createForTesting(
       signInAnonymouslySpy,
-      onAuthStateChangedSpy
+      onAuthStateChangedSpy,
     );
+  });
+
+  describe('FirebaseFirestoreAuthWrapperService (real methods)', () => {
+    let realService: FirebaseFirestoreAuthWrapperService;
+    beforeEach(() => {
+      realService = new FirebaseFirestoreAuthWrapperService();
+    });
+
+    it('should call the real signInAnonymously and onAuthStateChanged', () => {
+      try {
+        realService.signInAnonymously({} as any);
+      } catch {}
+      try {
+        realService.onAuthStateChanged({} as any, () => {});
+      } catch {}
+
+      expect(realService.signInAnonymously).toBeDefined();
+      expect(typeof realService.signInAnonymously).toBe('function');
+      expect(realService.onAuthStateChanged).toBeDefined();
+      expect(typeof realService.onAuthStateChanged).toBe('function');
+    });
   });
 
   describe('signInAnonymously', () => {
@@ -76,7 +83,7 @@ describe('FirebaseFirestoreAuthWrapperService', () => {
   describe('onAuthStateChanged', () => {
     it('should call onAuthStateChanged with auth and callback', () => {
       const callback = jasmine.createSpy('callback') as (
-        user: angularFireAuth.User | null
+        user: angularFireAuth.User | null,
       ) => void;
 
       const result = service.onAuthStateChanged(authMock, callback);

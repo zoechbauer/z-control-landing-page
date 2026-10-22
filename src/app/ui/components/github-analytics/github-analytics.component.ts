@@ -78,8 +78,12 @@ export class GithubAnalyticsComponent implements OnInit {
     'SETTINGS.GITHUB_ANALYTICS.LABEL.STATS_PAGE_TITLE_2_LINES',
   );
 
-  ngOnInit() {
-    this.init();
+  ngOnInit(): void {
+    // Start async initialization without changing the OnInit signature
+    void this.init().catch((err) => {
+      // Log initialization errors
+      console.error('Failed to initialize GithubAnalyticsComponent:', err);
+    });
   }
 
   async init() {
@@ -145,8 +149,8 @@ export class GithubAnalyticsComponent implements OnInit {
   /**
    * Closes the modal dialog.
    */
-  closeModal() {
-    this.modalController.dismiss();
+  async closeModal() {
+    await this.modalController.dismiss();
   }
 
   /**

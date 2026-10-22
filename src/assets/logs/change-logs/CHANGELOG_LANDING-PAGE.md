@@ -2,6 +2,17 @@
 
 All recent updates and improvements to our **z&#8209;control Landing Page** app.
 
+## [4.4] – 2026-10-22
+
+### 🚀 Improvements
+
+- Refactored GitHub Analytics with using the repo as parameter in relevant methods and removing await within loops for better performance.
+
+### 🔧 Internal
+
+- Improved the code base to fix lint errors and SonarQube issues.
+- Updated tests, suite contains **427 specs with 99.4% statement coverage**.
+
 ## [4.3] - 2026-10-07
 
 ### ✨ New Features

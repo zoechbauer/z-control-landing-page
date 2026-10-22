@@ -1,4 +1,4 @@
-import { Component, Input, inject, OnInit } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonIcon } from '@ionic/angular/standalone';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
@@ -39,9 +39,9 @@ export class PrivacyPolicyComponent {
   /**
    * Logs a visit to the privacy policy page to Firebase if analytics is disabled.
    */
-  logPrivacyPolicyVisit() {
+  async logPrivacyPolicyVisit() {
     if (!this.isAnalyticsEnabled) {
-      this.fbLandingPageVisitService.logLandingPageVisit(
+      await this.fbLandingPageVisitService.logLandingPageVisit(
         false,
         EventEnum.READ_POLICY_FROM_SETTINGS,
       );

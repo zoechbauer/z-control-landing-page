@@ -197,28 +197,6 @@ describe('PrivacyViewerComponent', () => {
   });
 
   describe('detectInternalNavigation', () => {
-    it('should set showBackButton to true if navigation state has internal true', () => {
-      const router = TestBed.inject(Router);
-      spyOn(router, 'getCurrentNavigation').and.returnValue({
-        extras: { state: { internal: true } },
-      } as any);
-
-      component['detectInternalNavigation']();
-
-      expect(component.showBackButton).toBeTrue();
-    });
-
-    it('should set showBackButton to false if navigation state does not have internal true', () => {
-      const router = TestBed.inject(Router);
-      spyOn(router, 'getCurrentNavigation').and.returnValue({
-        extras: { state: {} },
-      } as any);
-
-      component['detectInternalNavigation']();
-
-      expect(component.showBackButton).toBeFalse();
-    });
-
     describe('route params & queryParams subscription', () => {
       it('should set policyType and language from route params', () => {
         spyOn(component as any, 'loadPolicy').and.callThrough();

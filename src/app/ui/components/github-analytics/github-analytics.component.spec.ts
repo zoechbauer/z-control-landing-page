@@ -167,6 +167,22 @@ describe('GithubAnalyticsComponent', () => {
       await (component as any).init();
       expect(component.isLoading).toBeFalse();
     });
+
+    it('should log error when getAnalyticsData throws an error', async () => {
+      const error = new Error('Test error');
+      spyOn(firebaseFirestoreGithubService, 'getAnalyticsData').and.callFake(() => Promise.reject(error) as any);
+      const consoleErrorSpy = spyOn(console, 'error');
+
+      // Call ngOnInit so the outer IIFE's .catch handles the rejection and logs the error
+      component.ngOnInit();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Failed to initialize GithubAnalyticsComponent:',
+        error,
+      );
+    });
   });
 
   describe('getMostRecentItem', () => {
@@ -232,7 +248,7 @@ describe('GithubAnalyticsComponent', () => {
       const result = await component['getAnalyticsData'](collection);
       expect(result).toEqual(mockAnalyticsData);
     });
-    
+
     afterEach(() => {
       Object.assign(environment, environmentBackup);
     });

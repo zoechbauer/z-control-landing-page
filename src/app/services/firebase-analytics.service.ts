@@ -47,7 +47,7 @@ export class FirebaseAnalyticsService {
   logEvent(name: string, params?: { [key: string]: any }) {
     // Disable logging from localhost by default during development.
     // Set to true in .env.local for testing new events from localhost.
-    
+
     // do not log if window is not available
     if (!this.windowRef.isAvailable) return;
     // do not log if running on localhost and logging in dev mode is disabled

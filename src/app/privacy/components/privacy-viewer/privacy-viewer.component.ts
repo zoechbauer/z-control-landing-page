@@ -49,9 +49,6 @@ export class PrivacyViewerComponent implements OnInit {
   Tab = Tab;
 
   ngOnInit() {
-    // Check for internal navigation first
-    this.detectInternalNavigation();
-
     this.route.params.subscribe((params) => {
       this.policyType = params['type'] || 'qr-code-generator';
       this.language = params['language'] || 'en';
@@ -68,17 +65,6 @@ export class PrivacyViewerComponent implements OnInit {
         this.currentTab = params['currentTab'] || Tab.Settings;
       }
     });
-  }
-
-  private detectInternalNavigation() {
-    // Check if navigation came from Angular Router with state
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state?.['internal']) {
-      this.showBackButton = true;
-    } else {
-      // Default to false (external access)
-      this.showBackButton = false;
-    }
   }
 
   get backToHomeButtonLabel(): string {

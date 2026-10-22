@@ -56,8 +56,8 @@ export class MarkdownViewerComponent implements OnInit {
   /**
    * Closes the modal dialog.
    */
-  closeModal() {
-    this.modalController.dismiss();
+  async closeModal() {
+    await this.modalController.dismiss();
   }
 
   /**

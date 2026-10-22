@@ -57,16 +57,16 @@ export class HeaderComponent {
     return !this.utilsService.isShowIonTabBar;
   }
 
-  goToSettings() {
-    this.utilsService.navigateToTab(Tab.Settings);
+  async goToSettings() {
+    await this.utilsService.navigateToTab(Tab.Settings);
   }
 
-  goToMainFeature() {
-    this.utilsService.navigateToTab(Tab.MainFeature);
+  async goToMainFeature() {
+    await this.utilsService.navigateToTab(Tab.MainFeature);
   }
 
-  goToSettingsAndOpenFeedback() {
-    this.utilsService.navigateToTabWithParams(Tab.Settings, {
+  async goToSettingsAndOpenFeedback() {
+    await this.utilsService.navigateToTabWithParams(Tab.Settings, {
       open: 'z-control',
     });
     setTimeout(() => {
@@ -78,10 +78,10 @@ export class HeaderComponent {
     return this.utilsService.openHelpModal();
   }
 
-  goBack(event: Event) {
+  async goBack(event: Event) {
     event.preventDefault();
     event.stopPropagation();
 
-    this.utilsService.navigateToTab(this.currentTab);
+    await this.utilsService.navigateToTab(this.currentTab);
   }
 }

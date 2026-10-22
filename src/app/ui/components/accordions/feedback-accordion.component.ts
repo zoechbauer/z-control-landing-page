@@ -49,9 +49,9 @@ export class FeedbackAccordionComponent {
   /**
    * Logs the action of sending feedback to Firebase if analytics is disabled.
    */
-  logSendFeedback() {
+  async logSendFeedback() {
     if (!this.isAnalyticsEnabled) {
-      this.fbLandingPageVisitService.logLandingPageVisit(
+      await this.fbLandingPageVisitService.logLandingPageVisit(
         false,
         EventEnum.SEND_FEEDBACK,
       );

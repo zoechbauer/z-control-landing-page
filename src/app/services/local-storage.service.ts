@@ -44,16 +44,16 @@ export class LocalStorageService {
       await this.loadSelectedOrDefaultLanguage();
     } catch (error) {
       console.error('App initialization failed:', error);
-      await this.initializeWithDefaults(translate);
+      this.initializeWithDefaults(translate);
     }
   }
 
   /**
    * Fallback: sets default language to 'en' in TranslateService
    */
-  private async initializeWithDefaults(
+  private initializeWithDefaults(
     translate: import('@ngx-translate/core').TranslateService,
-  ): Promise<void> {
+  ): void {
     try {
       translate.setDefaultLang('en');
       translate.use('en');

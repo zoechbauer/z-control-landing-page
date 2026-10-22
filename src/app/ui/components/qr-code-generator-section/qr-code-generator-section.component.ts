@@ -15,7 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { APPS, AppKey } from 'src/app/shared/github.constants';
+import { APPS } from 'src/app/shared/github.constants';
 import { Tab } from '@app/shared/enums';
 import { QrCodeGeneratorSectionParameters } from 'src/app/shared/app.interfaces';
 import { UtilsService } from '@app/services/utils.service';

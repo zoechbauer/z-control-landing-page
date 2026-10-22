@@ -5,12 +5,20 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project uses [Semantic Versioning](https://semver.org/).
 
+## [2.9] – 2026-10-22
+
+### Changed
+
+- Improved the code base to fix lint errors and SonarQube issues.
+- Test suite: **250 specs with 100% statement coverage.**
+
 ## [2.8] - 2026-10-07
 
 ### Added
 
 - Added `GITHUB_TOKEN` secret definition for secure access to GitHub API in Firebase functions. This is more secure than environment variables which was used before.
 - Created `STAGING_Project` in Firebase for testing and development purposes.
+- Created a test document for verifying Firebase staging environment setup and functionality.
 
 ### Changed
 

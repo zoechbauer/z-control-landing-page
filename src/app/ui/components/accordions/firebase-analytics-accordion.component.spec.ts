@@ -39,6 +39,7 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
       'setItem',
       'setAnalyticsConsent',
     ]);
+    localStorageServiceSpy.setAnalyticsConsent.and.resolveTo(undefined as any);
 
     utilsServiceSpy = jasmine.createSpyObj('UtilsService', [
       'onLogoClicked',
@@ -49,6 +50,7 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
       'navigateToTab',
     ]);
     utilsServiceSpy.logoClicked$ = of(false);
+    utilsServiceSpy.navigateToTab.and.resolveTo(undefined as any);
 
     firebaseAnalyticsServiceSpy = jasmine.createSpyObj(
       'FirebaseAnalyticsService',
@@ -59,6 +61,10 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
       'FirebaseFirestoreLandingPageVisitService',
       ['logLandingPageVisit'],
     );
+    fbLandingPageVisitServiceSpy.logLandingPageVisit.and.resolveTo(
+      undefined as any,
+    );
+
     enabledSubject = new Subject<boolean>();
     firebaseAnalyticsServiceSpy.enabled$ = enabledSubject.asObservable();
     enabledSubject.next(false);
@@ -103,9 +109,11 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
     });
 
     describe('onChangeEnableAnalytics', () => {
-      it('should enable collection on FirebaseAnalyticsService, save in localStorage, log event and navigate to main feature tab if not enabled', () => {
+      it('should enable collection on FirebaseAnalyticsService, save in localStorage, log event and navigate to main feature tab if not enabled', async () => {
         component.isAnalyticsEnabled = false;
         component.onChangeEnableAnalytics(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(localStorageServiceSpy.setAnalyticsConsent).toHaveBeenCalledWith(
           true,
@@ -138,6 +146,45 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
           firebaseAnalyticsServiceSpy.enableCollection,
         ).toHaveBeenCalledWith(false);
       }));
+
+      it('should log console.error when disabling flow async task fails', async () => {
+        component.isAnalyticsEnabled = true;
+        const error = new Error('Disable flow error');
+        // make the awaited landing page visit reject so the IIFE rejects
+        fbLandingPageVisitServiceSpy.logLandingPageVisit.and.callFake(() => Promise.reject(error) as any);
+        const consoleErrorSpy = spyOn(console, 'error');
+
+        component.onChangeEnableAnalytics(false);
+        // wait for the setTimeout(300) to run and for microtasks to settle
+        await new Promise((resolve) => setTimeout(resolve, 310));
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(consoleErrorSpy).toHaveBeenCalled();
+        // first arg should be our disabling message
+        expect(consoleErrorSpy.calls.mostRecent().args[0]).toBe(
+          'Error during disabling analytics flow:',
+        );
+        // second arg should be the error
+        expect(consoleErrorSpy.calls.mostRecent().args[1]).toBe(error);
+      });
+
+      it('should log console.error when enabling flow async task fails', async () => {
+        component.isAnalyticsEnabled = false;
+        const error = new Error('Enable flow error');
+        fbLandingPageVisitServiceSpy.logLandingPageVisit.and.callFake(() => Promise.reject(error) as any);
+        const consoleErrorSpy = spyOn(console, 'error');
+
+        component.onChangeEnableAnalytics(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(consoleErrorSpy).toHaveBeenCalled();
+        expect(consoleErrorSpy.calls.mostRecent().args[0]).toBe(
+          'Error during enabling analytics flow:',
+        );
+        expect(consoleErrorSpy.calls.mostRecent().args[1]).toBe(error);
+      });
 
       it('should show a toast analytics enabled when toggling analytics', () => {
         component.isAnalyticsEnabled = false;
@@ -272,8 +319,11 @@ describe('FirebaseAnalyticsAccordionComponent', () => {
         );
       });
 
-      it('should show the main feature tab when analytics is enabled on settings page', () => {
+      it('should show the main feature tab when analytics is enabled on settings page', async () => {
         component.onChangeEnableAnalytics(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(utilsServiceSpy.navigateToTab).toHaveBeenCalledWith(
           Tab.MainFeature,
         );

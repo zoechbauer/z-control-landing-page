@@ -103,12 +103,12 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.showAllAccordions = true;
     this.setupSubscriptions();
     this.utilsService.showOrHideIonTabBar();
-    this.getIsAnalyticsAllowed();
+    void this.getIsAnalyticsAllowed();
   }
 
   private setupSubscriptions() {
     this.subscriptions.push(
-      this.localStorageService.selectedLanguage$.subscribe(async (lang) => {
+      this.localStorageService.selectedLanguage$.subscribe((lang) => {
         this.translate.use(lang);
         this.translate.setDefaultLang(lang);
         this.selectedLanguage = lang;
@@ -171,10 +171,10 @@ export class SettingsPage implements OnInit, OnDestroy {
    * updating the selected language and saving it to local storage.
    * @param event The custom event emitted when the language selection changes.
    */
-  onLanguageChange(event: any) {
+  async onLanguageChange(event: any) {
     const lang = event.detail?.value;
     if (lang) {
-      this.localStorageService.saveSelectedLanguage(lang);
+      await this.localStorageService.saveSelectedLanguage(lang);
       this.translate.use(lang);
       this.translate.setDefaultLang(lang);
 
@@ -199,7 +199,7 @@ export class SettingsPage implements OnInit, OnDestroy {
    */
   async openChangelog() {
     const selectedAccordion = APP_KEYS.LANDING_PAGE as AppKey;
-    this.utilsService.openChangelog(selectedAccordion);
+    await this.utilsService.openChangelog(selectedAccordion);
   }
 
   /**

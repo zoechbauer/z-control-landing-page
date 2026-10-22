@@ -12,9 +12,27 @@ This project uses a simplified major.minor versioning scheme:
 
 ## What's Coming Next
 
-- Add unit tests for the new services and components.
+- Complete unit tests for the new services.
 - Add a search feature to find saved photos by title, description, or extracted text.
 - Compress photos before saving to reduce storage usage.
+- Migrate camera usage to the new adapter service.
+
+## [1.7] – 2026-10-22
+
+### 🚀 Improvements
+
+- Updated text statistics calculation to exclude newline characters from the character count, ensuring more accurate statistics for extracted text.
+- History button is now only displayed if there are saved photos available, improving the user experience by preventing unnecessary navigation options.
+- Refactored AlertService to improve code testability, readability, and maintainability.
+
+### 🔧 Internal
+
+- Replaced the loading indicator for fetching saved photos with a spinner component to be more visually consistent and user-friendly.
+- Refactored loadSavedPhotos (checking webview paths of photos) to improve maintainability and handle non-persistent blob URLs more effectively.
+- Improved the code base to fix lint errors and SonarQube issues.
+- Added missing function documentation to improve clarity and maintainability.
+- Added unit tests for the new services and components.
+- Test suite contains **759 specs with 91.3% statement coverage**.
 
 ## [1.6] – 2026-10-07
 

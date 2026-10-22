@@ -45,7 +45,9 @@ describe('AppComponent', () => {
       ['init', 'logLandingPageVisit'],
     );
     firebaseFirestoreLandingPageVisitServiceSpy.init.and.resolveTo(undefined);
-    firebaseFirestoreLandingPageVisitServiceSpy.logLandingPageVisit.and.returnValue(Promise.resolve());
+    firebaseFirestoreLandingPageVisitServiceSpy.logLandingPageVisit.and.returnValue(
+      Promise.resolve(),
+    );
 
     localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', [
       'initializeServicesAsync',
@@ -126,13 +128,30 @@ describe('AppComponent', () => {
       const error = new Error('Test error');
       firebaseAnalyticsServiceSpy.init.and.throwError(error.message);
       localStorageServiceSpy.initializeServicesAsync.and.resolveTo(undefined);
-      spyOn(console, 'error');
+      const consoleErrorSpy = spyOn(console, 'error');
 
       firebaseAnalyticsServiceSpy.enableCollection.calls.reset();
       component.ngOnInit();
       await fixture.whenStable();
 
-      expect(console.error).toHaveBeenCalledWith('fa.init error', error);
+      expect(consoleErrorSpy).toHaveBeenCalledWith('fa.init error', error);
+    });
+
+    it('should log error when platform.ready() throws an error', async () => {
+      const error = new Error('Test error');
+      // Simulate an error during platform.ready() so the outer IIFE.catch handles it
+      (component as any).platform = { ready: () => Promise.reject(error) };
+      const consoleErrorSpy = spyOn(console, 'error');
+
+      component.ngOnInit();
+
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error during initialization',
+        error,
+      );
     });
 
     it('should enable collection when local storage consent is given', async () => {

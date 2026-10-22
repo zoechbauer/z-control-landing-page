@@ -97,19 +97,30 @@ describe('FirebaseFirestoreGithubService', () => {
 
       expect(data).toEqual([mockAnalyticsData[0]]);
       expect((service as any).collection).toBe(collection);
-      expect((service as any).repo).toBe(repo1);
+      expect(data[0].repo).toBe(repo1);
       expect((service as any).useFirebaseEmulator).toBeFalse();
     });
 
     it('should return analytics data for all repos', async () => {
-      spyOn<any>(service, 'fetchAnalyticsForRepo').and.resolveTo(
-        mockAnalyticsData[0],
+      spyOn<any>(service, 'fetchAnalyticsForRepo').and.callFake(
+        (repo: string) =>
+          Promise.resolve(
+            mockAnalyticsData.find((d) => d.repo === repo) ||
+              makeDoc(
+                repo as any,
+                [{ uniques: 0, count: 0, timestamp: '2026-01-01T00:00:00.000Z' }],
+                [{ uniques: 0, count: 0, timestamp: '2026-01-01T00:00:00.000Z' }],
+              ),
+          ),
       );
 
       const data = await service.getAnalyticsData(collection, ALL_REPOS as any);
 
-      expect(data.length).toBe(REPOS.length);
-      expect((service as any).repo).toBe(REPOS[REPOS.length - 1].repo);
+      expect(data).toHaveSize(REPOS.length);
+      // order may vary due to parallel fetches; assert the set of repos matches regardless of order
+      expect(data.map((d) => d.repo)).toEqual(
+        jasmine.arrayWithExactContents(REPOS.map((r) => r.repo)),
+      );
     });
 
     it('should store emulator flag when enabled', async () => {
@@ -136,7 +147,7 @@ describe('FirebaseFirestoreGithubService', () => {
         timestamp: '2026-06-21T00:00:00.000Z',
       };
 
-      const result = (service as any).processData(rawData);
+      const result = (service as any).processData(repo1, rawData);
 
       expect(result.views.count).toBe(6);
       expect(result.views.uniques).toBe(4);
@@ -152,7 +163,7 @@ describe('FirebaseFirestoreGithubService', () => {
         clones: [],
         timestamp: '2026-06-21T00:00:00.000Z',
       };
-      expect(() => (service as any).processData(rawData)).toThrowError();
+      expect(() => (service as any).processData(repo1, rawData)).toThrowError();
       expect(console.error).toHaveBeenCalledWith(
         'Error processing analytics data:',
         jasmine.any(Error),
@@ -169,6 +180,7 @@ describe('FirebaseFirestoreGithubService', () => {
       ];
 
       const result = (service as any).processStatistics(
+        repo1,
         TrafficType.VIEWS,
         [...unsorted],
         '2026-06-21T00:00:00.000Z',
@@ -182,17 +194,19 @@ describe('FirebaseFirestoreGithubService', () => {
   describe('mergeDocuments', () => {
     it('should merge two analytics docs', () => {
       const doc1 = (service as any).processStatistics(
+        repo1,
         TrafficType.VIEWS,
         [{ uniques: 1, count: 2, timestamp: '2026-06-18T00:00:00.000Z' }],
         '2026-06-21T00:00:00.000Z',
       );
       const doc2 = (service as any).processStatistics(
+        repo1,
         TrafficType.CLONES,
         [{ uniques: 3, count: 4, timestamp: '2026-06-19T00:00:00.000Z' }],
         '2026-06-22T00:00:00.000Z',
       );
 
-      const merged = (service as any).mergeDocuments(doc1, doc2);
+      const merged = (service as any).mergeDocuments(repo1, doc1, doc2);
 
       expect(merged.views.count).toBe(2);
       expect(merged.clones.count).toBe(4);
@@ -232,7 +246,7 @@ describe('FirebaseFirestoreGithubService', () => {
     });
 
     it('should fetch analytics data for a repo', async () => {
-      const result = await (service as any).fetchAnalyticsForRepo();
+      const result = await (service as any).fetchAnalyticsForRepo(repo1);
 
       // Sort views and clones in expected result to match processing logic
       const expected = {
@@ -266,7 +280,7 @@ describe('FirebaseFirestoreGithubService', () => {
 
       (service as any).useFirebaseEmulator = false;
 
-      const result = await (service as any).fetchAnalyticsForRepo();
+      const result = await (service as any).fetchAnalyticsForRepo(repo1);
 
       expect(result).toEqual({
         collection: COLLECTION.GITHUB_ANALYTICS_TRAFFIC_HISTORY,
@@ -281,7 +295,7 @@ describe('FirebaseFirestoreGithubService', () => {
       spyOn(console, 'log');
       (service as any).useFirebaseEmulator = true;
 
-      await (service as any).fetchAnalyticsForRepo();
+      await (service as any).fetchAnalyticsForRepo(repo1);
 
       expect(console.log).toHaveBeenCalledWith(
         'Using Firebase Emulator for Firestore',
@@ -315,7 +329,7 @@ describe('FirebaseFirestoreGithubService', () => {
       (service as any).repo = repo1;
       (service as any).useFirebaseEmulator = false;
 
-      const result = await (service as any).fetchAnalyticsForRepo();
+      const result = await (service as any).fetchAnalyticsForRepo(repo1);
 
       expect(result).toEqual({
         collection: COLLECTION.GITHUB_ANALYTICS_TRAFFIC,
@@ -340,3 +354,4 @@ describe('FirebaseFirestoreGithubService', () => {
     });
   });
 });
+
